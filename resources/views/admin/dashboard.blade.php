@@ -3,7 +3,7 @@
 @section('content')
     <div class="h-[2000px]">
         <h1 class="font-bold text-2xl mb-4">Dashboard</h1>
-        <section class="flex gap-x-3">
+        <section class="flex justify-between">
             <div class="border-[#DD4049] border shadow-2xl flex items-center gap-x-5 py-4 px-5 rounded-lg">
                 <div class="text-sm">
                     <p>Pengeluaran Hari Ini</p>

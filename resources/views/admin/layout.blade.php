@@ -9,7 +9,7 @@
 </head>
 <body class="font-poppins">
     <section class="flex h-screen">
-        <nav class="flex flex-col bg-white h-screen w-[300px] py-5 px-5 shadow-[5px_0px_8px_rgba(0,0,0,0.25)] items-center">
+        <nav class="flex flex-col bg-white h-screen w-[300px] py-5 px-5 shadow-[3px_0px_8px_rgba(0,0,0,0.25)] items-center relative z-[99]">
             {{-- Logo --}}
             <div class="flex justify-between items-center gap-x-1 mb-8">
                 <img src="{{ asset('assets/ar4anSmallLogo.png') }}" alt="LOGO AR4N GROUP" class="w-[100px]">
@@ -89,10 +89,10 @@
                 </div>
             </header>
             {{-- header --}}
-            <div class="px-6 pt-5 overflow-y-auto">
+            <div class="px-6 pt-5 pb-16 overflow-y-auto">
                 @yield('content')
             </div>
-            <footer class="absolute bottom-0 flex justify-center w-full py-3 shadow-[0px_-2px_8px_rgba(0,0,0,0.25)]">
+            <footer class="absolute bottom-0 z-50 flex justify-center w-full py-3 shadow-[0px_-2px_8px_rgba(0,0,0,0.25)] bg-white">
                     <div class="text-center text-xs text-[#A8A8A8]">Copyright@AR4N GROUP</div>
                 </footer>
         </div>
