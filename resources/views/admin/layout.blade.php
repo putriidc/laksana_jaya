@@ -6,10 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Admin</title>
     @vite('resources/css/app.css')
+    @vite('resources/js/app.js')
 </head>
 <body class="font-poppins">
     <section class="flex h-screen">
-        <nav class="flex flex-col bg-white h-screen w-[300px] py-5 px-5 shadow-[5px_0px_8px_rgba(0,0,0,0.25)] items-center">
+        <nav class="flex flex-col bg-white h-screen w-[300px] py-5 px-5 shadow-[3px_0px_8px_rgba(0,0,0,0.25)] items-center relative z-[99]">
             {{-- Logo --}}
             <div class="flex justify-between items-center gap-x-1 mb-8">
                 <img src="{{ asset('assets/ar4anSmallLogo.png') }}" alt="LOGO AR4N GROUP" class="w-[100px]">
@@ -29,7 +30,7 @@
                         <span>Master Data</span>
                     </button>
                 </a>
-                <a href="" class="cursor-pointer">
+                <a href="/admin/jurnal-umum" class="cursor-pointer">
                     <button class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_15px_rgba(0,0,0,0.25)]">
                         <img src="{{ asset('assets/navbar/receipt-item.png') }}" alt="receipt icon">
                         <span>Jurnal Umum</span>
@@ -41,13 +42,13 @@
                         <span>Buku Besar</span>
                     </button>
                 </a>
-                <a href="" class="cursor-pointer">
+                <a href="/admin/freelance" class="cursor-pointer">
                     <button class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_15px_rgba(0,0,0,0.25)]">
                         <img src="{{ asset('assets/navbar/home-hashtag.png') }}" alt="home hashtag icon">
                         <span>Freelance</span>
                     </button>
                 </a>
-                <a href="" class="cursor-pointer">
+                <a href="/admin/pinjawan-karyawan" class="cursor-pointer">
                     <button class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_15px_rgba(0,0,0,0.25)]">
                         <img src="{{ asset('assets/navbar/receipt-item.png') }}" alt="receipt2 icon">
                         <span>Pinjaman Karyawan</span>
@@ -65,7 +66,7 @@
                         <span>Neraca</span>
                     </button>
                 </a>
-                <a href="" class="mt-2 cursor-pointer">
+                <a href="" class="cursor-pointer">
                     <button class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_15px_rgba(0,0,0,0.25)]">
                         <img src="{{ asset('assets/navbar/logout.png') }}" alt="logout icon">
                         <span>Logout</span>
@@ -89,10 +90,10 @@
                 </div>
             </header>
             {{-- header --}}
-            <div class="px-6 pt-5 overflow-y-auto">
+            <div class="px-6 pt-5 pb-16 overflow-y-auto">
                 @yield('content')
             </div>
-            <footer class="absolute bottom-0 flex justify-center w-full py-3 shadow-[0px_-2px_8px_rgba(0,0,0,0.25)]">
+            <footer class="absolute bottom-0 z-50 flex justify-center w-full py-3 shadow-[0px_-2px_8px_rgba(0,0,0,0.25)] bg-white">
                     <div class="text-center text-xs text-[#A8A8A8]">Copyright@AR4N GROUP</div>
                 </footer>
         </div>
