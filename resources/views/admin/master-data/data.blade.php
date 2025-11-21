@@ -4,11 +4,33 @@
         <h1 class="font-bold text-2xl mb-6">Master Data</h1>
         <section class="flex flex-col">
                 <div class="flex justify-between items-center pb-4">
-                    <label for="dropdown-toggle" class="bg-[#FFF494] shadow-[0px_0px_15px_rgba(0,0,0,0.25)] rounded-lg cursor-pointer">
-                        <div class="flex px-4 py-2 items-center gap-x-3">
+                    <label for="dropdown-toggle" class="bg-[#FFF494] select-none shadow-[0px_0px_15px_rgba(0,0,0,0.25)] rounded-lg cursor-pointer w-[180px] relative">
+                        <div class="flex justify-between py-2 px-4 items-center">
                             <span>Tambah Data</span>
-                            <img src="{{ asset('assets/arrow-down.png') }}" alt="arrow down icon" class="w-[20px]">
-                            <input type="checkbox" id="dropdown-toggle" class="hidden">
+                            <img src="{{ asset('assets/arrow-down.png') }}" alt="arrow down icon" id="icon-dropdown" class="w-[20px]">
+                            <input type="checkbox" id="dropdown-toggle" class="hidden" />
+                        </div>
+                        <div class="absolute w-[180px] bg-[#FFF494] shadow-2xl rounded-b-lg top-9 hidden" id="dropdown-menu">
+                            <a href="/admin/master-data/create-asset" class="py-2 px-4 block hover:bg-[#E9E9E9]">
+                                <p class="truncate">
+                                    Asset Lancar, Asset Tetap, Kewajiban, Ekuitas, Pendatan & HPP Proyek
+                                </p>
+                            </a>
+                            <a href="/admin/master-data/create-piutang-hutang" class="py-2 px-4 block hover:bg-[#E9E9E9]">
+                                <p class="truncate">
+                                    Piutang & Hutang Usaha
+                                </p>
+                            </a>
+                            <a href="/admin/master-data/create-karyawan" class="py-2 px-4 block hover:bg-[#E9E9E9]">
+                                <p class="truncate">
+                                    Karyawan
+                                </p>
+                            </a>
+                            <a href="/admin/master-data/create-proyek" class="py-2 px-4 block hover:bg-[#E9E9E9]">
+                                <p class="truncate">
+                                    Proyek
+                                </p>
+                            </a>
                         </div>
                     </label>
                     <form action="" class="flex items-center gap-x-2">
@@ -302,5 +324,6 @@
                     </div>
                 </div>
         </section>
+        <script src="{{ asset('js/dropdown.js') }}"></script>
     </div>
 @endsection
