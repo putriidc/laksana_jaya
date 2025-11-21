@@ -17,7 +17,7 @@
                 <h1 class="leading-6 font-bold text-2xl text-[#353132]">AR4N <br> GROUP</h1>
             </div>
             {{-- logo --}}
-            <div class="flex flex-col gap-y-3">
+            <div class="flex flex-col gap-y-3 h-full">
                 <a href="/admin/dashboard" class="cursor-pointer">
                     <button class="bg-linear-to-r from-[#DD4049] to-[#F9E52D] text-white flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_15px_rgba(0,0,0,0.25)]">
                         <img src="{{ asset('assets/navbar/home-2.png') }}" alt="home icon">
@@ -36,12 +36,12 @@
                         <span>Jurnal Umum</span>
                     </button>
                 </a>
-                <a href="" class="cursor-pointer">
+                {{-- <a href="" class="cursor-pointer">
                     <button class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_15px_rgba(0,0,0,0.25)]">
                         <img src="{{ asset('assets/navbar/folder-open.png') }}" alt="folder icon">
                         <span>Buku Besar</span>
                     </button>
-                </a>
+                </a> --}}
                 <a href="/admin/freelance" class="cursor-pointer">
                     <button class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_15px_rgba(0,0,0,0.25)]">
                         <img src="{{ asset('assets/navbar/home-hashtag.png') }}" alt="home hashtag icon">
@@ -54,7 +54,7 @@
                         <span>Pinjaman Karyawan</span>
                     </button>
                 </a>
-                <a href="" class="cursor-pointer">
+                {{-- <a href="" class="cursor-pointer">
                     <button class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_15px_rgba(0,0,0,0.25)]">
                         <img src="{{ asset('assets/navbar/chart.png') }}" alt="chart icon">
                         <span>Laporan Laba Rugi</span>
@@ -65,13 +65,15 @@
                         <img src="{{ asset('assets/navbar/chart.png') }}" alt="chart icon">
                         <span>Neraca</span>
                     </button>
-                </a>
-                <a href="" class="cursor-pointer">
-                    <button class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_15px_rgba(0,0,0,0.25)]">
-                        <img src="{{ asset('assets/navbar/logout.png') }}" alt="logout icon">
-                        <span>Logout</span>
-                    </button>
-                </a>
+                </a> --}}
+                <div class="grow flex items-end">
+                    <a href="" class="cursor-pointer">
+                        <button class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_15px_rgba(0,0,0,0.25)]">
+                            <img src="{{ asset('assets/navbar/logout.png') }}" alt="logout icon">
+                            <span>Logout</span>
+                        </button>
+                    </a>
+                </div>
             </div>
         </nav>
         <div class="w-full flex flex-col relative">
