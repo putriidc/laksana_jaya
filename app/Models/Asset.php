@@ -11,9 +11,9 @@ class Asset extends Model
     protected $fillable = [
         'kode_akun',
         'nama_akun',
+        'akun_header',
         'post_saldo',
         'post_laporan',
-        'kredit',
         'created_by',
         'deleted_at',
     ];

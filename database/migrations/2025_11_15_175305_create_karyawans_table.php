@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('kode_karyawan');
             $table->string('kode_akun')->nullable();
-            $table->string('nama_pic');
+            $table->string('nama')->nullable();
             $table->string('akun_header')->nullable();
             $table->string('alamat')->nullable();
             $table->string('no_hp')->nullable();
             $table->string('email')->nullable();
-            $table->timestamp('created_by')->nullable();
+            $table->string('created_by')->nullable();
             $table->timestamp('deleted_at')->nullable(); // manual soft delete
             $table->timestamps(); // created_at & updated_at
         });

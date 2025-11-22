@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('tanggal')->nullable();
             $table->double('pinjam')->nullable();
             $table->double('bayar')->nullable();
-            $table->timestamp('created_by')->nullable();
+            $table->string('created_by')->nullable();
             $table->timestamp('deleted_at')->nullable(); // manual soft delete
             $table->timestamps(); // created_at & updated_at
         });
