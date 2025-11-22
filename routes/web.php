@@ -91,4 +91,16 @@ route::get('/kepala-gudang/dashboard', function () {
     return view('kepala-gudang.dashboard');
 });
 // dasboard
+
+// Input data barang
+route::get('/kepala-gudang/input-data-barang', function () {
+    return view('kepala-gudang.input-data-barang.index');
+});
+// Input data barang
+
+// output data barang
+route::get('/kepala-gudang/output-data-barang', function () {
+    return view('kepala-gudang.output-data-barang.index');
+});
+// output data barang
 // kepala gudang

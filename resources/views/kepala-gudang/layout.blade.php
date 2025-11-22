@@ -24,13 +24,13 @@
                         <span>Dashboard</span>
                     </button>
                 </a>
-                <a href="" class="cursor-pointer">
+                <a href="/input-data-barang" class="cursor-pointer">
                     <button class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_15px_rgba(0,0,0,0.25)]">
                         <img src="{{ asset('assets/navbar-kepala-gudang/box-add.png') }}" alt="box add icon">
                         <span>Input Data Barang</span>
                     </button>
                 </a>
-                <a href="" class="cursor-pointer">
+                <a href="/output-data-barang" class="cursor-pointer">
                     <button class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_15px_rgba(0,0,0,0.25)]">
                         <img src="{{ asset('assets/navbar-kepala-gudang/box-remove.png') }}" alt="box remove icon">
                         <span>Output Data Barang</span>
