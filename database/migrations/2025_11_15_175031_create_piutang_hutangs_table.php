@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('kode_akun');
             $table->string('nama_akun');
             $table->string('akun_header')->nullable();
-            $table->timestamp('created_by')->nullable();
+            $table->string('created_by')->nullable();
             $table->timestamp('deleted_at')->nullable(); // manual soft delete
             $table->timestamps(); // created_at & updated_at
         });

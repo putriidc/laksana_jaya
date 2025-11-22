@@ -17,11 +17,13 @@ return new class extends Migration
             $table->date('tgl_mulai')->nullable();
             $table->date('tgl_selesai')->nullable();
             $table->string('no_kontrak')->nullable();
-            $table->string('nama_perusahan');
+            $table->string('hari_kalender')->nullable();
+            $table->string('nama_proyek');
+            $table->string('nama_perusahaan');
             $table->string('kategori')->nullable();
             $table->string('jenis')->nullable();
             $table->double('nilai_kontrak')->default(0);
-            $table->timestamp('created_by')->nullable();
+            $table->string('created_by')->nullable();
             $table->timestamp('deleted_at')->nullable(); // manual soft delete
             $table->timestamps(); // created_at & updated_at
         });

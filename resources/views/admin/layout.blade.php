@@ -67,12 +67,13 @@
                     </button>
                 </a> --}}
                 <div class="grow flex items-end">
-                    <a href="" class="cursor-pointer">
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
                         <button class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_15px_rgba(0,0,0,0.25)]">
                             <img src="{{ asset('assets/navbar/logout.png') }}" alt="logout icon">
                             <span>Logout</span>
                         </button>
-                    </a>
+                    </form>
                 </div>
             </div>
         </nav>

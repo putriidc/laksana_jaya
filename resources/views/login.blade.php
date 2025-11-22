@@ -14,15 +14,16 @@
     </div>
     <div class="flex flex-col w-[35%]">
         <h1 class="text-5xl leading-10 text-[#353132] mb-8">Welcome to, <br> <span class="font-extrabold text-6xl">AR4N Group</span></h1>
-        <form action="" class="flex flex-col gap-y-5 mb-4">
+        <form method="POST" action="{{ route('login') }}" class="flex flex-col gap-y-5 mb-4">
+            @csrf
             <div class="border-[#72686B]/40 border-[2px] rounded-lg w-full flex items-center pb-2 pt-3 relative">
                 <label for="username" class="text-[#C0C0C0] text-lg absolute left-3 top-[7px] transition-all duration-300">username</label>
-                <input type="text" name="" id="username" class="w-full outline-none px-3 focus-input" required>
+                <input type="text" name="username" id="username" class="w-full outline-none px-3 focus-input" required>
                 <img src="{{ asset('assets/username.png') }}" alt="username icon" class="w-[25px] absolute right-3">
             </div>
             <div class="border-[#72686B]/40 border-[2px] rounded-lg w-full flex items-center pb-2 pt-3 relative">
                 <label for="password" class="text-[#C0C0C0] text-lg absolute left-3 top-[7px] transition-all duration-300">password</label>
-                <input type="password" name="" id="password" class="w-full outline-none px-3 focus-input" required>
+                <input type="password" name="password" id="password" class="w-full outline-none px-3 focus-input" required>
                 <img src="{{ asset('assets/eye.png') }}" alt="password icon" class="w-[25px] absolute right-3 cursor-pointer" id="toggle">
             </div>
             <button type="submit" class="bg-[#353132] font-bold text-white py-3 rounded-lg cursor-pointer">Login</button>

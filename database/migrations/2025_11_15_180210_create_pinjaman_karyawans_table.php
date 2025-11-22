@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('nama_karyawan');
             $table->double('total_pinjam')->default(0);
             $table->double('total_kasbon')->default(0);
-            $table->timestamp('created_by')->nullable();
+            $table->string('created_by')->nullable();
             $table->timestamp('deleted_at')->nullable(); // manual soft delete
             $table->timestamps(); // created_at & updated_at
         });
