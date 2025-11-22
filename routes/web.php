@@ -83,3 +83,12 @@ Route::get('/admin/pinjawan-karyawan/detail/form-pengembalian-kasbon', function 
     return view('admin.pinjaman-karyawan.detail.form-add.pengembalian-kasbon');
 });
 // pinjawan karyawan
+
+
+// kepala gudang
+// dasboard
+route::get('/kepala-gudang/dashboard', function () {
+    return view('kepala-gudang.dashboard');
+});
+// dasboard
+// kepala gudang
