@@ -1,8 +1,9 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\KasbonContent;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\KasbonContent;
 
 class KasbonContentController extends Controller
 {
@@ -39,7 +40,7 @@ class KasbonContentController extends Controller
     public function destroy($id)
     {
         $kasbonContent = KasbonContent::findOrFail($id);
-        $kasbonContent->update(['deleted_at' => now()]); // manual soft delete
+        $kasbonContent->update(['deleted_at' => Carbon::now('Asia/Jakarta')]); // manual soft delete
         return redirect()->route('kasbonContents.index')->with('success', 'Transaksi kasbon berhasil dihapus (soft delete)');
     }
 }

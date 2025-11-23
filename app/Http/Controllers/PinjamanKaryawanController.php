@@ -1,8 +1,9 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\PinjamanKaryawan;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\PinjamanKaryawan;
 
 class PinjamanKaryawanController extends Controller
 {
@@ -39,7 +40,7 @@ class PinjamanKaryawanController extends Controller
     public function destroy($id)
     {
         $pinjamanKaryawan = PinjamanKaryawan::findOrFail($id);
-        $pinjamanKaryawan->update(['deleted_at' => now()]); // manual soft delete
+        $pinjamanKaryawan->update(['deleted_at' => Carbon::now('Asia/Jakarta')]); // manual soft delete
         return redirect()->route('pinjamanKaryawans.index')->with('success', 'Data pinjaman berhasil dihapus (soft delete)');
     }
 }

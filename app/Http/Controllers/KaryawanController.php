@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -75,7 +76,7 @@ class KaryawanController extends Controller
     public function destroy($id)
     {
         $karyawan = Karyawan::findOrFail($id);
-        $karyawan->update(['deleted_at' => now()]); // manual soft delete
+        $karyawan->update(['deleted_at' => Carbon::now('Asia/Jakarta')]); // manual soft delete
         return redirect()->route('master-data.index')->with('success', 'Karyawan berhasil dihapus (soft delete)');
     }
 }

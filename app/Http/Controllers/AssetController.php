@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Asset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -72,7 +73,7 @@ class AssetController extends Controller
     public function destroy($id)
     {
         $asset = Asset::findOrFail($id);
-        $asset->update(['deleted_at' => now()]); // manual soft delete
+        $asset->update(['deleted_at' => Carbon::now('Asia/Jakarta')]); // manual soft delete
         return redirect()->route('master-data.index')->with('success', 'Asset berhasil dihapus (soft delete)');
     }
 }

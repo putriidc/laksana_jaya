@@ -1,8 +1,9 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\PinjamanContent;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\PinjamanContent;
 
 class PinjamanContentController extends Controller
 {
@@ -39,7 +40,7 @@ class PinjamanContentController extends Controller
     public function destroy($id)
     {
         $content = PinjamanContent::findOrFail($id);
-        $content->update(['deleted_at' => now()]);
+        $content->update(['deleted_at' => Carbon::now('Asia/Jakarta')]);
         return redirect()->route('pinjamanContents.index')->with('success', 'Transaksi pinjaman berhasil dihapus (soft delete)');
     }
 }
