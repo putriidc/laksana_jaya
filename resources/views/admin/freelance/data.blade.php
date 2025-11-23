@@ -21,7 +21,7 @@
                         </a>
                     </form>
                 </div>
-                <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
+                <div class="rounded-lg shadow-[1px_1px_10px_rgba(0,0,0,0.1)] pt-4 pb-6">
                     <table class="table-fixed text-center text-sm w-full">
                         <thead class="border-b-2 border-[#CCCCCC]">
                             <th class="w-[5%] py-2">No</th>

@@ -4,7 +4,7 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css"; // CSS dasar Flatpickr
 // Impor locale jika Anda menggunakannya (misalnya Bahasa Indonesia)
-// import { Indonesian } from "flatpickr/dist/l10n/id.js";
+import { Indonesian } from "flatpickr/dist/l10n/id.js";
 
 // Import file bootstrap Anda (jika ada, biasanya untuk setup Axios, dll.)
 import "./bootstrap";
@@ -23,7 +23,7 @@ function initializeFlatpickr() {
         flatpickr(inputElement, {
             // Opsi Default:
             dateFormat: "Y-m-d",
-            // locale: Indonesian, // Aktifkan jika Anda mengimpor locale
+            locale: Indonesian, // Aktifkan jika Anda mengimpor locale
 
             // Mengambil opsi tambahan dari atribut data HTML
             ...inputElement.dataset,

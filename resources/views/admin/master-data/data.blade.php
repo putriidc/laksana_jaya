@@ -47,10 +47,10 @@
             <div class="flex flex-col pb-4">
                 <h1 class="text-[#C0C0C0] font-bold text-xl">Data Asset Lancar, Asset Tetap, Kewajiban, Ekuitas, Pendatan &
                     HPP Proyek</h1>
-                <div
-                    class="w-full flex flex-col justify-center pt-2 pb-4 shadow-[0px_0px_15px_rgba(0,0,0,0.25)] rounded-lg mt-2">
+                <div class="w-full flex flex-col justify-center py-8 gap-y-8 shadow-[1px_1px_5px_rgba(0,0,0,0.25)] rounded-lg mt-2 items-center">
+                    <div class="flex flex-col w-[80%] gap-y-3">
                     <h1 class="text-[#C0C0C0] font-bold text-xl">Data Asset Lancar</h1>
-                    <table class="table-fixed w-[80%] text-center">
+                    <table class="table-fixed w-[80%] text-center w-full">
                         <thead class="border-b-2 border-[#CCCCCC]">
                             <th class="py-2 w-[10%]">No</th>
                             <th class="py-2 w-[15%]">Kode Akun</th>
@@ -93,8 +93,10 @@
                             @endforeach
                         </tbody>
                     </table>
+                    </div>
+                    <div class="flex flex-col w-[80%] gap-y-3">
                     <h1 class="text-[#C0C0C0] font-bold text-xl">Data Asset Tetap</h1>
-                    <table class="table-fixed w-[80%] text-center">
+                    <table class="table-fixed w-[80%] text-center w-full">
                         <thead class="border-b-2 border-[#CCCCCC]">
                             <th class="py-2 w-[10%]">No</th>
                             <th class="py-2 w-[15%]">Kode Akun</th>
@@ -137,8 +139,10 @@
                             @endforeach
                         </tbody>
                     </table>
+                    </div>
+                    <div class="flex flex-col w-[80%] gap-y-3">
                     <h1 class="text-[#C0C0C0] font-bold text-xl">Data Kewajiban</h1>
-                    <table class="table-fixed w-[80%] text-center">
+                    <table class="table-fixed w-[80%] text-center w-full">
                         <thead class="border-b-2 border-[#CCCCCC]">
                             <th class="py-2 w-[10%]">No</th>
                             <th class="py-2 w-[15%]">Kode Akun</th>
@@ -160,8 +164,7 @@
                                     <td class="py-2">{{ $kewajiban->post_laporan }}</td>
                                     <td class="flex justify-center items-center gap-x-2 py-2">
                                         {{-- Tombol Edit --}}
-                                        <a href="{{ route('akun.edit', $kewajiban->id) }}"
-                                            class="btn btn-sm btn-primary">
+                                        <a href="{{ route('akun.edit', $kewajiban->id) }}" class="btn btn-sm btn-primary">
                                             <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
                                                 class="w-[22px] cursor-pointer">
                                         </a>
@@ -182,8 +185,10 @@
                             @endforeach
                         </tbody>
                     </table>
+                    </div>
+                    <div class="flex flex-col w-[80%] gap-y-3">
                     <h1 class="text-[#C0C0C0] font-bold text-xl">Data Ekuitas</h1>
-                    <table class="table-fixed w-[80%] text-center">
+                    <table class="table-fixed w-[80%] text-center w-full">
                         <thead class="border-b-2 border-[#CCCCCC]">
                             <th class="py-2 w-[10%]">No</th>
                             <th class="py-2 w-[15%]">Kode Akun</th>
@@ -226,8 +231,10 @@
                             @endforeach
                         </tbody>
                     </table>
+                    </div>
+                    <div class="flex flex-col w-[80%] gap-y-3">
                     <h1 class="text-[#C0C0C0] font-bold text-xl">Data Pendapatan</h1>
-                    <table class="table-fixed w-[80%] text-center">
+                    <table class="table-fixed w-[80%] text-center w-full">
                         <thead class="border-b-2 border-[#CCCCCC]">
                             <th class="py-2 w-[10%]">No</th>
                             <th class="py-2 w-[15%]">Kode Akun</th>
@@ -249,8 +256,7 @@
                                     <td class="py-2">{{ $pendapatan->post_laporan }}</td>
                                     <td class="flex justify-center items-center gap-x-2 py-2">
                                         {{-- Tombol Edit --}}
-                                        <a href="{{ route('akun.edit', $pendapatan->id) }}"
-                                            class="btn btn-sm btn-primary">
+                                        <a href="{{ route('akun.edit', $pendapatan->id) }}" class="btn btn-sm btn-primary">
                                             <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
                                                 class="w-[22px] cursor-pointer">
                                         </a>
@@ -271,8 +277,10 @@
                             @endforeach
                         </tbody>
                     </table>
+                    </div>
+                    <div class="flex flex-col w-[80%] gap-y-3">
                     <h1 class="text-[#C0C0C0] font-bold text-xl">Data HPP Proyek</h1>
-                    <table class="table-fixed w-[80%] text-center">
+                    <table class="table-fixed w-[80%] text-center w-full">
                         <thead class="border-b-2 border-[#CCCCCC]">
                             <th class="py-2 w-[10%]">No</th>
                             <th class="py-2 w-[15%]">Kode Akun</th>
@@ -315,11 +323,12 @@
                             @endforeach
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
             <div class="flex flex-col pb-4">
                 <h1 class="text-[#C0C0C0] font-bold text-xl">Piutang & Hutang Usaha</h1>
-                <div class="w-full flex justify-center pt-2 pb-4 shadow-[0px_0px_15px_rgba(0,0,0,0.25)] rounded-lg mt-2">
+                <div class="w-full flex justify-center pt-2 pb-4 shadow-[1px_1px_5px_rgba(0,0,0,0.25)] rounded-lg mt-2">
                     <table class="table-fixed w-[80%] text-center">
                         <thead class="border-b-2 border-[#CCCCCC]">
                             <th class="py-2 w-[10%]">No</th>
@@ -365,15 +374,15 @@
             </div>
             <div class="flex flex-col pb-4">
                 <h1 class="text-[#C0C0C0] font-bold text-xl">Data Karyawan</h1>
-                <div class="w-full flex justify-center pt-2 pb-4 shadow-[0px_0px_15px_rgba(0,0,0,0.25)] rounded-lg mt-2">
+                <div class="w-full flex justify-center pt-2 pb-4 shadow-[1px_1px_5px_rgba(0,0,0,0.25)] rounded-lg mt-2">
                     <table class="table-fixed w-[80%] text-center">
                         <thead class="border-b-2 border-[#CCCCCC]">
                             <th class="py-2 w-[10%]">No</th>
                             <th class="py-2 w-[15%]">Kode Akun</th>
-                            <th class="py-2 w-[15%]">nama</th>
-                            <th class="py-2 w-[25%]">alamat</th>
-                            <th class="py-2 w-[25%]">No. HP</th>
-                            <th class="py-2 w-[25%]">Email</th>
+                            <th class="py-2 w-[10%]">nama</th>
+                            <th class="py-2 w-[20%]">alamat</th>
+                            <th class="py-2 w-[15%]">No. HP</th>
+                            <th class="py-2 w-[15%]">Email</th>
                             <th class="py-2 w-[20%]">Action</th>
                         </thead>
                         <tbody>
@@ -415,7 +424,7 @@
             </div>
             <div class="flex flex-col pb-4">
                 <h1 class="text-[#C0C0C0] font-bold text-xl">Proyek</h1>
-                <div class="w-full flex justify-center pt-2 pb-4 shadow-[0px_0px_15px_rgba(0,0,0,0.25)] rounded-lg mt-2">
+                <div class="w-full flex justify-center pt-2 pb-4 shadow-[1px_1px_5px_rgba(0,0,0,0.25)] rounded-lg mt-2">
                     <table class="table-fixed w-[80%] text-center">
                         <thead class="border-b-2 border-[#CCCCCC]">
                             <th class="py-2 w-[10%]">No</th>

@@ -9,13 +9,13 @@
 
             <div class="flex items-center">
                 <label class="w-[180px] font-medium">Tanggal Mulai</label>
-                <input type="date" name="tgl_mulai" value="{{ old('tgl_mulai', $proyek->tgl_mulai) }}"
+                <input type="text" name="tgl_mulai" data-flatpickr value="{{ old('tgl_mulai', $proyek->tgl_mulai) }}"
                        class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
             </div>
 
             <div class="flex items-center">
                 <label class="w-[180px] font-medium">Tanggal Selesai</label>
-                <input type="date" name="tgl_selesai" value="{{ old('tgl_selesai', $proyek->tgl_selesai) }}"
+                <input type="text" name="tgl_selesai" data-flatpickr value="{{ old('tgl_selesai', $proyek->tgl_selesai) }}"
                        class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
             </div>
 
