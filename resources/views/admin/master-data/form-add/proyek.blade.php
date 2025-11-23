@@ -7,11 +7,11 @@
             @csrf
             <div class="flex items-center">
                 <label for="" class="w-[180px] font-medium">Tanggal Mulai</label>
-                <input type="date" name="tgl_mulai" id="" class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
+                <input type="text" name="tgl_mulai" id="" data-flatpickr placeholder="Pilih Tanggal Mulai" class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
             </div>
             <div class="flex items-center">
                 <label for="" class="w-[180px] font-medium">Tanggal Selesai</label>
-                <input type="date" name="tgl_selesai" id="" class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
+                <input type="text" name="tgl_selesai" id="" data-flatpickr placeholder="Pilih Tanggal Selesai" class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
             </div>
             <div class="flex items-center">
                 <label for="" class="w-[180px] font-medium">No Kontrak</label>

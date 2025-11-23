@@ -24,7 +24,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
+                <div class="rounded-lg shadow-[1px_1px_10px_rgba(0,0,0,0.1)] pt-4 pb-6">
                     <table class="table-auto text-center text-sm w-full">
                         <thead class="border-b-2 border-[#CCCCCC]">
                             <th class="py-2 pl-[150px]">No</th>
