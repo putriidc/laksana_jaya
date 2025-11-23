@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Proyek;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -92,7 +93,7 @@ class ProyekController extends Controller
     public function destroy($id)
     {
         $proyek = Proyek::findOrFail($id);
-        $proyek->update(['deleted_at' => now()]); // manual soft delete
+        $proyek->update(['deleted_at' => Carbon::now('Asia/Jakarta')]); // manual soft delete
         return redirect()->route('master-data.index')->with('success', 'Proyek berhasil dihapus (soft delete)');
     }
 }
