@@ -3,8 +3,8 @@
     <div>
         <h1 class="font-bold text-2xl mb-6">Freelance</h1>
         <section>
-            <div class="flex items-center pb-4">
-                    <form action="" class="flex items-center gap-x-2">
+            <div class="flex items-center pb-4 justify-between">
+                    <form action="" class="flex items-center gap-x-2" id="myForm">
                         <select id="select-beast" placeholder="Pilih Nama" autocomplete="off" class="w-[200px] appearance-none border-[#9A9A9A] border-2 outline-none rounded-lg py-[8px] px-[10px] bg-white cursor-pointer">
                             <option selected>Pilih Nama</option>
                             <option value="1">Aby</option>
@@ -20,6 +20,7 @@
                             <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
                         </a>
                     </form>
+                    <a href="/admin/freelance/create" class="block border-[#9A9A9A] border-2 rounded-lg px-4 py-2 shadow-[0px_0px_10px_rgba(0,0,0,0.1)]">Tambah Data +</a>
                 </div>
                 <div class="rounded-lg shadow-[1px_1px_10px_rgba(0,0,0,0.1)] pt-4 pb-6">
                     <table class="table-fixed text-center text-sm w-full">

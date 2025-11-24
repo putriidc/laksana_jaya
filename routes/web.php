@@ -67,6 +67,10 @@ Route::get('/admin/jurnal-umum/create', function () {
 Route::get('/admin/freelance', function () {
     return view('admin.freelance.data');
 });
+
+Route::get('/admin/freelance/create', function () {
+    return view('admin.freelance.form-add.index');
+});
 // freelance
 
 // pinjawan karyawan
