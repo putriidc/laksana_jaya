@@ -24,4 +24,9 @@ class Karyawan extends Model
     {
         return $query->whereNull('deleted_at');
     }
+     // Relasi ke PinjamanKaryawan
+    public function pinjaman()
+    {
+        return $this->hasMany(PinjamanKaryawan::class, 'kode_karyawan', 'kode_karyawan');
+    }
 }

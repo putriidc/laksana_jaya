@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('kode_perkiraan');
             $table->string('nama_proyek')->nullable();
             $table->string('kode_proyek')->nullable();
-            $table->double('debit')->default(0);
-            $table->double('kredit')->default(0);
+            $table->double('debit')->default(0)->nullable();
+            $table->double('kredit')->default(0)->nullable();
             $table->string('created_by')->nullable();
             $table->timestamp('deleted_at')->nullable(); // manual soft delete
             $table->timestamps(); // created_at & updated_at

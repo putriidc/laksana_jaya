@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('pinjaman_karyawans', function (Blueprint $table) {
             $table->id();
+            $table->date('tanggal');
             $table->string('kode_karyawan');
-            $table->string('nama_karyawan');
-            $table->double('total_pinjam')->default(0);
-            $table->double('total_kasbon')->default(0);
+            $table->double('total_pinjam')->default(0)->nullable();
+            $table->double('total_kasbon')->default(0)->nullable();
             $table->string('created_by')->nullable();
             $table->timestamp('deleted_at')->nullable(); // manual soft delete
             $table->timestamps(); // created_at & updated_at

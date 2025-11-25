@@ -12,8 +12,12 @@ class KasbonContent extends Model
         'kode_karyawan',
         'kontrak',
         'tanggal',
-        'kasbon',
+        'sisa',
         'bayar',
+        'jenis',
+        'menunggu',
+        'setuju',
+        'tolak',
         'created_by',
         'deleted_at',
     ];

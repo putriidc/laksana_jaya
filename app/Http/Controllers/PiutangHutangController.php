@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use App\Models\PiutangHutang;
@@ -73,7 +74,7 @@ class PiutangHutangController extends Controller
     public function destroy($id)
     {
         $piutangHutang = PiutangHutang::findOrFail($id);
-        $piutangHutang->update(['deleted_at' => now()]); // manual soft delete
+        $piutangHutang->update(['deleted_at' => Carbon::now('Asia/Jakarta')]); // manual soft delete
         return redirect()->route('master-data.index')->with('success', 'Data berhasil dihapus (soft delete)');
     }
 }
