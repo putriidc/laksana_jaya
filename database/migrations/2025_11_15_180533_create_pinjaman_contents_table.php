@@ -16,8 +16,12 @@ return new class extends Migration
             $table->string('kode_karyawan');
             $table->string('kontrak')->nullable();
             $table->date('tanggal')->nullable();
-            $table->double('pinjam')->nullable();
             $table->double('bayar')->nullable();
+            $table->double('sisa')->nullable();
+            $table->string('jenis')->nullable();
+            $table->boolean('menunggu')->nullable();
+            $table->boolean('setuju')->nullable();
+            $table->boolean('tolak')->nullable();
             $table->string('created_by')->nullable();
             $table->timestamp('deleted_at')->nullable(); // manual soft delete
             $table->timestamps(); // created_at & updated_at

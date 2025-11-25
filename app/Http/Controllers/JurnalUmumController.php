@@ -23,7 +23,8 @@ class JurnalUmumController extends Controller
         ->get();
         $proyeks = Proyek::whereNull('deleted_at')
         ->get();
-        return view('admin.jurnal-umum.form-add.index', compact('assets', 'proyeks'));
+        $today = Carbon::now('Asia/Jakarta')->toDateString();
+        return view('admin.jurnal-umum.form-add.index', compact('assets', 'proyeks', 'today'));
     }
 
     public function store(Request $request)

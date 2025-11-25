@@ -1,39 +1,81 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Karyawan;
 use Illuminate\Http\Request;
+use App\Models\KasbonContent;
+use App\Models\PinjamanContent;
 use App\Models\PinjamanKaryawan;
+use Illuminate\Support\Facades\Auth;
 
 class PinjamanKaryawanController extends Controller
 {
     public function index()
     {
-        $pinjamanKaryawans = PinjamanKaryawan::active()->get();
-        return view('pinjamanKaryawans.index', compact('pinjamanKaryawans'));
+        $pinjamans = PinjamanKaryawan::with('karyawan')->active()->get();
+        return view('admin.pinjaman-karyawan.data', compact('pinjamans'));
+    }
+    public function show($id)
+    {
+        // Ambil data pinjaman utama + relasi karyawan
+        $pinjaman = PinjamanKaryawan::with('karyawan')->active()->findOrFail($id);
+
+        // Ambil semua transaksi pinjaman dan kasbon berdasarkan kode_karyawan
+        $pinjamanContents = PinjamanContent::where('kode_karyawan', $pinjaman->kode_karyawan)->active()->get();
+        $kasbonContents   = KasbonContent::where('kode_karyawan', $pinjaman->kode_karyawan)->active()->get();
+
+        return view('admin.pinjaman-karyawan.detail.data', compact('pinjaman', 'pinjamanContents', 'kasbonContents'));
     }
 
     public function create()
     {
-        return view('pinjamanKaryawans.create');
+        $today = Carbon::now('Asia/Jakarta')->toDateString();
+        $karyawans = Karyawan::whereNull('deleted_at')->get();
+        return view('admin.pinjaman-karyawan.form-add.index', compact('today', 'karyawans'));
     }
 
     public function store(Request $request)
     {
-        PinjamanKaryawan::create($request->all());
+        $request->validate([
+            'tanggal'       => 'required|date',
+            'kode_karyawan' => 'required|string',
+        ]);
+
+        PinjamanKaryawan::create([
+            'tanggal'       => $request->tanggal,
+            'kode_karyawan' => $request->kode_karyawan,
+            'total_pinjam'  => 0,
+            'total_kasbon'  => 0,
+            'created_by'    => Auth::check() ? Auth::user()->id : null,
+        ]);
         return redirect()->route('pinjamanKaryawans.index')->with('success', 'Data pinjaman berhasil ditambahkan');
     }
 
     public function edit($id)
     {
-        $pinjamanKaryawan = PinjamanKaryawan::findOrFail($id);
-        return view('pinjamanKaryawans.edit', compact('pinjamanKaryawan'));
+        $pinjaman = PinjamanKaryawan::findOrFail($id);
+        $karyawans = Karyawan::whereNull('deleted_at')->get();
+        return view('admin.pinjaman-karyawan.form-edit.index', compact('pinjaman', 'karyawans'));
     }
 
     public function update(Request $request, $id)
     {
-        $pinjamanKaryawan = PinjamanKaryawan::findOrFail($id);
-        $pinjamanKaryawan->update($request->all());
+        $request->validate([
+            'tanggal'       => 'required|date',
+            'kode_karyawan' => 'required|string',
+        ]);
+
+        $pinjaman = PinjamanKaryawan::findOrFail($id);
+
+        $pinjaman->update([
+            'tanggal'       => $request->tanggal,
+            'kode_karyawan' => $request->kode_karyawan,
+            // tetap 0, nanti ditambah/dikurangi lewat transaksi
+            'total_pinjam'  => 0,
+            'total_kasbon'  => 0,
+        ]);
         return redirect()->route('pinjamanKaryawans.index')->with('success', 'Data pinjaman berhasil diupdate');
     }
 

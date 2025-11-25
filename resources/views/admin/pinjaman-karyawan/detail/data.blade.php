@@ -6,7 +6,7 @@
             <div class="flex items-center gap-x-2">
                 <p>Nama Karyawan</p>
                 <div class="border-[#9A9A9A] border-2 rounded-lg py-[8px] px-[25px] font-bold">
-                    Kasmin Bin Amin
+                    {{ $pinjaman->karyawan->nama }}
                 </div>
                 <a href="" class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
@@ -15,193 +15,250 @@
         </div>
         <section class="mb-10">
             <div class="flex items-center pb-4 w-full justify-between">
-                    <h1 class="font-bold text-2xl">Pinjaman Karyawan</h1>
-                    <div class="flex items-center gap-x-4">
-                        <a href="/admin/pinjawan-karyawan/detail/form-pengembalian-pinjaman" class="flex items-center gap-x-3 border-[#9A9A9A] border-2 rounded-xl py-[10px] px-[15px] bg-white cursor-pointer">
-                            <span>Bayar Pinjaman</span>
-                            <img src="{{ asset('assets/card-receive.png') }}" alt="bayar pinjaman icon" class="w-[20px]">
-                        </a>
-                        <a href="/admin/pinjawan-karyawan/detail/form-pinjaman" class="flex items-center gap-x-3 border-[#9A9A9A] border-2 rounded-xl py-[10px] px-[15px] bg-white cursor-pointer">
-                            <span>Pinjam Uang</span>
-                            <img src="{{ asset('assets/card-receive.png') }}" alt="bayar pinjaman icon" class="w-[20px]">
-                        </a>
-                        <div class="flex items-center gap-x-2">
-                            <h1 class="font-bold">STATUS</h1>
+                <h1 class="font-bold text-2xl">Pinjaman Karyawan</h1>
+                <div class="flex items-center gap-x-4">
+                    <a href="{{ route('pinjamanContents.bayar', $pinjaman->id) }}"
+                        class="flex items-center gap-x-3 border-[#9A9A9A] border-2 rounded-xl py-[10px] px-[15px] bg-white cursor-pointer">
+                        <span>Bayar Pinjaman</span>
+                        <img src="{{ asset('assets/card-receive.png') }}" alt="bayar pinjaman icon" class="w-[20px]">
+                    </a>
+                    <a href="{{ route('pinjamanContents.pinjam', $pinjaman->id) }}"
+                        class="flex items-center gap-x-3 border-[#9A9A9A] border-2 rounded-xl py-[10px] px-[15px] bg-white cursor-pointer">
+                        <span>Pinjam Uang</span>
+                        <img src="{{ asset('assets/card-receive.png') }}" alt="bayar pinjaman icon" class="w-[20px]">
+                    </a>
+                    <div class="flex items-center gap-x-2">
+                        <h1 class="font-bold">STATUS</h1>
+                        @if ($pinjaman->total_pinjam > 4500000)
                             <div class="bg-[#8CE987] w-[100px] h-[20px]"></div>
-                        </div>
+                        @else
+                            <div class="bg-[#DD4049] w-[100px] h-[20px]"></div>
+                        @endif
                     </div>
                 </div>
-                <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                    <table class="table-auto text-center text-sm w-full">
-                        <thead class="border-b-2 border-[#CCCCCC]">
-                            <th class="py-2 w-[10%]">No</th>
-                            <th class="py-2 w-[15%]">Kontrak</th>
-                            <th class="py-2 w-[10%]">Tgl Pinjaman</th>
-                            <th class="py-2 w-[10%]">Tgl Cicilan</th>
-                            <th class="py-2 w-[15%]">Jumlah Pinjaman</th>
-                            <th class="py-2 w-[15%]">Cicilan Pinjaman</th>
-                            <th class="py-2 w-[15%]">Sisa Pinjaman</th>
-                            <th class="py-2 w-[10%]">Action</th>
-                        </thead>
-                        <tbody>
+            </div>
+            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
+                <table class="table-auto text-center text-sm w-full">
+                    <thead class="border-b-2 border-[#CCCCCC]">
+                        <th class="py-2 w-[10%]">Status</th>
+                        <th class="py-2 w-[15%]">Kontrak</th>
+                        <th class="py-2 w-[10%]">Tgl Pinjaman</th>
+                        <th class="py-2 w-[10%]">Tgl Cicilan</th>
+                        <th class="py-2 w-[15%]">Jumlah Pinjaman</th>
+                        <th class="py-2 w-[15%]">Cicilan Pinjaman</th>
+                        <th class="py-2 w-[15%]">Sisa Pinjaman</th>
+                        <th class="py-2 w-[10%]">Action</th>
+                    </thead>
+                    <tbody>
+                        @foreach ($pinjamanContents as $item)
                             <tr class="bg-[#E9E9E9] border-b-[1px] border-[#CCCCCC]">
-                                <td class="py-2">1</td>
-                                <td class="py-2">Kontrak Pinjaman I</td>
-                                <td class="py-2">15/06/2025</td>
-                                <td class="py-2">15/06/2025</td>
-                                <td class="py-2">Rp. 5.000.000</td>
-                                <td class="py-2">Rp. 1.650.000</td>
-                                <td class="py-2">Rp. 1.650.000</td>
+                                <td class="py-2">
+                                    @if ($item->menunggu)
+                                        <span class="text-blue-600 font-semibold">Menunggu</span>
+                                    @elseif($item->setuju)
+                                        <span class="text-green-600 font-semibold">Disetujui</span>
+                                    @elseif($item->tolak)
+                                        <span class="text-red-600 font-semibold">Ditolak</span>
+                                    @else
+                                        <span class="text-gray-600">-</span>
+                                    @endif
+                                </td>
+                                <td class="py-2">{{ $item->kontrak }}</td>
+                                <td class="py-2">
+                                    @if ($item->jenis === 'pinjam')
+                                        {{ $item->tanggal }}
+                                    @else
+                                        {{ '-' }}
+                                    @endif
+                                </td>
+                                <td class="py-2">
+                                    @if ($item->jenis === 'cicil')
+                                        {{ $item->tanggal }}
+                                    @else
+                                        {{ '-' }}
+                                    @endif
+                                </td>
+                                <td class="py-2">
+                                    @if ($item->jenis === 'pinjam')
+                                        {{ 'RP. ' . number_format($item->bayar, 0, ',', '.') }}
+                                    @else
+                                        {{ 'RP. 0' }}
+                                    @endif
+                                </td>
+                                <td class="py-2">
+                                    @if ($item->jenis === 'cicil')
+                                        {{ 'RP. ' . number_format($item->bayar, 0, ',', '.') }}
+                                    @else
+                                        {{ 'RP. 0' }}
+                                    @endif
+                                </td>
+                                <td class="py-2">{{ 'RP. ' . number_format($item->sisa, 0, ',', '.') }}</td>
                                 <td class="flex justify-center items-center gap-x-2 py-2">
-                                        <a href="/admin/pinjawan-karyawan/detail" class="">
-                                            <img src="{{ asset('assets/more-circle.png') }}" alt="more circle icon" class="w-[20px] cursor-pointer">
+                                    @if ($item->jenis === 'pinjam')
+                                        <a href="{{ route('pinjamanContents.edit', $item->id) }}" class="">
+                                            <img src="{{ asset('assets/more-circle.png') }}" alt="more circle icon"
+                                                class="w-[20px] cursor-pointer">
                                         </a>
-                                        <span class="border-black border-l-[1px] h-[22px]"></span>
-                                        <form action="" class=" h-[22px]">
-                                            <button type="submit">
-                                                <img src="{{ asset('assets/close-circle.png') }}" alt="trash icon" class="w-[20px] cursor-pointer">
+                                    @else
+                                        <a href="{{ route('pinjamanContents.editBayar', $item->id) }}" class="">
+                                            <img src="{{ asset('assets/more-circle.png') }}" alt="more circle icon"
+                                                class="w-[20px] cursor-pointer">
+                                        </a>
+                                    @endif
+
+                                    <span class="border-black border-l-[1px] h-[22px]"></span>
+                                    @if ($item->jenis === 'pinjam')
+                                        <form action="{{ route('pinjamanContents.destroy', $item->id) }}" method="POST"
+                                            class="h-[22px]">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                                <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                    class="w-[22px] cursor-pointer">
                                             </button>
                                         </form>
-                                    </td>
-                            </tr>
-                            <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
-                                <td class="py-2">1</td>
-                                <td class="py-2">Kontrak Pinjaman I</td>
-                                <td class="py-2">15/06/2025</td>
-                                <td class="py-2">15/06/2025</td>
-                                <td class="py-2">Rp. 5.000.000</td>
-                                <td class="py-2">Rp. 1.650.000</td>
-                                <td class="py-2">Rp. 1.650.000</td>
-                                <td class="flex justify-center items-center gap-x-2 py-2">
-                                        <a href="/admin/pinjawan-karyawan/detail" class="">
-                                            <img src="{{ asset('assets/more-circle.png') }}" alt="more circle icon" class="w-[20px] cursor-pointer">
-                                        </a>
-                                        <span class="border-black border-l-[1px] h-[22px]"></span>
-                                        <form action="" class=" h-[22px]">
-                                            <button type="submit">
-                                                <img src="{{ asset('assets/close-circle.png') }}" alt="trash icon" class="w-[20px] cursor-pointer">
+                                    @else
+                                        <form action="{{ route('pinjamanContents.destroyBayar', $item->id) }}"
+                                            method="POST" class="h-[22px]">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                                <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                    class="w-[22px] cursor-pointer">
                                             </button>
                                         </form>
-                                    </td>
+                                    @endif
+
+                                </td>
                             </tr>
-                            <tr class="bg-[#E9E9E9] border-b-[1px] border-[#CCCCCC]">
-                                <td class="py-2">1</td>
-                                <td class="py-2">Kontrak Pinjaman I</td>
-                                <td class="py-2">15/06/2025</td>
-                                <td class="py-2">15/06/2025</td>
-                                <td class="py-2">Rp. 5.000.000</td>
-                                <td class="py-2">Rp. 1.650.000</td>
-                                <td class="py-2">Rp. 1.650.000</td>
-                                <td class="flex justify-center items-center gap-x-2 py-2">
-                                        <a href="/admin/pinjawan-karyawan/detail" class="">
-                                            <img src="{{ asset('assets/more-circle.png') }}" alt="more circle icon" class="w-[20px] cursor-pointer">
-                                        </a>
-                                        <span class="border-black border-l-[1px] h-[22px]"></span>
-                                        <form action="" class=" h-[22px]">
-                                            <button type="submit">
-                                                <img src="{{ asset('assets/close-circle.png') }}" alt="trash icon" class="w-[20px] cursor-pointer">
-                                            </button>
-                                        </form>
-                                    </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </section>
         <section>
             <div class="flex items-center pb-4 w-full justify-between">
-                    <h1 class="font-bold text-2xl">Kasbon Karyawan</h1>
-                    <div class="flex items-center gap-x-4">
-                        <a href="/admin/pinjawan-karyawan/detail/form-pengembalian-kasbon" class="flex items-center gap-x-3 border-[#9A9A9A] border-2 rounded-xl py-[10px] px-[15px] bg-white cursor-pointer">
-                            <span>Bayar Kasbon</span>
-                            <img src="{{ asset('assets/card-receive.png') }}" alt="bayar pinjaman icon" class="w-[20px]">
-                        </a>
-                        <a href="/admin/pinjawan-karyawan/detail/form-kasbon" class="flex items-center gap-x-3 border-[#9A9A9A] border-2 rounded-xl py-[10px] px-[15px] bg-white cursor-pointer">
-                            <span>Kasbon</span>
-                            <img src="{{ asset('assets/card-receive.png') }}" alt="bayar pinjaman icon" class="w-[20px]">
-                        </a>
-                        <div class="flex items-center gap-x-2">
-                            <h1 class="font-bold">STATUS</h1>
+                <h1 class="font-bold text-2xl">Kasbon Karyawan</h1>
+                <div class="flex items-center gap-x-4">
+                    <a href="{{ route('kasbonContents.bayar', $pinjaman->id) }}"
+                        class="flex items-center gap-x-3 border-[#9A9A9A] border-2 rounded-xl py-[10px] px-[15px] bg-white cursor-pointer">
+                        <span>Bayar Kasbon</span>
+                        <img src="{{ asset('assets/card-receive.png') }}" alt="bayar pinjaman icon" class="w-[20px]">
+                    </a>
+                    <a href="{{ route('kasbonContents.pinjam', $pinjaman->id) }}"
+                        class="flex items-center gap-x-3 border-[#9A9A9A] border-2 rounded-xl py-[10px] px-[15px] bg-white cursor-pointer">
+                        <span>Kasbon</span>
+                        <img src="{{ asset('assets/card-receive.png') }}" alt="bayar pinjaman icon" class="w-[20px]">
+                    </a>
+                    <div class="flex items-center gap-x-2">
+                        <h1 class="font-bold">STATUS</h1>
+                        @if ($pinjaman->total_kasbon > 4500000)
+                            <div class="bg-[#8CE987] w-[100px] h-[20px]"></div>
+                        @else
                             <div class="bg-[#DD4049] w-[100px] h-[20px]"></div>
-                        </div>
+                        @endif
                     </div>
                 </div>
-                <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                    <table class="table-auto text-center text-sm w-full">
-                        <thead class="border-b-2 border-[#CCCCCC]">
-                            <th class="py-2 w-[10%]">No</th>
-                            <th class="py-2 w-[15%]">Kontrak</th>
-                            <th class="py-2 w-[10%]">Tgl Pinjaman</th>
-                            <th class="py-2 w-[10%]">Tgl Cicilan</th>
-                            <th class="py-2 w-[15%]">Jumlah Pinjaman</th>
-                            <th class="py-2 w-[15%]">Cicilan Pinjaman</th>
-                            <th class="py-2 w-[15%]">Sisa Pinjaman</th>
-                            <th class="py-2 w-[10%]">Action</th>
-                        </thead>
-                        <tbody>
-                            <tr class="bg-[#E9E9E9] border-b-[1px] border-[#CCCCCC]">
-                                <td class="py-2">1</td>
-                                <td class="py-2">Kontrak Pinjaman I</td>
-                                <td class="py-2">15/06/2025</td>
-                                <td class="py-2">15/06/2025</td>
-                                <td class="py-2">Rp. 5.000.000</td>
-                                <td class="py-2">Rp. 1.650.000</td>
-                                <td class="py-2">Rp. 1.650.000</td>
-                                <td class="flex justify-center items-center gap-x-2 py-2">
-                                        <a href="/admin/pinjawan-karyawan/detail" class="">
-                                            <img src="{{ asset('assets/more-circle.png') }}" alt="more circle icon" class="w-[20px] cursor-pointer">
-                                        </a>
-                                        <span class="border-black border-l-[1px] h-[22px]"></span>
-                                        <form action="" class=" h-[22px]">
-                                            <button type="submit">
-                                                <img src="{{ asset('assets/close-circle.png') }}" alt="trash icon" class="w-[20px] cursor-pointer">
-                                            </button>
-                                        </form>
-                                    </td>
-                            </tr>
-                            <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
-                                <td class="py-2">1</td>
-                                <td class="py-2">Kontrak Pinjaman I</td>
-                                <td class="py-2">15/06/2025</td>
-                                <td class="py-2">15/06/2025</td>
-                                <td class="py-2">Rp. 5.000.000</td>
-                                <td class="py-2">Rp. 1.650.000</td>
-                                <td class="py-2">Rp. 1.650.000</td>
-                                <td class="flex justify-center items-center gap-x-2 py-2">
-                                        <a href="/admin/pinjawan-karyawan/detail" class="">
-                                            <img src="{{ asset('assets/more-circle.png') }}" alt="more circle icon" class="w-[20px] cursor-pointer">
-                                        </a>
-                                        <span class="border-black border-l-[1px] h-[22px]"></span>
-                                        <form action="" class=" h-[22px]">
-                                            <button type="submit">
-                                                <img src="{{ asset('assets/close-circle.png') }}" alt="trash icon" class="w-[20px] cursor-pointer">
-                                            </button>
-                                        </form>
-                                    </td>
-                            </tr>
-                            <tr class="bg-[#E9E9E9] border-b-[1px] border-[#CCCCCC]">
-                                <td class="py-2">1</td>
-                                <td class="py-2">Kontrak Pinjaman I</td>
-                                <td class="py-2">15/06/2025</td>
-                                <td class="py-2">15/06/2025</td>
-                                <td class="py-2">Rp. 5.000.000</td>
-                                <td class="py-2">Rp. 1.650.000</td>
-                                <td class="py-2">Rp. 1.650.000</td>
-                                <td class="flex justify-center items-center gap-x-2 py-2">
-                                        <a href="/admin/pinjawan-karyawan/detail" class="">
-                                            <img src="{{ asset('assets/more-circle.png') }}" alt="more circle icon" class="w-[20px] cursor-pointer">
-                                        </a>
-                                        <span class="border-black border-l-[1px] h-[22px]"></span>
-                                        <form action="" class=" h-[22px]">
-                                            <button type="submit">
-                                                <img src="{{ asset('assets/close-circle.png') }}" alt="trash icon" class="w-[20px] cursor-pointer">
-                                            </button>
-                                        </form>
-                                    </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-        </section>
+            </div>
+    </div>
+    <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
+        <table class="table-auto text-center text-sm w-full">
+            <thead class="border-b-2 border-[#CCCCCC]">
+                <th class="py-2 w-[10%]">Status</th>
+                <th class="py-2 w-[15%]">Kontrak</th>
+                <th class="py-2 w-[10%]">Tgl Pinjaman</th>
+                <th class="py-2 w-[10%]">Tgl Cicilan</th>
+                <th class="py-2 w-[15%]">Jumlah Pinjaman</th>
+                <th class="py-2 w-[15%]">Cicilan Pinjaman</th>
+                <th class="py-2 w-[15%]">Sisa Pinjaman</th>
+                <th class="py-2 w-[10%]">Action</th>
+            </thead>
+            <tbody>
+                @foreach ($kasbonContents as $item)
+                    <tr class="bg-[#E9E9E9] border-b-[1px] border-[#CCCCCC]">
+                        <td class="py-2">
+                            @if ($item->menunggu)
+                                <span class="text-blue-600 font-semibold">Menunggu</span>
+                            @elseif($item->setuju)
+                                <span class="text-green-600 font-semibold">Disetujui</span>
+                            @elseif($item->tolak)
+                                <span class="text-red-600 font-semibold">Ditolak</span>
+                            @else
+                                <span class="text-gray-600">-</span>
+                            @endif
+                        </td>
+                        <td class="py-2">{{ $item->kontrak }}</td>
+                        <td class="py-2">
+                            @if ($item->jenis === 'pinjam')
+                                {{ $item->tanggal }}
+                            @else
+                                {{ '-' }}
+                            @endif
+                        </td>
+                        <td class="py-2">
+                            @if ($item->jenis === 'cicil')
+                                {{ $item->tanggal }}
+                            @else
+                                {{ '-' }}
+                            @endif
+                        </td>
+                        <td class="py-2">
+                            @if ($item->jenis === 'pinjam')
+                                {{ 'RP. ' . number_format($item->bayar, 0, ',', '.') }}
+                            @else
+                                {{ 'RP. 0' }}
+                            @endif
+                        </td>
+                        <td class="py-2">
+                            @if ($item->jenis === 'cicil')
+                                {{ 'RP. ' . number_format($item->bayar, 0, ',', '.') }}
+                            @else
+                                {{ 'RP. 0' }}
+                            @endif
+                        </td>
+                        <td class="py-2">{{ 'RP. ' . number_format($item->sisa, 0, ',', '.') }}</td>
+                        <td class="flex justify-center items-center gap-x-2 py-2">
+                            @if ($item->jenis === 'pinjam')
+                                <a href="{{ route('kasbonContents.edit', $item->id) }}" class="">
+                                    <img src="{{ asset('assets/more-circle.png') }}" alt="more circle icon"
+                                        class="w-[20px] cursor-pointer">
+                                </a>
+                            @else
+                                <a href="{{ route('kasbonContents.editBayar', $item->id) }}" class="">
+                                    <img src="{{ asset('assets/more-circle.png') }}" alt="more circle icon"
+                                        class="w-[20px] cursor-pointer">
+                                </a>
+                            @endif
+
+                            <span class="border-black border-l-[1px] h-[22px]"></span>
+                            @if ($item->jenis === 'pinjam')
+                                <form action="{{ route('kasbonContents.destroy', $item->id) }}" method="POST"
+                                    class="h-[22px]">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                        <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                            class="w-[22px] cursor-pointer">
+                                    </button>
+                                </form>
+                            @else
+                                <form action="{{ route('kasbonContents.destroyBayar', $item->id) }}" method="POST"
+                                    class="h-[22px]">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                        <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                            class="w-[22px] cursor-pointer">
+                                    </button>
+                                </form>
+                            @endif
+
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    </section>
     </div>
 @endsection

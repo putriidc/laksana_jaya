@@ -7,7 +7,7 @@
                 @csrf
                 <div class="flex items-center">
                     <label class="w-[180px] font-medium">Tanggal</label>
-                    <input readonly type="date" id="tanggal" name="tanggal"
+                    <input value="{{ $today }}" readonly type="date" id="tanggal" name="tanggal"
                         class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
                 </div>
                 <div class="flex items-center">
@@ -70,7 +70,7 @@
         </div>
     </div>
 
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             const now = new Date();
             const yyyy = now.getFullYear();
@@ -79,7 +79,7 @@
             const today = `${yyyy}-${mm}-${dd}`;
             document.getElementById('tanggal').value = today;
         });
-    </script>
+    </script> --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const namaPerkiraan = document.getElementById('nama-perkiraan');

@@ -12,8 +12,12 @@ class PinjamanContent extends Model
         'kode_karyawan',
         'kontrak',
         'tanggal',
-        'pinjam',
+        'sisa',
         'bayar',
+        'jenis',
+        'menunggu',
+        'setuju',
+        'tolak',
         'created_by',
         'deleted_at',
     ];
