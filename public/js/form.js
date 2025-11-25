@@ -53,7 +53,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (form) {
         form.addEventListener("submit", function (e) {
-            e.preventDefault();
             // 1. Cari semua input yang ditandai sebagai input Rupiah
             const rupiahInputs = form.querySelectorAll(".rupiah-format");
 
@@ -127,3 +126,20 @@ kasbonInput.addEventListener("input", () => {
 // End Hitung total seluruh
 // FORM FREELANCE ADD
 // ===============================================
+
+
+
+// ===============================================
+// Jalankan otomatis saat halaman edit dibuka
+document.addEventListener("DOMContentLoaded", () => {
+    rupiahFormatElements.forEach((element) => {
+        if (element.value) {
+            element.value = formatNumberToRupiah(parseRupiahToNumber(element.value));
+        }
+    });
+
+    // Trigger perhitungan awal biar field readonly langsung terisi
+    dayInput.dispatchEvent(new Event("input"));
+    tambahanInput.dispatchEvent(new Event("input"));
+    kasbonInput.dispatchEvent(new Event("input"));
+});
