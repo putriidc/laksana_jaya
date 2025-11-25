@@ -116,5 +116,17 @@ route::get('/kepala-gudang/output-data-barang', function () {
     return view('kepala-gudang.output-data-barang.index');
 });
 // output data barang
+
+// data barang
+route::get('/kepala-gudang/data-barang', function () {
+    return view('kepala-gudang.data-barang.data');
+});
+// data barang
+
+// transaksi barang
+route::get('/kepala-gudang/transaksi-barang', function () {
+    return view('kepala-gudang.transaksi-barang.data');
+});
+// transaksi barang
 // kepala gudang
 });
