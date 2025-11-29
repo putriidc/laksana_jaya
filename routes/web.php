@@ -3,11 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AssetController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\BarangController;
 use App\Http\Controllers\ProyekController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\SampinganController;
 use App\Http\Controllers\JurnalUmumController;
 use App\Http\Controllers\MasterDataController;
+use App\Http\Controllers\BarangMasukController;
+use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\KasbonContentController;
 use App\Http\Controllers\PiutangHutangController;
 use App\Http\Controllers\PinjamanContentController;
@@ -78,33 +81,26 @@ Route::middleware('auth')->group(function () {
 
     // kepala gudang
     // dasboard
-    route::get('/kepala-gudang/dashboard', function () {
+    route::get('/gudang', function () {
         return view('kepala-gudang.dashboard');
     });
     // dasboard
 
     // Input data barang
-    route::get('/kepala-gudang/input-data-barang', function () {
-        return view('kepala-gudang.input-data-barang.index');
-    });
+
     // Input data barang
 
     // output data barang
-    route::get('/kepala-gudang/output-data-barang', function () {
-        return view('kepala-gudang.output-data-barang.index');
-    });
+
     // output data barang
 
     // data barang
-    route::get('/kepala-gudang/data-barang', function () {
-        return view('kepala-gudang.data-barang.data');
-    });
+    Route::resource('barangs', BarangController::class);
     // data barang
 
     // transaksi barang
-    route::get('/kepala-gudang/transaksi-barang', function () {
-        return view('kepala-gudang.transaksi-barang.data');
-    });
+    Route::resource('barang-masuk', BarangMasukController::class);
+    Route::resource('barang-keluar', BarangKeluarController::class);
     // transaksi barang
     // kepala gudang
 });
