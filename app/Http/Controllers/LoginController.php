@@ -22,12 +22,12 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/admin/dashboard'); // halaman setelah login
+            // kirimkan pesan berhasil login
+            return redirect()->intended('/admin/dashboard')->with('success', 'Anda Berhasil Login berhasil'); // halaman setelah login
         }
 
-        return back()->withErrors([
-            'username' => 'Username atau password salah.',
-        ]);
+        // ... di dalam Auth::attempt gagal
+        return back()->with('error', 'Username atau password salah.'); // Menggunakan 'error'
     }
 
     public function logout(Request $request)

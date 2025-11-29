@@ -1,6 +1,13 @@
 @extends('admin.layout')
 @section('content')
     <div>
+        @if (session('success'))
+            <div
+                id="flash-message"
+                data-type="success"
+                data-message="{{ session('success') }}"
+            ></div>
+        @endif
         <h1 class="font-bold text-2xl mb-6">Master Data</h1>
         <section class="flex flex-col">
             <div class="flex justify-between items-center pb-4">

@@ -1,5 +1,12 @@
 // resources/js/app.js
 
+import "./bootstrap";
+import Swal from "sweetalert2";
+window.Swal = Swal; // Pastikan Swal tersedia secara global
+
+// Import modul notifikasi yang baru dibuat
+import { showFlashMessages } from "../../public/js/notification.js";
+
 // Import library Flatpickr untuk Datepicker
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css"; // CSS dasar Flatpickr
@@ -33,7 +40,5 @@ function initializeFlatpickr() {
 // Jalankan semua inisialisasi setelah DOM dimuat sepenuhnya
 document.addEventListener("DOMContentLoaded", () => {
     initializeFlatpickr();
+    showFlashMessages();
 });
-
-// Anda bisa mengekspor fungsi ini untuk inisialisasi elemen yang dimuat secara dinamis (misalnya di dalam Modal)
-window.initializeTomSelect = initializeTomSelect;
