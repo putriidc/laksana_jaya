@@ -26,7 +26,7 @@
                 </div>
                 {{-- logo --}}
                 <div class="flex flex-col gap-y-3 h-full">
-                    <a href="" class="cursor-pointer">
+                    <a href="/gudang" class="cursor-pointer">
                         <button
                             class="bg-linear-to-r from-[#DD4049] to-[#F9E52D] text-white flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_15px_rgba(0,0,0,0.25)]"
                         >
@@ -41,43 +41,7 @@
                             <span>Dashboard</span>
                         </button>
                     </a>
-                    <a
-                        href="/kepala-gudang/input-data-barang"
-                        class="cursor-pointer"
-                    >
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_15px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{
-                                    asset(
-                                        'assets/navbar-kepala-gudang/box-add.png'
-                                    )
-                                }}"
-                                alt="box add icon"
-                            />
-                            <span>Input Data Barang</span>
-                        </button>
-                    </a>
-                    <a
-                        href="/kepala-gudang/output-data-barang"
-                        class="cursor-pointer"
-                    >
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_15px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{
-                                    asset(
-                                        'assets/navbar-kepala-gudang/box-remove.png'
-                                    )
-                                }}"
-                                alt="box remove icon"
-                            />
-                            <span>Output Data Barang</span>
-                        </button>
-                    </a>
-                    <a href="/kepala-gudang/data-barang" class="cursor-pointer">
+                    <a href="{{ route('barangs.index') }}" class="cursor-pointer">
                         <button
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_15px_rgba(0,0,0,0.25)]"
                         >
@@ -93,7 +57,7 @@
                         </button>
                     </a>
                     <a
-                        href="/kepala-gudang/transaksi-barang"
+                        href="{{ route('barang-masuk.index') }}"
                         class="cursor-pointer"
                     >
                         <button
@@ -111,7 +75,7 @@
                         </button>
                     </a>
                     <div class="grow flex items-end">
-                        <a href="" class="cursor-pointer">
+                        <a href="/logout" class="cursor-pointer">
                             <button
                                 class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_15px_rgba(0,0,0,0.25)]"
                             >
@@ -146,8 +110,8 @@
                                 class="w-[40px] h-[40px]"
                             />
                             <div class="flex flex-col text-sm">
-                                <span class="font-bold">Hi, Rudi</span>
-                                <span>Kepala Gudang</span>
+                                <span class="font-bold">Hi, {{ Auth::user()->name }}</span>
+                                <span>{{ Auth::user()->role }}</span>
                             </div>
                         </div>
                     </div>
