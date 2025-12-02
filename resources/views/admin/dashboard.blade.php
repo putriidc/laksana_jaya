@@ -78,6 +78,5 @@
             </div>
         </div>
     </section>
-    <script src="{{ asset('js/notification.js') }}"></script>
 </div>
 @endsection

@@ -127,13 +127,15 @@
 
                 <div class="flex items-center">
                     <label class="w-[180px] font-medium">Foto</label>
-                    <input type="file" name="foto" class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2" />
-                    @if ($barang->foto)
-                        <a href="{{ asset('storage/' . $barang->foto) }}" target="_blank"
-                            class="ml-4 text-blue-600 underline">
-                            Lihat Foto Lama
-                        </a>
-                    @endif
+                    <div class="flex w-full">
+                        <input type="file" name="foto" class="w-[80%] outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2" />
+                        @if ($barang->foto)
+                            <a href="{{ asset('storage/' . $barang->foto) }}" target="_blank"
+                                class="ml-4 w-[20%] flex items-center justify-center bg-[#FFF494] rounded-sm px-4 py-2">
+                                Lihat Foto Lama
+                            </a>
+                        @endif
+                    </div>
                 </div>
 
                 <div class="flex mt-4">

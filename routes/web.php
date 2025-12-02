@@ -104,3 +104,39 @@ Route::middleware('auth')->group(function () {
     // transaksi barang
     // kepala gudang
 });
+
+
+// Kepala Proyek
+// dasboard
+Route::get('kepala-proyek/dashboard', function () {
+    return view('kepala-proyek.dashboard');
+});
+// dasboard
+// data proyek
+Route::get('kepala-proyek/data-proyek-gumilang', function () {
+    return view('kepala-proyek.data-proyek.cv-ars-gumilang');
+});
+Route::get('kepala-proyek/data-proyek-purnama', function () {
+    return view('kepala-proyek.data-proyek.cv-arn-purnama');
+});
+// data proyek
+
+// form edit data proyek
+Route::get('kepala-proyek/data-proyek/update', function () {
+    return view('kepala-proyek.data-proyek.form-edit.form-edit');
+});
+// form edit data proyek
+
+// form tambah data proyek
+Route::get('kepala-proyek/data-proyek/create', function () {
+    return view('kepala-proyek.data-proyek.form-add.form-add');
+});
+// form tambah data proyek
+
+// detail data proyek
+Route::get('kepala-proyek/data-proyek/detail', function () {
+    return view('kepala-proyek.data-proyek.detail.detail');
+});
+// detail data proyek
+
+// Kepala Proyek

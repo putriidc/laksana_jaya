@@ -29,7 +29,7 @@
         </div>
         <section class="mb-5 pb-6 border-b-2 border-[#B6B6B6]">
             <h1 class="font-bold text-2xl mb-4">Data Masuk Barang</h1>
-            <div class="flex gap-x-2">
+            <div class="flex gap-x-2 mb-4">
                 <a href="{{ route('barang-masuk.create') }}"
                     class="block border-[#9A9A9A] border-2 rounded-lg px-4 py-2 shadow-[0px_0px_10px_rgba(0,0,0,0.1)]">
                     Barang Masuk +</a>
@@ -51,6 +51,34 @@
                             $noKeluar = 1;
                         @endphp
                         @foreach ($barangMasuks as $item)
+                            @if($noMasuk % 2 == 1)
+                            <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
+                                <td class="py-2">{{ $noMasuk++ }}</td>
+                                <td class="py-2">{{ $item->tanggal }}</td>
+                                <td class="py-2">{{ $item->barang->nama_barang }}</td>
+                                <td class="py-2">{{ $item->barang->kategori }}</td>
+                                <td class="py-2">{{ $item->keterangan }}</td>
+                                <td class="py-2">{{ $item->qty }}</td>
+                                <td class="flex justify-center items-center gap-x-2 py-2">
+                                    {{-- Tombol Edit --}}
+                                    <a href="{{ route('barang-masuk.edit', $item->id) }}" class="btn btn-sm btn-primary">
+                                        <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
+                                            class="w-[22px] cursor-pointer">
+                                    </a>
+                                    <span class="border-black border-l-[1px] h-[22px]"></span>
+                                    {{-- Tombol Delete --}}
+                                    <form action="{{ route('barang-masuk.destroy', $item->id) }}" method="POST"
+                                        class="h-[22px]">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                            <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                class="w-[22px] cursor-pointer">
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @elseif($noMasuk % 2 == 0)
                             <tr class="bg-[#E9E9E9] border-b-[1px] border-[#CCCCCC]">
                                 <td class="py-2">{{ $noMasuk++ }}</td>
                                 <td class="py-2">{{ $item->tanggal }}</td>
@@ -77,6 +105,7 @@
                                     </form>
                                 </td>
                             </tr>
+                            @endif
                         @endforeach
                     </tbody>
                 </table>
@@ -109,7 +138,7 @@
                 </form>
             </div>
             <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                <div class="flex gap-x-2">
+                <div class="flex gap-x-2 ml-2 mb-4">
                     <a href="{{ route('barang-keluar.create') }}"
                         class="block border-[#9A9A9A] border-2 rounded-lg px-4 py-2 shadow-[0px_0px_10px_rgba(0,0,0,0.1)]">
                         Barang Keluar -</a>
@@ -126,6 +155,34 @@
                     </thead>
                     <tbody>
                         @foreach ($barangKeluars as $item)
+                            @if($noKeluar % 2 == 1)
+                            <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
+                                <td class="py-2">{{ $noKeluar++ }}</td>
+                                <td class="py-2">{{ $item->tanggal }}</td>
+                                <td class="py-2">{{ $item->barang->nama_barang }}</td>
+                                <td class="py-2">{{ $item->barang->kategori }}</td>
+                                <td class="py-2">{{ $item->keterangan }}</td>
+                                <td class="py-2">{{ $item->qty }}</td>
+                                <td class="flex justify-center items-center gap-x-2 py-2">
+                                    {{-- Tombol Edit --}}
+                                    <a href="{{ route('barang-keluar.edit', $item->id) }}" class="btn btn-sm btn-primary">
+                                        <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
+                                            class="w-[22px] cursor-pointer">
+                                    </a>
+                                    <span class="border-black border-l-[1px] h-[22px]"></span>
+                                    {{-- Tombol Delete --}}
+                                    <form action="{{ route('barang-keluar.destroy', $item->id) }}" method="POST"
+                                        class="h-[22px]">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                            <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                class="w-[22px] cursor-pointer">
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @elseif($noKeluar % 2 == 0)
                             <tr class="bg-[#E9E9E9] border-b-[1px] border-[#CCCCCC]">
                                 <td class="py-2">{{ $noKeluar++ }}</td>
                                 <td class="py-2">{{ $item->tanggal }}</td>
@@ -152,6 +209,7 @@
                                     </form>
                                 </td>
                             </tr>
+                            @endif
                         @endforeach
                     </tbody>
                 </table>

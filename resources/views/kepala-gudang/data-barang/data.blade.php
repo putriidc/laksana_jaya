@@ -43,6 +43,45 @@
                             $no = 1;
                         @endphp
                         @foreach ($barangs as $item)
+                            @if($no % 2 == 1)
+                                <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
+                                <td class="py-2">{{ $no++ }}</td>
+                                <td class="py-2">{{ $item->nama_barang }}</td>
+                                <td class="py-2">{{ $item->kategori }}</td>
+                                <td class="py-2">{{ $item->spesifikasi }}</td>
+                                <td class="py-2">{{ $item->satuan }}</td>
+                                <td class="py-2">{{ $item->stok }}</td>
+                                <td class="py-2">
+                                    @if ($item->foto)
+                                        <a href="{{ asset('storage/' . $item->foto) }}" target="_blank"
+                                            class="bg-[#fff494] px-3 py-1 rounded-lg text-sm">
+                                            Lihat Foto
+                                        </a>
+                                    @else
+                                        <span class="text-gray-500">Tidak ada foto</span>
+                                    @endif
+                                </td>
+                                <td class="flex justify-center items-center gap-x-2 py-2">
+                                        {{-- Tombol Edit --}}
+                                        <a href="{{ route('barangs.edit', $item->id) }}"
+                                            class="btn btn-sm btn-primary">
+                                            <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
+                                                class="w-[22px] cursor-pointer">
+                                        </a>
+                                        <span class="border-black border-l-[1px] h-[22px]"></span>
+                                        {{-- Tombol Delete --}}
+                                        <form action="{{ route('barangs.destroy', $item->id) }}" method="POST"
+                                            class="h-[22px]">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                                <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                    class="w-[22px] cursor-pointer">
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @elseif ($no % 2 == 0)
                             <tr class="bg-[#E9E9E9] border-b-[1px] border-[#CCCCCC]">
                                 <td class="py-2">{{ $no++ }}</td>
                                 <td class="py-2">{{ $item->nama_barang }}</td>
@@ -53,7 +92,7 @@
                                 <td class="py-2">
                                     @if ($item->foto)
                                         <a href="{{ asset('storage/' . $item->foto) }}" target="_blank"
-                                            class="text-blue-600 underline">
+                                            class="bg-[#fff494] px-3 py-1 rounded-lg text-sm">
                                             Lihat Foto
                                         </a>
                                     @else
@@ -80,6 +119,7 @@
                                         </form>
                                     </td>
                             </tr>
+                            @endif
                         @endforeach
                     </tbody>
                 </table>
