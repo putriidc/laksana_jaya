@@ -9,10 +9,12 @@ use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\SampinganController;
 use App\Http\Controllers\JurnalUmumController;
 use App\Http\Controllers\MasterDataController;
+use App\Http\Controllers\PerusahaanController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\KasbonContentController;
 use App\Http\Controllers\PiutangHutangController;
+use App\Http\Controllers\DataPerusahaanController;
 use App\Http\Controllers\PinjamanContentController;
 use App\Http\Controllers\PinjamanKaryawanController;
 
@@ -103,40 +105,53 @@ Route::middleware('auth')->group(function () {
     Route::resource('barang-keluar', BarangKeluarController::class);
     // transaksi barang
     // kepala gudang
-});
+
+    //kepala proyek
+    Route::resource('perusahaan', PerusahaanController::class);
+
+    Route::resource('data-perusahaan', DataPerusahaanController::class);
+    Route::prefix('perusahaan/{kode_perusahaan}')->group(function () {
+        Route::get('data-perusahaan/create', [DataPerusahaanController::class, 'create'])->name('data-perusahaan.create');
+    });
+    Route::post('data-perusahaan/{id}/progres', [DataPerusahaanController::class, 'storeProgres'])
+    ->name('data-perusahaan.progres.store');
+    Route::put('progres/{id}', [DataPerusahaanController::class, 'updateProgres'])
+    ->name('progres.update');
 
 
-// Kepala Proyek
-// dasboard
-Route::get('kepala-proyek/dashboard', function () {
-    return view('kepala-proyek.dashboard');
-});
-// dasboard
-// data proyek
-Route::get('kepala-proyek/data-proyek-gumilang', function () {
-    return view('kepala-proyek.data-proyek.cv-ars-gumilang');
-});
-Route::get('kepala-proyek/data-proyek-purnama', function () {
-    return view('kepala-proyek.data-proyek.cv-arn-purnama');
-});
-// data proyek
 
-// form edit data proyek
-Route::get('kepala-proyek/data-proyek/update', function () {
-    return view('kepala-proyek.data-proyek.form-edit.form-edit');
-});
-// form edit data proyek
+    // Kepala Proyek
+    // dasboard
+    Route::get('/kepala-proyek', function () {
+        return view('kepala-proyek.dashboard');
+    });
+    // dasboard
+    // data proyek
+    Route::get('kepala-proyek/data-proyek-gumilang', function () {
+        return view('kepala-proyek.data-proyek.cv-ars-gumilang');
+    });
+    Route::get('kepala-proyek/data-proyek-purnama', function () {
+        return view('kepala-proyek.data-proyek.cv-arn-purnama');
+    });
+    // data proyek
 
-// form tambah data proyek
-Route::get('kepala-proyek/data-proyek/create', function () {
-    return view('kepala-proyek.data-proyek.form-add.form-add');
-});
-// form tambah data proyek
+    // form edit data proyek
+    Route::get('kepala-proyek/data-proyek/update', function () {
+        return view('kepala-proyek.data-proyek.form-edit.form-edit');
+    });
+    // form edit data proyek
 
-// detail data proyek
-Route::get('kepala-proyek/data-proyek/detail', function () {
-    return view('kepala-proyek.data-proyek.detail.detail');
-});
-// detail data proyek
+    // form tambah data proyek
+    Route::get('kepala-proyek/data-proyek/create', function () {
+        return view('kepala-proyek.data-proyek.form-add.form-add');
+    });
+    // form tambah data proyek
 
-// Kepala Proyek
+    // detail data proyek
+    Route::get('kepala-proyek/data-proyek/detail', function () {
+        return view('kepala-proyek.data-proyek.detail.detail');
+    });
+    // detail data proyek
+
+    // Kepala Proyek
+});
