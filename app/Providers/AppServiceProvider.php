@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Perusahaan;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +21,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        View::composer('kepala-proyek.layout', function ($view) {
+        $view->with('sidebarPerusahaans', Perusahaan::whereNull('deleted_at')->get());
+    });
     }
 }
