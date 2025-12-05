@@ -57,7 +57,7 @@
                         </button>
                     </a>
                     <a
-                        href="{{ route('barang-masuk.index') }}"
+                        href="/pinjaman-karyawan"
                         class="cursor-pointer"
                     >
                         <button
@@ -66,12 +66,30 @@
                             <img
                                 src="{{
                                     asset(
-                                        'assets/navbar-kepala-gudang/convert-3d-cube.png'
+                                        'assets/navbar-kepala-gudang/wallet-minus.png'
                                     )
                                 }}"
                                 alt="convert 3d cube icon"
                             />
-                            <span>Transaksi Barang</span>
+                            <span>Pinjaman Karyawan</span>
+                        </button>
+                    </a>
+                    <a
+                        href="/pengajuan-eaf"
+                        class="cursor-pointer"
+                    >
+                        <button
+                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_15px_rgba(0,0,0,0.25)]"
+                        >
+                            <img
+                                src="{{
+                                    asset(
+                                        'assets/navbar-kepala-gudang/wallet-minus.png'
+                                    )
+                                }}"
+                                alt="convert 3d cube icon"
+                            />
+                            <span>Pengajuan EAF</span>
                         </button>
                     </a>
                     <div class="grow flex items-end">

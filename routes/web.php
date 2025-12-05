@@ -102,7 +102,40 @@ Route::middleware('auth')->group(function () {
     Route::resource('barang-masuk', BarangMasukController::class);
     Route::resource('barang-keluar', BarangKeluarController::class);
     // transaksi barang
+
+    // detail barang
+    Route::get('detail-barang', function () {
+        return view('kepala-gudang.detail-barang.index');
+    });
+    Route::get('pinjaman-karyawan', function () {
+        return view('kepala-gudang.pinjaman-karyawan.data');
+    });
+    Route::get('create-pinjaman', function () {
+        return view('kepala-gudang.pinjaman-karyawan.create-pinjaman');
+    });
+    Route::get('pengajuan-eaf', function () {
+        return view('kepala-gudang.pengajuan-eaf.data');
+    });
+    Route::get('create-pengajuan', function () {
+        return view('kepala-gudang.pengajuan-eaf.create-pengajuan');
+    });
     // kepala gudang
+
+    // admin
+    Route::get('/pinjaman-tukang', function () {
+        return view('admin.pinjaman-tukang.data');
+    });
+    Route::get('/create-tukang', function () {
+        return view('admin.pinjaman-tukang.create');
+    });
+    Route::get('/detail-pinjaman-tukang', function () {
+        return view('admin.pinjaman-tukang.detail.data');
+    });
+    Route::get('/pengembalian-tukang', function () {
+        return view('admin.pinjaman-tukang.detail.create');
+    });
+    // admin
+
 });
 
 

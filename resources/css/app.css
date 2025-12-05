@@ -13,3 +13,27 @@
 
     --font-poppins: "Poppins", ui-sans-serif, system-ui, sans-serif;
 }
+
+/* app.css */
+
+/* Target Scrollbar Global */
+::-webkit-scrollbar {
+    width: 4px; /* Atur lebar scrollbar di sini (misalnya 8px) */
+    height: 8px; /* Untuk scrollbar horizontal */
+}
+
+/* Target Scrollbar pada Elemen Tertentu */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* Target Handle (bagian yang diseret) */
+::-webkit-scrollbar-thumb {
+    background-color: #9ca3af; /* grey-600 */
+    border-radius: 10px;
+}
+
+/* Target Track (latar belakang scrollbar) */
+::-webkit-scrollbar-track {
+    background: #f3f4f6; /* gray-100 */
+}

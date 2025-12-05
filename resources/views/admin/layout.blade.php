@@ -10,7 +10,7 @@
     <body class="font-poppins">
         <section class="flex h-screen">
             <nav
-                class="flex flex-col bg-white h-screen w-[300px] py-5 px-5 shadow-[1px_0px_5px_rgba(0,0,0,0.25)] items-center relative z-[99]"
+                class="flex flex-col bg-white h-screen w-[350px] py-5 px-5 shadow-[1px_0px_5px_rgba(0,0,0,0.25)] items-center relative z-[99] overflow-y-auto overflow-x-hidden"
             >
                 {{-- Logo --}}
                 <div class="flex justify-between items-center gap-x-1 mb-8">
@@ -111,6 +111,23 @@
                             <span>Pinjaman Karyawan</span>
                         </button>
                     </a>
+                    <a
+                        href="/pinjaman-tukang"
+                        class="cursor-pointer"
+                    >
+                        <button
+                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
+                        >
+                            <img
+                                src="{{
+                                    asset('assets/navbar/receipt-item.png')
+                                }}"
+                                alt="receipt2 icon"
+                            />
+                            <span>Pinjaman Tukang</span>
+                        </button>
+                    </a>
+                    
                     {{--
                     <a href="" class="cursor-pointer">
                         <button
