@@ -12,6 +12,7 @@ use App\Http\Controllers\MasterDataController;
 use App\Http\Controllers\PerusahaanController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\BarangKeluarController;
+use App\Http\Controllers\barangReturController;
 use App\Http\Controllers\KasbonContentController;
 use App\Http\Controllers\PiutangHutangController;
 use App\Http\Controllers\DataPerusahaanController;
@@ -102,7 +103,16 @@ Route::middleware('auth')->group(function () {
 
     // transaksi barang
     Route::resource('barang-masuk', BarangMasukController::class);
+    Route::get('barang-masuk/create/{kode_barang}', [BarangMasukController::class, 'createForBarang'])
+    ->name('barang-masuk.create.for-barang');
+
     Route::resource('barang-keluar', BarangKeluarController::class);
+    Route::get('barang-keluar/create/{kode_barang}', [BarangKeluarController::class, 'createForBarang'])
+    ->name('barang-keluar.create.for-barang');
+
+    Route::resource('barang-retur', barangReturController::class);
+    Route::get('barang-retur/create/{kode_barang}', [barangReturController::class, 'createForBarang'])
+    ->name('barang-retur.create.for-barang');
     // transaksi barang
 
     // detail barang

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Barang;
 use App\Models\BarangMasuk;
+use App\Models\barangRetur;
 use App\Models\BarangKeluar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,15 +16,29 @@ class BarangMasukController extends Controller
     {
         $barangMasuks = BarangMasuk::with('barang')->whereNull('deleted_at')->get();
         $barangKeluars = BarangKeluar::with('barang')->whereNull('deleted_at')->get();
-        return view('kepala-gudang.transaksi-barang.data', compact('barangKeluars', 'barangMasuks'));
+        $barangReturs = barangRetur::with('barang')->whereNull('deleted_at')->get();
+        return view('kepala-gudang.transaksi-barang.data', compact('barangKeluars', 'barangMasuks', 'barangReturs'));
     }
 
-    public function create()
+    public function create($kode_barang)
     {
-        // Kirim semua barang aktif untuk option di form
-        $barangs = Barang::whereNull('deleted_at')->get();
-        return view('kepala-gudang.transaksi-barang.create-masuk', compact('barangs'));
+        // Ambil barang yang sedang dilihat
+        $barang = Barang::where('kode_barang', $kode_barang)
+            ->whereNull('deleted_at')
+            ->firstOrFail();
+
+        return view('kepala-gudang.detail-barang.transaksi-barang.create-masuk', compact('barang'));
     }
+
+    public function createForBarang($kode_barang)
+    {
+        $barang = Barang::where('kode_barang', $kode_barang)
+            ->whereNull('deleted_at')
+            ->firstOrFail();
+
+        return view('kepala-gudang.detail-barang.transaksi-barang.create-masuk', compact('barang'));
+    }
+
 
     public function store(Request $request)
     {
@@ -48,14 +64,14 @@ class BarangMasukController extends Controller
             $barang->increment('stok', $request->qty);
         }
 
-        return redirect()->route('barang-masuk.index')->with('success', 'Barang masuk berhasil ditambahkan');
+        return redirect()->route('barangs.show', $barang->id)->with('success', 'Barang masuk berhasil ditambahkan');
     }
 
     public function edit($id)
     {
         $barangMasuk = BarangMasuk::findOrFail($id);
         $barangs = Barang::whereNull('deleted_at')->get();
-        return view('kepala-gudang.transaksi-barang.edit-masuk', compact('barangMasuk', 'barangs'));
+        return view('kepala-gudang.detail-barang.transaksi-barang.edit-masuk', compact('barangMasuk', 'barangs'));
     }
 
     public function update(Request $request, $id)
@@ -86,7 +102,7 @@ class BarangMasukController extends Controller
             'qty'         => $request->qty,
         ]);
 
-        return redirect()->route('barang-masuk.index')->with('success', 'Data barang masuk berhasil diupdate');
+        return redirect()->route('barangs.show', $barang->id)->with('success', 'Data barang masuk berhasil diupdate');
     }
 
     public function destroy($id)
@@ -100,8 +116,8 @@ class BarangMasukController extends Controller
         }
 
         // Soft delete
-        $barangMasuk->update(['deleted_at' => now()]);
+        $barangMasuk->update(['deleted_at' => Carbon::now('Asia/Jakarta')]);
 
-        return redirect()->route('barang-masuk.index')->with('success', 'Barang masuk berhasil dihapus');
+        return redirect()->route('barangs.show', $barang->id)->with('success', 'Barang masuk berhasil dihapus');
     }
 }

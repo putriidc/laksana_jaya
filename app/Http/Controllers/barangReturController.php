@@ -4,33 +4,31 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Barang;
-use App\Models\BarangKeluar;
+use App\Models\barangRetur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class BarangKeluarController extends Controller
+class barangReturController extends Controller
 {
-    public function index()
+    public function create($kode_barang)
     {
-        // $barangMasuks = BarangMasuk::with('barang')->whereNull('deleted_at')->get();
-        // $barangKeluars = BarangKeluar::with('barang')->whereNull('deleted_at')->get();
-        // return view('kepala-gudang.transaksi-barang.data', compact('barangKeluars', 'barangMasuks'));
+        // Ambil barang yang sedang dilihat
+        $barang = Barang::where('kode_barang', $kode_barang)
+            ->whereNull('deleted_at')
+            ->firstOrFail();
+
+        return view('kepala-gudang.detail-barang.transaksi-barang.create-masuk', compact('barang'));
     }
 
-    public function create()
-    {
-        // Kirim semua barang aktif untuk option di form
-        $barangs = Barang::whereNull('deleted_at')->get();
-        return view('kepala-gudang.transaksi-barang.create-keluar', compact('barangs'));
-    }
     public function createForBarang($kode_barang)
     {
         $barang = Barang::where('kode_barang', $kode_barang)
             ->whereNull('deleted_at')
             ->firstOrFail();
 
-        return view('kepala-gudang.detail-barang.transaksi-barang.create-keluar', compact('barang'));
+        return view('kepala-gudang.detail-barang.transaksi-barang.create-retur', compact('barang'));
     }
+
 
     public function store(Request $request)
     {
@@ -42,7 +40,7 @@ class BarangKeluarController extends Controller
         ]);
 
         // Simpan barang masuk
-        $barangKeluar = BarangKeluar::create([
+        $barangMasuk = barangRetur::create([
             'kode_barang' => $request->kode_barang,
             'tanggal'     => $request->tanggal,
             'keterangan'  => $request->keterangan,
@@ -50,20 +48,20 @@ class BarangKeluarController extends Controller
             'created_by'  => Auth::check() ? Auth::user()->id : null,
         ]);
 
-        // kurang stok barang
+        // Tambah stok barang
         $barang = Barang::where('kode_barang', $request->kode_barang)->first();
         if ($barang) {
-            $barang->decrement('stok', $request->qty);
+            $barang->increment('stok', $request->qty);
         }
 
-        return redirect()->route('barangs.show', $barang->id)->with('success', 'Barang berhasil dikurangkan');
+        return redirect()->route('barangs.show', $barang->id)->with('success', 'Barang retur berhasil ditambahkan');
     }
 
     public function edit($id)
     {
-        $barangMasuk = BarangKeluar::findOrFail($id);
+        $barangMasuk = barangRetur::findOrFail($id);
         $barangs = Barang::whereNull('deleted_at')->get();
-        return view('kepala-gudang.detail-barang.transaksi-barang.edit-keluar', compact('barangMasuk', 'barangs'));
+        return view('kepala-gudang.detail-barang.transaksi-barang.edit-retur', compact('barangMasuk', 'barangs'));
     }
 
     public function update(Request $request, $id)
@@ -75,15 +73,15 @@ class BarangKeluarController extends Controller
             'qty'         => 'required|integer|min:1',
         ]);
 
-        $barangMasuk = BarangKeluar::findOrFail($id);
+        $barangMasuk = barangRetur::findOrFail($id);
         $barang = Barang::where('kode_barang', $barangMasuk->kode_barang)->first();
 
         if ($barang) {
             // 1. Kembalikan stok ke posisi sebelum transaksi ini
-            $barang->increment('stok', $barangMasuk->qty);
+            $barang->decrement('stok', $barangMasuk->qty);
 
-            // 2. kurangkan stok dengan qty baru
-            $barang->decrement('stok', $request->qty);
+            // 2. Tambahkan stok dengan qty baru
+            $barang->increment('stok', $request->qty);
         }
 
         // Update data barang masuk
@@ -94,22 +92,22 @@ class BarangKeluarController extends Controller
             'qty'         => $request->qty,
         ]);
 
-        return redirect()->route('barangs.show', $barang->id)->with('success', 'Data barang masuk berhasil diupdate');
+        return redirect()->route('barangs.show', $barang->id)->with('success', 'Data barang retur berhasil diupdate');
     }
 
     public function destroy($id)
     {
-        $barangMasuk = Barangkeluar::findOrFail($id);
+        $barangMasuk = barangRetur::findOrFail($id);
 
-        // tambah stok barang sesuai qty
+        // Kurangi stok barang sesuai qty
         $barang = Barang::where('kode_barang', $barangMasuk->kode_barang)->first();
         if ($barang) {
-            $barang->increment('stok', $barangMasuk->qty);
+            $barang->decrement('stok', $barangMasuk->qty);
         }
 
         // Soft delete
         $barangMasuk->update(['deleted_at' => Carbon::now('Asia/Jakarta')]);
 
-        return redirect()->route('barangs.show', $barang->id)->with('success', 'Barang masuk berhasil dihapus');
+        return redirect()->route('barangs.show', $barang->id)->with('success', 'Barang retur berhasil dihapus');
     }
 }

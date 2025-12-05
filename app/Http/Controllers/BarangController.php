@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Barang;
 use Carbon\Carbon;
+use App\Models\Barang;
+use App\Models\BarangMasuk;
+use App\Models\BarangKeluar;
+use App\Models\barangRetur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -41,8 +44,10 @@ class BarangController extends Controller
         if ($request->hasFile('foto')) {
             $fotoPath = $request->file('foto')->store('barang', 'public');
         }
+        $today = Carbon::now('Asia/Jakarta')->toDateString();
 
         Barang::create([
+            'tanggal'     => $today,
             'kode_barang' => $kodeBarang,
             'nama_barang' => $request->nama_barang,
             'kategori'    => $request->kategori,
@@ -59,7 +64,25 @@ class BarangController extends Controller
     public function show($id)
     {
         $barang = Barang::findOrFail($id);
-        return view('barang.show', compact('barang'));
+
+        // Ambil semua barang masuk untuk barang ini
+        $barangMasuks = BarangMasuk::with('barang')
+            ->where('kode_barang', $barang->kode_barang)
+            ->whereNull('deleted_at')
+            ->get();
+
+        // Ambil semua barang keluar untuk barang ini
+        $barangKeluars = BarangKeluar::with('barang')
+            ->where('kode_barang', $barang->kode_barang)
+            ->whereNull('deleted_at')
+            ->get();
+        $barangReturs = barangRetur::with('barang')
+            ->where('kode_barang', $barang->kode_barang)
+            ->whereNull('deleted_at')
+            ->get();
+
+
+        return view('kepala-gudang.detail-barang.index', compact('barang', 'barangMasuks', 'barangKeluars', 'barangReturs'));
     }
 
     public function edit($id)

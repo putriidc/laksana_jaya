@@ -11,19 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('barangs', function (Blueprint $table) {
+        Schema::create('barang_retures', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_barang')->unique()->nullable();
+            $table->string('kode_barang'); // relasi ke barang
             $table->date('tanggal')->nullable();
-            $table->string('nama_barang')->nullable();
-            $table->string('kategori')->nullable();
-            $table->text('spesifikasi')->nullable();
-            $table->string('satuan')->nullable();
-            $table->integer('stok')->default(0)->nullable();
-            $table->text('foto')->nullable();
+            $table->string('keterangan')->nullable();
+            $table->integer('qty')->default(0);
             $table->string('created_by')->nullable();
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
+
+            // foreign key ke barang
+            $table->foreign('kode_barang')->references('kode_barang')->on('barangs')->onDelete('cascade');
         });
     }
 
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('barangs');
+        Schema::dropIfExists('barang_retures');
     }
 };
