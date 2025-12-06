@@ -108,7 +108,7 @@
                 </table>
             </div>
         </section>
-        <script>
+        {{-- <script>
             // Modal Add menggunakan sweertalert2 untuk form tambah data
             const modalAdd = document.getElementById('modal-add');
             modalAdd.addEventListener('click', function() {
@@ -145,6 +145,6 @@
                 })
             });
 
-        </script>
+        </script> --}}
     </div>
 @endsection

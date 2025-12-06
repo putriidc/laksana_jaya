@@ -10,9 +10,16 @@
 </head>
 
 <body class="font-poppins">
+    @if(session('success'))
+    <div
+        id="flash-message"
+        data-type="success"
+        data-message="{{ session('success') }}"
+    ></div>
+    @endif
     <section class="flex h-screen">
         <nav
-            class="flex flex-col bg-white h-screen w-[300px] py-5 px-5 shadow-[1px_0px_8px_rgba(0,0,0,0.25)] items-center relative z-[99]">
+            class="flex flex-col bg-white h-screen w-[350px] py-5 px-5 shadow-[1px_0px_8px_rgba(0,0,0,0.25)] items-center relative z-[99] overflow-y-auto overflow-x-hidden">
             {{-- Logo --}}
             <div class="flex justify-between items-center gap-x-1 mb-8">
                 <img src="{{ asset('assets/ar4anSmallLogo.png') }}" alt="LOGO AR4N GROUP" class="w-[100px]" />
@@ -39,7 +46,7 @@
                         </button>
                     </a>
                 <label
-                    class="bg-linear-to-r from-[#DD4049] to-[#F9E52D] z-50 text-white flex justify-between items-center w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_15px_rgba(0,0,0,0.25)] link-clicked select-none">
+                    class="bg-linear-to-r from-[#DD4049] to-[#F9E52D] z-50 text-white flex justify-between items-center w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_15px_rgba(0,0,0,0.25)] select-none">
                     <div class="flex gap-x-5 items-center">
                         <img src="{{ asset('assets/navbar-kepala-gudang/home-2.png') }}"
                             alt="home icon" />
@@ -49,11 +56,10 @@
                         class="transition-all duration-300 ease-in-out" />
                     <input type="checkbox" id="dropdown-toggle-navbar" class="hidden" />
                 </label>
-                <div class="flex flex-col gap-y-3 -translate-y-[60px] transition-all duration-300 ease-in-out"
-                    id="dropdown-content">
+                <div class="flex flex-col gap-y-3" id="dropdown-content">
                     {{-- <a href="/kepala-proyek/data-proyek-gumilang" class="cursor-pointer">
                         <button
-                            class="bg-white text-[#353132] flex items-center justify-center w-[250px] py-3 px-5 cursor-pointer link-clicked">
+                            class="bg-white text-[#353132] flex items-center justify-center w-[250px] py-3 px-5 cursor-pointer">
                             <span>CV ARS GUMILANG</span>
                         </button>
                     </a>
@@ -61,37 +67,36 @@
                         class="cursor-pointer -translate-y-[60px] transition-all duration-300 ease-in-out"
                         id="inside-content">
                         <button
-                            class="bg-white text-[#353132] flex items-center justify-center w-[250px] py-3 px-5 cursor-pointer link-clicked">
+                            class="bg-white text-[#353132] flex items-center justify-center w-[250px] py-3 px-5 cursor-pointer">
                             <span>CV ARN PURNAMA</span>
                         </button>
                     </a> --}}
                     @forelse($sidebarPerusahaans as $perusahaan)
                         <a href="{{ route('perusahaan.show', $perusahaan->id) }}"
-                            class="cursor-pointer -translate-y-[60px] transition-all duration-300 ease-in-out"
-                        id="inside-content">
+                            class="cursor-pointer transition-all duration-300 ease-in-out">
                             <button
-                                class="bg-white text-[#353132] flex items-center justify-center w-[250px] py-3 px-5 cursor-pointer link-clicked">
+                                class="bg-white text-[#353132] flex items-center justify-center w-[250px] py-3 px-5 cursor-pointer rounded-lg">
                                 <span>{{ $perusahaan->nama_perusahaan }}</span>
                             </button>
                         </a>
                     @empty
-                        <div id="inside-content" class="text-sm text-red-600 px-4 py-2">Belum ada perusahaan terdaftar</div>
+                        <div class="text-sm text-red-600 px-4 py-2 transition-all duration-300 ease-in-out text-center italic">Belum ada perusahaan terdaftar</div>
                     @endforelse
                         <button id="modal-add"
-                            class="bg-white text-[#353132] flex items-center justify-center w-[250px] py-3 px-5 cursor-pointer link-clicked">
+                            class="bg-white text-[#353132] flex items-center justify-center w-[250px] py-3 px-5 cursor-pointer rounded-lg transition-all duration-300 ease-in-out">
                             <span>TAMBAH PERUSAHAAN +</span>
                         </button>
                 </div>
                 <a href="/kepala-proyek/data-proyek/create"
-                    class="cursor-pointer -translate-y-[120px] transition-all duration-300 ease-in-out outside-content">
+                    class="cursor-pointer outside-content transition-all duration-300 ease-in-out">
                     <button
-                        class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_15px_rgba(0,0,0,0.25)] link-clicked">
+                        class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_15px_rgba(0,0,0,0.25)]">
                         <img src="{{ asset('assets/navbar/chart.png') }}"
                             alt="cube scan icon" />
                         <span>Input Data Proyek</span>
                     </button>
                 </a>
-                <div class="grow flex items-end">
+                <div class="grow flex items-end pb-3">
                     <a href="/logout" class="cursor-pointer">
                         <button
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_15px_rgba(0,0,0,0.25)]">
@@ -159,26 +164,68 @@
 
         // dropdown navbar
         const dropdownToggle = document.getElementById("dropdown-toggle-navbar");
-        const dropdownContent = document.getElementById("dropdown-content");
-        const insideContent = document.getElementById("inside-content");
         const outsideContent = document.querySelectorAll(".outside-content");
+        const dropdownContent = document.getElementById("dropdown-content");
         const arrowNavbar = document.getElementById("arrow-navbar");
+        const modalAdd = document.getElementById('modal-add');
+
+        // pada awal load, sembunyikan semua children dari dropdowncontent
+        Array.from(dropdownContent.children).forEach((item, index) => {
+            item.classList.add(`-translate-y-[${(index + 1) * 60}px]`);
+        });
+        // lakukan pengulangan untuk semua outsidecontent, dengan jarak sesuai dengan jumlah children dari dropdowncontent
+        outsideContent.forEach((item, index) => {
+            item.classList.add(`-translate-y-[${dropdownContent.children.length * 60}px]`);
+        });
 
         dropdownToggle.addEventListener("click", () => {
-            dropdownContent.classList.toggle("-translate-y-[60px]");
-            insideContent.classList.toggle("-translate-y-[60px]");
             arrowNavbar.classList.toggle("-rotate-90");
-            // mengatur isi dari dropdowncontent
-            dropdownContent.children[0].classList.toggle(
-                "shadow-[0px_0px_15px_rgba(0,0,0,0.25)]"
-            );
-            dropdownContent.children[1].classList.toggle(
-                "shadow-[0px_0px_15px_rgba(0,0,0,0.25)]"
-            );
-            outsideContent.forEach((item) => {
-                item.classList.toggle("-translate-y-[120px]");
+            // lakukan pengulangan untuk semua children dari dropdowncontent
+            Array.from(dropdownContent.children).forEach((item, index) => {
+                item.classList.toggle(`-translate-y-[${(index + 1) * 60}px]`);
+                item.classList.toggle("shadow-[0px_0px_5px_rgba(0,0,0,0.25)]");
+            });
+            // lakukan pengulangan untuk semua outsidecontent, dengan jarak sesuai dengan jumlah children dari dropdowncontent
+            outsideContent.forEach((item, index) => {
+                item.classList.toggle(`-translate-y-[${dropdownContent.children.length * 60}px]`);
             });
         })
+
+        // modal tambah perusahaan
+         // Modal Add menggunakan sweertalert2 untuk form tambah data
+            modalAdd.addEventListener('click', function() {
+                Swal.fire({
+                    html: `
+                        <form action="{{ route('perusahaan.store') }}" method="POST" id="form-tambah">
+                            @csrf
+                            <div class="flex items-center">
+                                <div class="w-[280px]"></div>
+                                <h1 class="font-bold text-2xl mb-4 w-full text-left">Tambah Perusahaan</h1>
+                            </div>
+                            <div class="flex items-center">
+                                <label for="nama-perusahaan" class="w-[300px]">Nama Perusahaan</label>
+                                <input type="text" id="nama-perusahaan" name="nama_perusahaan" class="w-full outline-none bg-[#E9E9E9] rounded-lg px-4 py-2" required>
+                            </div>
+                        </form>
+                    `,
+                    showCancelButton: true,
+                    confirmButtonText: 'Simpan',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Kirim data ke server
+                        const form = document.getElementById('form-tambah');
+                        // Periksa apakah form ditemukan
+                        if (form) {
+                            // PENTING: Submit form secara paksa
+                            form.submit();
+                        } else {
+                            // Handle jika form tidak ditemukan (jarang terjadi)
+                            Swal.fire('Error!', 'Form tidak ditemukan.', 'error');
+                        }
+                    }
+                })
+            });
     </script>
 
 </body>
