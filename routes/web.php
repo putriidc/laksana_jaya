@@ -136,6 +136,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/pengembalian-tukang', function () {
         return view('admin.pinjaman-tukang.detail.create');
     });
+    Route::get('/form-eaf', function () {
+        return view('admin.form-eaf.form');
+    });
+    Route::get('/detail-eaf', function () {
+        return view('admin.form-eaf.detail');
+    });
     // admin
 
 
@@ -187,4 +193,16 @@ Route::middleware('auth')->group(function () {
     // detail data proyek
 
     // Kepala Proyek
+
+    // owner
+    Route::get('/owner-dashboard', function () {
+        return view('owner.dashboard');
+    });
+    Route::get('/owner-pinjaman', function () {
+        return view('owner.pinjaman-karyawan.data');
+    });
+    Route::get('/owner-pinjaman-create', function () {
+        return view('owner.pinjaman-karyawan.create');
+    });
+    // owner
 });

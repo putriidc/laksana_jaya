@@ -26,7 +26,7 @@
                 </div>
                 {{-- logo --}}
                 <div class="flex flex-col gap-y-3 h-full">
-                    <a href="/admin/dashboard" class="cursor-pointer">
+                    <a href="/owner-dashboard" class="cursor-pointer">
                         <button
                             class="bg-linear-to-r from-[#DD4049] to-[#F9E52D] text-white flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >
@@ -37,7 +37,7 @@
                             <span>Dashboard</span>
                         </button>
                     </a>
-                    <a href="/admin/master-data" class="cursor-pointer">
+                    <a href="/owner-pinjaman" class="cursor-pointer">
                         <button
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >
@@ -45,129 +45,9 @@
                                 src="{{ asset('assets/navbar/devices.png') }}"
                                 alt="devices icon"
                             />
-                            <span>Master Data</span>
-                        </button>
-                    </a>
-                    <a
-                        href="{{ route('jurnalUmums.index') }}"
-                        class="cursor-pointer"
-                    >
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{
-                                    asset('assets/navbar/receipt-item.png')
-                                }}"
-                                alt="receipt icon"
-                            />
-                            <span>Jurnal Umum</span>
-                        </button>
-                    </a>
-                    {{--
-                    <a href="" class="cursor-pointer">
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{
-                                    asset('assets/navbar/folder-open.png')
-                                }}"
-                                alt="folder icon"
-                            />
-                            <span>Buku Besar</span>
-                        </button>
-                    </a>
-                    --}}
-                    <a
-                        href="{{ route('sampingans.index') }}"
-                        class="cursor-pointer"
-                    >
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{
-                                    asset('assets/navbar/home-hashtag.png')
-                                }}"
-                                alt="home hashtag icon"
-                            />
-                            <span>Freelance</span>
-                        </button>
-                    </a>
-                    <a
-                        href="{{ route('pinjamanKaryawans.index') }}"
-                        class="cursor-pointer"
-                    >
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{
-                                    asset('assets/navbar/receipt-item.png')
-                                }}"
-                                alt="receipt2 icon"
-                            />
                             <span>Pinjaman Karyawan</span>
                         </button>
                     </a>
-                    <a
-                        href="/pinjaman-tukang"
-                        class="cursor-pointer"
-                    >
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{
-                                    asset('assets/navbar/receipt-item.png')
-                                }}"
-                                alt="receipt2 icon"
-                            />
-                            <span>Pinjaman Tukang</span>
-                        </button>
-                    </a>
-                    <a
-                        href="/form-eaf"
-                        class="cursor-pointer"
-                    >
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{
-                                    asset('assets/navbar/receipt.png')
-                                }}"
-                                alt="receipt2 icon"
-                            />
-                            <span>Form EAF</span>
-                        </button>
-                    </a>
-                    
-                    {{--
-                    <a href="" class="cursor-pointer">
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{ asset('assets/navbar/chart.png') }}"
-                                alt="chart icon"
-                            />
-                            <span>Laporan Laba Rugi</span>
-                        </button>
-                    </a>
-                    <a href="" class="cursor-pointer">
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{ asset('assets/navbar/chart.png') }}"
-                                alt="chart icon"
-                            />
-                            <span>Neraca</span>
-                        </button>
-                    </a>
-                    --}}
                     <div class="grow flex items-end">
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
