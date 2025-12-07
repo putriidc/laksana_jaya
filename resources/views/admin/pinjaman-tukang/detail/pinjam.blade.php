@@ -1,10 +1,11 @@
 @extends('admin.layout')
 @section('content')
     <div class="flex flex-col items-center">
-        <h1 class="text-2xl font-bold mb-6 w-full">Form Pengajuan Pinjaman</h1>
+        <h1 class="text-2xl font-bold mb-6 w-full">Form Pengajuan Pinjaman Tukang</h1>
         <div class="shadow-[0px_0px_15px_rgba(0,0,0,0.25)] w-full p-10 rounded-lg bg-white">
-            <form method="POST" action="{{ route('pinjamanTukangs.store') }}" class="flex flex-col gap-y-4">
+            <form method="POST" action="{{ route('tukangContents.store') }}" class="flex flex-col gap-y-4">
                 @csrf
+                <input type="hidden" name="kode_karyawan" value="{{ $pinjaman->id }}">
                 <div class="flex items-center">
                     <label for="" class="w-[200px] font-medium">Tanggal Pengajuan</label>
                     <input value="{{ $today }}" readonly type="date" data-flatpickr
@@ -12,35 +13,25 @@
                         class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
                 </div>
                 <div class="flex items-center">
-                    <label for="" class="w-[200px] font-medium">Nama Tukang</label>
-                    <input type="text" name="nama_tukang" id=""
-                        class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
-                </div>
-                {{-- <div class="flex items-center">
                     <label for="" class="w-[200px] font-medium">Keterangan</label>
-                    <input type="text" name="keterangan" id=""
+                    <input type="text" name="kontrak" id=""
                         class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
-                </div> --}}
-                <div class="flex items-center">
-                    <label for="" class="w-[200px] font-medium">Nama Akun</label>
-                    <input value="Piutang Mandor/Tukang" readonly type="text" name="nama_akun" id=""
-                        class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
-                </div>
-                <div class="flex items-center">
-                    <label for="" class="w-[200px] font-medium">Nama Proyek</label>
-                    <select name="nama_proyek" id=""
-                        class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2 appearance-none cursor-pointer">
-                        <option selected>Pilih Nama Proyek</option>
-                        @foreach ($karyawans as $karyawan)
-                            <option value="{{ $karyawan->nama_proyek }}">{{ $karyawan->nama_proyek }}</option>
-                        @endforeach
-                    </select>
                 </div>
                 {{-- <div class="flex items-center">
-                    <label for="" class="w-[200px] font-medium">Nominal</label>
+                    <label for="" class="w-[200px] font-medium">Nama Akun</label>
                     <input type="text" name="keterangan" id=""
                         class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
                 </div> --}}
+                {{-- <div class="flex items-center">
+                    <label for="" class="w-[200px] font-medium">Nama Proyek</label>
+                    <input type="text" name="keterangan" id=""
+                        class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
+                </div> --}}
+                <div class="flex items-center">
+                    <label for="" class="w-[200px] font-medium">Nominal</label>
+                    <input type="number" name="bayar" id=""
+                        class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
+                </div>
                 <div class="flex mt-4">
                     <div class="w-[200px]"></div>
                     <div class="w-full flex gap-x-2">

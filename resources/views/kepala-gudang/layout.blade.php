@@ -57,7 +57,7 @@
                         </button>
                     </a>
                     <a
-                        href="/pinjaman-karyawan"
+                        href="{{ route('accspv.index') }}"
                         class="cursor-pointer"
                     >
                         <button
@@ -71,7 +71,7 @@
                                 }}"
                                 alt="convert 3d cube icon"
                             />
-                            <span>Pinjaman Karyawan</span>
+                            <span>Pinjaman Tukang</span>
                         </button>
                     </a>
                     <a

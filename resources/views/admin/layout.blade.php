@@ -112,7 +112,7 @@
                         </button>
                     </a>
                     <a
-                        href="/pinjaman-tukang"
+                        href="{{ route('pinjamanTukangs.index') }}"
                         class="cursor-pointer"
                     >
                         <button
@@ -127,7 +127,7 @@
                             <span>Pinjaman Tukang</span>
                         </button>
                     </a>
-                    
+
                     {{--
                     <a href="" class="cursor-pointer">
                         <button
