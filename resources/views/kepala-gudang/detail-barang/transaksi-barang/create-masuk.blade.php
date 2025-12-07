@@ -11,25 +11,14 @@
                         class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
                 </div>
                 <div class="flex items-center">
-                    <label for="" class="w-[180px] font-medium">Nama Barang</label>
-                    <select name="kode_barang" id=""
-                        class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2 appearance-none cursor-pointer">
-                        @if ($barangs->isEmpty())
-                            <option value="" disabled selected>
-                                Belum ada barang, harap masukkan atau buat barang terlebih dahulu.
-                            </option>
-                        @else
-                        <option value="" disabled selected>
-                                - Pilih Barang -
-                            </option>
-                            @foreach ($barangs as $barang)
-                                <option value="{{ $barang->kode_barang }}">
-                                    {{ $barang->nama_barang }}
-                                </option>
-                            @endforeach
-                        @endif
-                    </select>
+                    <label class="w-[180px] font-medium">Nama Barang</label>
+                    <input type="text" value="{{ $barang->nama_barang }}"
+                        class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2" readonly />
+
+                    <!-- Hidden input untuk kirim kode_barang -->
+                    <input type="hidden" name="kode_barang" value="{{ $barang->kode_barang }}">
                 </div>
+
                 <div class="flex items-center">
                     <label for="" class="w-[180px] font-medium">Keterangan</label>
                     <input type="text" name="keterangan" id=""

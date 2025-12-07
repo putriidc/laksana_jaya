@@ -19,6 +19,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             PerusahaanSeeder::class,
         ]);
+        $this->call([
+            AssetSeeder::class,
+        ]);
         // User::factory(10)->create();
 
         // User::factory()->create([

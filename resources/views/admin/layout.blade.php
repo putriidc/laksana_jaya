@@ -112,7 +112,7 @@
                         </button>
                     </a>
                     <a
-                        href="/pinjaman-tukang"
+                        href="{{ route('pinjamanTukangs.index') }}"
                         class="cursor-pointer"
                     >
                         <button
@@ -143,7 +143,7 @@
                             <span>Form EAF</span>
                         </button>
                     </a>
-                    
+
                     {{--
                     <a href="" class="cursor-pointer">
                         <button

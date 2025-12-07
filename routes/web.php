@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccTukangSpvController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AssetController;
 use App\Http\Controllers\LoginController;
@@ -12,11 +13,14 @@ use App\Http\Controllers\MasterDataController;
 use App\Http\Controllers\PerusahaanController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\BarangKeluarController;
+use App\Http\Controllers\barangReturController;
 use App\Http\Controllers\KasbonContentController;
 use App\Http\Controllers\PiutangHutangController;
 use App\Http\Controllers\DataPerusahaanController;
 use App\Http\Controllers\PinjamanContentController;
 use App\Http\Controllers\PinjamanKaryawanController;
+use App\Http\Controllers\pinjamanTukangController;
+use App\Http\Controllers\TukangContentController;
 
 Route::get('/', function () {
     return view('login');
@@ -88,21 +92,23 @@ Route::middleware('auth')->group(function () {
     });
     // dasboard
 
-    // Input data barang
-
-    // Input data barang
-
-    // output data barang
-
-    // output data barang
-
     // data barang
     Route::resource('barangs', BarangController::class);
     // data barang
+    Route::resource('accspv', AccTukangSpvController::class);
 
     // transaksi barang
     Route::resource('barang-masuk', BarangMasukController::class);
+    Route::get('barang-masuk/create/{kode_barang}', [BarangMasukController::class, 'createForBarang'])
+    ->name('barang-masuk.create.for-barang');
+
     Route::resource('barang-keluar', BarangKeluarController::class);
+    Route::get('barang-keluar/create/{kode_barang}', [BarangKeluarController::class, 'createForBarang'])
+    ->name('barang-keluar.create.for-barang');
+
+    Route::resource('barang-retur', barangReturController::class);
+    Route::get('barang-retur/create/{kode_barang}', [barangReturController::class, 'createForBarang'])
+    ->name('barang-retur.create.for-barang');
     // transaksi barang
 
     // detail barang
@@ -124,6 +130,22 @@ Route::middleware('auth')->group(function () {
     // kepala gudang
 
     // admin
+    Route::resource('pinjamanTukangs', pinjamanTukangController::class);
+
+    Route::resource('tukangContents', TukangContentController::class);
+    Route::get('tukangContents/pinjam/{id}', [TukangContentController::class, 'pinjam'])
+        ->name('tukangContents.pinjam');
+    Route::get('tukangContents/bayar/{id}', [TukangContentController::class, 'bayar'])
+        ->name('tukangContents.bayar');
+    Route::get('tukangContents/editBayar/{id}', [TukangContentController::class, 'editBayar'])
+        ->name('tukangContents.editBayar');
+    Route::delete('tukangContents/destroyBayar/{id}', [TukangContentController::class, 'destroyBayar'])
+        ->name('tukangContents.destroyBayar');
+    Route::post('tukangContents/storeBayar', [TukangContentController::class, 'storeBayar'])
+        ->name('tukangContents.storeBayar');
+    Route::put('tukangContents/updateBayar/{id}', [TukangContentController::class, 'updateBayar'])
+        ->name('tukangContents.updateBayar');
+
     Route::get('/pinjaman-tukang', function () {
         return view('admin.pinjaman-tukang.data');
     });
