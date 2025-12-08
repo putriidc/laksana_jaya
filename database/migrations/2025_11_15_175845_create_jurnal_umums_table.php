@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('jurnal_umums', function (Blueprint $table) {
             $table->id();
             $table->string('id_content')->nullable();
+            $table->string('id_pinjam')->nullable();
+            $table->string('id_kasbon')->nullable();
             $table->string('kode_jurnal');
             $table->date('tanggal');
             $table->string('keterangan')->nullable();

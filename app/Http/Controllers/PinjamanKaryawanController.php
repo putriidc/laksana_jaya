@@ -15,7 +15,25 @@ class PinjamanKaryawanController extends Controller
     public function index()
     {
         $pinjamans = PinjamanKaryawan::with('karyawan')->active()->get();
-        return view('admin.pinjaman-karyawan.data', compact('pinjamans'));
+        $pinjams = PinjamanContent::with('karyawanPinjaman')
+            ->where('jenis', 'pinjam')
+            ->whereNull('deleted_at')
+            ->where(function ($q) {
+                $q->where('setuju', false)
+                    ->orWhereNull('setuju');
+            })
+            ->get();
+
+        $kasbons = KasbonContent::with('karyawanKasbon')
+            ->where('jenis', 'pinjam')
+            ->whereNull('deleted_at')
+            ->where(function ($q) {
+                $q->where('setuju', false)
+                    ->orWhereNull('setuju');
+            })
+            ->get();
+
+        return view('admin.pinjaman-karyawan.data', compact('pinjamans', 'pinjams', 'kasbons'));
     }
     public function show($id)
     {
@@ -23,10 +41,15 @@ class PinjamanKaryawanController extends Controller
         $pinjaman = PinjamanKaryawan::with('karyawan')->active()->findOrFail($id);
 
         // Ambil semua transaksi pinjaman dan kasbon berdasarkan kode_karyawan
-        $pinjamanContents = PinjamanContent::where('kode_karyawan', $pinjaman->kode_karyawan)->active()->get();
-        $kasbonContents   = KasbonContent::where('kode_karyawan', $pinjaman->kode_karyawan)->active()->get();
+        $pinjamanContents = PinjamanContent::where('kode_karyawan', $pinjaman->kode_karyawan)
+            ->where('setuju', true)
+            ->active()->get();
+        $kasbonContents   = KasbonContent::where('kode_karyawan', $pinjaman->kode_karyawan)
+            ->where('setuju', true)
+            ->active()->get();
+        $today = Carbon::now('Asia/Jakarta')->toDateString();
 
-        return view('admin.pinjaman-karyawan.detail.data', compact('pinjaman', 'pinjamanContents', 'kasbonContents'));
+        return view('admin.pinjaman-karyawan.detail.data', compact('pinjaman', 'pinjamanContents', 'kasbonContents', 'today'));
     }
 
     public function create()
@@ -72,9 +95,6 @@ class PinjamanKaryawanController extends Controller
         $pinjaman->update([
             'tanggal'       => $request->tanggal,
             'kode_karyawan' => $request->kode_karyawan,
-            // tetap 0, nanti ditambah/dikurangi lewat transaksi
-            'total_pinjam'  => 0,
-            'total_kasbon'  => 0,
         ]);
         return redirect()->route('pinjamanKaryawans.index')->with('success', 'Data pinjaman berhasil diupdate');
     }

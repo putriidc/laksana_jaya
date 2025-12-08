@@ -1,6 +1,71 @@
 @extends('admin.layout')
 @section('content')
     <div>
+        <div class="flex flex-col mb-8">
+            <h1 class="font-bold text-2xl">Pengajuan Pinjaman / Kasbon</h1>
+            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 mt-4">
+                <table class="table-auto text-center text-sm w-full">
+                    <thead class="border-b-2 border-[#CCCCCC]">
+                        <th class="py-2 w-[10%]">Tgl Pengajuan</th>
+                        <th class="py-2 w-[15%]">Karyawan</th>
+                        <th class="py-2 w-[15%]">Kontrak</th>
+                        <th class="py-2 w-[15%]">Ket Owner</th>
+                        <th class="py-2 w-[20%]">Jumlah Pinjaman</th>
+                        <th class="py-2 w-[10%]">Status</th>
+                    </thead>
+                    <tbody>
+                        <tr class="bg-gray-200">
+                                <td colspan="5" class="py-2 font-semibold text-left px-4">Pinjaman Karyawan</td>
+                            </tr>
+                        @foreach ($pinjams as $item)
+                            <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
+                                <td class="py-2">{{ $item->tanggal }}</td>
+                                <td class="py-2">{{ $item->karyawanPinjaman->karyawan->nama }}</td>
+                                <td class="py-2">{{ $item->kontrak }}</td>
+                                <td class="py-2">{{ $item->ket_owner }}</td>
+                                <td class="py-2">{{ 'RP. ' . number_format($item->bayar, 0, ',', '.') }}</td>
+                                <td class="py-2 flex justify-center items-center gap-x-2">
+                                    {{-- Status SPV --}}
+                                    @if ($item->menunggu == true)
+                                        <span class="bg-[#999999] px-4 py-2 rounded-lg cursor-pointer text-white/60">Pending
+                                        </span>
+                                    @elseif ($item->tolak == true)
+                                        <span class="bg-[#DD4049] px-4 py-2 rounded-lg cursor-pointer text-white">Decline
+                                        </span>
+                                    @elseif ($item->setuju == true)
+                                        <span class="bg-[#8CE987] px-4 py-2 rounded-lg cursor-pointer">Accept</span>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                        <tr class="bg-gray-200">
+                                <td colspan="5" class="py-2 font-semibold text-left px-4">Kasbon Karyawan</td>
+                            </tr>
+                        @foreach ($kasbons as $item)
+                            <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
+                                <td class="py-2">{{ $item->tanggal }}</td>
+                                <td class="py-2">{{ $item->karyawanKasbon->karyawan->nama }}</td>
+                                <td class="py-2">{{ $item->kontrak }}</td>
+                                <td class="py-2">{{ $item->ket_owner }}</td>
+                                <td class="py-2">{{ 'RP. ' . number_format($item->bayar, 0, ',', '.') }}</td>
+                                <td class="py-2 flex justify-center items-center gap-x-2">
+                                    {{-- Status --}}
+                                    @if ($item->menunggu == true)
+                                        <span class="bg-[#999999] px-4 py-2 rounded-lg cursor-pointer text-white/60">Pending
+                                        </span>
+                                    @elseif ($item->tolak == true)
+                                        <span class="bg-[#DD4049] px-4 py-2 rounded-lg cursor-pointer text-white">Decline
+                                        </span>
+                                    @elseif ($item->setuju == true)
+                                        <span class="bg-[#8CE987] px-4 py-2 rounded-lg cursor-pointer">Accept</span>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
         <h1 class="font-bold text-2xl mb-6">Pinjaman Karyawan</h1>
         <section>
             <div class="flex items-center pb-4 w-full justify-between">
@@ -49,12 +114,17 @@
                                 <td class="py-2">{{ 'RP. ' . number_format($pinjaman->total_kasbon, 0, ',', '.') }}</td>
                                 <td class="flex justify-center items-center gap-x-2 py-2 pr-[150px]">
                                     {{-- Tombol Edit --}}
-                                    <a href="{{ route('pinjamanKaryawans.edit', $pinjaman->id) }}"
+                                    {{-- <a href="{{ route('pinjamanKaryawans.edit', $pinjaman->id) }}"
                                         class="btn btn-sm btn-primary">
                                         <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
                                             class="w-[20px] cursor-pointer">
-                                    </a>
+                                    </a> --}}
 
+                                    {{-- Tombol Detail --}}
+                                    <a href="{{ route('pinjamanKaryawans.show', $pinjaman->id) }}"
+                                        class="bg-green-500 text-black px-3 py-1 rounded-md text-bold hover:bg-green-600">
+                                        Detail
+                                    </a>
                                     <span class="border-black border-l-[1px] h-[22px]"></span>
 
                                     {{-- Tombol Delete --}}
@@ -67,12 +137,8 @@
                                                 class="w-[20px] cursor-pointer">
                                         </button>
                                     </form>
-                                    <span class="border-black border-l-[1px] h-[22px]"></span>
-                                    {{-- Tombol Detail --}}
-                                    <a href="{{ route('pinjamanKaryawans.show', $pinjaman->id) }}"
-                                        class="bg-green-500 text-black px-3 py-1 rounded-md text-bold hover:bg-green-600">
-                                        Detail
-                                    </a>
+
+
                                 </td>
                             </tr>
                         @endforeach

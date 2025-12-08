@@ -10,6 +10,7 @@ class KasbonContent extends Model
 
     protected $fillable = [
         'kode_karyawan',
+        'ket_owner',
         'kontrak',
         'tanggal',
         'sisa',
