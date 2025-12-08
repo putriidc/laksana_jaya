@@ -6,10 +6,10 @@
                 <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
                     <table class="table-auto text-center text-sm w-full">
                         <thead class="border-b-2 border-[#CCCCCC]">
-                            <th class="py-2 w-[5%]">No</th>
                             <th class="py-2 w-[10%]">Tgl Pengajuan</th>
-                            <th class="py-2 w-[15%]">Nama Karyawan</th>
-                            <th class="py-2 w-[15%]">Status</th>
+                            <th class="py-2 w-[15%]">Nama Tukang</th>
+                            <th class="py-2 w-[15%]">Proyek</th>
+                            <th class="py-2 w-[15%]">Kontrak</th>
                             <th class="py-2 w-[20%]">Jumlah Pinjaman</th>
                             <th class="py-2 w-[10%]">Action</th>
                         </thead>
@@ -19,9 +19,9 @@
                             @endphp
                             @foreach ($contents as $item)
                                 <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
-                                    <td class="py-2">{{ $noacca++ }}</td>
                                     <td class="py-2">{{ $item->tanggal }}</td>
                                     <td class="py-2">{{ $item->kasbon->nama_tukang }}</td>
+                                    <td class="py-2">{{ $item->kasbon->nama_proyek }}</td>
                                     <td class="py-2">{{ $item->kontrak }}</td>
                                     <td class="py-2">{{ 'RP. ' . number_format($item->bayar, 0, ',', '.') }}</td>
                                     <td class="py-2 flex justify-center items-center">
@@ -33,7 +33,8 @@
 
                                         <span>&nbsp; &nbsp;</span>
 
-                                        <button class="bg-[#DD4049] px-4 py-2 rounded-lg cursor-pointer text-white"
+                                        <button data-id="{{ $item->id }}"
+                                            class="bg-[#DD4049] px-4 py-2 rounded-lg cursor-pointer text-white decline-btn"
                                             id="modal-decline">Decline</button>
                                     </td>
                                 </tr>
@@ -52,9 +53,10 @@
                 <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
                     <table class="table-auto text-center text-sm w-full">
                         <thead class="border-b-2 border-[#CCCCCC]">
-                            <th class="py-2 w-[5%]">No</th>
                             <th class="py-2 w-[10%]">Tgl Pengajuan</th>
                             <th class="py-2 w-[15%]">Nama Tukang</th>
+                            <th class="py-2 w-[15%]">Proyek</th>
+                            <th class="py-2 w-[15%]">Kontrak</th>
                             <th class="py-2 w-[15%]">Status</th>
                             <th class="py-2 w-[20%]">Jumlah Pinjaman</th>
                             <th class="py-2 w-[10%]">Action</th>
@@ -65,10 +67,11 @@
                             @endphp
                             @foreach ($pinjamans as $item)
                                 <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
-                                    <td class="py-2">{{ $noacc++ }}</td>
                                     <td class="py-2">{{ $item->tanggal }}</td>
                                     <td class="py-2">{{ $item->kasbon->nama_tukang }}</td>
+                                    <td class="py-2">{{ $item->kasbon->nama_proyek }}</td>
                                     <td class="py-2">{{ $item->kontrak }}</td>
+                                    <td class="py-2">{{ $item->ket_spv }}</td>
                                     <td class="py-2">{{ 'RP. ' . number_format($item->bayar, 0, ',', '.') }}</td>
                                     <td class="py-2 flex justify-center items-center gap-x-2">
                                         {{-- Status SPV --}}
@@ -91,22 +94,49 @@
                 </div>
             </section>
             <script>
-                const modalDecline = document.getElementById('modal-decline');
-                modalDecline.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    Swal.fire({
-                        html: `
-                        <form action="" method="POST" id="form-tambah" class="flex gap-x-4 w-full justify-center items-center h-[100px]">
-                            @csrf
-                            <a href="/create-pinjaman" class="bg-[#8CE987] px-4 py-2 rounded-lg cursor-pointer">Ajukan Nominal Baru</a>
-                            <button type="submit" class="bg-[#DD4049] px-4 py-2 rounded-lg cursor-pointer">Tolak Pengajuan</button>
-                        </form>
-                    `,
-                        showCancelButton: false,
-                        showCloseButton: false,
-                        showConfirmButton: false,
+                document.querySelectorAll('.decline-btn').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const id = this.dataset.id; // ambil ID dari data-id
 
-                    })
+                        Swal.fire({
+                            title: 'Tolak Pengajuan',
+                            input: 'textarea',
+                            inputPlaceholder: 'Tuliskan alasan penolakan...',
+                            showCancelButton: true,
+                            confirmButtonText: 'Tolak',
+                            cancelButtonText: 'Batal',
+                            confirmButtonColor: '#DD4049',
+                            preConfirm: (ket_spv) => {
+                                if (!ket_spv) {
+                                    Swal.showValidationMessage('Alasan wajib diisi');
+                                }
+                                return ket_spv;
+                            }
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                fetch(`/pinjaman/${id}/decline`, {
+                                        method: "POST",
+                                        headers: {
+                                            "Content-Type": "application/json",
+                                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                                        },
+                                        body: JSON.stringify({
+                                            status_spv: "decline",
+                                            ket_spv: result.value
+                                        })
+                                    })
+                                    .then(res => res.json())
+                                    .then(data => {
+                                        Swal.fire('Ditolak!', 'Pengajuan berhasil ditolak.', 'success');
+                                        location.reload();
+                                    })
+                                    .catch(err => {
+                                        Swal.fire('Error', 'Terjadi kesalahan.', 'error');
+                                    });
+                            }
+                        });
+                    });
                 });
             </script>
         </div>

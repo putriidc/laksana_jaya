@@ -15,23 +15,22 @@
             <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 mt-4">
                 <table class="table-auto text-center text-sm w-full">
                     <thead class="border-b-2 border-[#CCCCCC]">
-                        <th class="py-2 w-[5%]">No</th>
                         <th class="py-2 w-[10%]">Tgl Pengajuan</th>
-                        <th class="py-2 w-[15%]">Nama Tukang</th>
-                        <th class="py-2 w-[15%]">Status</th>
+                        <th class="py-2 w-[15%]">Tukang</th>
+                        <th class="py-2 w-[15%]">Proyek</th>
+                        <th class="py-2 w-[15%]">Ket. SPV</th>
+                        <th class="py-2 w-[15%]">Ket. Owner</th>
                         <th class="py-2 w-[20%]">Jumlah Pinjaman</th>
-                        <th class="py-2 w-[10%]">Action</th>
+                        <th class="py-2 w-[10%]">Status</th>
                     </thead>
                     <tbody>
-                        @php
-                            $noacc = 1;
-                        @endphp
                         @foreach ($contents as $item)
                             <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
-                                <td class="py-2">{{ $noacc++ }}</td>
                                 <td class="py-2">{{ $item->tanggal }}</td>
                                 <td class="py-2">{{ $item->kasbon->nama_tukang }}</td>
-                                <td class="py-2">{{ $item->kontrak }}</td>
+                                <td class="py-2">{{ $item->kasbon->nama_proyek }}</td>
+                                <td class="py-2">{{ $item->ket_spv }}</td>
+                                <td class="py-2">{{ $item->ket_owner }}</td>
                                 <td class="py-2">{{ 'RP. ' . number_format($item->bayar, 0, ',', '.') }}</td>
                                 <td class="py-2 flex justify-center items-center gap-x-2">
                                     {{-- Status SPV --}}

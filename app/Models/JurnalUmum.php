@@ -9,6 +9,7 @@ class JurnalUmum extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id_content',
         'kode_jurnal',
         'tanggal',
         'keterangan',

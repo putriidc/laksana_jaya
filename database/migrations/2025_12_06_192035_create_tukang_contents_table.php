@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->date('tanggal');
             $table->string('kode_kasbon'); // relasi ke kasbon_tukangs
+            $table->string('ket_spv')->nullable();
+            $table->string('ket_owner')->nullable();
             $table->string('status_spv')->nullable();
             $table->string('status_owner')->nullable();
             $table->string('jenis')->nullable();

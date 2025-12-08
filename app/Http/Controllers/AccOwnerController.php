@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\TukangContent;
 use Illuminate\Support\Facades\Auth;
 
-class AccTukangSpvController extends Controller
+class AccOwnerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,9 +22,9 @@ class AccTukangSpvController extends Controller
             ->get();
         $contents = TukangContent::with('kasbon')->where('jenis', 'pinjam')
             ->whereNull('deleted_at')
-            ->where('status_spv', 'pending')
+            ->where('status_owner', 'pending')
             ->get();
-        return view('kepala-gudang.pinjaman-karyawan.data', compact('pinjamans', 'contents'));
+        return view('owner.pinjaman-karyawan.data', compact('pinjamans', 'contents'));
     }
 
     /**
@@ -46,14 +46,14 @@ class AccTukangSpvController extends Controller
 
         $kasbonContent = TukangContent::active()->findOrFail($request->id_tukang_content);
 
-        // Update status SPV dulu
+        // Update status owner dulu
         $kasbonContent->update([
-            'status_spv' => 'accept',
-            'ket_spv' => 'accept',
+            'status_owner' => 'accept',
+            'ket_owner' => 'accept',
         ]);
 
-        // Cek apakah Owner juga sudah accept
-        if ($kasbonContent->status_owner === 'accept') {
+        // Cek apakah spv juga sudah accept
+        if ($kasbonContent->status_spv === 'accept') {
             $pinjamanKaryawan = KasbonTukang::active()
                 ->where('kode_kasbon', $kasbonContent->kode_kasbon)
                 ->firstOrFail();
@@ -89,19 +89,17 @@ class AccTukangSpvController extends Controller
             'kredit'        => 0,
             'created_by'    => Auth::check() ? Auth::user()->id : null,
         ]);
-
         }
 
-        return redirect()->route('accspv.index')
-            ->with('success', 'Status SPV berhasil disetujui');
+        return redirect()->route('accowner.index')
+            ->with('success', 'Status Owner berhasil disetujui');
     }
-
     public function decline(Request $request, $id)
     {
         $pinjaman = TukangContent::findOrFail($id);
 
-        $pinjaman->status_spv = 'decline';
-        $pinjaman->ket_spv = $request->ket_spv; // ambil alasan dari input
+        $pinjaman->status_owner = 'decline';
+        $pinjaman->ket_owner = $request->ket_owner; // ambil alasan dari input
         $pinjaman->save();
 
         return response()->json([
@@ -109,9 +107,6 @@ class AccTukangSpvController extends Controller
             'message' => 'Pengajuan berhasil ditolak'
         ]);
     }
-
-
-
     /**
      * Display the specified resource.
      */
