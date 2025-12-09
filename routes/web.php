@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccOwnerController;
 use App\Http\Controllers\AccTukangSpvController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AssetController;
@@ -96,6 +97,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('barangs', BarangController::class);
     // data barang
     Route::resource('accspv', AccTukangSpvController::class);
+    Route::post('/pinjaman/{id}/decline', [AccTukangSpvController::class, 'decline'])
+     ->name('pinjaman.decline');
 
     // transaksi barang
     Route::resource('barang-masuk', BarangMasukController::class);
@@ -226,6 +229,25 @@ Route::middleware('auth')->group(function () {
     // Kepala Proyek
 
     // owner
+    Route::resource('accowner', AccOwnerController::class);
+    Route::post('/pinjamanO/{id}/decline', [AccOwnerController::class, 'decline'])
+     ->name('pinjaman.decline');
+    Route::post('/pinjamanKR/{id}/decline', [AccOwnerController::class, 'declineKR'])
+     ->name('pinjaman.decline');
+    Route::post('/pinjamanKS/{id}/decline', [AccOwnerController::class, 'declineKS'])
+     ->name('pinjaman.decline');
+    Route::post('accowner/storePinjam/{id}', [AccOwnerController::class, 'storePinjam'])
+     ->name('accowner.storePinjam');
+    Route::post('accowner/storeKasbon/{id}', [AccOwnerController::class, 'storeKasbon'])
+     ->name('accowner.storeKasbon');
+     Route::get('/create-pinjaman/{id}/edit', [AccOwnerController::class, 'edit'])
+     ->name('create-pinjaman.edit');
+     Route::get('/create-kasbon/{id}/edit', [AccOwnerController::class, 'editKasbon'])
+     ->name('create-kasbon.edit');
+     Route::put('/accowner/{id}/updateKasbon', [AccOwnerController::class, 'updateKasbon'])
+    ->name('accowner.updateKasbon');
+
+
     Route::get('/owner-dashboard', function () {
         return view('owner.dashboard');
     });

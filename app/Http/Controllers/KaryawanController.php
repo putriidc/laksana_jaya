@@ -35,7 +35,6 @@ class KaryawanController extends Controller
             'kode_karyawan' => 'K-' . uniqid(), // generate kode unik
             'kode_akun'     => $kodeAkun,
             'nama'      => $request->nama,
-            'akun_header'   => $request->akun_header,
             'alamat'        => $request->alamat,
             'no_hp'         => $request->no_hp,
             'email'         => $request->email,

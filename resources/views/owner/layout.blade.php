@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <title>Admin</title>
+        <title>{{ Auth::user()->role }}</title>
         @vite('resources/css/app.css') @vite('resources/js/app.js')
     </head>
     <body class="font-poppins">
@@ -37,7 +37,7 @@
                             <span>Dashboard</span>
                         </button>
                     </a>
-                    <a href="/owner-pinjaman" class="cursor-pointer">
+                    <a href="{{ route('accowner.index') }}" class="cursor-pointer">
                         <button
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >

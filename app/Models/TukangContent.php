@@ -13,6 +13,8 @@ class TukangContent extends Model
     protected $fillable = [
         'tanggal',
         'kode_kasbon',
+        'ket_spv',
+        'ket_owner',
         'status_spv',
         'status_owner',
         'jenis',

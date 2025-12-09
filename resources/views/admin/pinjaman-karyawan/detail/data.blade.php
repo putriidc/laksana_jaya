@@ -40,7 +40,6 @@
             <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
                 <table class="table-auto text-center text-sm w-full">
                     <thead class="border-b-2 border-[#CCCCCC]">
-                        <th class="py-2 w-[10%]">Status</th>
                         <th class="py-2 w-[15%]">Kontrak</th>
                         <th class="py-2 w-[10%]">Tgl Pinjaman</th>
                         <th class="py-2 w-[10%]">Tgl Cicilan</th>
@@ -52,17 +51,7 @@
                     <tbody>
                         @foreach ($pinjamanContents as $item)
                             <tr class="bg-[#E9E9E9] border-b-[1px] border-[#CCCCCC]">
-                                <td class="py-2">
-                                    @if ($item->menunggu)
-                                        <span class="text-blue-600 font-semibold">Menunggu</span>
-                                    @elseif($item->setuju)
-                                        <span class="text-green-600 font-semibold">Disetujui</span>
-                                    @elseif($item->tolak)
-                                        <span class="text-red-600 font-semibold">Ditolak</span>
-                                    @else
-                                        <span class="text-gray-600">-</span>
-                                    @endif
-                                </td>
+
                                 <td class="py-2">{{ $item->kontrak }}</td>
                                 <td class="py-2">
                                     @if ($item->jenis === 'pinjam')
@@ -94,21 +83,22 @@
                                 </td>
                                 <td class="py-2">{{ 'RP. ' . number_format($item->sisa, 0, ',', '.') }}</td>
                                 <td class="flex justify-center items-center gap-x-2 py-2">
-                                    @if ($item->jenis === 'pinjam')
-                                        <a href="{{ route('pinjamanContents.edit', $item->id) }}" class="">
+                                    @if ($item->tanggal == $today)
+                                        @if ($item->jenis === 'pinjam')
+                                            {{-- <a href="{{ route('pinjamanContents.edit', $item->id) }}" class="">
                                             <img src="{{ asset('assets/more-circle.png') }}" alt="more circle icon"
                                                 class="w-[20px] cursor-pointer">
-                                        </a>
-                                    @else
-                                        <a href="{{ route('pinjamanContents.editBayar', $item->id) }}" class="">
-                                            <img src="{{ asset('assets/more-circle.png') }}" alt="more circle icon"
-                                                class="w-[20px] cursor-pointer">
-                                        </a>
-                                    @endif
-
-                                    <span class="border-black border-l-[1px] h-[22px]"></span>
-                                    @if ($item->jenis === 'pinjam')
-                                        <form action="{{ route('pinjamanContents.destroy', $item->id) }}" method="POST"
+                                        </a> --}}
+                                            {{ 'No ' }}
+                                        @else
+                                            <a href="{{ route('pinjamanContents.editBayar', $item->id) }}" class="">
+                                                <img src="{{ asset('assets/more-circle.png') }}" alt="more circle icon"
+                                                    class="w-[20px] cursor-pointer">
+                                            </a>
+                                        @endif
+                                        {{-- <span class="border-black border-l-[1px] h-[22px]"></span> --}}
+                                        @if ($item->jenis === 'pinjam')
+                                            {{-- <form action="{{ route('pinjamanContents.destroy', $item->id) }}" method="POST"
                                             class="h-[22px]">
                                             @csrf
                                             @method('DELETE')
@@ -116,19 +106,22 @@
                                                 <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
                                                     class="w-[22px] cursor-pointer">
                                             </button>
-                                        </form>
+                                        </form> --}}
+                                            {{ 'Edit' }}
+                                        @else
+                                            <form action="{{ route('pinjamanContents.destroyBayar', $item->id) }}"
+                                                method="POST" class="h-[22px]">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                                    <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                        class="w-[22px] cursor-pointer">
+                                                </button>
+                                            </form>
+                                        @endif
                                     @else
-                                        <form action="{{ route('pinjamanContents.destroyBayar', $item->id) }}"
-                                            method="POST" class="h-[22px]">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
-                                                    class="w-[22px] cursor-pointer">
-                                            </button>
-                                        </form>
+                                        <span class="text-gray-600 font-bold">Lewat <br> Tanggal</span>
                                     @endif
-
                                 </td>
                             </tr>
                         @endforeach
@@ -164,7 +157,6 @@
     <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
         <table class="table-auto text-center text-sm w-full">
             <thead class="border-b-2 border-[#CCCCCC]">
-                <th class="py-2 w-[10%]">Status</th>
                 <th class="py-2 w-[15%]">Kontrak</th>
                 <th class="py-2 w-[10%]">Tgl Pinjaman</th>
                 <th class="py-2 w-[10%]">Tgl Cicilan</th>
@@ -176,17 +168,7 @@
             <tbody>
                 @foreach ($kasbonContents as $item)
                     <tr class="bg-[#E9E9E9] border-b-[1px] border-[#CCCCCC]">
-                        <td class="py-2">
-                            @if ($item->menunggu)
-                                <span class="text-blue-600 font-semibold">Menunggu</span>
-                            @elseif($item->setuju)
-                                <span class="text-green-600 font-semibold">Disetujui</span>
-                            @elseif($item->tolak)
-                                <span class="text-red-600 font-semibold">Ditolak</span>
-                            @else
-                                <span class="text-gray-600">-</span>
-                            @endif
-                        </td>
+
                         <td class="py-2">{{ $item->kontrak }}</td>
                         <td class="py-2">
                             @if ($item->jenis === 'pinjam')
@@ -218,41 +200,46 @@
                         </td>
                         <td class="py-2">{{ 'RP. ' . number_format($item->sisa, 0, ',', '.') }}</td>
                         <td class="flex justify-center items-center gap-x-2 py-2">
-                            @if ($item->jenis === 'pinjam')
-                                <a href="{{ route('kasbonContents.edit', $item->id) }}" class="">
-                                    <img src="{{ asset('assets/more-circle.png') }}" alt="more circle icon"
-                                        class="w-[20px] cursor-pointer">
-                                </a>
-                            @else
-                                <a href="{{ route('kasbonContents.editBayar', $item->id) }}" class="">
-                                    <img src="{{ asset('assets/more-circle.png') }}" alt="more circle icon"
-                                        class="w-[20px] cursor-pointer">
-                                </a>
-                            @endif
+                            @if ($item->tanggal == $today)
+                                @if ($item->jenis === 'pinjam')
+                                    {{-- <a href="{{ route('kasbonContents.edit', $item->id) }}" class="">
+                                        <img src="{{ asset('assets/more-circle.png') }}" alt="more circle icon"
+                                            class="w-[20px] cursor-pointer">
+                                    </a> --}}
+                                    {{ '-' }}
+                                @else
+                                    <a href="{{ route('kasbonContents.editBayar', $item->id) }}" class="">
+                                        <img src="{{ asset('assets/more-circle.png') }}" alt="more circle icon"
+                                            class="w-[20px] cursor-pointer">
+                                    </a>
+                                @endif
 
-                            <span class="border-black border-l-[1px] h-[22px]"></span>
-                            @if ($item->jenis === 'pinjam')
-                                <form action="{{ route('kasbonContents.destroy', $item->id) }}" method="POST"
-                                    class="h-[22px]">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                        <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
-                                            class="w-[22px] cursor-pointer">
-                                    </button>
-                                </form>
+                                <span class="border-black border-l-[1px] h-[22px]"></span>
+                                @if ($item->jenis === 'pinjam')
+                                    {{-- <form action="{{ route('kasbonContents.destroy', $item->id) }}" method="POST"
+                                        class="h-[22px]">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                            <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                class="w-[22px] cursor-pointer">
+                                        </button>
+                                    </form> --}}
+                                    {{ '-' }}
+                                @else
+                                    <form action="{{ route('kasbonContents.destroyBayar', $item->id) }}" method="POST"
+                                        class="h-[22px]">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                            <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                class="w-[22px] cursor-pointer">
+                                        </button>
+                                    </form>
+                                @endif
                             @else
-                                <form action="{{ route('kasbonContents.destroyBayar', $item->id) }}" method="POST"
-                                    class="h-[22px]">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                        <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
-                                            class="w-[22px] cursor-pointer">
-                                    </button>
-                                </form>
+                                <span class="text-gray-600 font-bold">Lewat <br> Tanggal</span>
                             @endif
-
                         </td>
                     </tr>
                 @endforeach

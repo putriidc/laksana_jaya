@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('kasbon_contents', function (Blueprint $table) {
             $table->id();
             $table->string('kode_karyawan');
+            $table->string('ket_owner')->nullable();
             $table->string('kontrak')->nullable();
             $table->date('tanggal')->nullable();
             $table->double('bayar')->nullable();

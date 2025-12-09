@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\KasbonContent;
 use Carbon\Carbon;
+use App\Models\Asset;
+use App\Models\Proyek;
+use App\Models\JurnalUmum;
 use App\Models\KasbonTukang;
-use App\Models\TukangContent;
 use Illuminate\Http\Request;
+use App\Models\KasbonContent;
+use App\Models\TukangContent;
 use Illuminate\Support\Facades\Auth;
 
 class TukangContentController extends Controller
@@ -67,6 +70,8 @@ class TukangContentController extends Controller
             'jenis'         => 'pinjam',
             'bayar'         => $request->bayar,
             'sisa'          => 0,
+            'ket_spv'      => 'pending',
+            'ket_owner'      => 'pending',
             'status_spv'      => 'pending',
             'status_owner'      => 'pending',
             'created_by'    => Auth::id(),
@@ -75,6 +80,7 @@ class TukangContentController extends Controller
         return redirect()->route('pinjamanTukangs.show', $pinjamanKaryawan->id)
             ->with('success', 'Data pinjaman berhasil ditambahkan');
     }
+    //bayar pinjaman
     public function storeBayar(Request $request)
     {
         $request->validate([
@@ -96,7 +102,7 @@ class TukangContentController extends Controller
         ]);
 
         // Simpan PinjamanContent
-        TukangContent::create([
+        $content = TukangContent::create([
             'kode_kasbon' => $pinjamanKaryawan->kode_kasbon,
             'kontrak'       => $request->kontrak,
             'tanggal'       => $request->tanggal,
@@ -106,6 +112,28 @@ class TukangContentController extends Controller
             'status_spv'      => 'accept',
             'status_owner'      => 'accept',
             'created_by'    => Auth::id(),
+        ]);
+
+        // ✅ Tambahkan input ke jurnal umum
+        $asset  = Asset::where('nama_akun', $pinjamanKaryawan->nama_akun)->first();
+        $proyek = Proyek::where('nama_proyek', $pinjamanKaryawan->nama_proyek)->first();
+        // generate kode jurnal J-00{id terakhir + 1}
+        $lastId = JurnalUmum::max('id') ?? 0;
+        $nextId = $lastId + 1;
+        $kodeJurnal = 'J-' . str_pad($nextId, 3, '0', STR_PAD_LEFT);
+
+        JurnalUmum::create([
+            'id_content'   => $content->id, // generate kode unik
+            'kode_jurnal'   => $kodeJurnal, // generate kode unik
+            'tanggal'       => $request->tanggal,         // sama dengan tanggal content
+            'keterangan'    => $request->kontrak,         // isi kontrak
+            'nama_perkiraan' => $pinjamanKaryawan->nama_akun,
+            'kode_perkiraan' => $asset ? $asset->kode_akun : null,
+            'nama_proyek'   => $pinjamanKaryawan->nama_proyek,
+            'kode_proyek'   => $proyek ? $proyek->kode_akun : null,
+            'debit'         => 0,
+            'kredit'        => $request->bayar,
+            'created_by'    => Auth::check() ? Auth::user()->id : null,
         ]);
 
         return redirect()->route('pinjamanTukangs.show', $pinjamanKaryawan->id)
@@ -178,6 +206,17 @@ class TukangContentController extends Controller
         $pinjamanKaryawan->update([
             'total' => $totalBaru,
         ]);
+
+        $jurnal = JurnalUmum::where('id_content', $content->id)->first();
+
+        if ($jurnal) {
+            $jurnal->update([
+                'tanggal'    => $request->tanggal,
+                'keterangan' => $request->kontrak,
+                'debit'      => 0,
+                'kredit'     => $request->bayar,
+            ]);
+        }
 
         // Update PinjamanContent
         $content->update([
