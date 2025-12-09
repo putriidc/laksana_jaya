@@ -164,6 +164,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/detail-eaf', function () {
         return view('admin.form-eaf.detail');
     });
+    Route::get('/laba-rugi', function () {
+        return view('admin.laba-rugi.data');
+    });
+    Route::get('/laporan-harian', function () {
+        return view('admin.laporan-harian.data');
+    });
+    Route::get('/buku-besar', function () {
+        return view('admin.buku-besar.data');
+    });
     // admin
 
 

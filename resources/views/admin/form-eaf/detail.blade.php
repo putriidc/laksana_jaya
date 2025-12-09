@@ -16,7 +16,7 @@
             </div>
         </div>
     </div>
-    <div class="pb-8 border-b border-gray-300 mb-5">
+    {{-- <div class="pb-8 border-b border-gray-300 mb-5">
         <h1 class="text-2xl font-bold mb-5">Rincian</h1>
         <form action="" method="post" class="flex flex-col gap-y-5">
             <div class="flex items-center">
@@ -63,14 +63,19 @@
                     </div>
                 </div>
         </form>
-    </div>
+    </div> --}}
     <div>
         <div class="flex justify-between items-center mb-5">
             <h1 class="text-2xl font-bold">Tabel Rincian</h1>
-            <button id="modal-generate" class="flex items-center gap-x-2 border border-[#45D03E] px-4 py-2 rounded-lg cursor-pointer">
-                <span class="text-[#45D03E]">Generate</span>
-                <img src="{{ asset('assets/card-send-greeen.png') }}" alt="card send icon" class="w-[20px] h-[20px]">
-            </button>
+            <div class="flex items-center gap-x-2">
+                <button onclick="modalAddRincian()" class="flex items-center gap-x-2 border border-[#3E98D0] px-4 py-2 rounded-lg cursor-pointer">
+                   <span class="text-[#3E98D0]">Tambah Rincian +</span>
+               </button>
+                 <button id="modal-generate" class="flex items-center gap-x-2 border border-[#45D03E] px-4 py-2 rounded-lg cursor-pointer">
+                    <span class="text-[#45D03E]">Generate</span>
+                    <img src="{{ asset('assets/card-send-greeen.png') }}" alt="card send icon" class="w-[20px] h-[20px]">
+                </button>
+            </div>
         </div>
         <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
                 <table class="table-auto text-center text-sm w-full">
@@ -134,8 +139,10 @@
                         <div>
                             <h1 class="font-bold text-2xl text-center mb-5">Lanjutkan Generate Laporan?</h1>
                             <div class="w-full flex justify-center items-center">
-                                <a href="/form-eaf" class="bg-[#8CE987] w-[100px] py-2 font-semibold rounded-lg cursor-pointer mx-2">YA</a>
-                                <a href="" class="bg-[#DD4049] w-[100px] py-2 font-semibold rounded-lg cursor-pointer mx-2">BATAL</a>
+                                <form action="" method="post">
+                                    <button type="submit" class="bg-[#8CE987] w-[100px] py-2 font-semibold rounded-lg cursor-pointer mx-2">YA</button>
+                                </form>
+                                <button onclick="Swal.close()" class="bg-[#DD4049] w-[100px] py-2 font-semibold rounded-lg cursor-pointer mx-2">BATAL</button>
                             </div>
                         </div>
                     `,
@@ -145,6 +152,55 @@
                     
                 })
             });
+
+            function modalAddRincian() {
+                Swal.fire({
+                    html: `
+                        <div>
+                            <h1 class="font-bold text-2xl text-center mb-5">Tambah Rincian</h1>
+                            <form action="" method="post" class="flex flex-col gap-y-4">
+                                <div class="flex items-center">
+                                    <label for="" class="w-[240px] text-start">Tanggal Relasi</label>
+                                    <input type="date" name="tanggal_relasi" id=""
+                                        class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
+                                </div>
+                                <div class="flex items-center">
+                                    <label for="" class="w-[240px] text-start">Kode Akun</label>
+                                    <input type="text" name="kode_akun" id=""
+                                        class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
+                                </div>
+                                <div class="flex items-center">
+                                    <label for="" class="w-[240px] text-start">Nama Akun</label>
+                                    <input type="text" name="nama_akun" id=""
+                                        class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
+                                </div>
+                                <div class="flex items-center">
+                                    <label for="" class="w-[240px] text-start">Keterangan</label>
+                                    <input type="text" name="keterangan" id=""
+                                        class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
+                                </div>
+                                <div class="flex items-center">
+                                    <label for="" class="w-[240px] text-start">Debet</label>
+                                    <input type="text" name="debet" id=""
+                                        class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
+                                </div>
+                                <div class="flex items-center">
+                                    <label for="" class="w-[240px] text-start">Kredit</label>
+                                    <input type="text" name="kredit" id=""
+                                        class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
+                                </div>
+                                <div class="flex mt-4 justify-center gap-x-4 text-white">
+                                    <button type="submit" class="bg-[#8CE987] w-[100px] py-2 font-semibold rounded-lg cursor-pointer">Simpan</button>
+                                    <button type="button" onclick="Swal.close()" class="bg-[#DD4049] w-[100px] py-2 font-semibold rounded-lg cursor-pointer">Batal</button>
+                                </div>
+                            </form>
+                        </div>
+                    `,
+                    showCancelButton: false,
+                    showCloseButton: false,
+                    showConfirmButton: false,
+                })
+            }
         </script>
 </div>
 @endsection

@@ -143,6 +143,54 @@
                             <span>Form EAF</span>
                         </button>
                     </a>
+                    <a
+                        href="/laba-rugi"
+                        class="cursor-pointer"
+                    >
+                        <button
+                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
+                        >
+                            <img
+                                src="{{
+                                    asset('assets/navbar/receipt-item.png')
+                                }}"
+                                alt="receipt2 icon"
+                            />
+                            <span>Laba Rugi</span>
+                        </button>
+                    </a>
+                    <a
+                        href="/laporan-harian"
+                        class="cursor-pointer"
+                    >
+                        <button
+                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
+                        >
+                            <img
+                                src="{{
+                                    asset('assets/navbar/status-up.png')
+                                }}"
+                                alt="receipt2 icon"
+                            />
+                            <span>Laporan Harian</span>
+                        </button>
+                    </a>
+                    <a
+                        href="/buku-besar"
+                        class="cursor-pointer"
+                    >
+                        <button
+                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
+                        >
+                            <img
+                                src="{{
+                                    asset('assets/navbar/book.png')
+                                }}"
+                                alt="receipt2 icon"
+                            />
+                            <span>Buku Besar</span>
+                        </button>
+                    </a>
 
                     {{--
                     <a href="" class="cursor-pointer">
@@ -168,7 +216,7 @@
                         </button>
                     </a>
                     --}}
-                    <div class="grow flex items-end">
+                    <div class="grow flex items-end pb-3">
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button

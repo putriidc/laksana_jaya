@@ -1,0 +1,331 @@
+@extends('admin.layout')
+@section('content')
+<div>
+    <h1 class="text-2xl font-bold mb-8">Laporan Kuangan Harian</h1>
+    <div class="flex items-center justify-between mb-5 pb-5 border-b-[1px] border-[#CCCCCC]">
+        <div class="flex items-center gap-x-4">
+            <span class="font-medium">Saldo Debet</span>
+            <span class="bg-[#E9E9E9] py-[6px] px-4 w-[200px] rounded-lg font-semibold text-gray-500">Rp. 3.000.000</span>
+        </div>
+        <div class="flex items-center gap-x-4">
+            <span class="font-medium">Saldo Kredit</span>
+            <span class="bg-[#E9E9E9] py-[6px] px-4 w-[200px] rounded-lg font-semibold text-gray-500">Rp. 3.000.000</span>
+        </div>
+        <div class="flex items-center gap-x-1">
+            <span class="font-medium mr-4">Status</span>
+            <span class="bg-[#E9E9E9] py-[6px] px-8 rounded-lg font-semibold text-gray-500">Balance</span>
+            <div class="bg-[#45D03E] w-[80px] h-[35px] rounded-lg"></div>
+        </div>
+    </div>
+    <div class="flex flex-col gap-y-5 mb-5">
+        <div class="flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Cash In</h1>
+            <a href="" class="border-2 border-[#9A9A9A] py-2 px-4 rounded-lg flex items-center gap-x-3 cursor-pointer">
+                <span class="text-[#72686B] font-medium">Cetak Data</span>
+                <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[25px]">
+            </a>
+        </div>
+        <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
+                <table class="table-fixed text-center text-sm w-full">
+                    <thead class="border-b-2 border-[#CCCCCC]">
+                        <th class="w-[10%] py-2">Tanggal</th>
+                        <th class="w-[22%] py-2">Keterangan</th>
+                        <th class="w-[13%] py-2">Nama Perkiraan</th>
+                        <th class="w-[6%] py-2">Kode</th>
+                        <th class="w-[15%] py-2">Nama Proyek</th>
+                        <th class="w-[7%] py-2">Kd Proyek</th>
+                        <th class="w-[10%] py-2">Kredit</th>
+                        <th class="w-[10%] py-2">Action</th>
+                    </thead>
+                    <tbody>
+                            <tr class="bg-[#E9E9E9] border-b-[1px] border-[#CCCCCC]">
+                                <td class="py-2">1/1/2025</td>
+                                <td class="py-2">Mutasi dari bank BCA</td>
+                                <td class="py-2">Kas Bank BCA</td>
+                                <td class="py-2">111</td>
+                                <td class="py-2">Pak Dwi Santoso</td>
+                                <td class="py-2">P-0024</td>
+                                <td class="py-2">Rp. 5.000.000</td>
+                                <td class="flex justify-center items-center gap-x-2 py-2">
+                                        <button onclick="editLaporanKeuangan()" class="">
+                                            <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
+                                                class="w-[22px] cursor-pointer">
+                                        </button>
+                                        <span class="border-black border-l-[1px] h-[22px]"></span>
+                                        <form action="" method="POST"
+                                            class="h-[22px]">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                                <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                    class="w-[22px] cursor-pointer">
+                                            </button>
+                                        </form>
+                                </td>
+                                {{-- <td class="flex justify-center items-center gap-x-2 py-2">{{ $jurnal->tanggal }} | {{ $today }}</td> --}}
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+    </div>
+    <div class="flex flex-col gap-y-5 mb-5 pb-8 border-b border-gray-400">
+        <div class="flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Cash Out</h1>
+            <a href="" class="border-2 border-[#9A9A9A] py-2 px-4 rounded-lg flex items-center gap-x-3 cursor-pointer">
+                <span class="text-[#72686B] font-medium">Cetak Data</span>
+                <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[25px]">
+            </a>
+        </div>
+        <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
+                <table class="table-fixed text-center text-sm w-full">
+                    <thead class="border-b-2 border-[#CCCCCC]">
+                        <th class="w-[10%] py-2">Tanggal</th>
+                        <th class="w-[22%] py-2">Keterangan</th>
+                        <th class="w-[13%] py-2">Nama Perkiraan</th>
+                        <th class="w-[6%] py-2">Kode</th>
+                        <th class="w-[15%] py-2">Nama Proyek</th>
+                        <th class="w-[7%] py-2">Kd Proyek</th>
+                        <th class="w-[10%] py-2">Kredit</th>
+                        <th class="w-[10%] py-2">Action</th>
+                    </thead>
+                    <tbody>
+                            <tr class="bg-[#E9E9E9] border-b-[1px] border-[#CCCCCC]">
+                                <td class="py-2">1/1/2025</td>
+                                <td class="py-2">Mutasi dari bank BCA</td>
+                                <td class="py-2">Kas Bank BCA</td>
+                                <td class="py-2">111</td>
+                                <td class="py-2">Pak Dwi Santoso</td>
+                                <td class="py-2">P-0024</td>
+                                <td class="py-2">Rp. 5.000.000</td>
+                                <td class="flex justify-center items-center gap-x-2 py-2">
+                                        <button onclick="editLaporanKeuangan()" class="">
+                                            <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
+                                                class="w-[22px] cursor-pointer">
+                                        </button>
+                                        <span class="border-black border-l-[1px] h-[22px]"></span>
+                                        <form action="" method="POST"
+                                            class="h-[22px]">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                                <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                    class="w-[22px] cursor-pointer">
+                                            </button>
+                                        </form>
+                                </td>
+                                {{-- <td class="flex justify-center items-center gap-x-2 py-2">{{ $jurnal->tanggal }} | {{ $today }}</td> --}}
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+    </div>
+    <div class="flex flex-col gap-y-5 mb-5">
+        <div class="flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Global Cash In</h1>
+            <div class="flex items-center">
+                <form action="" class="flex items-center gap-x-1">
+                    <input type="text" data-flatpickr placeholder="Tanggal Mulai" name="" id="" class="w-[180px] rounded-lg border-2 border-[#9A9A9A] py-2 px-4">
+                    <input type="text" data-flatpickr placeholder="Tanggal Mulai" name="" id="" class="w-[180px] rounded-lg border-2 border-[#9A9A9A] py-2 px-4">
+                    <button type="submit" class="border-2 border-[#9A9A9A] py-2 px-2 rounded-lg cursor-pointer">
+                        <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" class="w-[25px]">
+                    </button>
+                </form>
+                <a href="" class="border-2 border-[#9A9A9A] py-2 px-4 rounded-lg flex items-center gap-x-3 cursor-pointer ml-1">
+                    <span class="text-[#72686B] font-medium">Cetak Data</span>
+                    <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[25px]">
+                </a>
+            </div>
+        </div>
+        <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
+                <table class="table-fixed text-center text-sm w-full">
+                    <thead class="border-b-2 border-[#CCCCCC]">
+                        <th class="w-[10%] py-2">Tanggal</th>
+                        <th class="w-[22%] py-2">Keterangan</th>
+                        <th class="w-[13%] py-2">Nama Perkiraan</th>
+                        <th class="w-[6%] py-2">Kode</th>
+                        <th class="w-[15%] py-2">Nama Proyek</th>
+                        <th class="w-[7%] py-2">Kd Proyek</th>
+                        <th class="w-[10%] py-2">Kredit</th>
+                        <th class="w-[10%] py-2">Action</th>
+                    </thead>
+                    <tbody>
+                            <tr class="bg-[#E9E9E9] border-b-[1px] border-[#CCCCCC]">
+                                <td class="py-2">1/1/2025</td>
+                                <td class="py-2">Mutasi dari bank BCA</td>
+                                <td class="py-2">Kas Bank BCA</td>
+                                <td class="py-2">111</td>
+                                <td class="py-2">Pak Dwi Santoso</td>
+                                <td class="py-2">P-0024</td>
+                                <td class="py-2">Rp. 5.000.000</td>
+                                <td class="flex justify-center items-center gap-x-2 py-2">
+                                        <button onclick="editLaporanKeuangan()" class="">
+                                            <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
+                                                class="w-[22px] cursor-pointer">
+                                        </button>
+                                        <span class="border-black border-l-[1px] h-[22px]"></span>
+                                        <form action="" method="POST"
+                                            class="h-[22px]">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                                <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                    class="w-[22px] cursor-pointer">
+                                            </button>
+                                        </form>
+                                </td>
+                                {{-- <td class="flex justify-center items-center gap-x-2 py-2">{{ $jurnal->tanggal }} | {{ $today }}</td> --}}
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+    </div>
+    <div class="flex flex-col gap-y-5 mb-5">
+        <div class="flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Global Cash Out</h1>
+            <div class="flex items-center">
+                <form action="" class="flex items-center gap-x-1">
+                    <input type="text" data-flatpickr placeholder="Tanggal Mulai" name="" id="" class="w-[180px] rounded-lg border-2 border-[#9A9A9A] py-2 px-4">
+                    <input type="text" data-flatpickr placeholder="Tanggal Mulai" name="" id="" class="w-[180px] rounded-lg border-2 border-[#9A9A9A] py-2 px-4">
+                    <button type="submit" class="border-2 border-[#9A9A9A] py-2 px-2 rounded-lg cursor-pointer">
+                        <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" class="w-[25px]">
+                    </button>
+                </form>
+                <a href="" class="border-2 border-[#9A9A9A] py-2 px-4 rounded-lg flex items-center gap-x-3 cursor-pointer ml-1">
+                    <span class="text-[#72686B] font-medium">Cetak Data</span>
+                    <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[25px]">
+                </a>
+            </div>
+        </div>
+        <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
+                <table class="table-fixed text-center text-sm w-full">
+                    <thead class="border-b-2 border-[#CCCCCC]">
+                        <th class="w-[10%] py-2">Tanggal</th>
+                        <th class="w-[22%] py-2">Keterangan</th>
+                        <th class="w-[13%] py-2">Nama Perkiraan</th>
+                        <th class="w-[6%] py-2">Kode</th>
+                        <th class="w-[15%] py-2">Nama Proyek</th>
+                        <th class="w-[7%] py-2">Kd Proyek</th>
+                        <th class="w-[10%] py-2">Kredit</th>
+                        <th class="w-[10%] py-2">Action</th>
+                    </thead>
+                    <tbody>
+                            <tr class="bg-[#E9E9E9] border-b-[1px] border-[#CCCCCC]">
+                                <td class="py-2">1/1/2025</td>
+                                <td class="py-2">Mutasi dari bank BCA</td>
+                                <td class="py-2">Kas Bank BCA</td>
+                                <td class="py-2">111</td>
+                                <td class="py-2">Pak Dwi Santoso</td>
+                                <td class="py-2">P-0024</td>
+                                <td class="py-2">Rp. 5.000.000</td>
+                                <td class="flex justify-center items-center gap-x-2 py-2">
+                                        <button onclick="editLaporanKeuangan()" class="">
+                                            <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
+                                                class="w-[22px] cursor-pointer">
+                                        </button>
+                                        <span class="border-black border-l-[1px] h-[22px]"></span>
+                                        <form action="" method="POST"
+                                            class="h-[22px]">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                                <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                    class="w-[22px] cursor-pointer">
+                                            </button>
+                                        </form>
+                                </td>
+                                {{-- <td class="flex justify-center items-center gap-x-2 py-2">{{ $jurnal->tanggal }} | {{ $today }}</td> --}}
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+    </div>
+    <script>
+        function editLaporanKeuangan() {
+                // buat form modal dengan sweetalert2
+                Swal.fire({
+                    html: `
+                    <form action="" method="POST" class="flex flex-col text-left">
+                        @csrf
+                        <h1 class="font-bold text-2xl mb-4">Edit Laporan Keuangan</h1>
+                        <div class="flex items-center mt-4">
+                            <label for="tanggal" class="font-medium w-[150px]">Tgl Relasi</label>
+                            <div class="flex items-center w-full justify-between">
+                                <input type="date" name="tanggal" id="tanggal" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none">
+                                <div class="flex items-center w-[350px]">
+                                    <label for="keterangan" class="font-medium w-[35%]">Keterangan</label>
+                                    <input type="text" name="keterangan" id="keterangan" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center mt-4">
+                            <label for="tanggal" class="font-medium w-[150px]">Kode Akun</label>
+                            <div class="flex items-center w-full justify-between">
+                                <input type="text" name="kodeakun" id="kodeakun" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none">
+                                <div class="flex items-center w-[350px]">
+                                    <label for="keterangan" class="font-medium w-[35%]">Debet</label>
+                                    <input type="text" name="debet" id="debet" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center mt-4">
+                            <label for="tanggal" class="font-medium w-[150px]">Nama Akun</label>
+                            <div class="flex items-center w-full justify-between">
+                                <select class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none appearance-none" name="" id="">
+                                    <option selected disabled hidden>-Pilih Nama Akun-</option>    
+                                    <option value="Kas Besar">Kas Besar</option>
+                                    <option value="Kas Utama">Kas Utama</option>
+                                    <option value="Kas Kecil">Kas Kecil</option>
+                                    <option value="Kas Bank BCA">Kas Bank BCA</option>
+                                    <option value="Piutang Usaha">Piutang Usaha</option>
+                                    <option value="Persediaan Material">Persediaan Material</option>
+                                    <option value="Uang Muka PPh">Uang Muka PPh</option>
+                                    <option value="Kas Flip">Kas Flip</option>
+                                    <option value="Piutang Pihak Lain">Piutang Pihak Lain</option>
+                                    <option value="Pendapatan Proyek Fisik">Pendapatan Proyek Fisik</option>
+                                    <option value="Pendapatan Konsultan">Pendapatan Konsultan</option>
+                                    <option value="Pendapatan Online">Pendapatan Online</option>
+                                    <option value="Pendapatan AR4N Bangunan">Pendapatan AR4N Bangunan</option>
+                                    <option value="Pendapatan Lain-Lain">Pendapatan Lain-Lain</option>
+                                    <option value="Pendapatan PBG">Pendapatan PBG</option>
+                                    <option value="Biaya PBG">Biaya PBG</option>
+                                    <option value="Biaya Iklan dan Promosi">Biaya Iklan dan Promosi</option>
+                                    <option value="Biaya Admin Bank">Biaya Admin Bank</option>
+                                    <option value="Biaya Gaji Staf Kantor">Biaya Gaji Staf Kantor</option>
+                                    <option value="Biaya Konsumsi">Biaya Konsumsi</option>
+                                    <option value="Biaya Owner">Biaya Owner</option>
+                                    <option value="Fee Perusahaan">Fee Perusahaan</option>
+                                    <option value="Biaya Entertainment">Biaya Entertainment</option>
+                                    <option value="Fee Dinas">Fee Dinas</option>
+                                    <option value="OVO">OVO</option>
+                                    <option value="Biaya Reparasi dan Pemeliharaan">Biaya Reparasi dan Pemeliharaan</option>
+                                    <option value="Biaya Kartu Kredit">Biaya Kartu Kredit</option>
+                                    <option value="Fee Bendera SKK">Fee Bendera SKK</option>
+                                </select>
+                                <div class="flex items-center w-[350px]">
+                                    <label for="keterangan" class="font-medium w-[35%]">Kredit</label>
+                                    <input type="text" name="kredit" id="kredit" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center mt-6 gap-x-4">
+                            <div class="w-[110px]"></div>
+                            <button type="submit" class="border-[#3E98D0] border text-[#3E98D0] py-1 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
+                                <span class="">Simpan Data</span>    
+                                <img src="{{ asset('assets/plus-circle-blue.png') }}" alt="arrow right blue icon" class="w-[30px]">
+                            </button>
+                            <button type="button" onclick="Swal.close()" class="border-[#DD4049] border text-[#DD4049] py-1 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
+                                <span class="">Batal</span>    
+                                <img src="{{ asset('assets/close-circle-red.png') }}" alt="arrow right blue icon" class="w-[22px]">
+                            </button>
+                        </div>
+                    </form>
+                    `,
+                    width: '800px',
+                    showCancelButton: false,
+                    showCloseButton: false,
+                    showConfirmButton: false,
+                });
+            }
+    </script>
+</div>
+@endsection
