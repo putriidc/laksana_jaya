@@ -22,7 +22,7 @@
                 <div class="w-[180px]"></div>
                 <div class="w-full flex gap-x-2">
                     <button type="submit" class="bg-[#FFF494] px-6 py-2 rounded-lg cursor-pointer">Simpan Data</button>
-                    <button class="bg-[#FFB7B7] px-6 py-2 rounded-lg cursor-pointer">Batal</button>
+                    <button type="button" onclick="history.back()" class="bg-[#FFB7B7] px-6 py-2 rounded-lg cursor-pointer">Batal</button>
                 </div>
             </div>
         </form>

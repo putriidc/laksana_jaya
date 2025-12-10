@@ -15,7 +15,7 @@
                     </thead>
                     <tbody>
                         <tr class="bg-gray-200">
-                                <td colspan="5" class="py-2 font-semibold text-left px-4">Pinjaman Karyawan</td>
+                                <td colspan="6" class="py-2 font-semibold text-left px-4">Pinjaman Karyawan</td>
                             </tr>
                         @foreach ($pinjams as $item)
                             <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
@@ -39,7 +39,7 @@
                             </tr>
                         @endforeach
                         <tr class="bg-gray-200">
-                                <td colspan="5" class="py-2 font-semibold text-left px-4">Kasbon Karyawan</td>
+                                <td colspan="6" class="py-2 font-semibold text-left px-4">Kasbon Karyawan</td>
                             </tr>
                         @foreach ($kasbons as $item)
                             <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
@@ -69,7 +69,7 @@
         <h1 class="font-bold text-2xl mb-6">Pinjaman Karyawan</h1>
         <section>
             <div class="flex items-center pb-4 w-full justify-between">
-                <form action="" class="flex items-center gap-x-2">
+                {{-- <form action="" class="flex items-center gap-x-2">
                     <select id="select-beast" placeholder="Pilih Nama" autocomplete="off"
                         class="w-[200px] appearance-none border-[#9A9A9A] border-2 outline-none rounded-lg py-[8px] px-[10px] bg-white cursor-pointer">
                         <option selected>Pilih Nama</option>
@@ -83,7 +83,7 @@
                         class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
                         <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" class="w-[20px]">
                     </button>
-                </form>
+                </form> --}}
                 <div class="flex items-center gap-x-2">
                     <a href="{{ route('pinjamanKaryawans.create') }}"><button
                             class="cursor-pointer px-4 py-2 border-[#9A9A9A] border-2 rounded-lg">Tambah Data +</button></a>
