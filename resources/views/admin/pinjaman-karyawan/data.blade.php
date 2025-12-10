@@ -87,7 +87,7 @@
                 <div class="flex items-center gap-x-2">
                     <a href="{{ route('pinjamanKaryawans.create') }}"><button
                             class="cursor-pointer px-4 py-2 border-[#9A9A9A] border-2 rounded-lg">Tambah Data +</button></a>
-                    <a href=""
+                    <a target="_blank" href="{{ route('pinjamanKaryawan.print') }}"
                         class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
                         <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
                     </a>

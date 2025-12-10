@@ -64,6 +64,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::resource('pinjamanKaryawans', PinjamanKaryawanController::class);
+    Route::get('pinjamanKaryawan/print', [PinjamanKaryawanController::class, 'print'])->name('pinjamanKaryawan.print');
 
     Route::resource('pinjamanContents', PinjamanContentController::class);
     Route::get('pinjamanContents/pinjam/{id}', [PinjamanContentController::class, 'pinjam'])

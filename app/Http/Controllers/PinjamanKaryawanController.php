@@ -7,6 +7,7 @@ use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use App\Models\KasbonContent;
 use App\Models\PinjamanContent;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\PinjamanKaryawan;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,6 +35,18 @@ class PinjamanKaryawanController extends Controller
             ->get();
 
         return view('admin.pinjaman-karyawan.data', compact('pinjamans', 'pinjams', 'kasbons'));
+    }
+    public function print()
+    {
+        $pinjamans = PinjamanKaryawan::active()->get();
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->format('d F Y');
+        $role = Auth::user()->role ?? 'Admin';
+        $admin = Auth::user()->name ?? 'Admin';
+
+        $pdf = Pdf::loadView('admin.pinjaman-karyawan.print', compact('pinjamans', 'tanggalCetak', 'admin', 'role'))
+            ->setPaper('A4', 'portrait');
+
+        return $pdf->stream('laporan-Pinjaman-Karyawan.pdf');
     }
     public function show($id)
     {
