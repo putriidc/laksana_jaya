@@ -11,19 +11,29 @@ use Illuminate\Support\Facades\Auth;
 
 class JurnalUmumController extends Controller
 {
-    public function index()
+
+    public function index(Request $request)
     {
-        $jurnals = JurnalUmum::active()
-        ->orderBy('tanggal', 'desc')
-        ->get();
-        $today = Carbon::now('Asia/Jakarta')->toDateString();
+        $query = JurnalUmum::active();
+
+        // Cek apakah user isi tanggal
+        if ($request->filled('start') && $request->filled('end')) {
+            $start = Carbon::parse($request->start)->startOfDay();
+            $end = Carbon::parse($request->end)->endOfDay();
+
+            $query->whereBetween('tanggal', [$start, $end]);
+        }
+
+        $jurnals = $query->orderBy('tanggal', 'desc')->get();
 
         $totalDebit = $jurnals->sum('debit');
         $totalKredit = $jurnals->sum('kredit');
-
         $status = $totalDebit === $totalKredit ? 'Balance' : 'Tidak Balance';
+        $today = Carbon::now('Asia/Jakarta')->toDateString();
+
         return view('admin.jurnal-umum.data', compact('jurnals', 'today', 'totalDebit', 'totalKredit', 'status'));
     }
+
 
     public function create()
     {

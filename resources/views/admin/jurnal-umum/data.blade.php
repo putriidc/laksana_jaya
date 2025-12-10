@@ -6,16 +6,21 @@
             <div class="flex items-center justify-between mb-5 pb-5 border-b-[1px] border-[#CCCCCC]">
                 <div class="flex items-center gap-x-4">
                     <span class="font-medium">Saldo Debet</span>
-                    <span class="bg-[#E9E9E9] py-[6px] px-4 w-[200px] rounded-lg font-semibold text-gray-500">{{ 'RP. ' . number_format($totalDebit, 0, ',', '.') }}</span>
+                    <span
+                        class="bg-[#E9E9E9] py-[6px] px-4 w-[200px] rounded-lg font-semibold text-gray-500">{{ 'RP. ' . number_format($totalDebit, 0, ',', '.') }}</span>
                 </div>
                 <div class="flex items-center gap-x-4">
                     <span class="font-medium">Saldo Kredit</span>
-                    <span class="bg-[#E9E9E9] py-[6px] px-4 w-[200px] rounded-lg font-semibold text-gray-500">{{ 'RP. ' . number_format($totalKredit, 0, ',', '.') }}</span>
+                    <span
+                        class="bg-[#E9E9E9] py-[6px] px-4 w-[200px] rounded-lg font-semibold text-gray-500">{{ 'RP. ' . number_format($totalKredit, 0, ',', '.') }}</span>
                 </div>
                 <div class="flex items-center gap-x-1">
                     <span class="font-medium mr-4">Status</span>
-                    <span class="bg-[#E9E9E9] py-[6px] px-8 rounded-lg font-semibold text-gray-500">{{ $status }}</span>
-                    <div class="{{ $status === 'Balance' ? 'bg-[#45D03E] w-[80px] h-[35px] rounded-lg' : 'bg-[#f80707] w-[80px] h-[35px] rounded-lg' }}"></div>
+                    <span
+                        class="bg-[#E9E9E9] py-[6px] px-8 rounded-lg font-semibold text-gray-500">{{ $status }}</span>
+                    <div
+                        class="{{ $status === 'Balance' ? 'bg-[#45D03E] w-[80px] h-[35px] rounded-lg' : 'bg-[#f80707] w-[80px] h-[35px] rounded-lg' }}">
+                    </div>
                 </div>
             </div>
             <div class="flex justify-between items-center pb-4">
@@ -24,19 +29,23 @@
                     <button class="cursor-pointer">Tambah Data +</button>
                 </a> --}}
                 <div class="flex items-center gap-x-2">
-                    <button onclick="transaksiMasuk()" class="flex items-center gap-x-3 border-2 border-[#9A9A9A] px-4 py-2 rounded-lg cursor-pointer">
+                    <button onclick="transaksiMasuk()"
+                        class="flex items-center gap-x-3 border-2 border-[#9A9A9A] px-4 py-2 rounded-lg cursor-pointer">
                         <span class="text-gray-700">Transaksi Masuk</span>
                         <img src="{{ asset('assets/card-receive.png') }}" alt="card receive icon" class="w-[20px]">
                     </button>
-                    <button onclick="transaksiKeluar()" class="flex items-center gap-x-3 border-2 border-[#9A9A9A] px-4 py-2 rounded-lg cursor-pointer">
+                    <button onclick="transaksiKeluar()"
+                        class="flex items-center gap-x-3 border-2 border-[#9A9A9A] px-4 py-2 rounded-lg cursor-pointer">
                         <span class="text-gray-700">Transaksi Keluar</span>
                         <img src="{{ asset('assets/card-receive.png') }}" alt="card receive icon" class="w-[20px]">
                     </button>
                 </div>
-                <form action="" class="flex items-center gap-x-2">
-                    <input type="text" name="" data-flatpickr placeholder="Tgl Mulai"
+                <form action="{{ route('jurnalUmums.index') }}" method="GET" class="flex items-center gap-x-2">
+                    <input type="text" name="start" data-flatpickr placeholder="Tgl Mulai"
+                        value="{{ request('start') }}"
                         class="border-[#9A9A9A] border-2 rounded-lg py-2 px-4 w-[170px] outline-none">
-                    <input type="text" name="" data-flatpickr placeholder="Tgl Selesai"
+                    <input type="text" name="end" data-flatpickr placeholder="Tgl Selesai"
+                        value="{{ request('end') }}"
                         class="border-[#9A9A9A] border-2 rounded-lg py-2 px-4 w-[170px] outline-none">
                     <button type="submit"
                         class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
@@ -73,7 +82,7 @@
                                 <td class="py-2">{{ 'RP. ' . number_format($jurnal->debit, 0, ',', '.') }}</td>
                                 <td class="py-2">{{ 'RP. ' . number_format($jurnal->kredit, 0, ',', '.') }}</td>
                                 {{-- <td class="flex justify-center items-center gap-x-2 py-2">
-                                    @if($jurnal->tanggal == $today)
+                                    @if ($jurnal->tanggal == $today)
                                         <a href="{{ route('jurnalUmums.edit', $jurnal->id) }}"
                                             class="btn btn-sm btn-primary">
                                             <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
@@ -181,6 +190,7 @@
                     showConfirmButton: false,
                 });
             }
+
             function transaksiKeluar() {
                 // buat form modal dengan sweetalert2
                 Swal.fire({

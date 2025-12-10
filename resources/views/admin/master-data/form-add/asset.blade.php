@@ -74,7 +74,7 @@
                     >
                         Simpan Data
                     </button>
-                    <button
+                    <button type="button" onclick="history.back()"
                         class="bg-[#FFB7B7] px-6 py-2 rounded-lg cursor-pointer"
                     >
                         Batal
