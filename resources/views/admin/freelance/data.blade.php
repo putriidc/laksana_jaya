@@ -5,7 +5,7 @@
         <section>
             <div class="flex items-center pb-4 justify-between">
                 <form action="" class="flex items-center gap-x-2" id="myForm">
-                    <select id="select-beast" placeholder="Pilih Nama" autocomplete="off"
+                    {{-- <select id="select-beast" placeholder="Pilih Nama" autocomplete="off"
                         class="w-[200px] appearance-none border-[#9A9A9A] border-2 outline-none rounded-lg py-[8px] px-[10px] bg-white cursor-pointer">
                         <option selected>Pilih Nama</option>
                         <option value="1">Aby</option>
@@ -17,8 +17,8 @@
                     <button type="submit"
                         class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
                         <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" class="w-[20px]">
-                    </button>
-                    <a href=""
+                    </button> --}}
+                    <a href="{{ route('freelance.print') }}"
                         class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
                         <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
                     </a>

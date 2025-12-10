@@ -93,6 +93,8 @@ Route::middleware('auth')->group(function () {
 
     // freelance
     Route::resource('sampingans', SampinganController::class);
+    Route::get('freelance/print', [SampinganController::class, 'print'])->name('freelance.print');
+
     // freelance
 
 

@@ -119,11 +119,7 @@
                     >
                         Simpan Data
                     </button>
-                    <button
-                        class="bg-[#FFB7B7] px-6 py-2 rounded-lg cursor-pointer"
-                    >
-                        Batal
-                    </button>
+                    <a href="{{ route('sampingans.index') }}" class="bg-[#FFB7B7] px-6 py-2 rounded-lg cursor-pointer text-center">Batal</a>
                 </div>
             </div>
         </form>

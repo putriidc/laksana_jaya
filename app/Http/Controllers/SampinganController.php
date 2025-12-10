@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Sampingan;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 
 class SampinganController extends Controller
@@ -13,6 +14,19 @@ class SampinganController extends Controller
     {
         $sampingans = Sampingan::active()->get();
         return view('admin.freelance.data', compact('sampingans'));
+    }
+
+    public function print()
+    {
+        $sampingans = Sampingan::active()->get();
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->format('d F Y');
+        $role = Auth::user()->role ?? 'Admin';
+        $admin = Auth::user()->name ?? 'Admin';
+
+        $pdf = Pdf::loadView('admin.freelance.print', compact('sampingans', 'tanggalCetak', 'admin', 'role'))
+            ->setPaper('A4', 'portrait');
+
+        return $pdf->stream('laporan-freelance.pdf');
     }
 
     public function create()
