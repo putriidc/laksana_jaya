@@ -6,16 +6,16 @@
             <div class="flex items-center justify-between mb-5 pb-5 border-b-[1px] border-[#CCCCCC]">
                 <div class="flex items-center gap-x-4">
                     <span class="font-medium">Saldo Debet</span>
-                    <span class="bg-[#E9E9E9] py-[6px] px-4 w-[200px] rounded-lg font-semibold text-gray-500">Rp. 3.000.000</span>
+                    <span class="bg-[#E9E9E9] py-[6px] px-4 w-[200px] rounded-lg font-semibold text-gray-500">{{ 'RP. ' . number_format($totalDebit, 0, ',', '.') }}</span>
                 </div>
                 <div class="flex items-center gap-x-4">
                     <span class="font-medium">Saldo Kredit</span>
-                    <span class="bg-[#E9E9E9] py-[6px] px-4 w-[200px] rounded-lg font-semibold text-gray-500">Rp. 3.000.000</span>
+                    <span class="bg-[#E9E9E9] py-[6px] px-4 w-[200px] rounded-lg font-semibold text-gray-500">{{ 'RP. ' . number_format($totalKredit, 0, ',', '.') }}</span>
                 </div>
                 <div class="flex items-center gap-x-1">
                     <span class="font-medium mr-4">Status</span>
-                    <span class="bg-[#E9E9E9] py-[6px] px-8 rounded-lg font-semibold text-gray-500">Balance</span>
-                    <div class="bg-[#45D03E] w-[80px] h-[35px] rounded-lg"></div>
+                    <span class="bg-[#E9E9E9] py-[6px] px-8 rounded-lg font-semibold text-gray-500">{{ $status }}</span>
+                    <div class="{{ $status === 'Balance' ? 'bg-[#45D03E] w-[80px] h-[35px] rounded-lg' : 'bg-[#f80707] w-[80px] h-[35px] rounded-lg' }}"></div>
                 </div>
             </div>
             <div class="flex justify-between items-center pb-4">
@@ -59,7 +59,7 @@
                         <th class="w-[7%] py-2">Kd Proyek</th>
                         <th class="w-[10%] py-2">Debet</th>
                         <th class="w-[10%] py-2">Kredit</th>
-                        <th class="w-[10%] py-2">Action</th>
+                        {{-- <th class="w-[10%] py-2">Action</th> --}}
                     </thead>
                     <tbody>
                         @foreach ($jurnals as $jurnal)
@@ -72,7 +72,7 @@
                                 <td class="py-2">{{ $jurnal->kode_proyek }}</td>
                                 <td class="py-2">{{ 'RP. ' . number_format($jurnal->debit, 0, ',', '.') }}</td>
                                 <td class="py-2">{{ 'RP. ' . number_format($jurnal->kredit, 0, ',', '.') }}</td>
-                                <td class="flex justify-center items-center gap-x-2 py-2">
+                                {{-- <td class="flex justify-center items-center gap-x-2 py-2">
                                     @if($jurnal->tanggal == $today)
                                         <a href="{{ route('jurnalUmums.edit', $jurnal->id) }}"
                                             class="btn btn-sm btn-primary">
@@ -90,9 +90,9 @@
                                             </button>
                                         </form>
                                     @else
-                                        <span class="text-gray-600 font-bold">Lewat <br> Tanggal</span>
+                                        <span class="text-gray-600 font-bold" >Lewat <br> Tanggal</span>
                                     @endif
-                                </td>
+                                </td> --}}
                                 {{-- <td class="flex justify-center items-center gap-x-2 py-2">{{ $jurnal->tanggal }} | {{ $today }}</td> --}}
                             </tr>
                         @endforeach
@@ -105,26 +105,26 @@
                 // buat form modal dengan sweetalert2
                 Swal.fire({
                     html: `
-                    <form action="" method="POST" class="flex flex-col text-left">
+                    <form action="{{ route('jurnalUmums.storeCashIn') }}" method="POST" class="flex flex-col text-left">
                         @csrf
                         <h1 class="font-bold text-2xl mb-4">Transaksi Jurnal - Cash In</h1>
                         <div class="flex items-center mt-4">
                             <label for="tanggal" class="font-medium w-[150px]">Tgl Transaksi</label>
                             <div class="flex items-center w-full justify-between">
-                                <input type="date" name="tanggal" id="tanggal" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none" readonly>
+                                <input value="{{ $today }}" type="date" name="tanggal" id="tanggal" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none" readonly>
                                 <div class="flex items-center w-[350px]">
-                                    <label for="keterangan" class="font-medium w-[35%]">Kode Akun</label>
-                                    <input type="text" name="kode_perkiraan" id="kode_perkiraan" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2">
+                                    <label for="kode_akun" class="font-medium w-[35%]">Kode Akun</label>
+                                    <input type="text" name="kode_perkiraan" id="kode_akun" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2">
                                 </div>
                             </div>
                         </div>
                         <div class="flex items-center mt-4">
-                            <label for="tanggal" class="font-medium w-[150px]">Keterangan</label>
+                            <label for="keterangan" class="font-medium w-[150px]">Keterangan</label>
                             <div class="flex items-center w-full justify-between">
-                                <input type="text" name="tanggal" id="tanggal" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none">
+                                <input type="text" name="keterangan" id="keterangan" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none">
                                 <div class="flex items-center w-[350px]">
-                                    <label for="keterangan" class="font-medium w-[35%]">Nominal</label>
-                                    <input type="text" name="kode_perkiraan" id="kode_perkiraan" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2">
+                                    <label for="kredit" class="font-medium w-[35%]">Nominal</label>
+                                    <input type="number" name="kredit" id="kredit" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2">
                                 </div>
                             </div>
                         </div>
@@ -165,11 +165,11 @@
                         <div class="flex items-center mt-6 gap-x-4">
                             <div class="w-[110px]"></div>
                             <button type="submit" class="border-[#3E98D0] border text-[#3E98D0] py-1 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
-                                <span class="">Simpan Data</span>    
+                                <span class="">Simpan Data</span>
                                 <img src="{{ asset('assets/plus-circle-blue.png') }}" alt="arrow right blue icon" class="w-[30px]">
                             </button>
                             <button type="button" onclick="Swal.close()" class="border-[#DD4049] border text-[#DD4049] py-1 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
-                                <span class="">Batal</span>    
+                                <span class="">Batal</span>
                                 <img src="{{ asset('assets/close-circle-red.png') }}" alt="arrow right blue icon" class="w-[22px]">
                             </button>
                         </div>
@@ -185,26 +185,26 @@
                 // buat form modal dengan sweetalert2
                 Swal.fire({
                     html: `
-                    <form action="" method="POST" class="flex flex-col text-left">
+                    <form action="{{ route('jurnalUmums.storeCashOut') }}" method="POST" class="flex flex-col text-left">
                         @csrf
                         <h1 class="font-bold text-2xl mb-4">Transaksi Jurnal - Cash Out</h1>
                         <div class="flex items-center mt-4">
                             <label for="tanggal" class="font-medium w-[150px]">Tgl Transaksi</label>
                             <div class="flex items-center w-full justify-between">
-                                <input type="date" name="tanggal" id="tanggal" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none" readonly>
+                                <input value="{{ $today }}" type="date" name="tanggal" id="tanggal" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none" readonly>
                                 <div class="flex items-center w-[350px]">
-                                    <label for="keterangan" class="font-medium w-[35%]">Kode Akun</label>
-                                    <input type="text" name="kode_perkiraan" id="kode_perkiraan" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2">
+                                    <label for="kode_akun" class="font-medium w-[35%]">Kode Akun</label>
+                                    <input type="text" name="kode_perkiraan" id="kode_akun" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2">
                                 </div>
                             </div>
                         </div>
                         <div class="flex items-center mt-4">
-                            <label for="tanggal" class="font-medium w-[150px]">Keterangan</label>
+                            <label for="keterangan" class="font-medium w-[150px]">Keterangan</label>
                             <div class="flex items-center w-full justify-between">
-                                <input type="text" name="tanggal" id="tanggal" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none">
+                                <input type="text" name="keterangan" id="keterangan" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none">
                                 <div class="flex items-center w-[350px]">
-                                    <label for="keterangan" class="font-medium w-[35%]">Nominal</label>
-                                    <input type="text" name="kode_perkiraan" id="kode_perkiraan" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2">
+                                    <label for="kredit" class="font-medium w-[35%]">Nominal</label>
+                                    <input type="number" name="debit" id="kredit" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2">
                                 </div>
                             </div>
                         </div>
@@ -245,11 +245,11 @@
                         <div class="flex items-center mt-6 gap-x-4">
                             <div class="w-[110px]"></div>
                             <button type="submit" class="border-[#3E98D0] border text-[#3E98D0] py-1 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
-                                <span class="">Simpan Data</span>    
+                                <span class="">Simpan Data</span>
                                 <img src="{{ asset('assets/plus-circle-blue.png') }}" alt="arrow right blue icon" class="w-[30px]">
                             </button>
                             <button type="button" onclick="Swal.close()" class="border-[#DD4049] border text-[#DD4049] py-1 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
-                                <span class="">Batal</span>    
+                                <span class="">Batal</span>
                                 <img src="{{ asset('assets/close-circle-red.png') }}" alt="arrow right blue icon" class="w-[22px]">
                             </button>
                         </div>

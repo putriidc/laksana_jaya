@@ -49,6 +49,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('proyek', ProyekController::class);
 
     Route::resource('jurnalUmums', JurnalUmumController::class);
+    Route::post('jurnalUmums/storeCashIn', [JurnalUmumController::class, 'storeCashIn'])
+     ->name('jurnalUmums.storeCashIn');
+    Route::post('jurnalUmums/storeCashOut', [JurnalUmumController::class, 'storeCashOut'])
+     ->name('jurnalUmums.storeCashOut');
 
     Route::resource('pinjamanKaryawans', PinjamanKaryawanController::class);
 
