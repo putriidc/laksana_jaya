@@ -30,7 +30,7 @@
                     <label for="" class="w-[200px] font-medium">Nama Proyek</label>
                     <select name="nama_proyek" id=""
                         class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2 appearance-none cursor-pointer">
-                        <option selected>Pilih Nama Proyek</option>
+                        <option selected disabled>Pilih Nama Proyek</option>
                         @foreach ($karyawans as $karyawan)
                             <option value="{{ $karyawan->nama_proyek }}">{{ $karyawan->nama_proyek }}</option>
                         @endforeach

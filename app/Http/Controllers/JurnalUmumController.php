@@ -7,7 +7,9 @@ use App\Models\Asset;
 use App\Models\Proyek;
 use App\Models\JurnalUmum;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
+
 
 class JurnalUmumController extends Controller
 {
@@ -32,6 +34,27 @@ class JurnalUmumController extends Controller
         $today = Carbon::now('Asia/Jakarta')->toDateString();
 
         return view('admin.jurnal-umum.data', compact('jurnals', 'today', 'totalDebit', 'totalKredit', 'status'));
+    }
+
+    public function print(Request $request)
+    {
+        $query = JurnalUmum::active();
+
+        if ($request->filled('start') && $request->filled('end')) {
+            $start = Carbon::parse($request->start)->startOfDay();
+            $end = Carbon::parse($request->end)->endOfDay();
+            $query->whereBetween('tanggal', [$start, $end]);
+        }
+
+        $jurnals = $query->orderBy('tanggal', 'desc')->get();
+        $admin = Auth::user()->name ?? 'Administrator';
+        $role = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+
+        $pdf = Pdf::loadView('admin.jurnal-umum.print', compact('jurnals', 'admin', 'role', 'tanggalCetak'))
+            ->setPaper('A4', 'portrait');
+
+        return $pdf->stream('jurnal-umum.pdf');
     }
 
 

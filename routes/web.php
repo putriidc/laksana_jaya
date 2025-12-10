@@ -49,11 +49,13 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('proyek', ProyekController::class);
 
-    Route::resource('jurnalUmums', JurnalUmumController::class);
+    Route::get('jurnalUmums/print', [JurnalUmumController::class, 'print'])->name('jurnalUmums.print');
+    Route::resource('jurnalUmums', JurnalUmumController::class)->except(['show']);
     Route::post('jurnalUmums/storeCashIn', [JurnalUmumController::class, 'storeCashIn'])
      ->name('jurnalUmums.storeCashIn');
     Route::post('jurnalUmums/storeCashOut', [JurnalUmumController::class, 'storeCashOut'])
      ->name('jurnalUmums.storeCashOut');
+    Route::get('jurnalUmums/print', [JurnalUmumController::class, 'print'])->name('jurnalUmums.print');
 
 
     Route::resource('laporanHarian', LaporanHarianController::class);
