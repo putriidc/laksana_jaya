@@ -8,7 +8,8 @@
                 <div class="border-[#9A9A9A] border-2 rounded-lg py-[8px] px-[25px] font-bold">
                     {{ $pinjaman->karyawan->nama }}
                 </div>
-                <a href="" class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
+                <a href="{{ route('pinjaman-karyawan.print', $pinjaman->id) }}"
+                    class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer" target="_blank">
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
                 </a>
             </div>
@@ -85,10 +86,6 @@
                                 <td class="flex justify-center items-center gap-x-2 py-2">
                                     @if ($item->tanggal == $today)
                                         @if ($item->jenis === 'pinjam')
-                                            {{-- <a href="{{ route('pinjamanContents.edit', $item->id) }}" class="">
-                                            <img src="{{ asset('assets/more-circle.png') }}" alt="more circle icon"
-                                                class="w-[20px] cursor-pointer">
-                                        </a> --}}
                                             {{ 'No ' }}
                                         @else
                                             <a href="{{ route('pinjamanContents.editBayar', $item->id) }}" class="">
@@ -98,15 +95,6 @@
                                         @endif
                                         {{-- <span class="border-black border-l-[1px] h-[22px]"></span> --}}
                                         @if ($item->jenis === 'pinjam')
-                                            {{-- <form action="{{ route('pinjamanContents.destroy', $item->id) }}" method="POST"
-                                            class="h-[22px]">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
-                                                    class="w-[22px] cursor-pointer">
-                                            </button>
-                                        </form> --}}
                                             {{ 'Edit' }}
                                         @else
                                             <form action="{{ route('pinjamanContents.destroyBayar', $item->id) }}"
@@ -202,10 +190,6 @@
                         <td class="flex justify-center items-center gap-x-2 py-2">
                             @if ($item->tanggal == $today)
                                 @if ($item->jenis === 'pinjam')
-                                    {{-- <a href="{{ route('kasbonContents.edit', $item->id) }}" class="">
-                                        <img src="{{ asset('assets/more-circle.png') }}" alt="more circle icon"
-                                            class="w-[20px] cursor-pointer">
-                                    </a> --}}
                                     {{ '-' }}
                                 @else
                                     <a href="{{ route('kasbonContents.editBayar', $item->id) }}" class="">
@@ -216,15 +200,6 @@
 
                                 <span class="border-black border-l-[1px] h-[22px]"></span>
                                 @if ($item->jenis === 'pinjam')
-                                    {{-- <form action="{{ route('kasbonContents.destroy', $item->id) }}" method="POST"
-                                        class="h-[22px]">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                            <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
-                                                class="w-[22px] cursor-pointer">
-                                        </button>
-                                    </form> --}}
                                     {{ '-' }}
                                 @else
                                     <form action="{{ route('kasbonContents.destroyBayar', $item->id) }}" method="POST"

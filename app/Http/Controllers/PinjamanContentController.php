@@ -6,7 +6,9 @@ use Carbon\Carbon;
 use App\Models\Asset;
 use App\Models\JurnalUmum;
 use Illuminate\Http\Request;
+use App\Models\KasbonContent;
 use App\Models\PinjamanContent;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\PinjamanKaryawan;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,6 +18,35 @@ class PinjamanContentController extends Controller
     {
         $contents = PinjamanContent::active()->get();
         return view('pinjamanContents.index', compact('contents'));
+    }
+    public function print($id)
+    {
+        // Ambil data pinjaman utama + relasi karyawan
+        $pinjaman = PinjamanKaryawan::with('karyawan')->active()->findOrFail($id);
+
+        // Ambil semua transaksi pinjaman dan kasbon berdasarkan kode_karyawan
+        $pinjamanContents = PinjamanContent::where('kode_karyawan', $pinjaman->kode_karyawan)
+            ->where('setuju', true)
+            ->active()->get();
+
+        $kasbonContents = KasbonContent::where('kode_karyawan', $pinjaman->kode_karyawan)
+            ->where('setuju', true)
+            ->active()->get();
+
+        $admin        = Auth::user()->name ?? 'Administrator';
+        $role         = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+
+        $pdf = Pdf::loadView('admin.pinjaman-karyawan.detail.print', compact(
+            'pinjaman',
+            'pinjamanContents',
+            'kasbonContents',
+            'admin',
+            'role',
+            'tanggalCetak'
+        ))->setPaper('A4', 'portrait');
+
+        return $pdf->stream('detail-pinjaman-karyawan.pdf');
     }
 
     public function create()
@@ -237,8 +268,8 @@ class PinjamanContentController extends Controller
             'total_pinjam' => $totalBaru,
         ]);
         $content->update(['deleted_at' => Carbon::now('Asia/Jakarta')]);
-         return redirect()->route('pinjamanKaryawans.show', $pinjamanKaryawan->id)
-                     ->with('success', 'Data pinjaman berhasil dihapus');
+        return redirect()->route('pinjamanKaryawans.show', $pinjamanKaryawan->id)
+            ->with('success', 'Data pinjaman berhasil dihapus');
     }
     public function destroyBayar($id)
     {
@@ -258,7 +289,7 @@ class PinjamanContentController extends Controller
             'total_pinjam' => $totalBaru,
         ]);
         $content->update(['deleted_at' => Carbon::now('Asia/Jakarta')]);
-         return redirect()->route('pinjamanKaryawans.show', $pinjamanKaryawan->id)
-                     ->with('success', 'Data pinjaman berhasil dihapus');
+        return redirect()->route('pinjamanKaryawans.show', $pinjamanKaryawan->id)
+            ->with('success', 'Data pinjaman berhasil dihapus');
     }
 }

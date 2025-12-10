@@ -52,9 +52,9 @@ Route::middleware('auth')->group(function () {
     Route::get('jurnalUmums/print', [JurnalUmumController::class, 'print'])->name('jurnalUmums.print');
     Route::resource('jurnalUmums', JurnalUmumController::class)->except(['show']);
     Route::post('jurnalUmums/storeCashIn', [JurnalUmumController::class, 'storeCashIn'])
-     ->name('jurnalUmums.storeCashIn');
+        ->name('jurnalUmums.storeCashIn');
     Route::post('jurnalUmums/storeCashOut', [JurnalUmumController::class, 'storeCashOut'])
-     ->name('jurnalUmums.storeCashOut');
+        ->name('jurnalUmums.storeCashOut');
     Route::get('jurnalUmums/print', [JurnalUmumController::class, 'print'])->name('jurnalUmums.print');
 
 
@@ -79,6 +79,10 @@ Route::middleware('auth')->group(function () {
         ->name('pinjamanContents.storeBayar');
     Route::put('pinjamanContents/updateBayar/{id}', [PinjamanContentController::class, 'updateBayar'])
         ->name('pinjamanContents.updateBayar');
+    // Print detail pinjaman per karyawan
+    Route::get('pinjaman-karyawan/{id}/print', [PinjamanContentController::class, 'print'])
+        ->name('pinjaman-karyawan.print');
+
 
     Route::resource('kasbonContents', KasbonContentController::class);
     Route::get('kasbonContents/pinjam/{id}', [KasbonContentController::class, 'pinjam'])
@@ -114,20 +118,20 @@ Route::middleware('auth')->group(function () {
     // data barang
     Route::resource('accspv', AccTukangSpvController::class);
     Route::post('/pinjaman/{id}/decline', [AccTukangSpvController::class, 'decline'])
-     ->name('pinjaman.decline');
+        ->name('pinjaman.decline');
 
     // transaksi barang
     Route::resource('barang-masuk', BarangMasukController::class);
     Route::get('barang-masuk/create/{kode_barang}', [BarangMasukController::class, 'createForBarang'])
-    ->name('barang-masuk.create.for-barang');
+        ->name('barang-masuk.create.for-barang');
 
     Route::resource('barang-keluar', BarangKeluarController::class);
     Route::get('barang-keluar/create/{kode_barang}', [BarangKeluarController::class, 'createForBarang'])
-    ->name('barang-keluar.create.for-barang');
+        ->name('barang-keluar.create.for-barang');
 
     Route::resource('barang-retur', barangReturController::class);
     Route::get('barang-retur/create/{kode_barang}', [barangReturController::class, 'createForBarang'])
-    ->name('barang-retur.create.for-barang');
+        ->name('barang-retur.create.for-barang');
     // transaksi barang
 
     // detail barang
@@ -203,9 +207,9 @@ Route::middleware('auth')->group(function () {
         Route::get('data-perusahaan/create', [DataPerusahaanController::class, 'create'])->name('data-perusahaan.create');
     });
     Route::post('data-perusahaan/{id}/progres', [DataPerusahaanController::class, 'storeProgres'])
-    ->name('data-perusahaan.progres.store');
+        ->name('data-perusahaan.progres.store');
     Route::put('progres/{id}', [DataPerusahaanController::class, 'updateProgres'])
-    ->name('progres.update');
+        ->name('progres.update');
 
 
 
@@ -247,21 +251,21 @@ Route::middleware('auth')->group(function () {
     // owner
     Route::resource('accowner', AccOwnerController::class);
     Route::post('/pinjamanO/{id}/decline', [AccOwnerController::class, 'decline'])
-     ->name('pinjaman.decline');
+        ->name('pinjaman.decline');
     Route::post('/pinjamanKR/{id}/decline', [AccOwnerController::class, 'declineKR'])
-     ->name('pinjaman.decline');
+        ->name('pinjaman.decline');
     Route::post('/pinjamanKS/{id}/decline', [AccOwnerController::class, 'declineKS'])
-     ->name('pinjaman.decline');
+        ->name('pinjaman.decline');
     Route::post('accowner/storePinjam/{id}', [AccOwnerController::class, 'storePinjam'])
-     ->name('accowner.storePinjam');
+        ->name('accowner.storePinjam');
     Route::post('accowner/storeKasbon/{id}', [AccOwnerController::class, 'storeKasbon'])
-     ->name('accowner.storeKasbon');
-     Route::get('/create-pinjaman/{id}/edit', [AccOwnerController::class, 'edit'])
-     ->name('create-pinjaman.edit');
-     Route::get('/create-kasbon/{id}/edit', [AccOwnerController::class, 'editKasbon'])
-     ->name('create-kasbon.edit');
-     Route::put('/accowner/{id}/updateKasbon', [AccOwnerController::class, 'updateKasbon'])
-    ->name('accowner.updateKasbon');
+        ->name('accowner.storeKasbon');
+    Route::get('/create-pinjaman/{id}/edit', [AccOwnerController::class, 'edit'])
+        ->name('create-pinjaman.edit');
+    Route::get('/create-kasbon/{id}/edit', [AccOwnerController::class, 'editKasbon'])
+        ->name('create-kasbon.edit');
+    Route::put('/accowner/{id}/updateKasbon', [AccOwnerController::class, 'updateKasbon'])
+        ->name('accowner.updateKasbon');
 
 
     Route::get('/owner-dashboard', function () {
