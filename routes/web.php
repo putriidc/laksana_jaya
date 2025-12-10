@@ -18,6 +18,7 @@ use App\Http\Controllers\barangReturController;
 use App\Http\Controllers\KasbonContentController;
 use App\Http\Controllers\PiutangHutangController;
 use App\Http\Controllers\DataPerusahaanController;
+use App\Http\Controllers\LaporanHarianController;
 use App\Http\Controllers\PinjamanContentController;
 use App\Http\Controllers\PinjamanKaryawanController;
 use App\Http\Controllers\pinjamanTukangController;
@@ -53,6 +54,12 @@ Route::middleware('auth')->group(function () {
      ->name('jurnalUmums.storeCashIn');
     Route::post('jurnalUmums/storeCashOut', [JurnalUmumController::class, 'storeCashOut'])
      ->name('jurnalUmums.storeCashOut');
+
+
+    Route::resource('laporanHarian', LaporanHarianController::class);
+    Route::put('laporanHarian/{id}', [LaporanHarianController::class, 'update'])->name('laporanHarian.update');
+
+
 
     Route::resource('pinjamanKaryawans', PinjamanKaryawanController::class);
 

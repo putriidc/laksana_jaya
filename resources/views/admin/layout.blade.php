@@ -160,7 +160,7 @@
                         </button>
                     </a>
                     <a
-                        href="/laporan-harian"
+                        href="{{ route('laporanHarian.index') }}"
                         class="cursor-pointer"
                     >
                         <button

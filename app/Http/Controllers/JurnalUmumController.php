@@ -13,7 +13,9 @@ class JurnalUmumController extends Controller
 {
     public function index()
     {
-        $jurnals = JurnalUmum::active()->get();
+        $jurnals = JurnalUmum::active()
+        ->orderBy('tanggal', 'desc')
+        ->get();
         $today = Carbon::now('Asia/Jakarta')->toDateString();
 
         $totalDebit = $jurnals->sum('debit');
