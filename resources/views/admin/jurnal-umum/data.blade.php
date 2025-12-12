@@ -124,7 +124,8 @@
                                 <input value="{{ $today }}" type="date" name="tanggal" id="tanggal" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none" readonly>
                                 <div class="flex items-center w-[350px]">
                                     <label for="kode_akun" class="font-medium w-[35%]">Kode Akun</label>
-                                    <input type="text" name="kode_perkiraan" id="kode_akun" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2">
+                                    <input type="text" name="kode_perkiraan" id="kode_akun" readonly
+                                    class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none">
                                 </div>
                             </div>
                         </div>
@@ -142,34 +143,11 @@
                             <label for="tanggal" class="font-medium w-[125px]">Nama Akun</label>
                             <select name="nama_perkiraan" id="nama_perkiraan" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none appearance-none">
                                 <option value="" disabled selected>-Pilih Nama Akun-</option>
-                                <option value="Kas Besar">Kas Besar</option>
-                                <option value="Kas Utama">Kas Utama</option>
-                                <option value="Kas Kecil">Kas Kecil</option>
-                                <option value="Kas Bank BCA">Kas Bank BCA</option>
-                                <option value="Piutang Usaha">Piutang Usaha</option>
-                                <option value="Persediaan Material">Persediaan Material</option>
-                                <option value="Uang Muka PPh">Uang Muka PPh</option>
-                                <option value="Kas Flip">Kas Flip</option>
-                                <option value="Piutang Pihak Lain">Piutang Pihak Lain</option>
-                                <option value="Pendapatan Proyek Fisik">Pendapatan Proyek Fisik</option>
-                                <option value="Pendapatan Konsultan">Pendapatan Konsultan</option>
-                                <option value="Pendapatan Online">Pendapatan Online</option>
-                                <option value="Pendapatan AR4N Bangunan">Pendapatan AR4N Bangunan</option>
-                                <option value="Pendapatan Lain-Lain">Pendapatan Lain-Lain</option>
-                                <option value="Pendapatan PBG">Pendapatan PBG</option>
-                                <option value="Biaya PBG">Biaya PBG</option>
-                                <option value="Biaya Iklan dan Promosi">Biaya Iklan dan Promosi</option>
-                                <option value="Biaya Admin Bank">Biaya Admin Bank</option>
-                                <option value="Biaya Gaji Staf Kantor">Biaya Gaji Staf Kantor</option>
-                                <option value="Biaya Konsumsi">Biaya Konsumsi</option>
-                                <option value="Biaya Owner">Biaya Owner</option>
-                                <option value="Fee Perusahaan">Fee Perusahaan</option>
-                                <option value="Biaya Entertainment">Biaya Entertainment</option>
-                                <option value="Fee Dinas">Fee Dinas</option>
-                                <option value="OVO">OVO</option>
-                                <option value="Biaya Reparasi dan Pemeliharaan">Biaya Reparasi dan Pemeliharaan</option>
-                                <option value="Biaya Kartu Kredit">Biaya Kartu Kredit</option>
-                                <option value="Fee Bendera SKK">Fee Bendera SKK</option>
+                                 @foreach ($akun as $item)
+                                    <option value="{{ $item->nama_akun }}" data-kode="{{ $item->kode_akun }}">
+                                        {{ $item->nama_akun }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="flex items-center mt-6 gap-x-4">
@@ -189,6 +167,17 @@
                     showCancelButton: false,
                     showCloseButton: false,
                     showConfirmButton: false,
+                    didOpen: () => {
+                        // pasang listener setelah modal muncul
+                        const select = document.getElementById('nama_perkiraan');
+                        const kodeInput = document.getElementById('kode_akun');
+
+                        select.addEventListener('change', function() {
+                            let selectedOption = this.options[this.selectedIndex];
+                            let kode = selectedOption.getAttribute('data-kode');
+                            kodeInput.value = kode;
+                        });
+                    }
                 });
             }
 
@@ -205,7 +194,8 @@
                                 <input value="{{ $today }}" type="date" name="tanggal" id="tanggal" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none" readonly>
                                 <div class="flex items-center w-[350px]">
                                     <label for="kode_akun" class="font-medium w-[35%]">Kode Akun</label>
-                                    <input type="text" name="kode_perkiraan" id="kode_akun" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2">
+                                    <input type="text" name="kode_perkiraan" id="kode_akun" readonly
+                                    class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none">
                                 </div>
                             </div>
                         </div>
@@ -223,34 +213,11 @@
                             <label for="tanggal" class="font-medium w-[125px]">Nama Akun</label>
                             <select name="nama_perkiraan" id="nama_perkiraan" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none appearance-none">
                                 <option value="" disabled selected>-Pilih Nama Akun-</option>
-                                <option value="Kas Besar">Kas Besar</option>
-                                <option value="Kas Utama">Kas Utama</option>
-                                <option value="Kas Kecil">Kas Kecil</option>
-                                <option value="Kas Bank BCA">Kas Bank BCA</option>
-                                <option value="Piutang Usaha">Piutang Usaha</option>
-                                <option value="Persediaan Material">Persediaan Material</option>
-                                <option value="Uang Muka PPh">Uang Muka PPh</option>
-                                <option value="Kas Flip">Kas Flip</option>
-                                <option value="Piutang Pihak Lain">Piutang Pihak Lain</option>
-                                <option value="Pendapatan Proyek Fisik">Pendapatan Proyek Fisik</option>
-                                <option value="Pendapatan Konsultan">Pendapatan Konsultan</option>
-                                <option value="Pendapatan Online">Pendapatan Online</option>
-                                <option value="Pendapatan AR4N Bangunan">Pendapatan AR4N Bangunan</option>
-                                <option value="Pendapatan Lain-Lain">Pendapatan Lain-Lain</option>
-                                <option value="Pendapatan PBG">Pendapatan PBG</option>
-                                <option value="Biaya PBG">Biaya PBG</option>
-                                <option value="Biaya Iklan dan Promosi">Biaya Iklan dan Promosi</option>
-                                <option value="Biaya Admin Bank">Biaya Admin Bank</option>
-                                <option value="Biaya Gaji Staf Kantor">Biaya Gaji Staf Kantor</option>
-                                <option value="Biaya Konsumsi">Biaya Konsumsi</option>
-                                <option value="Biaya Owner">Biaya Owner</option>
-                                <option value="Fee Perusahaan">Fee Perusahaan</option>
-                                <option value="Biaya Entertainment">Biaya Entertainment</option>
-                                <option value="Fee Dinas">Fee Dinas</option>
-                                <option value="OVO">OVO</option>
-                                <option value="Biaya Reparasi dan Pemeliharaan">Biaya Reparasi dan Pemeliharaan</option>
-                                <option value="Biaya Kartu Kredit">Biaya Kartu Kredit</option>
-                                <option value="Fee Bendera SKK">Fee Bendera SKK</option>
+                                 @foreach ($akun as $item)
+                                    <option value="{{ $item->nama_akun }}" data-kode="{{ $item->kode_akun }}">
+                                        {{ $item->nama_akun }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="flex items-center mt-6 gap-x-4">
@@ -270,8 +237,20 @@
                     showCancelButton: false,
                     showCloseButton: false,
                     showConfirmButton: false,
+                    didOpen: () => {
+                        // pasang listener setelah modal muncul
+                        const select = document.getElementById('nama_perkiraan');
+                        const kodeInput = document.getElementById('kode_akun');
+
+                        select.addEventListener('change', function() {
+                            let selectedOption = this.options[this.selectedIndex];
+                            let kode = selectedOption.getAttribute('data-kode');
+                            kodeInput.value = kode;
+                        });
+                    }
                 });
             }
         </script>
+
     </div>
 @endsection
