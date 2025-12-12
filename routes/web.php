@@ -153,6 +153,8 @@ Route::middleware('auth')->group(function () {
     // kepala gudang
 
     // admin
+    Route::get('pinjamanTukangs/print', [pinjamanTukangController::class, 'print'])->name('pinjamanTukangs.print');
+
     Route::resource('pinjamanTukangs', pinjamanTukangController::class);
 
     Route::resource('tukangContents', TukangContentController::class);
@@ -168,6 +170,9 @@ Route::middleware('auth')->group(function () {
         ->name('tukangContents.storeBayar');
     Route::put('tukangContents/updateBayar/{id}', [TukangContentController::class, 'updateBayar'])
         ->name('tukangContents.updateBayar');
+        // Print detail pinjaman per karyawan
+    Route::get('tukangContents/{id}/print', [TukangContentController::class, 'print'])
+        ->name('tukangContents.print');
 
     Route::get('/pinjaman-tukang', function () {
         return view('admin.pinjaman-tukang.data');
