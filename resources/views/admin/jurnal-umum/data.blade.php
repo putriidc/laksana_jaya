@@ -232,7 +232,7 @@
                             <label for="tanggal" class="font-medium w-[125px]">Nama Akun</label>
                             <select name="nama_perkiraan" id="nama_perkiraan" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none appearance-none">
                                 <option value="" disabled selected>-Pilih Nama Akun-</option>
-                                 @foreach ($akun as $item)
+                                 @foreach ($kredit as $item)
                                     <option value="{{ $item->nama_akun }}" data-kode="{{ $item->kode_akun }}">
                                         {{ $item->nama_akun }}
                                     </option>

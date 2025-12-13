@@ -26,13 +26,14 @@ class JurnalUmumController extends Controller
             $query->whereBetween('tanggal', [$start, $end]);
         }
 
-        $akun = Asset::query();
+        //debit
+        $akun = Asset::where('for_admin', true)
+            ->Active()
+            ->get();
 
-        if (Auth::user()->role === 'Admin') {
-            $akun->where('for_admin', true);
-        }
-
-        $akun = $akun->get();
+        $kredit = Asset::Active()
+        ->whereIn('nama_akun', ['Kas Besar', 'Kas Kecil', 'Kas Bank BCA'])
+        ->get();
 
         $daftarProyek = Proyek::active()
             ->pluck('nama_proyek')
@@ -50,7 +51,7 @@ class JurnalUmumController extends Controller
         $status = $totalDebit === $totalKredit ? 'Balance' : 'Tidak Balance';
         $today = Carbon::now('Asia/Jakarta')->toDateString();
 
-        return view('admin.jurnal-umum.data', compact('jurnals', 'today', 'totalDebit', 'totalKredit', 'status', 'akun', 'daftarProyek'));
+        return view('admin.jurnal-umum.data', compact('jurnals', 'today', 'totalDebit', 'totalKredit', 'status', 'akun', 'daftarProyek', 'kredit'));
     }
 
     public function print(Request $request)
