@@ -11,7 +11,7 @@ class AssetSeeder extends Seeder
     public function run(): void
     {
         $data = [
-            ['kode_akun' => '111', 'nama_akun' => 'Kas Besar'],
+            ['kode_akun' => '111', 'nama_akun' => 'Kas Besar', 'for_admin' => true],
             ['kode_akun' => '112', 'nama_akun' => 'Kas Kecil'],
             ['kode_akun' => '113', 'nama_akun' => 'Kas Bank BCA'],
             ['kode_akun' => '114', 'nama_akun' => 'Piutang Usaha'],
@@ -29,6 +29,7 @@ class AssetSeeder extends Seeder
             Asset::create([
                 'kode_akun'     => $item['kode_akun'],
                 'nama_akun'     => $item['nama_akun'],
+                'for_admin'     => $item['for_admin'] ?? false, // default false kalau tidak ada
                 'akun_header'   => 'asset_lancar',
                 'post_saldo'    => 'DEBET',
                 'post_laporan'  => 'NERACA',
@@ -52,6 +53,7 @@ class AssetSeeder extends Seeder
             Asset::create([
                 'kode_akun'     => $item['kode_akun'],
                 'nama_akun'     => $item['nama_akun'],
+                'for_admin'     => $item['for_admin'] ?? false, // default false kalau tidak ada
                 'akun_header'   => 'asset_tetap',
                 'post_saldo'    => 'DEBET',
                 'post_laporan'  => 'NERACA',
@@ -71,6 +73,7 @@ class AssetSeeder extends Seeder
             Asset::create([
                 'kode_akun'     => $item['kode_akun'],
                 'nama_akun'     => $item['nama_akun'],
+                'for_admin'     => $item['for_admin'] ?? false, // default false kalau tidak ada
                 'akun_header'   => 'kewajiban',
                 'post_saldo'    => 'KREDIT',
                 'post_laporan'  => 'NERACA',
@@ -88,6 +91,7 @@ class AssetSeeder extends Seeder
             Asset::create([
                 'kode_akun'     => $item['kode_akun'],
                 'nama_akun'     => $item['nama_akun'],
+                'for_admin'     => $item['for_admin'] ?? false, // default false kalau tidak ada
                 'akun_header'   => 'ekuitas',
                 'post_saldo'    => 'KREDIT',
                 'post_laporan'  => 'NERACA',
@@ -108,6 +112,7 @@ class AssetSeeder extends Seeder
             Asset::create([
                 'kode_akun'     => $item['kode_akun'],
                 'nama_akun'     => $item['nama_akun'],
+                'for_admin'     => $item['for_admin'] ?? false, // default false kalau tidak ada
                 'akun_header'   => 'pendapatan',
                 'post_saldo'    => 'KREDIT',
                 'post_laporan'  => 'LABA RUGI',
@@ -149,6 +154,7 @@ class AssetSeeder extends Seeder
             Asset::create([
                 'kode_akun'     => $item['kode_akun'],
                 'nama_akun'     => $item['nama_akun'],
+                'for_admin'     => $item['for_admin'] ?? false, // default false kalau tidak ada
                 'akun_header'   => 'hpp_proyek',
                 'post_saldo'    => 'DEBET',
                 'post_laporan'  => 'LABA RUGI',

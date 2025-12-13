@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('kode_akun');
             $table->string('nama_akun');
+            $table->boolean('for_admin')->nullable();
             $table->string('akun_header')->nullable();
             $table->string('post_saldo')->nullable();
             $table->string('post_laporan')->nullable();

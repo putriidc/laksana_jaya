@@ -10,6 +10,7 @@ use App\Models\KasbonTukang;
 use Illuminate\Http\Request;
 use App\Models\KasbonContent;
 use App\Models\TukangContent;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 
 class TukangContentController extends Controller
@@ -28,6 +29,31 @@ class TukangContentController extends Controller
     public function create()
     {
         //
+    }
+    public function print($id)
+    {
+        // Ambil data pinjaman utama + relasi karyawan
+        $pinjaman = KasbonTukang::active()->findOrFail($id);
+
+        // Ambil semua transaksi pinjaman dan kasbon berdasarkan kode_karyawan
+        $pinjamanContents = TukangContent::where('kode_kasbon', $pinjaman->kode_kasbon)
+            ->where('status_spv', 'accept')
+            ->where('status_owner', 'accept')
+            ->active()->get();
+
+        $admin        = Auth::user()->name ?? 'Administrator';
+        $role         = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+
+        $pdf = Pdf::loadView('admin.pinjaman-tukang.detail.print', compact(
+            'pinjaman',
+            'pinjamanContents',
+            'admin',
+            'role',
+            'tanggalCetak'
+        ))->setPaper('A4', 'portrait');
+
+        return $pdf->stream('detail-pinjaman-tukang.pdf');
     }
     public function pinjam($id)
     {

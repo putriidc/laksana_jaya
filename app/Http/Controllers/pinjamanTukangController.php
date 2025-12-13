@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Proyek;
 use App\Models\KasbonTukang;
-use App\Models\TukangContent;
 use Illuminate\Http\Request;
+use App\Models\TukangContent;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 
 class pinjamanTukangController extends Controller
@@ -26,6 +27,19 @@ class pinjamanTukangController extends Controller
             ->get();
 
         return view('admin.pinjaman-tukang.data', compact('pinjamans', 'contents'));
+    }
+
+    public function print()
+    {
+        $pinjamans = KasbonTukang::active()->get();
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->format('d F Y');
+        $role = Auth::user()->role ?? 'Admin';
+        $admin = Auth::user()->name ?? 'Admin';
+
+        $pdf = Pdf::loadView('admin.pinjaman-tukang.print', compact('pinjamans', 'tanggalCetak', 'admin', 'role'))
+            ->setPaper('A4', 'portrait');
+
+        return $pdf->stream('laporan-Pinjaman-Tukang.pdf');
     }
 
     /**

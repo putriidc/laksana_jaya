@@ -5,7 +5,7 @@
         <div class="flex items-center gap-x-4 mb-6 pb-6 border-b-2 border-[#B6B6B6]">
             <a href="{{ route('pinjamanTukangs.create') }}" class="px-4 py-2 border-2 border-[#9A9A9A] rounded-lg">Tambah Data
                 +</a>
-            <a href="" class="px-4 py-2 border-2 border-[#9A9A9A] rounded-lg flex items-center gap-x-2">
+            <a target="_blank" href="{{ route('pinjamanTukangs.print') }}" class="px-4 py-2 border-2 border-[#9A9A9A] rounded-lg flex items-center gap-x-2">
                 <span class="text-[#72686B]">Cetak Semua Data</span>
                 <img src="{{ asset('assets/printer.png') }}" alt="printer icon">
             </a>

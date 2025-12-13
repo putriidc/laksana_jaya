@@ -9,7 +9,7 @@
                     {{ $pinjaman->nama_tukang }}
                 </div>
             </div>
-            <a href="" class="px-2 py-2 border-2 border-[#9A9A9A] rounded-lg flex items-center gap-x-2">
+            <a target="_blank" href="{{ route("tukangContents.print", $pinjaman->id) }}" class="px-2 py-2 border-2 border-[#9A9A9A] rounded-lg flex items-center gap-x-2">
                 <img src="{{ asset('assets/printer.png') }}" alt="printer icon">
             </a>
         </div>
