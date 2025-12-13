@@ -34,6 +34,14 @@ class JurnalUmumController extends Controller
 
         $akun = $akun->get();
 
+        $daftarProyek = Proyek::active()
+            ->pluck('nama_proyek')
+            ->filter()
+            ->values();        // reset index biar rapi
+        if ($request->filled('filter_proyek')) {
+            $query->whereIn('nama_proyek', $request->filter_proyek);
+        }
+
 
         $jurnals = $query->orderBy('tanggal', 'desc')->get();
 
@@ -42,7 +50,7 @@ class JurnalUmumController extends Controller
         $status = $totalDebit === $totalKredit ? 'Balance' : 'Tidak Balance';
         $today = Carbon::now('Asia/Jakarta')->toDateString();
 
-        return view('admin.jurnal-umum.data', compact('jurnals', 'today', 'totalDebit', 'totalKredit', 'status', 'akun'));
+        return view('admin.jurnal-umum.data', compact('jurnals', 'today', 'totalDebit', 'totalKredit', 'status', 'akun', 'daftarProyek'));
     }
 
     public function print(Request $request)
@@ -117,35 +125,6 @@ class JurnalUmumController extends Controller
             'keterangan'      => 'required|string|max:255',
             'nama_perkiraan'  => 'required|string|max:100',
             'kode_perkiraan'  => 'required|string|max:50',
-            'kredit'          => 'required|numeric|min:1',
-        ]);
-
-        // generate kode jurnal J-00{id terakhir + 1}
-        $lastId = JurnalUmum::max('id') ?? 0;
-        $nextId = $lastId + 1;
-        $kodeJurnal = 'J-' . str_pad($nextId, 3, '0', STR_PAD_LEFT);
-
-        JurnalUmum::create([
-            'kode_jurnal'     => $kodeJurnal,
-            'tanggal'         => $request->tanggal,
-            'keterangan'      => $request->keterangan,
-            'nama_perkiraan'  => $request->nama_perkiraan,
-            'kode_perkiraan'  => $request->kode_perkiraan,
-            'nama_proyek'     => '-',
-            'kode_proyek'     => '-',
-            'debit'           => 0,
-            'kredit'          => $request->kredit ?? 0,
-            'created_by'      => Auth::check() ? Auth::user()->id : null,
-        ]);
-        return redirect()->route('jurnalUmums.index')->with('success', 'Jurnal berhasil ditambahkan');
-    }
-    public function storeCashOut(Request $request)
-    {
-        $request->validate([
-            'tanggal'         => 'required|date',
-            'keterangan'      => 'required|string|max:255',
-            'nama_perkiraan'  => 'required|string|max:100',
-            'kode_perkiraan'  => 'required|string|max:50',
             'debit'          => 'required|numeric|min:1',
         ]);
 
@@ -163,7 +142,36 @@ class JurnalUmumController extends Controller
             'nama_proyek'     => '-',
             'kode_proyek'     => '-',
             'debit'           => $request->debit ?? 0,
-            'kredit'          => 0,
+            'kredit'          =>  0,
+            'created_by'      => Auth::check() ? Auth::user()->id : null,
+        ]);
+        return redirect()->route('jurnalUmums.index')->with('success', 'Jurnal berhasil ditambahkan');
+    }
+    public function storeCashOut(Request $request)
+    {
+        $request->validate([
+            'tanggal'         => 'required|date',
+            'keterangan'      => 'required|string|max:255',
+            'nama_perkiraan'  => 'required|string|max:100',
+            'kode_perkiraan'  => 'required|string|max:50',
+            'kredit'          => 'required|numeric|min:1',
+        ]);
+
+        // generate kode jurnal J-00{id terakhir + 1}
+        $lastId = JurnalUmum::max('id') ?? 0;
+        $nextId = $lastId + 1;
+        $kodeJurnal = 'J-' . str_pad($nextId, 3, '0', STR_PAD_LEFT);
+
+        JurnalUmum::create([
+            'kode_jurnal'     => $kodeJurnal,
+            'tanggal'         => $request->tanggal,
+            'keterangan'      => $request->keterangan,
+            'nama_perkiraan'  => $request->nama_perkiraan,
+            'kode_perkiraan'  => $request->kode_perkiraan,
+            'nama_proyek'     => '-',
+            'kode_proyek'     => '-',
+            'debit'           =>  0,
+            'kredit'          => $request->kredit ?? 0,
             'created_by'      => Auth::check() ? Auth::user()->id : null,
         ]);
         return redirect()->route('jurnalUmums.index')->with('success', 'Jurnal berhasil ditambahkan');

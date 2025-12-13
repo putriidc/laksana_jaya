@@ -31,12 +31,12 @@
                 <div class="flex items-center gap-x-2">
                     <button onclick="transaksiMasuk()"
                         class="flex items-center gap-x-3 border-2 border-[#9A9A9A] px-4 py-2 rounded-lg cursor-pointer">
-                        <span class="text-gray-700">Transaksi Masuk</span>
+                        <span class="text-gray-700">Transaksi Debit</span>
                         <img src="{{ asset('assets/card-receive.png') }}" alt="card receive icon" class="w-[20px]">
                     </button>
                     <button onclick="transaksiKeluar()"
                         class="flex items-center gap-x-3 border-2 border-[#9A9A9A] px-4 py-2 rounded-lg cursor-pointer">
-                        <span class="text-gray-700">Transaksi Keluar</span>
+                        <span class="text-gray-700">Transaksi Kredit</span>
                         <img src="{{ asset('assets/card-receive.png') }}" alt="card receive icon" class="w-[20px]">
                     </button>
                 </div>
@@ -52,9 +52,8 @@
                         <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" class="w-[20px]">
                     </button>
                     <a href="{{ route('jurnalUmums.print', ['start' => request('start'), 'end' => request('end')]) }}"
-                        class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer"
-                        target="_blank">
-                        <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
+                        class="flex items-center gap-x-3 border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer "
+                        target="_blank"> <span class="text-gray-500">Cetak Data</span> <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
                     </a>
                 </form>
             </div>
@@ -65,7 +64,27 @@
                         <th class="w-[22%] py-2">Keterangan</th>
                         <th class="w-[13%] py-2">Nama Perkiraan</th>
                         <th class="w-[6%] py-2">Kd Akun</th>
-                        <th class="w-[15%] py-2">Nama Proyek</th>
+                        <th class="w-[15%] py-2 relative">
+                            Nama Proyek
+                            <div x-data="{ open: false }" class="inline-block ml-2">
+                                <button @click="open = !open"
+                                    class="text-xs border px-2 py-1 rounded bg-white">Filter</button>
+                                <div x-show="open" @click.away="open = false"
+                                    class="absolute top-full left-0 mt-1 bg-white border rounded shadow-lg p-2 z-10 w-[220px]">
+                                    <form class="pb-4" method="GET" action="{{ route('jurnalUmums.index') }}">
+                                        @foreach ($daftarProyek as $proyek)
+                                            <label class="flex items-center gap-x-2 mb-1">
+                                                <input type="checkbox" name="filter_proyek[]" value="{{ $proyek }}"
+                                                    {{ in_array($proyek, request('filter_proyek', [])) ? 'checked' : '' }}>
+                                                <span>{{ $proyek }}</span>
+                                            </label>
+                                        @endforeach
+                                        <button type="submit"
+                                            class="mt-2 w-full bg-blue-500 text-white py-1 rounded">Terapkan</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </th>
                         <th class="w-[7%] py-2">Kd Proyek</th>
                         <th class="w-[10%] py-2">Debet</th>
                         <th class="w-[10%] py-2">Kredit</th>
@@ -117,7 +136,7 @@
                     html: `
                     <form action="{{ route('jurnalUmums.storeCashIn') }}" method="POST" class="flex flex-col text-left">
                         @csrf
-                        <h1 class="font-bold text-2xl mb-4">Transaksi Jurnal - Cash In</h1>
+                        <h1 class="font-bold text-2xl mb-4">Transaksi Jurnal - Debet</h1>
                         <div class="flex items-center mt-4">
                             <label for="tanggal" class="font-medium w-[150px]">Tgl Transaksi</label>
                             <div class="flex items-center w-full justify-between">
@@ -134,8 +153,8 @@
                             <div class="flex items-center w-full justify-between">
                                 <input type="text" name="keterangan" id="keterangan" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none">
                                 <div class="flex items-center w-[350px]">
-                                    <label for="kredit" class="font-medium w-[35%]">Nominal</label>
-                                    <input type="number" name="kredit" id="kredit" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2">
+                                    <label for="debit" class="font-medium w-[35%]">Nominal</label>
+                                    <input type="number" name="debit" id="debit" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2">
                                 </div>
                             </div>
                         </div>
@@ -187,7 +206,7 @@
                     html: `
                     <form action="{{ route('jurnalUmums.storeCashOut') }}" method="POST" class="flex flex-col text-left">
                         @csrf
-                        <h1 class="font-bold text-2xl mb-4">Transaksi Jurnal - Cash Out</h1>
+                        <h1 class="font-bold text-2xl mb-4">Transaksi Jurnal - Kredit</h1>
                         <div class="flex items-center mt-4">
                             <label for="tanggal" class="font-medium w-[150px]">Tgl Transaksi</label>
                             <div class="flex items-center w-full justify-between">
@@ -205,7 +224,7 @@
                                 <input type="text" name="keterangan" id="keterangan" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none">
                                 <div class="flex items-center w-[350px]">
                                     <label for="kredit" class="font-medium w-[35%]">Nominal</label>
-                                    <input type="number" name="debit" id="kredit" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2">
+                                    <input type="number" name="kredit" id="kredit" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2">
                                 </div>
                             </div>
                         </div>
