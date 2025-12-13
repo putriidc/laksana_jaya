@@ -45,7 +45,7 @@
                             <span>Dashboard</span>
                         </button>
                     </a>
-                <label
+                {{-- <label
                     class="bg-linear-to-r from-[#DD4049] to-[#F9E52D] z-50 text-white flex justify-between items-center w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_15px_rgba(0,0,0,0.25)] select-none">
                     <div class="flex gap-x-5 items-center">
                         <img src="{{ asset('assets/navbar-kepala-gudang/home-2.png') }}"
@@ -56,7 +56,7 @@
                         class="transition-all duration-300 ease-in-out" />
                     <input type="checkbox" id="dropdown-toggle-navbar" class="hidden" />
                 </label>
-                <div class="flex flex-col gap-y-3" id="dropdown-content">
+                <div class="flex flex-col gap-y-3" id="dropdown-content"> --}}
                     {{-- <a href="/kepala-proyek/data-proyek-gumilang" class="cursor-pointer">
                         <button
                             class="bg-white text-[#353132] flex items-center justify-center w-[250px] py-3 px-5 cursor-pointer">
@@ -71,7 +71,7 @@
                             <span>CV ARN PURNAMA</span>
                         </button>
                     </a> --}}
-                    @forelse($sidebarPerusahaans as $perusahaan)
+                    {{-- @forelse($sidebarPerusahaans as $perusahaan)
                         <a href="{{ route('perusahaan.show', $perusahaan->id) }}"
                             class="cursor-pointer transition-all duration-300 ease-in-out">
                             <button
@@ -86,7 +86,36 @@
                             class="bg-white text-[#353132] flex items-center justify-center w-[250px] py-3 px-5 cursor-pointer rounded-lg transition-all duration-300 ease-in-out">
                             <span>TAMBAH PERUSAHAAN +</span>
                         </button>
-                </div>
+                </div> --}}
+                {{-- dropdown baru --}}
+                <!-- Include this script tag or install `@tailwindplus/elements` via npm: -->
+                <!-- <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script> -->
+                <el-dropdown class="inline-block">
+                <button class="bg-linear-to-r from-[#DD4049] to-[#F9E52D] text-white flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_15px_rgba(0,0,0,0.25)]">
+                    <img src="{{ asset('assets/navbar-kepala-gudang/home-2.png') }}"
+                            alt="home icon" />
+                    <span>Data Proyek</span>
+                    <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class=" size-5 text-white ml-10">
+                    <path d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd" />
+                    </svg>
+                </button>
+
+                <el-menu anchor="bottom end" popover class="w-[250px] origin-top-right rounded-md bg-gray-800 outline-1 -outline-offset-1 outline-white/10 transition transition-discrete [--anchor-gap:--spacing(2)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in">
+                    <div class="py-1">
+                    @forelse($sidebarPerusahaans as $perusahaan)
+                        <a href="{{ route('perusahaan.show', $perusahaan->id) }}" class="block px-4 py-3 text-sm text-gray-300 focus:bg-white/5 focus:text-white focus:outline-hidden">{{ $perusahaan->nama_perusahaan }}</a>
+                    @empty
+                        <div class="text-sm text-red-600 px-4 py-2 transition-all duration-300 ease-in-out text-center italic">Belum ada perusahaan terdaftar</div>
+                    @endforelse
+                    </div>
+                </el-menu>
+                </el-dropdown>
+
+                <button id="modal-add"
+                            class="bg-white text-[#353132] shadow-[0px_0px_15px_rgba(0,0,0,0.25)] flex items-center justify-center w-[250px] py-3 px-5 cursor-pointer rounded-lg transition-all duration-300 ease-in-out">
+                            <span>TAMBAH PERUSAHAAN +</span>
+                        </button>
+    
                 <a href="/kepala-proyek/data-proyek/create"
                     class="cursor-pointer outside-content transition-all duration-300 ease-in-out">
                     <button
@@ -169,27 +198,27 @@
         const arrowNavbar = document.getElementById("arrow-navbar");
         const modalAdd = document.getElementById('modal-add');
 
-        // pada awal load, sembunyikan semua children dari dropdowncontent
-        Array.from(dropdownContent.children).forEach((item, index) => {
-            item.classList.add(`-translate-y-[${(index + 1) * 60}px]`);
-        });
-        // lakukan pengulangan untuk semua outsidecontent, dengan jarak sesuai dengan jumlah children dari dropdowncontent
-        outsideContent.forEach((item, index) => {
-            item.classList.add(`-translate-y-[${dropdownContent.children.length * 60}px]`);
-        });
+        // // pada awal load, sembunyikan semua children dari dropdowncontent
+        // Array.from(dropdownContent.children).forEach((item, index) => {
+        //     item.classList.add(`-translate-y-[${(index + 1) * 60}px]`);
+        // });
+        // // lakukan pengulangan untuk semua outsidecontent, dengan jarak sesuai dengan jumlah children dari dropdowncontent
+        // outsideContent.forEach((item, index) => {
+        //     item.classList.add(`-translate-y-[${dropdownContent.children.length * 60}px]`);
+        // });
 
-        dropdownToggle.addEventListener("click", () => {
-            arrowNavbar.classList.toggle("-rotate-90");
-            // lakukan pengulangan untuk semua children dari dropdowncontent
-            Array.from(dropdownContent.children).forEach((item, index) => {
-                item.classList.toggle(`-translate-y-[${(index + 1) * 60}px]`);
-                item.classList.toggle("shadow-[0px_0px_5px_rgba(0,0,0,0.25)]");
-            });
-            // lakukan pengulangan untuk semua outsidecontent, dengan jarak sesuai dengan jumlah children dari dropdowncontent
-            outsideContent.forEach((item, index) => {
-                item.classList.toggle(`-translate-y-[${dropdownContent.children.length * 60}px]`);
-            });
-        })
+        // dropdownToggle.addEventListener("click", () => {
+        //     arrowNavbar.classList.toggle("-rotate-90");
+        //     // lakukan pengulangan untuk semua children dari dropdowncontent
+        //     Array.from(dropdownContent.children).forEach((item, index) => {
+        //         item.classList.toggle(`-translate-y-[${(index + 1) * 60}px]`);
+        //         item.classList.toggle("shadow-[0px_0px_5px_rgba(0,0,0,0.25)]");
+        //     });
+        //     // lakukan pengulangan untuk semua outsidecontent, dengan jarak sesuai dengan jumlah children dari dropdowncontent
+        //     outsideContent.forEach((item, index) => {
+        //         item.classList.toggle(`-translate-y-[${dropdownContent.children.length * 60}px]`);
+        //     });
+        // })
 
         // modal tambah perusahaan
          // Modal Add menggunakan sweertalert2 untuk form tambah data
@@ -227,6 +256,7 @@
                 })
             });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
 
 </body>
 

@@ -25,9 +25,9 @@
             <label for="" class="w-[200px]">Nominal</label>
             <input type="text" placeholder="Rp." name="" id="" class="bg-[#D9D9D9]/40 px-6 py-2 rounded-lg w-full">
         </div>
-         <div class="flex items-center">
-            <label for="" class="w-[200px]">Keterangan</label>
-            <input type="text" name="" id="" class="bg-[#D9D9D9]/40 px-6 py-2 rounded-lg w-full">
+         <div class="flex">
+            <label for="" class="w-[200px]">Detail Biaya</label>
+            <textarea name="" id="" cols="20" rows="8" class="bg-[#D9D9D9]/40 px-6 py-2 rounded-lg w-full"></textarea>
         </div>
         <div class="flex">
                     <div class="w-[200px]"></div>
@@ -53,8 +53,7 @@
                         <th class="py-2 w-[15%]">Nama Proyek</th>
                         <th class="py-2 w-[10%]">PIC</th>
                         <th class="py-2 w-[10%]">Nominal</th>
-                        <th class="py-2 w-[15%]">Nominal ACC</th>
-                        <th class="py-2 w-[15%]">Keterangan</th>
+                        <th class="py-2 w-[15%]">Detail Biaya</th>
                         <th class="py-2 w-[10%]">Status</th>
                         <th class="py-2 w-[10%]">Action</th>
                     </thead>
@@ -65,8 +64,9 @@
                                 <td class="py-2">Proyek Pa Dwi</td>
                                 <td class="py-2">Rhama</td>
                                 <td class="py-2">Rp. 5.000.000</td>
-                                <td class="py-2">Rp. 5.000.000</td>
-                                <td class="py-2">Cat hold dlu</td>
+                                <td class="py-2">
+                                    <span onclick="detailBiaya()" class="hover:underline text-blue-400 cursor-pointer">Lihat Detail</span>
+                                </td>
                                 <td class="py-2">
                                     <div class="flex gap-x-1 items-center">
                                         <span class="px-4 py-1 bg-[#45D03E] text-xs rounded-sm text-white">ACC</span>
@@ -101,8 +101,9 @@
                                 <td class="py-2">Proyek Pa Dwi</td>
                                 <td class="py-2">Rhama</td>
                                 <td class="py-2">Rp. 5.000.000</td>
-                                <td class="py-2">Rp. 5.000.000</td>
-                                <td class="py-2">Cat hold dlu</td>
+                                <td class="py-2">
+                                    <span onclick="detailBiaya()" class="hover:underline text-blue-400 cursor-pointer">Lihat Detail</span>
+                                </td>
                                 <td class="py-2">
                                     <div class="flex gap-x-1 items-center">
                                         <span class="px-4 py-1 bg-[#DD4049] text-xs rounded-sm text-white">DEC</span>
@@ -135,5 +136,23 @@
                 </table>
             </div>
     </div>
+    <script>
+        function detailBiaya() {
+            Swal.fire({
+                html: `
+                    <div class="flex flex-col gap-y-4 items-center">
+                        <h1 class="font-bold text-2xl text-center mb-5">Detail Biaya</h1>
+                        <div class="px-4 py-4 bg-[#D9D9D9]/40 w-full">
+                            Uang Makan : Rp. 1.500.000,
+                            Biaya Material : Rp. 1.300.000,
+                            Sisa Kas Pak Dwi : Rp. 200.000,
+                        </div>
+                    </div>
+                `,
+                showCloseButton: true,
+                showConfirmButton: false,
+            })
+        }
+    </script>
 </div>
 @endsection

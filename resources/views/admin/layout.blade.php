@@ -152,7 +152,7 @@
                         >
                             <img
                                 src="{{
-                                    asset('assets/navbar/receipt-item.png')
+                                    asset('assets/navbar/status-up.png')
                                 }}"
                                 alt="receipt2 icon"
                             />
@@ -272,7 +272,7 @@
                 </footer>
             </div>
         </section>
-        <script>
+        <script> 
             // menyimpan focus pada sidebar ketika di klik
             const link = document.querySelectorAll("nav a button");
             const icon = document.querySelectorAll("nav a button img");
@@ -288,6 +288,28 @@
                         "to-[#F9E52D]",
                         "text-white"
                     );
+                    // ganti icon navbar sesuai indexnya
+                    if (index == 0) {
+                        item.children[0].src = "{{ asset('assets/navbar/home-click.png') }}";
+                    } else if (index == 1) {
+                        item.children[0].src = "{{ asset('assets/navbar/devices-click.png') }}";
+                    } else if (index == 2) {
+                        item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
+                    } else if (index == 3) {
+                        item.children[0].src = "{{ asset('assets/navbar/home-hashtag-click.png') }}";
+                    } else if (index == 4) {
+                        item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
+                    } else if (index == 5) {
+                        item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
+                    } else if (index == 6) {
+                        item.children[0].src = "{{ asset('assets/navbar/receipt-click.png') }}";
+                    } else if (index == 7) {
+                        item.children[0].src = "{{ asset('assets/navbar/status-up-click.png') }}";
+                    } else if (index == 8) {
+                        item.children[0].src = "{{ asset('assets/navbar/status-up-click.png') }}";
+                    } else if (index == 9) {
+                        item.children[0].src = "{{ asset('assets/navbar/book-click.png') }}";
+                    }
                 } else {
                     item.classList.remove(
                         "bg-linear-to-r",

@@ -11,7 +11,8 @@
                         <th class="py-2 w-[15%]">Nama Proyek</th>
                         <th class="py-2 w-[15%]">PIC</th>
                         <th class="py-2 w-[20%]">Nominal</th>
-                        <th class="py-2 w-[10%]">Action</th>
+                        <th class="py-2 w-[15%]">Keterangan</th>
+                        <th class="py-2 w-[20%]">Action</th>
                     </thead>
                     <tbody>
                             <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
@@ -20,10 +21,13 @@
                                 <td class="py-2">Proyek Pa Dwi</td>
                                 <td class="py-2">Rhama</td>
                                 <td class="py-2">Rp. 5.000.000</td>
+                                <td class="py-2">
+                                    <span onclick="detailBiaya()" class="hover:underline text-blue-400 cursor-pointer">Lihat Detail</span>
+                                </td>
                                 <td class="py-2 flex justify-center items-center">
                                     <form action="" class="flex items-center gap-x-2">
-                                        <button class="bg-[#8CE987] px-4 py-2 rounded-lg cursor-pointer">Accept</button>
-                                        <button class="bg-[#DD4049] px-4 py-2 rounded-lg cursor-pointer text-white" id="modal-decline">Decline</button>
+                                        <button type="submit" class="bg-[#8CE987] px-4 py-2 rounded-lg cursor-pointer">Accept</button>
+                                        <button type="button" class="bg-[#DD4049] px-4 py-2 rounded-lg cursor-pointer text-white" onclick="modalDecline()">Decline</button>
                                     </form>
                                 </td>
                             </tr>
@@ -45,7 +49,8 @@
                         <th class="py-2 w-[15%]">Nama Proyek</th>
                         <th class="py-2 w-[15%]">PIC</th>
                         <th class="py-2 w-[20%]">Nominal</th>
-                        <th class="py-2 w-[10%]">Action</th>
+                        <th class="py-2 w-[15%]">Keterangan</th>
+                        <th class="py-2 w-[15%]">Action</th>
                     </thead>
                     <tbody>
                             <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
@@ -54,6 +59,9 @@
                                 <td class="py-2">Aby</td>
                                 <td class="py-2">Pengajuan Kasbon</td>
                                 <td class="py-2">Rp. 500.000</td>
+                                <td class="py-2">
+                                    <span onclick="detailBiaya()" class="hover:underline text-blue-400 cursor-pointer">Lihat Detail</span>
+                                </td>
                                 <td class="py-2 flex justify-center items-center">
                                     <span class="bg-[#8CE987] px-4 py-2 rounded-lg cursor-pointer">Accept</span>
                                 </td>
@@ -64,6 +72,9 @@
                                 <td class="py-2">Aby</td>
                                 <td class="py-2">Pengajuan Kasbon</td>
                                 <td class="py-2">Rp. 500.000</td>
+                                <td class="py-2">
+                                    <span onclick="detailBiaya()" class="hover:underline text-blue-400 cursor-pointer">Lihat Detail</span>
+                                </td>
                                 <td class="py-2 flex justify-center items-center">
                                     <span class="bg-[#DD4049] px-4 py-2 rounded-lg cursor-pointer">Decline</span>
                                 </td>
@@ -73,9 +84,7 @@
             </div>
         </section>
         <script>
-            const modalDecline = document.getElementById('modal-decline');
-            modalDecline.addEventListener('click', function(e) {
-                e.preventDefault();
+            function modalDecline() {
                 Swal.fire({
                     html: `
                         <form action="" method="POST" id="form-tambah" class="flex gap-x-4 w-full justify-center items-center h-[100px]">
@@ -89,7 +98,24 @@
                     showConfirmButton: false,
                     
                 })
-            });
+            }
+
+            function detailBiaya() {
+            Swal.fire({
+                html: `
+                    <div class="flex flex-col gap-y-4 items-center">
+                        <h1 class="font-bold text-2xl text-center mb-5">Detail Biaya</h1>
+                        <div class="px-4 py-4 bg-[#D9D9D9]/40 w-full">
+                            Uang Makan : Rp. 1.500.000,
+                            Biaya Material : Rp. 1.300.000,
+                            Sisa Kas Pak Dwi : Rp. 200.000,
+                        </div>
+                    </div>
+                `,
+                showCloseButton: true,
+                showConfirmButton: false,
+            })
+        }
         </script>
     </div>
 @endsection
