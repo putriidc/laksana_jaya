@@ -26,6 +26,12 @@
                 <input type="text" name="nama_proyek" id="" class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
             </div>
             <div class="flex items-center">
+                <label for="" class="w-[180px] font-medium">PIC</label>
+                <select name="pic" id="" class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2 appearance-none cursor-pointer">
+                    <option selected>-Pilih PIC-</option>
+                </select>
+            </div>
+            <div class="flex items-center">
                 <label for="" class="w-[180px] font-medium">Perusahaan</label>
                 <select name="nama_perusahaan" id="" class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2 appearance-none cursor-pointer">
                     <option selected>-Pilih Perusahaan-</option>
