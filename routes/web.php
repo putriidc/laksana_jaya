@@ -62,7 +62,14 @@ Route::middleware('auth')->group(function () {
         ->name('jurnalUmums.storeBank');
     Route::get('jurnalUmums/print', [JurnalUmumController::class, 'print'])->name('jurnalUmums.print');
 
-
+    Route::get('laporanHarian/printCashOut', [LaporanHarianController::class, 'printCashOut'])->name('laporanHarian.printCashOut');
+    Route::get('laporanHarian/printCashIn', [LaporanHarianController::class, 'printCashIn'])->name('laporanHarian.printCashIn');
+    // Cash In Global
+Route::get('laporanHarian/printCashInGlobal', [LaporanHarianController::class, 'printCashInGlobal'])
+    ->name('laporanHarian.printCashInGlobal');
+// Cash Out Global
+Route::get('laporanHarian/printCashOutGlobal', [LaporanHarianController::class, 'printCashOutGlobal'])
+    ->name('laporanHarian.printCashOutGlobal');
     Route::resource('laporanHarian', LaporanHarianController::class);
     Route::put('laporanHarian/{id}', [LaporanHarianController::class, 'update'])->name('laporanHarian.update');
 
