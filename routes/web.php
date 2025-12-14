@@ -58,6 +58,8 @@ Route::middleware('auth')->group(function () {
         ->name('jurnalUmums.storeCashIn');
     Route::post('jurnalUmums/storeCashOut', [JurnalUmumController::class, 'storeCashOut'])
         ->name('jurnalUmums.storeCashOut');
+    Route::post('jurnalUmums/storeBank', [JurnalUmumController::class, 'storeBank'])
+        ->name('jurnalUmums.storeBank');
     Route::get('jurnalUmums/print', [JurnalUmumController::class, 'print'])->name('jurnalUmums.print');
 
 

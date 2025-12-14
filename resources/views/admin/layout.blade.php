@@ -272,7 +272,8 @@
                 </footer>
             </div>
         </section>
-        <script src="//unpkg.com/alpinejs" defer></script>
+       <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
         <script>
             // menyimpan focus pada sidebar ketika di klik
             const link = document.querySelectorAll("nav a button");

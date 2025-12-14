@@ -31,16 +31,29 @@ class JurnalUmumController extends Controller
             ->Active()
             ->get();
 
+        $bank = Asset::Active()
+            ->whereIn('nama_akun', ['Kas Besar', 'Kas Kecil', 'Kas Bank BCA'])
+            ->get();
         $kredit = Asset::Active()
-        ->whereIn('nama_akun', ['Kas Besar', 'Kas Kecil', 'Kas Bank BCA'])
-        ->get();
+            ->whereIn('nama_akun', ['Pendapatan Proyek Fisik', 'Pendapatan Konsultan',
+            'Pendapatan Online', 'Pendapatan AR4N Bangunan', 'Pendapatan Lain-Lain',
+            'Pendapatan PBG', 'Pendapatan Mining'])
+            ->get();
 
         $daftarProyek = Proyek::active()
             ->pluck('nama_proyek')
             ->filter()
             ->values();        // reset index biar rapi
+        $daftarAkun = Asset::active()
+            ->pluck('nama_akun')
+            ->filter()
+            ->values();
+
         if ($request->filled('filter_proyek')) {
             $query->whereIn('nama_proyek', $request->filter_proyek);
+        }
+        if ($request->filled('filter_akun')) {
+            $query->whereIn('nama_perkiraan', $request->filter_akun);
         }
 
 
@@ -51,7 +64,7 @@ class JurnalUmumController extends Controller
         $status = $totalDebit === $totalKredit ? 'Balance' : 'Tidak Balance';
         $today = Carbon::now('Asia/Jakarta')->toDateString();
 
-        return view('admin.jurnal-umum.data', compact('jurnals', 'today', 'totalDebit', 'totalKredit', 'status', 'akun', 'daftarProyek', 'kredit'));
+        return view('admin.jurnal-umum.data', compact('jurnals', 'today', 'totalDebit', 'totalKredit', 'status', 'akun', 'daftarProyek', 'daftarAkun', 'kredit', 'bank'));
     }
 
     public function print(Request $request)
@@ -173,6 +186,35 @@ class JurnalUmumController extends Controller
             'kode_proyek'     => '-',
             'debit'           =>  0,
             'kredit'          => $request->kredit ?? 0,
+            'created_by'      => Auth::check() ? Auth::user()->id : null,
+        ]);
+        return redirect()->route('jurnalUmums.index')->with('success', 'Jurnal berhasil ditambahkan');
+    }
+    public function storeBank(Request $request)
+    {
+        $request->validate([
+            'tanggal'         => 'required|date',
+            'keterangan'      => 'required|string|max:255',
+            'nama_perkiraan'  => 'required|string|max:100',
+            'kode_perkiraan'  => 'required|string|max:50',
+            'debit'          => 'required|numeric|min:1',
+        ]);
+
+        // generate kode jurnal J-00{id terakhir + 1}
+        $lastId = JurnalUmum::max('id') ?? 0;
+        $nextId = $lastId + 1;
+        $kodeJurnal = 'J-' . str_pad($nextId, 3, '0', STR_PAD_LEFT);
+
+        JurnalUmum::create([
+            'kode_jurnal'     => $kodeJurnal,
+            'tanggal'         => $request->tanggal,
+            'keterangan'      => $request->keterangan,
+            'nama_perkiraan'  => $request->nama_perkiraan,
+            'kode_perkiraan'  => $request->kode_perkiraan,
+            'nama_proyek'     => '-',
+            'kode_proyek'     => '-',
+            'debit'           => $request->debit ?? 0,
+            'kredit'          =>  0,
             'created_by'      => Auth::check() ? Auth::user()->id : null,
         ]);
         return redirect()->route('jurnalUmums.index')->with('success', 'Jurnal berhasil ditambahkan');

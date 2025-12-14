@@ -100,13 +100,13 @@ class AssetSeeder extends Seeder
         }
 
         $dataPendapatan = [
-            ['kode_akun' => '410', 'nama_akun' => 'Pendapatan Proyek Fisik', 'for_admin' => true],
-            ['kode_akun' => '420', 'nama_akun' => 'Pendapatan Konsultan', 'for_admin' => true],
-            ['kode_akun' => '430', 'nama_akun' => 'Pendapatan Online', 'for_admin' => true],
-            ['kode_akun' => '440', 'nama_akun' => 'Pendapatan AR4N Bangunan', 'for_admin' => true],
-            ['kode_akun' => '450', 'nama_akun' => 'Pendapatan Lain-Lain', 'for_admin' => true],
-            ['kode_akun' => '451', 'nama_akun' => 'Pendapatan PBG', 'for_admin' => true],
-            ['kode_akun' => '452', 'nama_akun' => 'Pendapatan Mining', 'for_admin' => true],
+            ['kode_akun' => '410', 'nama_akun' => 'Pendapatan Proyek Fisik'],
+            ['kode_akun' => '420', 'nama_akun' => 'Pendapatan Konsultan'],
+            ['kode_akun' => '430', 'nama_akun' => 'Pendapatan Online'],
+            ['kode_akun' => '440', 'nama_akun' => 'Pendapatan AR4N Bangunan'],
+            ['kode_akun' => '450', 'nama_akun' => 'Pendapatan Lain-Lain'],
+            ['kode_akun' => '451', 'nama_akun' => 'Pendapatan PBG'],
+            ['kode_akun' => '452', 'nama_akun' => 'Pendapatan Mining'],
         ];
 
         foreach ($dataPendapatan as $item) {

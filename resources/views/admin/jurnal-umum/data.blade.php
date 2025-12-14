@@ -58,8 +58,7 @@
                     </button>
                     <a href="{{ route('jurnalUmums.print', ['start' => request('start'), 'end' => request('end')]) }}"
                         class="flex items-center gap-x-3 border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer "
-                        target="_blank"><img
-                            src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
+                        target="_blank"><img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
                     </a>
                 </form>
             </div>
@@ -67,77 +66,82 @@
                 <table class="table-fixed text-center text-sm w-full">
                     <thead class="border-b-2 border-[#CCCCCC]">
                         <th class="w-[12%] py-2">
-                            <div class="flex items-center justify-end">
-                            <span>Tanggal</span>
-                            <div x-data="{ open: false }" class="inline-block">
-                                <button @click="open = !open" class="text-xs px-2 py-1 rounded bg-white">
-                                    <img src="{{ asset('assets/filter-search.png') }}" alt="card receive icon" class="w-[20px] cursor-pointer">
-                                </button>
-                                <div x-show="open" @click.away="open = false"
-                                    class="absolute top-full left-0 mt-1 bg-white border rounded shadow-lg p-2 z-10 w-[220px]">
-                                    <form class="pb-4" method="GET" action="{{ route('jurnalUmums.index') }}">
-                                        @foreach ($daftarProyek as $proyek)
-                                            <label class="flex items-center gap-x-2 mb-1">
-                                                <input type="checkbox" name="filter_proyek[]" value="{{ $proyek }}"
-                                                    {{ in_array($proyek, request('filter_proyek', [])) ? 'checked' : '' }}>
-                                                <span>{{ $proyek }}</span>
-                                            </label>
-                                        @endforeach
-                                        <button type="submit"
-                                            class="mt-2 w-full bg-blue-500 text-white py-1 rounded">Terapkan</button>
-                                    </form>
-                                </div>
-                            </div>
-                            </div>
+                            Tanggal
                         </th>
                         <th class="w-[22%] py-2">Keterangan</th>
                         <th class="w-[15%] py-2">
                             <div class="flex items-center justify-center">
-                            <span>Nama Perkiraan</span>
-                            <div x-data="{ open: false }" class="inline-block">
-                                <button @click="open = !open" class="text-xs px-2 py-1 rounded bg-white">
-                                    <img src="{{ asset('assets/filter-search.png') }}" alt="card receive icon" class="w-[20px] cursor-pointer">
-                                </button>
-                                <div x-show="open" @click.away="open = false"
-                                    class="absolute top-full left-0 mt-1 bg-white border rounded shadow-lg p-2 z-10 w-[220px]">
-                                    <form class="pb-4" method="GET" action="{{ route('jurnalUmums.index') }}">
-                                        @foreach ($daftarProyek as $proyek)
-                                            <label class="flex items-center gap-x-2 mb-1">
-                                                <input type="checkbox" name="filter_proyek[]" value="{{ $proyek }}"
-                                                    {{ in_array($proyek, request('filter_proyek', [])) ? 'checked' : '' }}>
-                                                <span>{{ $proyek }}</span>
-                                            </label>
-                                        @endforeach
-                                        <button type="submit"
-                                            class="mt-2 w-full bg-blue-500 text-white py-1 rounded">Terapkan</button>
-                                    </form>
+                                <span>Nama Perkiraan</span>
+                                <div x-data="{ open: false, search: '' }" class="relative inline-block">
+                                    <button @click="open = !open" class="text-xs px-2 py-1 rounded bg-white">
+                                        <img src="{{ asset('assets/filter-search.png') }}" alt="filter icon"
+                                            class="w-[20px] cursor-pointer">
+                                    </button>
+
+                                    <div x-show="open" x-transition style="display: none;" @click.away="open = false"
+                                        class="absolute top-full left-0 mt-1 bg-white border rounded shadow-lg z-10 w-[220px] p-2">
+
+                                        <form method="GET" action="{{ route('jurnalUmums.index') }}"
+                                            x-data="{ search: '' }">
+                                            <input type="text" x-model="search" placeholder="Cari akun..."
+                                                class="w-full mb-2 px-2 py-1 border rounded text-sm">
+
+                                            <!-- Scroll aktif di sini -->
+                                            <div class="overflow-y-auto max-h-[200px] pr-1 space-y-1">
+                                                @foreach ($daftarAkun as $item)
+                                                    <label class="flex items-center gap-x-2"
+                                                        x-show="{{ json_encode($item) }}.toLowerCase().includes(search.toLowerCase())">
+                                                        <input type="checkbox" name="filter_akun[]"
+                                                            value="{{ $item }}"
+                                                            {{ in_array($item, request('filter_akun', [])) ? 'checked' : '' }}>
+                                                        <span>{{ $item }}</span>
+                                                    </label>
+                                                @endforeach
+                                            </div>
+
+                                            <button type="submit"
+                                                class="mt-2 w-full bg-blue-500 text-white py-1 rounded">Terapkan</button>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
                             </div>
                         </th>
                         <th class="w-[10%] py-2">Kd Akun</th>
                         <th class="w-[15%] py-2 relative">
                             <div class="flex items-center justify-center">
-                            <span>Nama Proyek</span>
-                            <div x-data="{ open: false }" class="inline-block">
-                                <button @click="open = !open" class="text-xs px-2 py-1 rounded bg-white">
-                                    <img src="{{ asset('assets/filter-search.png') }}" alt="card receive icon" class="w-[20px] cursor-pointer">
-                                </button>
-                                <div x-show="open" @click.away="open = false"
-                                    class="absolute top-full left-0 mt-1 bg-white border rounded shadow-lg p-2 z-10 w-[220px]">
-                                    <form class="pb-4" method="GET" action="{{ route('jurnalUmums.index') }}">
-                                        @foreach ($daftarProyek as $proyek)
-                                            <label class="flex items-center gap-x-2 mb-1">
-                                                <input type="checkbox" name="filter_proyek[]" value="{{ $proyek }}"
-                                                    {{ in_array($proyek, request('filter_proyek', [])) ? 'checked' : '' }}>
-                                                <span>{{ $proyek }}</span>
-                                            </label>
-                                        @endforeach
-                                        <button type="submit"
-                                            class="mt-2 w-full bg-blue-500 text-white py-1 rounded">Terapkan</button>
-                                    </form>
+                                <span>Nama Proyek</span>
+                                <div x-data="{ open: false, search: '' }" class="inline-block relative">
+                                    <button @click="open = !open" class="text-xs px-2 py-1 rounded bg-white">
+                                        <img src="{{ asset('assets/filter-search.png') }}" alt="card receive icon"
+                                            class="w-[20px] cursor-pointer">
+                                    </button>
+
+                                    <div x-show="open" x-transition style="display: none;" @click.away="open = false"
+                                        class="absolute top-full left-0 mt-1 bg-white border rounded shadow-lg p-2 z-10 w-[220px]">
+
+                                        <form method="GET" action="{{ route('jurnalUmums.index') }}">
+                                            <!-- Search input -->
+                                            <input type="text" x-model="search" placeholder="Cari proyek..."
+                                                class="w-full mb-2 px-2 py-1 border rounded text-sm">
+
+                                            <!-- Scrollable list -->
+                                            <div class="max-h-[200px] overflow-y-auto pr-1 space-y-1">
+                                                @foreach ($daftarProyek as $proyek)
+                                                    <label class="flex items-center gap-x-2"
+                                                        x-show="{{ json_encode($proyek) }}.toLowerCase().includes(search.toLowerCase())">
+                                                        <input type="checkbox" name="filter_proyek[]"
+                                                            value="{{ $proyek }}"
+                                                            {{ in_array($proyek, request('filter_proyek', [])) ? 'checked' : '' }}>
+                                                        <span>{{ $proyek }}</span>
+                                                    </label>
+                                                @endforeach
+                                            </div>
+
+                                            <button type="submit"
+                                                class="mt-2 w-full bg-blue-500 text-white py-1 rounded">Terapkan</button>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
                             </div>
                         </th>
                         <th class="w-[10%] py-2">Kd Proyek</th>
@@ -275,7 +279,9 @@
                                     let value = input.value;
                                     let cleanValue = parseInt(value.replace(/[^,\d]/g, ""));
                                     input.value = cleanValue;
-                                    console.log(`Input name: ${input.name}, Clean value: ${input.value}`);
+                                    console.log(
+                                        `Input name: ${input.name}, Clean value: ${input.value}`
+                                    );
                                 })
                             })
                         }
@@ -374,18 +380,21 @@
                                     let value = input.value;
                                     let cleanValue = parseInt(value.replace(/[^,\d]/g, ""));
                                     input.value = cleanValue;
-                                    console.log(`Input name: ${input.name}, Clean value: ${input.value}`);
+                                    console.log(
+                                        `Input name: ${input.name}, Clean value: ${input.value}`
+                                    );
                                 })
                             })
                         }
                     }
                 });
             }
+
             function transferBank() {
                 // buat form modal dengan sweetalert2
                 Swal.fire({
                     html: `
-                    <form action="{{ route('jurnalUmums.storeCashOut') }}" method="POST" class="flex flex-col text-left" id="myForm">
+                    <form action="{{ route('jurnalUmums.storeBank') }}" method="POST" class="flex flex-col text-left" id="myForm">
                         @csrf
                         <h1 class="font-bold text-2xl mb-4">Transaksi Kas Bank</h1>
                         <div class="flex items-center mt-4">
@@ -414,7 +423,7 @@
                             <div class="flex items-center w-full justify-between">
                                 <select name="nama_perkiraan" id="nama_perkiraan" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none appearance-none">
                                 <option value="" disabled selected>-Pilih Nama Akun-</option>
-                                 @foreach ($kredit as $item)
+                                 @foreach ($bank as $item)
                                     <option value="{{ $item->nama_akun }}" data-kode="{{ $item->kode_akun }}">
                                         {{ $item->nama_akun }}
                                     </option>
@@ -422,7 +431,7 @@
                                 </select>
                                 <div class="flex items-center w-[350px]">
                                     <label for="kredit" class="font-medium w-[35%]">Nominal</label>
-                                    <input type="text" name="kredit" id="kredit" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2 rupiah-format">
+                                    <input type="text" name="debit" id="kredit" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2 rupiah-format">
                                 </div>
                             </div>
                         </div>
@@ -477,7 +486,9 @@
                                     let value = input.value;
                                     let cleanValue = parseInt(value.replace(/[^,\d]/g, ""));
                                     input.value = cleanValue;
-                                    console.log(`Input name: ${input.name}, Clean value: ${input.value}`);
+                                    console.log(
+                                        `Input name: ${input.name}, Clean value: ${input.value}`
+                                    );
                                 })
                             })
                         }
