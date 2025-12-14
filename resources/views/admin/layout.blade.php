@@ -144,7 +144,7 @@
                         </button>
                     </a>
                     <a
-                        href="/laba-rugi"
+                        href="{{ route('labarugi.index') }}"
                         class="cursor-pointer"
                     >
                         <button

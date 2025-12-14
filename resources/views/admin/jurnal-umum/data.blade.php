@@ -31,12 +31,17 @@
                 <div class="flex items-center gap-x-2">
                     <button onclick="transaksiMasuk()"
                         class="flex items-center gap-x-3 border-2 border-[#9A9A9A] px-4 py-2 rounded-lg cursor-pointer">
-                        <span class="text-gray-700">Transaksi Debit</span>
+                        <span class="text-gray-700">Debit</span>
                         <img src="{{ asset('assets/card-receive.png') }}" alt="card receive icon" class="w-[20px]">
                     </button>
                     <button onclick="transaksiKeluar()"
                         class="flex items-center gap-x-3 border-2 border-[#9A9A9A] px-4 py-2 rounded-lg cursor-pointer">
-                        <span class="text-gray-700">Transaksi Kredit</span>
+                        <span class="text-gray-700">Kredit</span>
+                        <img src="{{ asset('assets/card-receive.png') }}" alt="card receive icon" class="w-[20px]">
+                    </button>
+                    <button onclick="transaksiKeluar()"
+                        class="flex items-center gap-x-3 border-2 border-[#9A9A9A] px-4 py-2 rounded-lg cursor-pointer">
+                        <span class="text-gray-700">Transfer Bank</span>
                         <img src="{{ asset('assets/card-receive.png') }}" alt="card receive icon" class="w-[20px]">
                     </button>
                 </div>
@@ -53,7 +58,8 @@
                     </button>
                     <a href="{{ route('jurnalUmums.print', ['start' => request('start'), 'end' => request('end')]) }}"
                         class="flex items-center gap-x-3 border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer "
-                        target="_blank"> <span class="text-gray-500">Cetak Data</span> <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
+                        target="_blank"> <span class="text-gray-500">Cetak Data</span> <img
+                            src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
                     </a>
                 </form>
             </div>
@@ -67,8 +73,10 @@
                         <th class="w-[15%] py-2 relative">
                             Nama Proyek
                             <div x-data="{ open: false }" class="inline-block ml-2">
-                                <button @click="open = !open"
-                                    class="text-xs border px-2 py-1 rounded bg-white">Filter</button>
+                                <button @click="open = !open" class="text-xs border px-2 py-1 rounded bg-white">
+                                    <img
+                                        src="{{ asset('assets/filter-search.png') }}" alt="card receive icon"
+                                        height="2"></button>
                                 <div x-show="open" @click.away="open = false"
                                     class="absolute top-full left-0 mt-1 bg-white border rounded shadow-lg p-2 z-10 w-[220px]">
                                     <form class="pb-4" method="GET" action="{{ route('jurnalUmums.index') }}">
@@ -175,7 +183,7 @@
                                 <span class="">Simpan Data</span>
                                 <img src="{{ asset('assets/plus-circle-blue.png') }}" alt="arrow right blue icon" class="w-[30px]">
                             </button>
-                            <button type="button" onclick="Swal.close()" class="border-[#DD4049] border text-[#DD4049] py-1 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
+                            <button type="button" onclick="Swal.close()" class="border-[#DD4049] border text-[#DD4049] py-2 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
                                 <span class="">Batal</span>
                                 <img src="{{ asset('assets/close-circle-red.png') }}" alt="arrow right blue icon" class="w-[22px]">
                             </button>
@@ -196,6 +204,7 @@
                             let kode = selectedOption.getAttribute('data-kode');
                             kodeInput.value = kode;
                         });
+
                     }
                 });
             }
@@ -245,7 +254,7 @@
                                 <span class="">Simpan Data</span>
                                 <img src="{{ asset('assets/plus-circle-blue.png') }}" alt="arrow right blue icon" class="w-[30px]">
                             </button>
-                            <button type="button" onclick="Swal.close()" class="border-[#DD4049] border text-[#DD4049] py-1 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
+                            <button type="button" onclick="Swal.close()" class="border-[#DD4049] border text-[#DD4049] py-2 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
                                 <span class="">Batal</span>
                                 <img src="{{ asset('assets/close-circle-red.png') }}" alt="arrow right blue icon" class="w-[22px]">
                             </button>

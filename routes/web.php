@@ -18,6 +18,7 @@ use App\Http\Controllers\barangReturController;
 use App\Http\Controllers\KasbonContentController;
 use App\Http\Controllers\PiutangHutangController;
 use App\Http\Controllers\DataPerusahaanController;
+use App\Http\Controllers\LabaRugiController;
 use App\Http\Controllers\LaporanHarianController;
 use App\Http\Controllers\PinjamanContentController;
 use App\Http\Controllers\PinjamanKaryawanController;
@@ -38,6 +39,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/dashboard', function () {
         return view('admin.dashboard');
     });
+
+    // ADMIN KEUANGAN
     Route::get('/admin/master-data', [MasterDataController::class, 'index'])->name('master-data.index');
 
 
@@ -61,8 +64,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('laporanHarian', LaporanHarianController::class);
     Route::put('laporanHarian/{id}', [LaporanHarianController::class, 'update'])->name('laporanHarian.update');
 
-
-
     Route::resource('pinjamanKaryawans', PinjamanKaryawanController::class);
     Route::get('pinjamanKaryawan/print', [PinjamanKaryawanController::class, 'print'])->name('pinjamanKaryawan.print');
 
@@ -79,7 +80,6 @@ Route::middleware('auth')->group(function () {
         ->name('pinjamanContents.storeBayar');
     Route::put('pinjamanContents/updateBayar/{id}', [PinjamanContentController::class, 'updateBayar'])
         ->name('pinjamanContents.updateBayar');
-    // Print detail pinjaman per karyawan
     Route::get('pinjaman-karyawan/{id}/print', [PinjamanContentController::class, 'print'])
         ->name('pinjaman-karyawan.print');
 
@@ -103,6 +103,33 @@ Route::middleware('auth')->group(function () {
     Route::get('freelance/print', [SampinganController::class, 'print'])->name('freelance.print');
 
     // freelance
+
+    Route::get('pinjamanTukangs/print', [pinjamanTukangController::class, 'print'])->name('pinjamanTukangs.print');
+
+    Route::resource('pinjamanTukangs', pinjamanTukangController::class);
+
+    Route::resource('tukangContents', TukangContentController::class);
+    Route::get('tukangContents/pinjam/{id}', [TukangContentController::class, 'pinjam'])
+        ->name('tukangContents.pinjam');
+    Route::get('tukangContents/bayar/{id}', [TukangContentController::class, 'bayar'])
+        ->name('tukangContents.bayar');
+    Route::get('tukangContents/editBayar/{id}', [TukangContentController::class, 'editBayar'])
+        ->name('tukangContents.editBayar');
+    Route::delete('tukangContents/destroyBayar/{id}', [TukangContentController::class, 'destroyBayar'])
+        ->name('tukangContents.destroyBayar');
+    Route::post('tukangContents/storeBayar', [TukangContentController::class, 'storeBayar'])
+        ->name('tukangContents.storeBayar');
+    Route::put('tukangContents/updateBayar/{id}', [TukangContentController::class, 'updateBayar'])
+        ->name('tukangContents.updateBayar');
+        // Print detail pinjaman per karyawan
+    Route::get('tukangContents/{id}/print', [TukangContentController::class, 'print'])
+        ->name('tukangContents.print');
+
+    Route::get('labarugi/print', [LabaRugiController::class, 'print'])->name('labarugi.print');
+
+    Route::resource('labarugi', LabaRugiController::class);
+
+
 
 
 
@@ -135,15 +162,6 @@ Route::middleware('auth')->group(function () {
     // transaksi barang
 
     // detail barang
-    Route::get('detail-barang', function () {
-        return view('kepala-gudang.detail-barang.index');
-    });
-    Route::get('pinjaman-karyawan', function () {
-        return view('kepala-gudang.pinjaman-karyawan.data');
-    });
-    Route::get('create-pinjaman', function () {
-        return view('kepala-gudang.pinjaman-karyawan.create-pinjaman');
-    });
     Route::get('pengajuan-eaf', function () {
         return view('kepala-gudang.pengajuan-eaf.data');
     });
@@ -153,39 +171,7 @@ Route::middleware('auth')->group(function () {
     // kepala gudang
 
     // admin
-    Route::get('pinjamanTukangs/print', [pinjamanTukangController::class, 'print'])->name('pinjamanTukangs.print');
 
-    Route::resource('pinjamanTukangs', pinjamanTukangController::class);
-
-    Route::resource('tukangContents', TukangContentController::class);
-    Route::get('tukangContents/pinjam/{id}', [TukangContentController::class, 'pinjam'])
-        ->name('tukangContents.pinjam');
-    Route::get('tukangContents/bayar/{id}', [TukangContentController::class, 'bayar'])
-        ->name('tukangContents.bayar');
-    Route::get('tukangContents/editBayar/{id}', [TukangContentController::class, 'editBayar'])
-        ->name('tukangContents.editBayar');
-    Route::delete('tukangContents/destroyBayar/{id}', [TukangContentController::class, 'destroyBayar'])
-        ->name('tukangContents.destroyBayar');
-    Route::post('tukangContents/storeBayar', [TukangContentController::class, 'storeBayar'])
-        ->name('tukangContents.storeBayar');
-    Route::put('tukangContents/updateBayar/{id}', [TukangContentController::class, 'updateBayar'])
-        ->name('tukangContents.updateBayar');
-        // Print detail pinjaman per karyawan
-    Route::get('tukangContents/{id}/print', [TukangContentController::class, 'print'])
-        ->name('tukangContents.print');
-
-    Route::get('/pinjaman-tukang', function () {
-        return view('admin.pinjaman-tukang.data');
-    });
-    Route::get('/create-tukang', function () {
-        return view('admin.pinjaman-tukang.create');
-    });
-    Route::get('/detail-pinjaman-tukang', function () {
-        return view('admin.pinjaman-tukang.detail.data');
-    });
-    Route::get('/pengembalian-tukang', function () {
-        return view('admin.pinjaman-tukang.detail.create');
-    });
     Route::get('/form-eaf', function () {
         return view('admin.form-eaf.form');
     });
