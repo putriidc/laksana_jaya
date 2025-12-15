@@ -63,33 +63,37 @@
 
 <body>
     <div class="logo-container">
-        <img src="{{ public_path('assets/ar4anSmallLogo.png') }}" class="logo">
+        <img src="{{ public_path('assets/logo-font.png') }}" class="logo" style="width: 150px; height: 40px;">
     </div>
-    <h2>LAPORAN LABA RUGI<br>AR4N GROUP <br>
-        {{ $bulan ? \Carbon\Carbon::parse($bulan)->translatedFormat('F Y') : 'Semua Periode' }}</h2>
+    <h2 style="font-size: 30px; font-weight: bolder; margin-top: 20px;">LAPORAN LABA RUGI</h2>
+    <span style="">Periode: {{ $bulan ? \Carbon\Carbon::parse($bulan)->translatedFormat('F Y') : 'Semua Periode' }}</span>
 
-    <table style="width:100%; border-collapse:collapse;">
+    <table style="width:100%; border-collapse:collapse; margin-top: 20px;">
+            <tr style="font-weight: bold; background-color: #E7E7E7;">
+                <td style="padding:6px 0; padding-left: 10px;">Pendapatan</td>
+                <td style="text-align:right; padding-right: 10px;">Rp. 5.000.000</td>
+            </tr>
         @foreach ($pendapatanFinal as $item)
-            <tr>
-                <td style="padding:6px 0;">{{ $item['nama_perkiraan'] }}</td>
-                <td style="text-align:right;">Rp. {{ number_format($item['total'], 0, ',', '.') }}</td>
+            <tr style="border-bottom-width: 1px; border-bottom-color: #CBCBCB; border-bottom-style: dashed;">
+                <td style="padding:6px 0; padding-left: 10px;">{{ $item['nama_perkiraan'] }}</td>
+                <td style="padding-right: 10px; width: 180px;">Rp. {{ number_format($item['total'], 0, ',', '.') }}</td>
             </tr>
         @endforeach
-        <tr style="font-weight:bold; border-top:1px solid #ccc;">
-            <td>Total Pendapatan</td>
-            <td style="text-align:right;">Rp. {{ number_format($totalPendapatan, 0, ',', '.') }}</td>
+        <tr style="font-weight: bold; background-color: #E7E7E7;">
+            <td style="padding:6px 0; padding-left: 10px;">Total Pendapatan</td>
+            <td style="text-align:right; padding-right: 10px;">Rp. {{ number_format($totalPendapatan, 0, ',', '.') }}</td>
         </tr>
     </table>
     <table style="width:100%; border-collapse:collapse;">
         @foreach ($biayaFinal as $item)
-            <tr>
-                <td style="padding:6px 0;">{{ $item['nama_perkiraan'] }}</td>
-                <td style="text-align:right;">Rp. {{ number_format($item['total'], 0, ',', '.') }}</td>
+            <tr style="border-bottom-width: 1px; border-bottom-color: #CBCBCB; border-bottom-style: dashed;">
+                <td style="padding:6px 0; padding-left: 10px;">{{ $item['nama_perkiraan'] }}</td>
+                <td style="padding-right: 10px; width: 180px;">Rp. {{ number_format($item['total'], 0, ',', '.') }}</td>
             </tr>
         @endforeach
-        <tr style="font-weight:bold; border-top:1px solid #ccc;">
-            <td>Total Biaya</td>
-            <td style="text-align:right;">Rp. {{ number_format($totalBiaya, 0, ',', '.') }}</td>
+        <tr style="font-weight: bold; background-color: #E7E7E7;">
+            <td style="padding:6px 0; padding-left: 10px;">Total Biaya</td>
+            <td style="text-align:right; padding-right: 10px;">Rp. {{ number_format($totalBiaya, 0, ',', '.') }}</td>
         </tr>
     </table>
     <p style="text-align:right; font-weight:bold; font-size:18px;">Rp. {{ number_format($totalLabaRugi, 0, ',', '.') }}

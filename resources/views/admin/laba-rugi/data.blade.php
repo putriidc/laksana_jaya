@@ -2,10 +2,11 @@
 @section('content')
     <div>
         <h1 class="font-bold text-2xl mb-5">Laporan Laba Rugi</h1>
-        <form action="{{ route('labarugi.index') }}" method="GET" class="flex items-center gap-x-2 mb-5">
+        <div class="flex items-center gap-x-2 mb-5">
+            <form action="{{ route('labarugi.index') }}" method="GET" class="flex items-center gap-x-2">
             @csrf
-            <select name="bulan" class="border-2 border-[#9A9A9A] px-4 py-2 rounded-lg w-[200px]">
-                <option value="" class="border-2 border-[#9A9A9A] px-4 py-2 rounded-lg w-[200px]">-- Pilih Bulan --
+            <select name="bulan" class="border-2 border-[#9A9A9A] px-4 py-2 rounded-lg w-[200px] appearance-none">
+                <option selected disabled class="border-2 border-[#9A9A9A] px-4 py-2 rounded-lg w-[200px]">-- Pilih Bulan --
                 </option>
                 @for ($i = 1; $i <= 12; $i++)
                     @php
@@ -20,14 +21,15 @@
             <button type="submit" class="py-[10px] px-[10px] border-[#9A9A9A] border-2 rounded-lg cursor-pointer">
                 <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" class="w-[20px]">
             </button>
-        </form>
+            </form>
         <a href="{{ route('labarugi.print', ['bulan' => request('bulan')]) }}" target="_blank"
-            class="py-[10px] px-[10px] border-[#9A9A9A] border-2 rounded-lg cursor-pointer flex items-center gap-x-2">
+            class="py-[10px] px-[10px] border-[#9A9A9A] border-2 rounded-lg cursor-pointer flex items-center gap-x-2 w-fit">
             <span class="text-gray-500">Cetak Laporan</span>
             <img src="{{ asset('assets/printer.png') }}" alt="search icon" class="w-[22px]">
         </a>
+        </div>
 
-        <section class="w-full py-4 px-14 rounded-2xl shadow-[0px_0px_5px_rgba(0,0,0,0.25)] gap-y-4 flex flex-col">
+        <section class="w-full py-8 px-14 rounded-2xl shadow-[0px_0px_5px_rgba(0,0,0,0.25)] gap-y-4 flex flex-col">
             <div class="flex flex-col gap-y-1">
                 <div class="text-[#9A9A9A] flex items-center justify-between">
                     <span class="font-bold">PENDAPATAN</span>
