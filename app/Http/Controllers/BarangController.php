@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Barang;
 use App\Models\BarangMasuk;
-use App\Models\BarangKeluar;
 use App\Models\barangRetur;
+use App\Models\BarangKeluar;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -73,29 +74,117 @@ class BarangController extends Controller
         return redirect()->route('barangs.index')->with('success', 'Barang berhasil ditambahkan');
     }
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $barang = Barang::findOrFail($id);
 
-        // Ambil semua barang masuk untuk barang ini
-        $barangMasuks = BarangMasuk::with('barang')
+        // Barang Masuk
+        $queryMasuk = BarangMasuk::with('barang')
             ->where('kode_barang', $barang->kode_barang)
-            ->whereNull('deleted_at')
-            ->get();
+            ->whereNull('deleted_at');
 
-        // Ambil semua barang keluar untuk barang ini
-        $barangKeluars = BarangKeluar::with('barang')
+        if ($request->filled('start_masuk') && $request->filled('end_masuk')) {
+            $queryMasuk->whereBetween('tanggal', [$request->start_masuk, $request->end_masuk]);
+        }
+        $barangMasuks = $queryMasuk->get();
+
+        // Barang Keluar
+        $queryKeluar = BarangKeluar::with('barang')
             ->where('kode_barang', $barang->kode_barang)
-            ->whereNull('deleted_at')
-            ->get();
-        $barangReturs = barangRetur::with('barang')
+            ->whereNull('deleted_at');
+
+        if ($request->filled('start_keluar') && $request->filled('end_keluar')) {
+            $queryKeluar->whereBetween('tanggal', [$request->start_keluar, $request->end_keluar]);
+        }
+        $barangKeluars = $queryKeluar->get();
+
+        // Barang Retur
+        $queryRetur = BarangRetur::with('barang')
             ->where('kode_barang', $barang->kode_barang)
-            ->whereNull('deleted_at')
-            ->get();
+            ->whereNull('deleted_at');
 
+        if ($request->filled('start_retur') && $request->filled('end_retur')) {
+            $queryRetur->whereBetween('tanggal', [$request->start_retur, $request->end_retur]);
+        }
+        $barangReturs = $queryRetur->get();
 
-        return view('kepala-gudang.detail-barang.index', compact('barang', 'barangMasuks', 'barangKeluars', 'barangReturs'));
+        return view('kepala-gudang.detail-barang.index', compact(
+            'barang',
+            'barangMasuks',
+            'barangKeluars',
+            'barangReturs'
+        ));
     }
+
+    public function printMasuk(Request $request, $id)
+    {
+        $barang = Barang::findOrFail($id);
+
+        $query = BarangMasuk::with('barang')
+            ->where('kode_barang', $barang->kode_barang)
+            ->whereNull('deleted_at');
+
+        if ($request->filled('start_masuk') && $request->filled('end_masuk')) {
+            $query->whereBetween('tanggal', [$request->start_masuk, $request->end_masuk]);
+        }
+
+        $barangMasuks = $query->orderBy('tanggal', 'desc')->get();
+        $admin = Auth::user()->name ?? 'Administrator';
+        $role = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+
+        $pdf = Pdf::loadView('kepala-gudang.detail-barang.printIn', compact('barang', 'barangMasuks', 'admin', 'role', 'tanggalCetak'))
+            ->setPaper('A4', 'portrait');
+
+        return $pdf->stream("BarangMasuk_{$barang->nama_barang}.pdf");
+    }
+
+    public function printKeluar(Request $request, $id)
+    {
+        $barang = Barang::findOrFail($id);
+
+        $query = BarangKeluar::with('barang')
+            ->where('kode_barang', $barang->kode_barang)
+            ->whereNull('deleted_at');
+
+        if ($request->filled('start_keluar') && $request->filled('end_keluar')) {
+            $query->whereBetween('tanggal', [$request->start_keluar, $request->end_keluar]);
+        }
+
+        $barangKeluars = $query->orderBy('tanggal', 'desc')->get();
+        $admin = Auth::user()->name ?? 'Administrator';
+        $role = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+
+        $pdf = Pdf::loadView('kepala-gudang.detail-barang.printOut', compact('barang', 'barangKeluars', 'admin', 'role', 'tanggalCetak'))
+            ->setPaper('A4', 'portrait');
+
+        return $pdf->stream("BarangKeluar_{$barang->nama_barang}.pdf");
+    }
+
+    public function printRetur(Request $request, $id)
+    {
+        $barang = Barang::findOrFail($id);
+
+        $query = BarangRetur::with('barang')
+            ->where('kode_barang', $barang->kode_barang)
+            ->whereNull('deleted_at');
+
+        if ($request->filled('start_retur') && $request->filled('end_retur')) {
+            $query->whereBetween('tanggal', [$request->start_retur, $request->end_retur]);
+        }
+
+        $barangReturs = $query->orderBy('tanggal', 'desc')->get();
+        $admin = Auth::user()->name ?? 'Administrator';
+        $role = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+
+        $pdf = Pdf::loadView('kepala-gudang.detail-barang.printRtr', compact('barang', 'barangReturs', 'admin', 'role', 'tanggalCetak'))
+            ->setPaper('A4', 'portrait');
+
+        return $pdf->stream("BarangRetur_{$barang->nama_barang}.pdf");
+    }
+
 
     public function edit($id)
     {

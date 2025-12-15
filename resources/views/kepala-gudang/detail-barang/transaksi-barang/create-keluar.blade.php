@@ -7,7 +7,7 @@
                 @csrf
                 <div class="flex items-center">
                     <label for="" class="w-[180px] font-medium">Tgl Keluar</label>
-                    <input type="date" name="tanggal" id=""
+                    <input type="date" name="tanggal" id="" value="{{ $today }}" readonly
                         class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
                 </div>
                  <div class="flex items-center">

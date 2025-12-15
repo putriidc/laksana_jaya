@@ -65,11 +65,11 @@ Route::middleware('auth')->group(function () {
     Route::get('laporanHarian/printCashOut', [LaporanHarianController::class, 'printCashOut'])->name('laporanHarian.printCashOut');
     Route::get('laporanHarian/printCashIn', [LaporanHarianController::class, 'printCashIn'])->name('laporanHarian.printCashIn');
     // Cash In Global
-Route::get('laporanHarian/printCashInGlobal', [LaporanHarianController::class, 'printCashInGlobal'])
-    ->name('laporanHarian.printCashInGlobal');
-// Cash Out Global
-Route::get('laporanHarian/printCashOutGlobal', [LaporanHarianController::class, 'printCashOutGlobal'])
-    ->name('laporanHarian.printCashOutGlobal');
+    Route::get('laporanHarian/printCashInGlobal', [LaporanHarianController::class, 'printCashInGlobal'])
+        ->name('laporanHarian.printCashInGlobal');
+    // Cash Out Global
+    Route::get('laporanHarian/printCashOutGlobal', [LaporanHarianController::class, 'printCashOutGlobal'])
+        ->name('laporanHarian.printCashOutGlobal');
     Route::resource('laporanHarian', LaporanHarianController::class);
     Route::put('laporanHarian/{id}', [LaporanHarianController::class, 'update'])->name('laporanHarian.update');
 
@@ -130,7 +130,7 @@ Route::get('laporanHarian/printCashOutGlobal', [LaporanHarianController::class, 
         ->name('tukangContents.storeBayar');
     Route::put('tukangContents/updateBayar/{id}', [TukangContentController::class, 'updateBayar'])
         ->name('tukangContents.updateBayar');
-        // Print detail pinjaman per karyawan
+    // Print detail pinjaman per karyawan
     Route::get('tukangContents/{id}/print', [TukangContentController::class, 'print'])
         ->name('tukangContents.print');
 
@@ -150,6 +150,18 @@ Route::get('laporanHarian/printCashOutGlobal', [LaporanHarianController::class, 
     // dasboard
 
     // data barang
+    // Print Barang Masuk
+    Route::get('barangs/{id}/printMasuk', [BarangController::class, 'printMasuk'])
+        ->name('barangs.printMasuk');
+
+    // Print Barang Keluar
+    Route::get('barangs/{id}/printKeluar', [BarangController::class, 'printKeluar'])
+        ->name('barangs.printKeluar');
+
+    // Print Barang Retur
+    Route::get('barangs/{id}/printRetur', [BarangController::class, 'printRetur'])
+        ->name('barangs.printRetur');
+
     Route::resource('barangs', BarangController::class);
     // data barang
     Route::resource('accspv', AccTukangSpvController::class);
