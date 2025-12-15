@@ -10,19 +10,34 @@ class AssetSeeder extends Seeder
 {
     public function run(): void
     {
-        $data = [
+
+        $dataKas = [
             ['kode_akun' => '111', 'nama_akun' => 'Kas Besar'],
             ['kode_akun' => '112', 'nama_akun' => 'Kas Kecil'],
             ['kode_akun' => '113', 'nama_akun' => 'Kas Bank BCA'],
+            ['kode_akun' => '119', 'nama_akun' => 'Kas Flip'],
+            ['kode_akun' => '122', 'nama_akun' => 'Kas utama'],
+        ];
+
+        foreach ($dataKas as $item) {
+            Asset::create([
+                'kode_akun'     => $item['kode_akun'],
+                'nama_akun'     => $item['nama_akun'],
+                'for_admin'     => $item['for_admin'] ?? false, // default false kalau tidak ada
+                'akun_header'   => 'asset_lancar_bank',
+                'post_saldo'    => 'DEBET',
+                'post_laporan'  => 'NERACA',
+                'created_by'    => 'seeder',
+            ]);
+        }
+        $data = [
             ['kode_akun' => '114', 'nama_akun' => 'Piutang Usaha', 'for_admin' => true],
             ['kode_akun' => '115', 'nama_akun' => 'Piutang Proyek'],
             ['kode_akun' => '116', 'nama_akun' => 'Piutang Karyawan'],
             ['kode_akun' => '117', 'nama_akun' => 'Persediaan Material', 'for_admin' => true],
             ['kode_akun' => '118', 'nama_akun' => 'Uang Muka PPh', 'for_admin' => true],
-            ['kode_akun' => '119', 'nama_akun' => 'Kas Flip', 'for_admin' => true],
             ['kode_akun' => '120', 'nama_akun' => 'Piutang Pihak Lain', 'for_admin' => true],
             ['kode_akun' => '121', 'nama_akun' => 'Piutang Mandor/Tukang'],
-            ['kode_akun' => '122', 'nama_akun' => 'Kas utama'],
         ];
 
         foreach ($data as $item) {

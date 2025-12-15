@@ -13,11 +13,23 @@ use Illuminate\Support\Facades\Storage;
 
 class BarangController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $barangs = Barang::active()->get();
+        $query = Barang::active();
+
+        if ($request->filled('q')) {
+            $search = $request->q;
+            $query->where(function ($q) use ($search) {
+                $q->where('nama_barang', 'like', "%{$search}%")
+                    ->orWhere('kategori', 'like', "%{$search}%");
+            });
+        }
+
+        $barangs = $query->get();
+
         return view('kepala-gudang.data-barang.data', compact('barangs'));
     }
+
 
     public function create()
     {
