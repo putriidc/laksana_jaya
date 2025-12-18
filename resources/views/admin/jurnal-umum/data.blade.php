@@ -189,7 +189,8 @@
                 // buat form modal dengan sweetalert2
                 Swal.fire({
                     html: `
-                    <form action="{{ route('jurnalUmums.storeCashIn') }}" method="POST" class="flex flex-col text-left" id="myForm">
+                    <div class="flex flex-col">
+                    <form action="" method="POST" class="flex flex-col text-left pb-8 border-b border-gray-400" id="myForm">
                         @csrf
                         <h1 class="font-bold text-2xl mb-4">Transaksi Jurnal - Debet</h1>
                         <div class="flex items-center mt-4">
@@ -197,9 +198,15 @@
                             <div class="flex items-center w-full justify-between">
                                 <input value="{{ $today }}" type="date" name="tanggal" id="tanggal" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none" readonly>
                                 <div class="flex items-center w-[350px]">
-                                    <label for="kode_akun" class="font-medium w-[35%]">Kode Akun</label>
-                                    <input type="text" name="kode_perkiraan" id="kode_akun" readonly
-                                    class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none">
+                                    <label for="kode_akun" class="font-medium w-[35%]">Akun Perkiraan</label>
+                                    <select name="nama_perkiraan" id="nama_perkiraan" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none appearance-none">
+                                        <option value="" disabled selected>-Pilih Akun-</option>
+                                        @foreach ($akun as $item)
+                                            <option value="{{ $item->nama_akun }}" data-kode="{{ $item->kode_akun }}">
+                                                {{ $item->nama_akun }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -236,6 +243,40 @@
                             </button>
                         </div>
                     </form>
+                    <div class="mt-5">
+                        <div class="flex items-center justify-between mb-4">
+                            <h1 class="text-2xl font-bold text-start">Data Transaksi</h1>
+                            <button class="border-[#45D03E] border text-[#45D03E] py-2 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
+                                <span>Generate</span>
+                                <img src="{{ asset('assets/card-send-greeen.png') }}" alt="arrow right blue icon" class="w-[20px]">
+                            </button>
+                        </div>
+                        <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
+                            <table class="table-fixed text-center text-sm w-full">
+                                <thead class="border-b-2 border-[#CCCCCC]">
+                                    <th class="w-[10%] py-2">No</th>
+                                    <th class="w-[15%] py-2">Akun Perkiraan</th>
+                                    <th class="w-[20%] py-2">Keterangan</th>
+                                    <th class="w-[15%] py-2">Nominal</th>
+                                </thead>
+                                <tbody>
+                                    <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
+                                        <td class="py-2">1</td>
+                                        <td class="py-2">Biaya Material, Alat dan Barang</td>
+                                        <td class="py-2">bebas caption</td>
+                                        <td class="py-2">Rp. 1.476.500</td>
+                                    </tr>
+                                    <tr class="bg-[#E9E9E9] border-b-[1px] border-[#CCCCCC]">
+                                        <td class="py-2">2</td>
+                                        <td class="py-2">Biaya Admin Bank</td>
+                                        <td class="py-2">Admin BCA</td>
+                                        <td class="py-2">Rp. 2.500</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    </div>
                     `,
                     width: '800px',
                     showCancelButton: false,

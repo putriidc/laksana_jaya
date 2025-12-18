@@ -63,10 +63,10 @@
 
 <body>
     <div class="logo-container">
-        <img src="{{ public_path('assets/ar4anSmallLogo.png') }}" class="logo">
+        <img src="{{ public_path('assets/logo-font.png') }}" class="logo" style="width: 150px; height: 40px;">
     </div>
+    <h2 style="font-size: 20px; font-weight: bolder; margin-top: 20px;">LAPORAN FREELANCE</h2>
 
-    <h2>LAPORAN FREELANCE<br>AR4N GROUP</h2>
 
     <table>
         <thead>

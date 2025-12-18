@@ -163,6 +163,11 @@
                         "to-[#F9E52D]",
                         "text-white"
                     );
+                    if (index == 0) {
+                        item.children[0].src = "{{ asset('assets/navbar/home-click.png') }}";
+                    } else if (index == 1) {
+                        item.children[0].src = "{{ asset('assets/navbar/devices-click.png') }}";
+                    }
                 } else {
                     item.classList.remove(
                         "bg-linear-to-r",
