@@ -48,6 +48,39 @@
                             <span>Pinjaman Karyawan</span>
                         </button>
                     </a>
+                    <a href="/labarugi-owner" class="cursor-pointer">
+                        <button
+                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
+                        >
+                            <img
+                                src="{{ asset('assets/navbar-owner/document.png') }}"
+                                alt="devices icon"
+                            />
+                            <span>Laba Rugi</span>
+                        </button>
+                    </a>
+                    <a href="/owner-bukubesar" class="cursor-pointer">
+                        <button
+                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
+                        >
+                            <img
+                                src="{{ asset('assets/navbar-owner/book2.png') }}"
+                                alt="devices icon"
+                            />
+                            <span>Buku Besar</span>
+                        </button>
+                    </a>
+                    <a href="/neraca" class="cursor-pointer">
+                        <button
+                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
+                        >
+                            <img
+                                src="{{ asset('assets/navbar-owner/diagram.png') }}"
+                                alt="devices icon"
+                            />
+                            <span>Neraca</span>
+                        </button>
+                    </a>
                     <div class="grow flex items-end">
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf

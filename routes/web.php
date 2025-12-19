@@ -268,5 +268,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/owner-pinjaman-create', function () {
         return view('owner.pinjaman-karyawan.create');
     });
+    Route::get('/labarugi-owner', function () {
+        return view('owner.laba-rugi.data');
+    });
+    Route::get('/owner-bukubesar', function () {
+        return view('owner.buku-besar.data');
+    });
+    Route::get('/neraca', function () {
+        return view('owner.neraca.data');
+    });
     // owner
 });
