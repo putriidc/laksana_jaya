@@ -81,6 +81,45 @@
                             <span>Neraca</span>
                         </button>
                     </a>
+                    <a href="#" onclick="triggerCheckbox(event)" class="cursor-pointer">
+                        <button
+                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
+                        >
+                            <img
+                                src="{{ asset('assets/navbar-owner/buildings.png') }}"
+                                alt="devices icon"
+                            />
+                            <span>Data Proyek</span>
+                             <img src="{{ asset('assets/arrow-down.png') }}" alt="" class="ml-8 transition-all duration-300 ease-in-out" id="arrowDataProyek">
+                        </button>
+                    </a>
+                    <input type="checkbox" name="" id="triggerMe" class="hidden">
+                    <div class="hidden flex-col items-center gap-y-3" id="dropdownDataProyek">
+                        <a href="/konsultan" class="cursor-pointer">
+                            <button
+                                class="bg-white text-[#353132] flex items-center justify-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)] hover:bg-linear-to-r hover:from-[#DD4049] hover:to-[#F9E52D] hover:text-white"
+                            >
+                                
+                                <span class="text-center font-bold">Konsultan</span>
+                            </button>
+                        </a>
+                        <a href="/kontruksi" class="cursor-pointer">
+                            <button
+                                class="bg-white text-[#353132] flex items-center justify-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)] hover:bg-linear-to-r hover:from-[#DD4049] hover:to-[#F9E52D] hover:text-white"
+                            >
+                                
+                                <span class="text-center font-bold">Kontruksi</span>
+                            </button>
+                        </a>
+                        <a href="/barang-jasa" class="cursor-pointer">
+                            <button
+                                class="bg-white text-[#353132] flex items-center justify-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)] hover:bg-linear-to-r hover:from-[#DD4049] hover:to-[#F9E52D] hover:text-white"
+                            >
+                                
+                                <span class="text-center font-bold">Barang & Jasa</span>
+                            </button>
+                        </a>
+                    </div>
                     <div class="grow flex items-end">
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -142,6 +181,27 @@
             const link = document.querySelectorAll("nav a button");
             const icon = document.querySelectorAll("nav a button img");
             const sidebar = localStorage.getItem("sidebar");
+            const arrow = document.getElementById("arrowDataProyek");
+            const dropdownDataProyek = document.getElementById("dropdownDataProyek");
+            function triggerCheckbox(event) {
+                event.preventDefault(); // Mencegah scroll ke atas karena href="#"
+    
+                const checkbox = document.getElementById("triggerMe");
+                console.log('test')
+                
+                // Cara 1: Meniru klik manusia (akan memicu event listener 'change' jika ada)
+                checkbox.click(); 
+                if (checkbox.checked) {
+                    dropdownDataProyek.classList.remove('hidden');
+                    dropdownDataProyek.classList.add('flex');
+                    arrow.classList.add('-rotate-90');
+                } else {
+                    dropdownDataProyek.classList.add('hidden');
+                    dropdownDataProyek.classList.remove('flex');
+                    arrow.classList.remove('-rotate-90');
+                }
+            }
+
             link.forEach((item, index) => {
                 item.addEventListener("click", () => {
                     localStorage.setItem("sidebar", index);

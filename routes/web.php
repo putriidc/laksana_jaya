@@ -277,5 +277,23 @@ Route::middleware('auth')->group(function () {
     Route::get('/neraca', function () {
         return view('owner.neraca.data');
     });
+    Route::get('/konsultan', function () {
+        return view('owner.data-proyek.konsultan.data');
+    });
+    Route::get('/detail-konsultan', function () {
+        return view('owner.data-proyek.konsultan.detail');
+    });
+    Route::get('/kontruksi', function () {
+        return view('owner.data-proyek.kontruksi.data');
+    });
+    Route::get('/detail-kontruksi', function () {
+        return view('owner.data-proyek.kontruksi.detail');
+    });
+    Route::get('/barang-jasa', function () {
+        return view('owner.data-proyek.barang-jasa.data');
+    });
+    Route::get('/detail-barang-jasa', function () {
+        return view('owner.data-proyek.barang-jasa.detail');
+    });
     // owner
 });
