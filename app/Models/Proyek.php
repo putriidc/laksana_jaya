@@ -16,6 +16,7 @@ class Proyek extends Model
         'hari_kalender',
         'nama_proyek',
         'nama_perusahaan',
+        'pic',
         'kategori',
         'jenis',
         'nilai_kontrak',

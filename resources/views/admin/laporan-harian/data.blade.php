@@ -24,7 +24,7 @@
         <div class="flex flex-col gap-y-5 mb-5">
             <div class="flex justify-between items-center">
                 <h1 class="text-2xl font-bold">Cash In</h1>
-                <a href=""
+                <a href="{{ route('laporanHarian.printCashIn') }}" target="_blank"
                     class="border-2 border-[#9A9A9A] py-2 px-4 rounded-lg flex items-center gap-x-3 cursor-pointer">
                     <span class="text-[#72686B] font-medium">Cetak Data</span>
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[25px]">
@@ -66,7 +66,8 @@
                                             class="w-[22px] cursor-pointer">
                                     </button>
                                     <span class="border-black border-l-[1px] h-[22px]"></span>
-                                    <form action="{{ route('laporanHarian.destroy', $item->id) }}" method="POST" class="h-[22px]">
+                                    <form action="{{ route('laporanHarian.destroy', $item->id) }}" method="POST"
+                                        class="h-[22px]">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
@@ -85,7 +86,7 @@
         <div class="flex flex-col gap-y-5 mb-5 pb-8 border-b border-gray-400">
             <div class="flex justify-between items-center">
                 <h1 class="text-2xl font-bold">Cash Out</h1>
-                <a href=""
+                <a href="{{ route('laporanHarian.printCashOut') }}" target="_blank"
                     class="border-2 border-[#9A9A9A] py-2 px-4 rounded-lg flex items-center gap-x-3 cursor-pointer">
                     <span class="text-[#72686B] font-medium">Cetak Data</span>
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[25px]">
@@ -127,7 +128,8 @@
                                             class="w-[22px] cursor-pointer">
                                     </button>
                                     <span class="border-black border-l-[1px] h-[22px]"></span>
-                                    <form action="{{ route('laporanHarian.destroy', $item->id) }}" method="POST" class="h-[22px]">
+                                    <form action="{{ route('laporanHarian.destroy', $item->id) }}" method="POST"
+                                        class="h-[22px]">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
@@ -147,19 +149,21 @@
             <div class="flex justify-between items-center">
                 <h1 class="text-2xl font-bold">Global Cash In</h1>
                 <div class="flex items-center">
-                    <form action="" class="flex items-center gap-x-1">
-                        <input type="text" data-flatpickr placeholder="Tanggal Mulai" name="" id=""
+                    {{-- Cash In Global --}}
+                    <form method="GET" action="{{ route('laporanHarian.index') }}" class="flex items-center gap-x-1">
+                        <input type="text" data-flatpickr name="start_in" placeholder="Tanggal Mulai"
                             class="w-[180px] rounded-lg border-2 border-[#9A9A9A] py-2 px-4">
-                        <input type="text" data-flatpickr placeholder="Tanggal Mulai" name="" id=""
+                        <input type="text" data-flatpickr name="end_in" placeholder="Tanggal Akhir"
                             class="w-[180px] rounded-lg border-2 border-[#9A9A9A] py-2 px-4">
                         <button type="submit" class="border-2 border-[#9A9A9A] py-2 px-2 rounded-lg cursor-pointer">
-                            <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" class="w-[25px]">
+                            <img src="{{ asset('assets/search-normal.png') }}" class="w-[25px]">
                         </button>
                     </form>
-                    <a href=""
+                    <a href="{{ route('laporanHarian.printCashInGlobal', ['start_in' => request('start_in'), 'end_in' => request('end_in')]) }}"
+                        target="_blank"
                         class="border-2 border-[#9A9A9A] py-2 px-4 rounded-lg flex items-center gap-x-3 cursor-pointer ml-1">
-                        <span class="text-[#72686B] font-medium">Cetak Data</span>
-                        <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[25px]">
+                        <span class="text-[#72686B] font-medium">Cetak Cash In</span>
+                        <img src="{{ asset('assets/printer.png') }}" class="w-[25px]">
                     </a>
                 </div>
             </div>
@@ -188,19 +192,20 @@
                                 <td class="flex justify-center items-center gap-x-2 py-2">
                                     @if ($item->tanggal == $today)
                                         <button
-                                        onclick="editLaporanKeuangan({{ $item->id }},
+                                            onclick="editLaporanKeuangan({{ $item->id }},
                                         '{{ $item->tanggal }}',
                                         '{{ $item->keterangan }}',
                                         '{{ $item->kode_perkiraan }}',
                                         '{{ $item->nama_perkiraan }}',
                                         '{{ $item->debit }}',
                                         '{{ $item->kredit }}')"
-                                        class="">
-                                        <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
-                                            class="w-[22px] cursor-pointer">
-                                    </button>
+                                            class="">
+                                            <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
+                                                class="w-[22px] cursor-pointer">
+                                        </button>
                                         <span class="border-black border-l-[1px] h-[22px]"></span>
-                                        <form action="{{ route('laporanHarian.destroy', $item->id) }}" method="POST" class="h-[22px]">
+                                        <form action="{{ route('laporanHarian.destroy', $item->id) }}" method="POST"
+                                            class="h-[22px]">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
@@ -223,19 +228,21 @@
             <div class="flex justify-between items-center">
                 <h1 class="text-2xl font-bold">Global Cash Out</h1>
                 <div class="flex items-center">
-                    <form action="" class="flex items-center gap-x-1">
-                        <input type="text" data-flatpickr placeholder="Tanggal Mulai" name="" id=""
+                    {{-- Cash Out Global --}}
+                    <form method="GET" action="{{ route('laporanHarian.index') }}" class="flex items-center gap-x-1">
+                        <input type="text" data-flatpickr name="start_out" placeholder="Tanggal Mulai"
                             class="w-[180px] rounded-lg border-2 border-[#9A9A9A] py-2 px-4">
-                        <input type="text" data-flatpickr placeholder="Tanggal Mulai" name="" id=""
+                        <input type="text" data-flatpickr name="end_out" placeholder="Tanggal Akhir"
                             class="w-[180px] rounded-lg border-2 border-[#9A9A9A] py-2 px-4">
                         <button type="submit" class="border-2 border-[#9A9A9A] py-2 px-2 rounded-lg cursor-pointer">
-                            <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" class="w-[25px]">
+                            <img src="{{ asset('assets/search-normal.png') }}" class="w-[25px]">
                         </button>
                     </form>
-                    <a href=""
+                    <a href="{{ route('laporanHarian.printCashOutGlobal', ['start_out' => request('start_out'), 'end_out' => request('end_out')]) }}"
+                        target="_blank"
                         class="border-2 border-[#9A9A9A] py-2 px-4 rounded-lg flex items-center gap-x-3 cursor-pointer ml-1">
-                        <span class="text-[#72686B] font-medium">Cetak Data</span>
-                        <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[25px]">
+                        <span class="text-[#72686B] font-medium">Cetak Cash Out</span>
+                        <img src="{{ asset('assets/printer.png') }}" class="w-[25px]">
                     </a>
                 </div>
             </div>
@@ -264,19 +271,20 @@
                                 <td class="flex justify-center items-center gap-x-2 py-2">
                                     @if ($item->tanggal == $today)
                                         <button
-                                        onclick="editLaporanKeuangan({{ $item->id }},
+                                            onclick="editLaporanKeuangan({{ $item->id }},
                                         '{{ $item->tanggal }}',
                                         '{{ $item->keterangan }}',
                                         '{{ $item->kode_perkiraan }}',
                                         '{{ $item->nama_perkiraan }}',
                                         '{{ $item->debit }}',
                                         '{{ $item->kredit }}')"
-                                        class="">
-                                        <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
-                                            class="w-[22px] cursor-pointer">
-                                    </button>
+                                            class="">
+                                            <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
+                                                class="w-[22px] cursor-pointer">
+                                        </button>
                                         <span class="border-black border-l-[1px] h-[22px]"></span>
-                                        <form action="{{ route('laporanHarian.destroy', $item->id) }}" method="POST" class="h-[22px]">
+                                        <form action="{{ route('laporanHarian.destroy', $item->id) }}" method="POST"
+                                            class="h-[22px]">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" onclick="return confirm('Yakin hapus data ini?')">

@@ -65,7 +65,7 @@ class LabaRugiController extends Controller
 
         // Query pendapatan → ambil dari kredit
         $detailPendapatan = $queryPendapatan
-            ->select('nama_perkiraan', DB::raw('SUM(debit) as total'))
+            ->select('nama_perkiraan', DB::raw('SUM(kredit) as total'))
             ->groupBy('nama_perkiraan')
             ->pluck('total', 'nama_perkiraan');
 

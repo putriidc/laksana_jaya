@@ -35,8 +35,9 @@ class BarangMasukController extends Controller
         $barang = Barang::where('kode_barang', $kode_barang)
             ->whereNull('deleted_at')
             ->firstOrFail();
+        $today = Carbon::now('Asia/Jakarta')->toDateString();
 
-        return view('kepala-gudang.detail-barang.transaksi-barang.create-masuk', compact('barang'));
+        return view('kepala-gudang.detail-barang.transaksi-barang.create-masuk', compact('barang', 'today'));
     }
 
 

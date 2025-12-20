@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AccEafOwnerController;
+use App\Http\Controllers\AccEafSpvController;
 use App\Http\Controllers\AccOwnerController;
 use App\Http\Controllers\AccTukangSpvController;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +20,7 @@ use App\Http\Controllers\barangReturController;
 use App\Http\Controllers\KasbonContentController;
 use App\Http\Controllers\PiutangHutangController;
 use App\Http\Controllers\DataPerusahaanController;
+use App\Http\Controllers\EafController;
 use App\Http\Controllers\LabaRugiController;
 use App\Http\Controllers\LaporanHarianController;
 use App\Http\Controllers\PinjamanContentController;
@@ -58,9 +61,18 @@ Route::middleware('auth')->group(function () {
         ->name('jurnalUmums.storeCashIn');
     Route::post('jurnalUmums/storeCashOut', [JurnalUmumController::class, 'storeCashOut'])
         ->name('jurnalUmums.storeCashOut');
+    Route::post('jurnalUmums/storeBank', [JurnalUmumController::class, 'storeBank'])
+        ->name('jurnalUmums.storeBank');
     Route::get('jurnalUmums/print', [JurnalUmumController::class, 'print'])->name('jurnalUmums.print');
 
-
+    Route::get('laporanHarian/printCashOut', [LaporanHarianController::class, 'printCashOut'])->name('laporanHarian.printCashOut');
+    Route::get('laporanHarian/printCashIn', [LaporanHarianController::class, 'printCashIn'])->name('laporanHarian.printCashIn');
+    // Cash In Global
+    Route::get('laporanHarian/printCashInGlobal', [LaporanHarianController::class, 'printCashInGlobal'])
+        ->name('laporanHarian.printCashInGlobal');
+    // Cash Out Global
+    Route::get('laporanHarian/printCashOutGlobal', [LaporanHarianController::class, 'printCashOutGlobal'])
+        ->name('laporanHarian.printCashOutGlobal');
     Route::resource('laporanHarian', LaporanHarianController::class);
     Route::put('laporanHarian/{id}', [LaporanHarianController::class, 'update'])->name('laporanHarian.update');
 
@@ -121,7 +133,7 @@ Route::middleware('auth')->group(function () {
         ->name('tukangContents.storeBayar');
     Route::put('tukangContents/updateBayar/{id}', [TukangContentController::class, 'updateBayar'])
         ->name('tukangContents.updateBayar');
-        // Print detail pinjaman per karyawan
+    // Print detail pinjaman per karyawan
     Route::get('tukangContents/{id}/print', [TukangContentController::class, 'print'])
         ->name('tukangContents.print');
 
@@ -141,6 +153,18 @@ Route::middleware('auth')->group(function () {
     // dasboard
 
     // data barang
+    // Print Barang Masuk
+    Route::get('barangs/{id}/printMasuk', [BarangController::class, 'printMasuk'])
+        ->name('barangs.printMasuk');
+
+    // Print Barang Keluar
+    Route::get('barangs/{id}/printKeluar', [BarangController::class, 'printKeluar'])
+        ->name('barangs.printKeluar');
+
+    // Print Barang Retur
+    Route::get('barangs/{id}/printRetur', [BarangController::class, 'printRetur'])
+        ->name('barangs.printRetur');
+
     Route::resource('barangs', BarangController::class);
     // data barang
     Route::resource('accspv', AccTukangSpvController::class);
@@ -162,9 +186,11 @@ Route::middleware('auth')->group(function () {
     // transaksi barang
 
     // detail barang
-    Route::get('pengajuan-eaf', function () {
-        return view('kepala-gudang.pengajuan-eaf.data');
-    });
+    Route::resource('AccEafSpv', AccEafSpvController::class);
+    Route::post('/Acceaf/{id}/decline', [AccEafSpvController::class, 'decline'])
+        ->name('Acceaf.decline');
+
+
     Route::get('create-pengajuan', function () {
         return view('kepala-gudang.pengajuan-eaf.create-pengajuan');
     });
@@ -172,9 +198,13 @@ Route::middleware('auth')->group(function () {
 
     // admin
 
-    Route::get('/form-eaf', function () {
-        return view('admin.form-eaf.form');
-    });
+    Route::resource('eaf', EafController::class);
+    // route untuk simpan rincian EAF
+    Route::post('/eaf/{id}/detail', [EafController::class, 'storeDetail'])->name('eaf.storeDetail');
+    Route::post('/eaf/{id}/generate', [EafController::class, 'generate'])->name('eaf.generate');
+
+
+
     Route::get('/detail-eaf', function () {
         return view('admin.form-eaf.detail');
     });
@@ -257,6 +287,10 @@ Route::middleware('auth')->group(function () {
         ->name('create-kasbon.edit');
     Route::put('/accowner/{id}/updateKasbon', [AccOwnerController::class, 'updateKasbon'])
         ->name('accowner.updateKasbon');
+
+    Route::resource('AccEafOwner', AccEafOwnerController::class);
+    Route::post('/AcceafO/{id}/decline', [AccEafOwnerController::class, 'decline'])
+        ->name('AcceafO.decline');
 
 
     Route::get('/owner-dashboard', function () {

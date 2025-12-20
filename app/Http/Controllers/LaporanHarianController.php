@@ -5,13 +5,15 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\JurnalUmum;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
 
 class LaporanHarianController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
 
         $today = Carbon::now('Asia/Jakarta')->toDateString();
@@ -22,8 +24,12 @@ class LaporanHarianController extends Controller
             ->orderBy('tanggal', 'desc')
             ->get();
 
+        // Cash In Global
         $cashInGL = JurnalUmum::where('kredit', '!=', 0)
             ->whereNull('deleted_at')
+            ->when($request->start_in && $request->end_in, function ($q) use ($request) {
+                $q->whereBetween('tanggal', [$request->start_in, $request->end_in]);
+            })
             ->orderBy('tanggal', 'desc')
             ->get();
 
@@ -33,8 +39,12 @@ class LaporanHarianController extends Controller
             ->orderBy('tanggal', 'desc')
             ->get();
 
+        // Cash Out Global
         $cashOutGL = JurnalUmum::where('debit', '!=', 0)
             ->whereNull('deleted_at')
+            ->when($request->start_out && $request->end_out, function ($q) use ($request) {
+                $q->whereBetween('tanggal', [$request->start_out, $request->end_out]);
+            })
             ->orderBy('tanggal', 'desc')
             ->get();
 
@@ -43,6 +53,111 @@ class LaporanHarianController extends Controller
 
         $status = $totalDebit === $totalKredit ? 'Balance' : 'Tidak Balance';
         return view('admin.laporan-harian.data', compact('cashIn', 'cashOut', 'cashInGL', 'cashOutGL', 'today', 'totalDebit', 'totalKredit', 'status'));
+    }
+
+    public function printCashIn(Request $request)
+    {
+        $today = Carbon::now('Asia/Jakarta')->toDateString();
+        $hari = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y'); // → 15 Desember 2025
+
+        $cashIn = JurnalUmum::whereDate('tanggal', $today)
+            ->where('kredit', '!=', 0)
+            ->whereNull('deleted_at')
+            ->orderBy('tanggal', 'desc')
+            ->get();
+
+        $admin = Auth::user()->name ?? 'Administrator';
+        $role = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+
+        $pdf = Pdf::loadView('admin.laporan-harian.printCashIn', compact(
+            'cashIn',
+            'admin',
+            'role',
+            'hari',
+            'tanggalCetak'
+        ))->setPaper('A4', 'portrait');
+
+        return $pdf->stream('Laporan Harian Cash In ' . $hari . '.pdf');
+    }
+    public function printCashOut(Request $request)
+    {
+        $today = Carbon::now('Asia/Jakarta')->toDateString();
+        $hari = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y'); // → 15 Desember 2025
+
+        $cashOut = JurnalUmum::whereDate('tanggal', $today)
+            ->where('debit', '!=', 0)
+            ->whereNull('deleted_at')
+            ->orderBy('tanggal', 'desc')
+            ->get();
+
+        $admin = Auth::user()->name ?? 'Administrator';
+        $role = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+
+        $pdf = Pdf::loadView('admin.laporan-harian.printCashOut', compact(
+            'cashOut',
+            'admin',
+            'role',
+            'hari',
+            'tanggalCetak'
+        ))->setPaper('A4', 'portrait');
+
+        return $pdf->stream('Laporan Harian Cash Out ' . $hari . '.pdf');
+    }
+
+    public function printCashInGlobal(Request $request)
+    {
+        $start = $request->input('start_in');
+        $end   = $request->input('end_in');
+
+        $cashInGL = JurnalUmum::where('kredit', '!=', 0)
+            ->whereNull('deleted_at')
+            ->when($start && $end, fn($q) => $q->whereBetween('tanggal', [$start, $end]))
+            ->orderBy('tanggal', 'desc')
+            ->get();
+
+        $admin = Auth::user()->name ?? 'Administrator';
+        $role = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+
+        $pdf = Pdf::loadView('admin.laporan-harian.printCashInGL', compact(
+            'cashInGL',
+            'admin',
+            'role',
+            'tanggalCetak',
+            'start',
+            'end'
+        ))->setPaper('A4', 'landscape');
+
+        return $pdf->stream("CashInGlobal_{$start}_{$end}.pdf");
+    }
+
+    public function printCashOutGlobal(Request $request)
+    {
+        $start = $request->input('start_out');
+        $end   = $request->input('end_out');
+
+        $cashOutGL = JurnalUmum::where('debit', '!=', 0)
+            ->whereNull('deleted_at')
+            ->when($start && $end, fn($q) => $q->whereBetween('tanggal', [$start, $end]))
+            ->orderBy('tanggal', 'desc')
+            ->get();
+
+        $admin = Auth::user()->name ?? 'Administrator';
+        $role = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+
+        $pdf = Pdf::loadView('admin.laporan-harian.printCashOutGL', compact(
+            'cashOutGL',
+            'admin',
+            'role',
+            'tanggalCetak',
+            'start',
+            'end'
+        ))->setPaper('A4', 'landscape');
+
+        return $pdf->stream("CashOutGlobal_{$start}_{$end}.pdf");
     }
 
     /**
@@ -104,14 +219,14 @@ class LaporanHarianController extends Controller
     public function destroy(string $id)
     {
         // Ambil data jurnal
-    $jurnal = JurnalUmum::findOrFail($id);
+        $jurnal = JurnalUmum::findOrFail($id);
 
-    // Update kolom deleted_at dengan waktu sekarang (Asia/Jakarta)
-    $jurnal->update([
-        'deleted_at' => Carbon::now('Asia/Jakarta'),
-    ]);
+        // Update kolom deleted_at dengan waktu sekarang (Asia/Jakarta)
+        $jurnal->update([
+            'deleted_at' => Carbon::now('Asia/Jakarta'),
+        ]);
 
-    return redirect()->route('laporanHarian.index')
-        ->with('success', 'Data jurnal berhasil dihapus (soft delete)');
+        return redirect()->route('laporanHarian.index')
+            ->with('success', 'Data jurnal berhasil dihapus (soft delete)');
     }
 }

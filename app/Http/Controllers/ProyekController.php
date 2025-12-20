@@ -1,9 +1,11 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Proyek;
 use Illuminate\Http\Request;
+use App\Models\PiutangHutang;
 use Illuminate\Support\Facades\Auth;
 
 class ProyekController extends Controller
@@ -16,20 +18,22 @@ class ProyekController extends Controller
 
     public function create()
     {
-        return view('admin.master-data.form-add.proyek');
+        $pic = PiutangHutang::where('akun_header', 'like', 'PIC%')->get();
+        return view('admin.master-data.form-add.proyek', compact('pic'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'tgl_mulai'       => 'nullable|date',
-            'tgl_selesai'     => 'nullable|date',
-            'no_kontrak'      => 'nullable|string|max:100',
-            'hari_kalender'   => 'nullable|string|max:50',
+            'tgl_mulai'       => 'required|date',
+            'tgl_selesai'     => 'required|date',
+            'no_kontrak'      => 'required|string|max:100',
+            'hari_kalender'   => 'required|string|max:50',
             'nama_proyek'     => 'required|string|max:150',
             'nama_perusahaan' => 'required|string|max:150',
-            'kategori'        => 'nullable|string|max:50',
-            'jenis'           => 'nullable|string|max:50',
+            'pic'             => 'required|string|max:150',
+            'kategori'        => 'required|string|max:50',
+            'jenis'           => 'required|string|max:50',
             'nilai_kontrak'   => 'required|numeric|min:0',
         ]);
 
@@ -45,7 +49,8 @@ class ProyekController extends Controller
             'no_kontrak'     => $request->no_kontrak,
             'hari_kalender'  => $request->hari_kalender,
             'nama_proyek'    => $request->nama_proyek,
-            'nama_perusahaan'=> $request->nama_perusahaan,
+            'nama_perusahaan' => $request->nama_perusahaan,
+            'pic'            => $request->pic,
             'kategori'       => $request->kategori,
             'jenis'          => $request->jenis,
             'nilai_kontrak'  => $request->nilai_kontrak,
@@ -82,7 +87,7 @@ class ProyekController extends Controller
             'no_kontrak'     => $request->no_kontrak,
             'hari_kalender'  => $request->hari_kalender,
             'nama_proyek'    => $request->nama_proyek,
-            'nama_perusahaan'=> $request->nama_perusahaan,
+            'nama_perusahaan' => $request->nama_perusahaan,
             'kategori'       => $request->kategori,
             'jenis'          => $request->jenis,
             'nilai_kontrak'  => $request->nilai_kontrak,

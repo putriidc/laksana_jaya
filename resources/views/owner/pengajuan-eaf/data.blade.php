@@ -1,4 +1,4 @@
-@extends('kepala-gudang.layout') @section('content')
+@extends('owner.layout') @section('content')
     <div>
         <div class="flex flex-col mb-6">
             <section class="mb-5 pb-10 border-b-2 border-[#B6B6B6]">
@@ -20,6 +20,7 @@
                                 $noacc = 1;
                             @endphp
                             @foreach ($eaf_needAcc as $item)
+
                                 <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
                                     <td class="py-2">{{ $noacc++ }}</td>
                                     <td class="py-2">{{ $item->tanggal }}</td>
@@ -34,7 +35,7 @@
                                         </span>
                                     </td>
                                     <td class="py-2 flex justify-center items-center">
-                                        <form action="{{ route('AccEafSpv.store') }}" method="POST">
+                                        <form action="{{ route('AccEafOwner.store') }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="id_eaf" value="{{ $item->id }}">
                                             <button class="bg-[#8CE987] px-4 py-2 rounded-lg cursor-pointer">Accept</button>
@@ -62,15 +63,15 @@
                 <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
                     <table class="table-auto text-center text-sm w-full">
                         <thead class="border-b-2 border-[#CCCCCC]">
-                            <th class="py-2 w-[5%]">No</th>
-                            <th class="py-2 w-[10%]">Tgl Pengajuan</th>
-                            <th class="py-2 w-[15%]">Nama Proyek</th>
-                            <th class="py-2 w-[15%]">PIC</th>
-                            <th class="py-2 w-[15%]">Sumber Dana</th>
-                            <th class="py-2 w-[20%]">Nominal</th>
-                            <th class="py-2 w-[20%]">Ket. Spv</th>
-                            <th class="py-2 w-[15%]">Detail Biaya</th>
-                            <th class="py-2 w-[15%]">Status</th>
+                            <th class="py-2">No</th>
+                            <th class="py-2 ">Tgl Pengajuan</th>
+                            <th class="py-2 ">Nama Proyek</th>
+                            <th class="py-2 ">PIC</th>
+                            <th class="py-2 ">Sumber dana</th>
+                            <th class="py-2">Nominal</th>
+                            <th class="py-2">Ket. Owner</th>
+                            <th class="py-2 ">Detail Biaya</th>
+                            <th class="py-2 ">Status</th>
                         </thead>
                         <tbody>
                             @php
@@ -84,7 +85,7 @@
                                     <td class="py-2">{{ $item->pic }}</td>
                                     <td class="py-2">{{ $item->bank->nama_akun }}</td>
                                     <td class="py-2">{{ 'RP. ' . number_format($item->nominal, 0, ',', '.') }}</td>
-                                    <td class="py-2">{{ $item->ket_spv }}</td>
+                                    <td class="py-2">{{ $item->ket_owner }}</td>
                                     <td class="py-2">
                                         <span data-detail="{{ $item->detail_biaya }}" onclick="detailBiaya(this)"
                                             class="hover:underline text-blue-400 cursor-pointer">
@@ -94,12 +95,12 @@
                                     <td class="py-2">
                                         <div class="flex gap-x-1 items-center">
                                         {{-- Status spv --}}
-                                        @if ($item->acc_spv === 'accept')
+                                        @if ($item->acc_owner === 'accept')
                                             <span class="bg-[#8CE987] px-4 py-2 rounded-lg cursor-pointer">Accept</span>
-                                        @elseif ($item->acc_spv === 'decline')
+                                        @elseif ($item->acc_owner === 'decline')
                                             <span class="bg-[#e91111] px-4 py-2 rounded-lg cursor-pointer">Decline</span>
                                         @else
-                                            <span class="px-4 py-1 bg-gray-400 text-xs rounded-sm text-white">Pending</span>
+                                            <span class="bg-[#b6b6b6e6] px-4 py-2 rounded-lg cursor-pointer">Pending</span>
                                         @endif
                                     </div>
                                     </td>
@@ -131,7 +132,7 @@
                             }
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                fetch(`/Acceaf/${id}/decline`, {
+                                fetch(`/AcceafO/${id}/decline`, {
                                         method: "POST",
                                         headers: {
                                             "Content-Type": "application/json",
