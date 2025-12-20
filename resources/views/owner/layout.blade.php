@@ -120,7 +120,62 @@
                             </button>
                         </a>
                     </div>
-                    <div class="grow flex items-end">
+                    <a href="/progress" class="cursor-pointer">
+                        <button
+                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
+                        >
+                            <img
+                                src="{{ asset('assets/navbar-owner/buildings.png') }}"
+                                alt="devices icon"
+                            />
+                            <span>Progress Proyek</span>
+                        </button>
+                    </a>
+                    <a href="/resume" class="cursor-pointer">
+                        <button
+                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
+                        >
+                            <img
+                                src="{{ asset('assets/navbar-owner/presention-chart.png') }}"
+                                alt="devices icon"
+                            />
+                            <span>Resume Proyek</span>
+                        </button>
+                    </a>
+                    <a href="/management" class="cursor-pointer">
+                        <button
+                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
+                        >
+                            <img
+                                src="{{ asset('assets/navbar-owner/menu-board.png') }}"
+                                alt="devices icon"
+                            />
+                            <span>Data Management</span>
+                        </button>
+                    </a>
+                    <a href="/jurnal" class="cursor-pointer">
+                        <button
+                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
+                        >
+                            <img
+                                src="{{ asset('assets/navbar-owner/book2.png') }}"
+                                alt="devices icon"
+                            />
+                            <span>Jurnal</span>
+                        </button>
+                    </a>
+                    <a href="{{ route('AccEafOwner.index') }}" class="cursor-pointer">
+                        <button
+                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
+                        >
+                            <img
+                                src="{{ asset('assets/navbar-owner/book2.png') }}"
+                                alt="devices icon"
+                            />
+                            <span>Pengajuan EAF</span>
+                        </button>
+                    </a>
+                    <div class="grow flex items-end pb-5">
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button

@@ -329,5 +329,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/detail-barang-jasa', function () {
         return view('owner.data-proyek.barang-jasa.detail');
     });
+    Route::get('/progress', function () {
+        return view('owner.progress.data');
+    });
+    Route::get('/detail-progress', function () {
+        return view('owner.progress.detail');
+    });
+    Route::get('/resume', function () {
+        return view('owner.resume.data');
+    });
+    Route::get('/management', function () {
+        return view('owner.management.data');
+    });
+    Route::get('/jurnal', function () {
+        return view('owner.jurnal.data');
+    });
     // owner
 });
