@@ -128,7 +128,7 @@
                         </button>
                     </a>
                     <a
-                        href="/form-eaf"
+                        href="{{ route('eaf.index') }}"
                         class="cursor-pointer"
                     >
                         <button

@@ -75,7 +75,7 @@
                         </button>
                     </a>
                     <a
-                        href="/pengajuan-eaf"
+                        href="{{ route('AccEafSpv.index') }}"
                         class="cursor-pointer"
                     >
                         <button

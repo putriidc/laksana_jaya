@@ -16,7 +16,10 @@ class AssetSeeder extends Seeder
             ['kode_akun' => '112', 'nama_akun' => 'Kas Kecil'],
             ['kode_akun' => '113', 'nama_akun' => 'Kas Bank BCA'],
             ['kode_akun' => '119', 'nama_akun' => 'Kas Flip'],
-            ['kode_akun' => '122', 'nama_akun' => 'Kas utama'],
+            ['kode_akun' => '122', 'nama_akun' => 'Kas Utama'],
+            ['kode_akun' => '123', 'nama_akun' => 'Kas BJB'],
+            ['kode_akun' => '531', 'nama_akun' => 'OVO'],
+
         ];
 
         foreach ($dataKas as $item) {
@@ -157,7 +160,6 @@ class AssetSeeder extends Seeder
             ['kode_akun' => '528', 'nama_akun' => 'Fee Perusahaan', 'for_admin' => true],
             ['kode_akun' => '529', 'nama_akun' => 'Biaya Entertainment', 'for_admin' => true],
             ['kode_akun' => '530', 'nama_akun' => 'Fee Dinas', 'for_admin' => true],
-            ['kode_akun' => '531', 'nama_akun' => 'OVO', 'for_admin' => true],
             ['kode_akun' => '532', 'nama_akun' => 'Biaya Reparasi dan Pemeliharaan', 'for_admin' => true],
             ['kode_akun' => '533', 'nama_akun' => 'Biaya Kartu Kredit', 'for_admin' => true],
             ['kode_akun' => '534', 'nama_akun' => 'Biaya Jilid dan Keperluan Product'],

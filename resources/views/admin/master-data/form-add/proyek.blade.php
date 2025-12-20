@@ -27,8 +27,12 @@
             </div>
             <div class="flex items-center">
                 <label for="" class="w-[180px] font-medium">PIC</label>
-                <select name="pic" id="" class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2 appearance-none cursor-pointer">
-                    <option selected>-Pilih PIC-</option>
+                <select name="pic" id=""
+                    class="bg-[#D9D9D9]/40 px-4 appearance-none py-2 rounded-lg w-full cursor-pointer">
+                    <option selected disabled>~Pilih PIC~</option>
+                    @foreach ($pic as $item)
+                        <option value="{{ $item->akun_header }}">{{ $item->akun_header }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="flex items-center">
@@ -39,15 +43,18 @@
                     <option value="CV.ARN PURNAMA CONSULTAN">CV. ARN PURNAMA CONSULTAN</option>
                     <option value="CV.ARN GUMILANG">CV. ARN GUMILANG</option>
                     <option value="CV.MITRA UTAMA SEMESTA">CV.MITRA UTAMA SEMESTA</option>
+                    <option value="CV. FAJAR MAS JAYA">CV. FAJAR MAS JAYA</option>
+                    <option value="CV. FAJAR MAS JAYA">CV. FAJAR MAS JAYA</option>
+                    <option value="CV. LAKSANA JAYA">CV. LAKSANA JAYA</option>
                 </select>
             </div>
             <div class="flex items-center">
                 <label for="" class="w-[180px] font-medium">Kategori</label>
                 <select name="kategori" id="" class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2 appearance-none cursor-pointer">
                     <option selected>-Pilih Kategori-</option>
-                    <option value="Fisik">Fisik</option>
-                    <option value="Perencanaan">Perencanaan</option>
-                    <option value="Pengawasan">Pengawasan</option>
+                    <option value="Kontruksi">Kontruksi</option>
+                    <option value="Konsultan">Konsultan</option>
+                    <option value="Barang & Jasa">Barang & Jasa</option>
                 </select>
             </div>
             <div class="flex items-center">

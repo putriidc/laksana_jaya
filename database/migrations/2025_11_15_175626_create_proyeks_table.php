@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('hari_kalender')->nullable();
             $table->string('nama_proyek');
             $table->string('nama_perusahaan');
+            $table->string('pic');
             $table->string('kategori')->nullable();
             $table->string('jenis')->nullable();
             $table->double('nilai_kontrak')->default(0);

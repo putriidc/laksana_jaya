@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AccEafOwnerController;
+use App\Http\Controllers\AccEafSpvController;
 use App\Http\Controllers\AccOwnerController;
 use App\Http\Controllers\AccTukangSpvController;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +20,7 @@ use App\Http\Controllers\barangReturController;
 use App\Http\Controllers\KasbonContentController;
 use App\Http\Controllers\PiutangHutangController;
 use App\Http\Controllers\DataPerusahaanController;
+use App\Http\Controllers\EafController;
 use App\Http\Controllers\LabaRugiController;
 use App\Http\Controllers\LaporanHarianController;
 use App\Http\Controllers\PinjamanContentController;
@@ -183,9 +186,11 @@ Route::middleware('auth')->group(function () {
     // transaksi barang
 
     // detail barang
-    Route::get('pengajuan-eaf', function () {
-        return view('kepala-gudang.pengajuan-eaf.data');
-    });
+    Route::resource('AccEafSpv', AccEafSpvController::class);
+    Route::post('/Acceaf/{id}/decline', [AccEafSpvController::class, 'decline'])
+        ->name('Acceaf.decline');
+
+
     Route::get('create-pengajuan', function () {
         return view('kepala-gudang.pengajuan-eaf.create-pengajuan');
     });
@@ -193,9 +198,13 @@ Route::middleware('auth')->group(function () {
 
     // admin
 
-    Route::get('/form-eaf', function () {
-        return view('admin.form-eaf.form');
-    });
+    Route::resource('eaf', EafController::class);
+    // route untuk simpan rincian EAF
+    Route::post('/eaf/{id}/detail', [EafController::class, 'storeDetail'])->name('eaf.storeDetail');
+    Route::post('/eaf/{id}/generate', [EafController::class, 'generate'])->name('eaf.generate');
+
+
+
     Route::get('/detail-eaf', function () {
         return view('admin.form-eaf.detail');
     });
@@ -278,6 +287,10 @@ Route::middleware('auth')->group(function () {
         ->name('create-kasbon.edit');
     Route::put('/accowner/{id}/updateKasbon', [AccOwnerController::class, 'updateKasbon'])
         ->name('accowner.updateKasbon');
+
+    Route::resource('AccEafOwner', AccEafOwnerController::class);
+    Route::post('/AcceafO/{id}/decline', [AccEafOwnerController::class, 'decline'])
+        ->name('AcceafO.decline');
 
 
     Route::get('/owner-dashboard', function () {
