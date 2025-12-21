@@ -70,7 +70,7 @@ class JurnalUmumController extends Controller
         }
 
 
-        $jurnals = $query->orderBy('tanggal', 'desc')->get();
+        $jurnals = $query->orderBy('id', 'desc')->get();
 
         $totalDebit = $jurnals->sum('debit');
         $totalKredit = $jurnals->sum('kredit');
