@@ -29,12 +29,14 @@
                     <button class="cursor-pointer">Tambah Data +</button>
                 </a> --}}
                 <div class="flex items-center gap-x-2">
-                    <button onclick="transaksiMasuk()"
+                    <button onclick="transaksiMasuk()" data-url="{{ route('jurnalUmums.storeDebit') }}"
+                        data-token="{{ csrf_token() }}"
                         class="flex items-center gap-x-3 border-2 border-[#9A9A9A] px-4 py-2 rounded-lg cursor-pointer">
                         <span class="text-gray-700">Debit</span>
                         <img src="{{ asset('assets/card-receive.png') }}" alt="card receive icon" class="w-[20px]">
                     </button>
-                    <button onclick="transaksiKeluar()"
+                    <button onclick="transaksiKeluar()" data-url="{{ route('jurnalUmums.storeKredit') }}"
+                        data-token="{{ csrf_token() }}"
                         class="flex items-center gap-x-3 border-2 border-[#9A9A9A] px-4 py-2 rounded-lg cursor-pointer">
                         <span class="text-gray-700">Kredit</span>
                         <img src="{{ asset('assets/card-receive.png') }}" alt="card receive icon" class="w-[20px]">
@@ -189,390 +191,333 @@
             </div>
         </section>
         <script>
+            let transaksiDebet = [];
+
             function transaksiMasuk() {
-                // buat form modal dengan sweetalert2
                 Swal.fire({
                     html: `
-                    <div class="flex flex-col">
-                    <form action="" method="POST" class="flex flex-col text-left pb-8 border-b border-gray-400" id="myForm">
-                        @csrf
-                        <h1 class="font-bold text-2xl mb-4">Transaksi Jurnal - Debet</h1>
-                        <div class="flex items-center mt-4">
-                            <label for="tanggal" class="font-medium w-[150px]">Tgl Transaksi</label>
-                            <div class="flex items-center w-full justify-between">
-                                <input value="{{ $today }}" type="date" name="tanggal" id="tanggal" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none" readonly>
-                                <div class="flex items-center w-[370px]">
-                                    <label for="kode_akun" class="font-medium w-[40%]">Akun Perkiraan</label>
-                                    <select name="nama_perkiraan" id="nama_perkiraan" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none appearance-none">
-                                        <option value="" disabled selected>-Pilih Akun-</option>
-                                        @foreach ($akun as $item)
-                                            <option value="{{ $item->nama_akun }}" data-kode="{{ $item->kode_akun }}">
-                                                {{ $item->nama_akun }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex items-center mt-4">
-                            <label for="keterangan" class="font-medium w-[150px]">Kas/Bank</label>
-                            <div class="flex items-center w-full justify-between">
-                                <select name="nama_perkiraan" id="nama_perkiraan" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none appearance-none">
-                                    <option disabled selected>-Pilih Kas-</option>
-                                    <option value="Kas Utama">Kas Utama</option>
-                                    <option value="Kas BCA">Kas BCA</option>
-                                    <option value="Kas BJB">Kas BJB</option>
-                                    <option value="Kas Besar">Kas Besar</option>
-                                    <option value="Kas Kecil">Kas Kecil</option>
-                                    <option value="OVO">OVO</option>
+                    <form id="formKasBank" class="flex flex-col gap-y-4">
+                    <h1 class="font-bold text-2xl mb-4">Transaksi Jurnal Debet</h1>
 
-                                </select>
-                                <div class="flex items-center w-[370px]">
-                                    <label for="debit" class="font-medium w-[40%]">Nominal</label>
-                                    <input type="text" name="debit" id="debit" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2 rupiah-format">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex items-center mt-4">
-                            <label for="tanggal" class="font-medium w-[125px]">Keterangan</label>
-                            <input type="text" name="debit" id="debit" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none">
-                        </div>
-                        <div class="flex items-center mt-6 gap-x-4">
-                            <div class="w-[110px]"></div>
-                            <button type="submit" class="border-[#3E98D0] border text-[#3E98D0] py-1 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
-                                <span class="">Simpan Data</span>
-                                <img src="{{ asset('assets/plus-circle-blue.png') }}" alt="arrow right blue icon" class="w-[30px]">
-                            </button>
-                            <button type="button" onclick="Swal.close()" class="border-[#DD4049] border text-[#DD4049] py-2 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
-                                <span class="">Batal</span>
-                                <img src="{{ asset('assets/close-circle-red.png') }}" alt="arrow right blue icon" class="w-[22px]">
-                            </button>
-                        </div>
+                    <label>Kas/Bank</label>
+                    <select id="kasBank" class="bg-gray-200 rounded-lg px-4 py-2">
+                        <option disabled selected>-Pilih Kas-</option>
+                        @foreach ($bank as $item)
+                        <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
+                         @endforeach
+                    </select>
+
+                    <label>Keterangan</label>
+                    <input type="text" id="ketKasBank" class="bg-gray-200 rounded-lg px-4 py-2">
+
+                    <hr class="my-4">
+
+                    <h2 class="font-bold">Tambah Rincian Debet</h2>
+                    <div class="flex gap-x-2">
+                    <select id="namaPerkiraan" class="bg-gray-200 rounded-lg px-4 py-2 w-1/2">
+                    <option></option>
+                    @foreach ($akun as $item)
+                        <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
+                    @endforeach
+                    </select>
+                    <input type="text" id="ketPerkiraan" placeholder="Keterangan" class="bg-gray-200 rounded-lg px-4 py-2 w-1/4">
+                    <input type="number" id="nominal" placeholder="Nominal" class="bg-gray-200 rounded-lg px-4 py-2 w-1/4">
+                    <button type="button" onclick="addDebet()" class="bg-blue-500 text-white px-3 rounded">+</button>
+                    </div>
+
+                    <table id="tableDebet" class="mt-4 w-full text-sm border">
+                        <thead>
+                        <tr class="bg-gray-300">
+                        <th>No</th><th>Akun</th><th>Keterangan</th><th>Nominal</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    </table>
+
+                    <div class="flex gap-x-4 mt-4">
+                    <button type="button" onclick="generateJurnal()" class="bg-green-500 text-white px-4 py-2 rounded">Generate</button>
+                    <button type="button" onclick="Swal.close()" class="bg-red-500 text-white px-4 py-2 rounded">Batal</button>
+                    </div>
                     </form>
-                    <div class="mt-5">
-                        <div class="flex items-center justify-between mb-4">
-                            <h1 class="text-2xl font-bold text-start">Data Transaksi</h1>
-                            <button class="border-[#45D03E] border text-[#45D03E] py-2 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
-                                <span>Generate</span>
-                                <img src="{{ asset('assets/card-send-greeen.png') }}" alt="arrow right blue icon" class="w-[20px]">
-                            </button>
-                        </div>
-                        <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                            <table class="table-fixed text-center text-sm w-full">
-                                <thead class="border-b-2 border-[#CCCCCC]">
-                                    <th class="w-[10%] py-2">No</th>
-                                    <th class="w-[15%] py-2">Akun Perkiraan</th>
-                                    <th class="w-[20%] py-2">Keterangan</th>
-                                    <th class="w-[15%] py-2">Nominal</th>
-                                </thead>
-                                <tbody>
-                                    <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
-                                        <td class="py-2">1</td>
-                                        <td class="py-2">Biaya Material, Alat dan Barang</td>
-                                        <td class="py-2">bebas caption</td>
-                                        <td class="py-2">Rp. 1.476.500</td>
-                                    </tr>
-                                    <tr class="bg-[#E9E9E9] border-b-[1px] border-[#CCCCCC]">
-                                        <td class="py-2">2</td>
-                                        <td class="py-2">Biaya Admin Bank</td>
-                                        <td class="py-2">Admin BCA</td>
-                                        <td class="py-2">Rp. 2.500</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    </div>
                     `,
-                    width: '850px',
-                    showCancelButton: false,
-                    showCloseButton: false,
+                    width: '900px',
                     showConfirmButton: false,
                     didOpen: () => {
-                        // pasang listener setelah modal muncul
-                        const select = document.getElementById('nama_perkiraan');
-                        const kodeInput = document.getElementById('kode_akun');
-
-                        select.addEventListener('change', function() {
-                            let selectedOption = this.options[this.selectedIndex];
-                            let kode = selectedOption.getAttribute('data-kode');
-                            kodeInput.value = kode;
+                        new TomSelect('#namaPerkiraan', {
+                            placeholder: 'Cari akun...',
+                            create: false,
+                            maxItems: 1,
+                            hideSelected: true,
+                            shouldLoadImmediately: false,
+                            sortField: {
+                                field: "text",
+                                direction: "asc"
+                            }
                         });
-
-                        const rupiahFormat = document.querySelectorAll('.rupiah-format');
-                        rupiahFormat.forEach(input => {
-                            input.addEventListener('input', function() {
-                                let value = this.value.replace(/[^,\d]/g, "").toString();
-                                let split = value.split(",");
-                                let sisa = split[0].length % 3;
-                                let rupiah = split[0].substr(0, sisa);
-                                let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-                                let separator = sisa ? "." : "";
-                                rupiah += separator + ribuan.join(".");
-                                rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
-                                this.value = rupiah ? "Rp. " + rupiah : "";
-                            });
-                        });
-
-                        const form = document.getElementById('myForm')
-                        if (form) {
-                            form.addEventListener('submit', function(e) {
-                                const rupiahInputs = document.querySelectorAll('.rupiah-format');
-                                rupiahInputs.forEach(input => {
-                                    let value = input.value;
-                                    let cleanValue = parseInt(value.replace(/[^,\d]/g, ""));
-                                    input.value = cleanValue;
-                                    console.log(
-                                        `Input name: ${input.name}, Clean value: ${input.value}`
-                                    );
-                                })
-                            })
-                        }
 
                     }
                 });
             }
+
+            function addDebet() {
+                let akun = document.getElementById('namaPerkiraan');
+                let kode = akun.value;
+                let nama = akun.options[akun.selectedIndex].text;
+                let ket = document.getElementById('ketPerkiraan').value;
+                let nominal = parseInt(document.getElementById('nominal').value);
+
+                transaksiDebet.push({
+                    kode_akun: kode,
+                    nama_akun: nama,
+                    keterangan: ket,
+                    nominal: nominal
+                });
+
+                let tbody = document.querySelector('#tableDebet tbody');
+                tbody.innerHTML = transaksiDebet.map((d, i) => `
+                <tr>
+                    <td>${i+1}</td>
+                    <td>${d.nama_akun}</td>
+                    <td>${d.keterangan}</td>
+                    <td>Rp ${d.nominal.toLocaleString()}</td>
+                </tr>
+                `).join('');
+            }
+
+            function generateJurnal() {
+                let kasBank = document.getElementById('kasBank');
+                let kodeKas = kasBank.value;
+                let namaKas = kasBank.options[kasBank.selectedIndex]?.text || "";
+                let ketKas = document.getElementById('ketKasBank').value;
+
+                // 🔎 Validasi input dulu
+                if (!kodeKas || !ketKas.trim()) {
+                    Swal.fire("Oops", "Kas/Bank dan Keterangan wajib diisi", "warning");
+                    return;
+                }
+
+                if (transaksiDebet.length === 0) {
+                    Swal.fire("Oops", "Minimal 1 rincian debet harus ditambahkan", "warning");
+                    return;
+                }
+
+                let totalNominal = transaksiDebet.reduce((sum, d) => sum + d.nominal, 0);
+
+                let data = [];
+                // baris pertama: Kas/Bank (kredit)
+                data.push({
+                    kode_akun: kodeKas,
+                    nama_akun: namaKas,
+                    keterangan: ketKas,
+                    debit: 0,
+                    kredit: totalNominal
+                });
+
+                // baris debet
+                transaksiDebet.forEach(d => {
+                    data.push({
+                        kode_akun: d.kode_akun,
+                        nama_akun: d.nama_akun,
+                        keterangan: d.keterangan,
+                        debit: d.nominal,
+                        kredit: 0
+                    });
+                });
+
+                let btn = document.querySelector('[onclick="transaksiMasuk()"]');
+                let url = btn.dataset.url;
+                let token = btn.dataset.token;
+
+                fetch(url, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-TOKEN": token
+                        },
+                        body: JSON.stringify({
+                            transaksi: data
+                        })
+                    })
+                    .then(res => res.json())
+                    .then(res => {
+                        if (res.error) {
+                            Swal.fire("Error", "Gagal generate: " + res.error, "error");
+                        } else {
+                            Swal.fire("Sukses", "Data berhasil digenerate ke jurnal umum", "success");
+                            transaksiDebet = []; // reset array setelah sukses
+                            location.reload();
+                        }
+                    })
+                    .catch(err => {
+                        Swal.fire("Error", "Gagal generate: " + err.message, "error");
+                    });
+            }
+        </script>
+
+        <script>
+            let transaksiKredit = [];
+
             function transaksiKeluar() {
                 // buat form modal dengan sweetalert2
                 Swal.fire({
                     html: `
-                    <div class="flex flex-col">
-                    <form action="" method="POST" class="flex flex-col text-left pb-8 border-b border-gray-400" id="myForm">
-                        @csrf
-                        <h1 class="font-bold text-2xl mb-4">Transaksi Jurnal - Kredit</h1>
-                        <div class="flex items-center mt-4">
-                            <label for="tanggal" class="font-medium w-[150px]">Tgl Transaksi</label>
-                            <div class="flex items-center w-full justify-between">
-                                <input value="{{ $today }}" type="date" name="tanggal" id="tanggal" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none" readonly>
-                                <div class="flex items-center w-[370px]">
-                                    <label for="kode_akun" class="font-medium w-[40%]">Akun Perkiraan</label>
-                                    <select name="nama_perkiraan" id="nama_perkiraan" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none appearance-none">
-                                        <option value="" disabled selected>-Pilih Akun-</option>
-                                        @foreach ($akun as $item)
-                                            <option value="{{ $item->nama_akun }}" data-kode="{{ $item->kode_akun }}">
-                                                {{ $item->nama_akun }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex items-center mt-4">
-                            <label for="keterangan" class="font-medium w-[150px]">Kas/Bank</label>
-                            <div class="flex items-center w-full justify-between">
-                                <select name="nama_perkiraan" id="nama_perkiraan" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none appearance-none">
-                                    <option disabled selected>-Pilih Kas-</option>
-                                    <option value="Kas Utama">Kas Utama</option>
-                                    <option value="Kas BCA">Kas BCA</option>
-                                    <option value="Kas BJB">Kas BJB</option>
-                                    <option value="Kas Besar">Kas Besar</option>
-                                    <option value="Kas Kecil">Kas Kecil</option>
-                                    <option value="OVO">OVO</option>
+                    <form id="formKasBank" class="flex flex-col gap-y-4">
+                    <h1 class="font-bold text-2xl mb-4">Transaksi Jurnal Kredit</h1>
 
-                                </select>
-                                <div class="flex items-center w-[370px]">
-                                    <label for="debit" class="font-medium w-[40%]">Nominal</label>
-                                    <input type="text" name="debit" id="debit" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2 rupiah-format">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex items-center mt-4">
-                            <label for="tanggal" class="font-medium w-[125px]">Keterangan</label>
-                            <input type="text" name="debit" id="debit" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none">
-                        </div>
-                        <div class="flex items-center mt-6 gap-x-4">
-                            <div class="w-[110px]"></div>
-                            <button type="submit" class="border-[#3E98D0] border text-[#3E98D0] py-1 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
-                                <span class="">Simpan Data</span>
-                                <img src="{{ asset('assets/plus-circle-blue.png') }}" alt="arrow right blue icon" class="w-[30px]">
-                            </button>
-                            <button type="button" onclick="Swal.close()" class="border-[#DD4049] border text-[#DD4049] py-2 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
-                                <span class="">Batal</span>
-                                <img src="{{ asset('assets/close-circle-red.png') }}" alt="arrow right blue icon" class="w-[22px]">
-                            </button>
-                        </div>
+                    <label>Kas/Bank</label>
+                    <select id="kasBank" class="bg-gray-200 rounded-lg px-4 py-2">
+                        <option disabled selected>-Pilih Kas-</option>
+                        @foreach ($bank as $item)
+                        <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
+                         @endforeach
+                    </select>
+
+                    <label>Keterangan</label>
+                    <input type="text" id="ketKasBank" class="bg-gray-200 rounded-lg px-4 py-2">
+
+                    <hr class="my-4">
+
+                    <h2 class="font-bold">Tambah Rincian Debet</h2>
+                    <div class="flex gap-x-2">
+                    <select id="namaPerkiraan" class="bg-gray-200 rounded-lg px-4 py-2 w-1/2">
+                    <option></option>
+                    @foreach ($akun as $item)
+                        <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
+                    @endforeach
+                    </select>
+                    <input type="text" id="ketPerkiraan" placeholder="Keterangan" class="bg-gray-200 rounded-lg px-4 py-2 w-1/4">
+                    <input type="number" id="nominal" placeholder="Nominal" class="bg-gray-200 rounded-lg px-4 py-2 w-1/4">
+                    <button type="button" onclick="addKredit()" class="bg-blue-500 text-white px-3 rounded">+</button>
+                    </div>
+
+                    <table id="tableKredit" class="mt-4 w-full text-sm border">
+                        <thead>
+                        <tr class="bg-gray-300">
+                        <th>No</th><th>Akun</th><th>Keterangan</th><th>Nominal</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    </table>
+
+                    <div class="flex gap-x-4 mt-4">
+                    <button type="button" onclick="generateJurnalKredit()" class="bg-green-500 text-white px-4 py-2 rounded">Generate</button>
+                    <button type="button" onclick="Swal.close()" class="bg-red-500 text-white px-4 py-2 rounded">Batal</button>
+                    </div>
                     </form>
-                    <div class="mt-5">
-                        <div class="flex items-center justify-between mb-4">
-                            <h1 class="text-2xl font-bold text-start">Data Transaksi</h1>
-                            <button class="border-[#45D03E] border text-[#45D03E] py-2 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
-                                <span>Generate</span>
-                                <img src="{{ asset('assets/card-send-greeen.png') }}" alt="arrow right blue icon" class="w-[20px]">
-                            </button>
-                        </div>
-                        <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                            <table class="table-fixed text-center text-sm w-full">
-                                <thead class="border-b-2 border-[#CCCCCC]">
-                                    <th class="w-[10%] py-2">No</th>
-                                    <th class="w-[15%] py-2">Akun Perkiraan</th>
-                                    <th class="w-[20%] py-2">Keterangan</th>
-                                    <th class="w-[15%] py-2">Nominal</th>
-                                </thead>
-                                <tbody>
-                                    <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
-                                        <td class="py-2">1</td>
-                                        <td class="py-2">Biaya Material, Alat dan Barang</td>
-                                        <td class="py-2">bebas caption</td>
-                                        <td class="py-2">Rp. 1.476.500</td>
-                                    </tr>
-                                    <tr class="bg-[#E9E9E9] border-b-[1px] border-[#CCCCCC]">
-                                        <td class="py-2">2</td>
-                                        <td class="py-2">Biaya Admin Bank</td>
-                                        <td class="py-2">Admin BCA</td>
-                                        <td class="py-2">Rp. 2.500</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    </div>
                     `,
-                    width: '850px',
-                    showCancelButton: false,
-                    showCloseButton: false,
+                    width: '900px',
                     showConfirmButton: false,
                     didOpen: () => {
-                        // pasang listener setelah modal muncul
-                        const select = document.getElementById('nama_perkiraan');
-                        const kodeInput = document.getElementById('kode_akun');
-
-                        select.addEventListener('change', function() {
-                            let selectedOption = this.options[this.selectedIndex];
-                            let kode = selectedOption.getAttribute('data-kode');
-                            kodeInput.value = kode;
+                        new TomSelect('#namaPerkiraan', {
+                            placeholder: 'Cari akun...',
+                            create: false,
+                            maxItems: 1,
+                            hideSelected: true,
+                            shouldLoadImmediately: false,
+                            sortField: {
+                                field: "text",
+                                direction: "asc"
+                            }
                         });
-
-                        const rupiahFormat = document.querySelectorAll('.rupiah-format');
-                        rupiahFormat.forEach(input => {
-                            input.addEventListener('input', function() {
-                                let value = this.value.replace(/[^,\d]/g, "").toString();
-                                let split = value.split(",");
-                                let sisa = split[0].length % 3;
-                                let rupiah = split[0].substr(0, sisa);
-                                let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-                                let separator = sisa ? "." : "";
-                                rupiah += separator + ribuan.join(".");
-                                rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
-                                this.value = rupiah ? "Rp. " + rupiah : "";
-                            });
-                        });
-
-                        const form = document.getElementById('myForm')
-                        if (form) {
-                            form.addEventListener('submit', function(e) {
-                                const rupiahInputs = document.querySelectorAll('.rupiah-format');
-                                rupiahInputs.forEach(input => {
-                                    let value = input.value;
-                                    let cleanValue = parseInt(value.replace(/[^,\d]/g, ""));
-                                    input.value = cleanValue;
-                                    console.log(
-                                        `Input name: ${input.name}, Clean value: ${input.value}`
-                                    );
-                                })
-                            })
-                        }
 
                     }
                 });
             }
 
-            // function transaksiKeluar() {
-            //     // buat form modal dengan sweetalert2
-            //     Swal.fire({
-            //         html: `
-            //         <form action="{{ route('jurnalUmums.storeCashOut') }}" method="POST" class="flex flex-col text-left" id="myForm">
-            //             @csrf
-            //             <h1 class="font-bold text-2xl mb-4">Transaksi Jurnal - Kredit</h1>
-            //             <div class="flex items-center mt-4">
-            //                 <label for="tanggal" class="font-medium w-[150px]">Tgl Transaksi</label>
-            //                 <div class="flex items-center w-full justify-between">
-            //                     <input value="{{ $today }}" type="date" name="tanggal" id="tanggal" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none" readonly>
-            //                     <div class="flex items-center w-[350px]">
-            //                         <label for="kode_akun" class="font-medium w-[35%]">Kode Akun</label>
-            //                         <input type="text" name="kode_perkiraan" id="kode_akun" readonly
-            //                         class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none">
-            //                     </div>
-            //                 </div>
-            //             </div>
-            //             <div class="flex items-center mt-4">
-            //                 <label for="keterangan" class="font-medium w-[150px]">Keterangan</label>
-            //                 <div class="flex items-center w-full justify-between">
-            //                     <input type="text" name="keterangan" id="keterangan" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none">
-            //                     <div class="flex items-center w-[350px]">
-            //                         <label for="kredit" class="font-medium w-[35%]">Nominal</label>
-            //                         <input type="text" name="kredit" id="kredit" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2 rupiah-format">
-            //                     </div>
-            //                 </div>
-            //             </div>
-            //             <div class="flex items-center mt-4">
-            //                 <label for="tanggal" class="font-medium w-[125px]">Nama Akun</label>
-            //                 <select name="nama_perkiraan" id="nama_perkiraan" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none appearance-none">
-            //                     <option value="" disabled selected>-Pilih Nama Akun-</option>
-            //                      @foreach ($kredit as $item)
-            //                         <option value="{{ $item->nama_akun }}" data-kode="{{ $item->kode_akun }}">
-            //                             {{ $item->nama_akun }}
-            //                         </option>
-            //                     @endforeach
-            //                 </select>
-            //             </div>
-            //             <div class="flex items-center mt-6 gap-x-4">
-            //                 <div class="w-[110px]"></div>
-            //                 <button type="submit" class="border-[#3E98D0] border text-[#3E98D0] py-1 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
-            //                     <span class="">Simpan Data</span>
-            //                     <img src="{{ asset('assets/plus-circle-blue.png') }}" alt="arrow right blue icon" class="w-[30px]">
-            //                 </button>
-            //                 <button type="button" onclick="Swal.close()" class="border-[#DD4049] border text-[#DD4049] py-2 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
-            //                     <span class="">Batal</span>
-            //                     <img src="{{ asset('assets/close-circle-red.png') }}" alt="arrow right blue icon" class="w-[22px]">
-            //                 </button>
-            //             </div>
-            //         </form>
-            //         `,
-            //         width: '800px',
-            //         showCancelButton: false,
-            //         showCloseButton: false,
-            //         showConfirmButton: false,
-            //         didOpen: () => {
-            //             // pasang listener setelah modal muncul
-            //             const select = document.getElementById('nama_perkiraan');
-            //             const kodeInput = document.getElementById('kode_akun');
 
-            //             select.addEventListener('change', function() {
-            //                 let selectedOption = this.options[this.selectedIndex];
-            //                 let kode = selectedOption.getAttribute('data-kode');
-            //                 kodeInput.value = kode;
-            //             });
+            function addKredit() {
+                let akun = document.getElementById('namaPerkiraan');
+                let kode = akun.value;
+                let nama = akun.options[akun.selectedIndex].text;
+                let ket = document.getElementById('ketPerkiraan').value;
+                let nominal = parseInt(document.getElementById('nominal').value);
 
-            //             const rupiahFormat = document.querySelectorAll('.rupiah-format');
-            //             rupiahFormat.forEach(input => {
-            //                 input.addEventListener('input', function() {
-            //                     let value = this.value.replace(/[^,\d]/g, "").toString();
-            //                     let split = value.split(",");
-            //                     let sisa = split[0].length % 3;
-            //                     let rupiah = split[0].substr(0, sisa);
-            //                     let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-            //                     let separator = sisa ? "." : "";
-            //                     rupiah += separator + ribuan.join(".");
-            //                     rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
-            //                     this.value = rupiah ? "Rp. " + rupiah : "";
-            //                 });
-            //             });
+                transaksiKredit.push({
+                    kode_akun: kode,
+                    nama_akun: nama,
+                    keterangan: ket,
+                    nominal: nominal
+                });
 
-            //             const form = document.getElementById('myForm')
-            //             if (form) {
-            //                 form.addEventListener('submit', function(e) {
-            //                     const rupiahInputs = document.querySelectorAll('.rupiah-format');
-            //                     rupiahInputs.forEach(input => {
-            //                         let value = input.value;
-            //                         let cleanValue = parseInt(value.replace(/[^,\d]/g, ""));
-            //                         input.value = cleanValue;
-            //                         console.log(`Input name: ${input.name}, Clean value: ${input.value}`);
-            //                     })
-            //                 })
-            //             }
-            //         }
-            //     });
-            // }
+                let tbody = document.querySelector('#tableKredit tbody');
+                tbody.innerHTML = transaksiKredit.map((d, i) => `
+        <tr>
+            <td>${i+1}</td>
+            <td>${d.nama_akun}</td>
+            <td>${d.keterangan}</td>
+            <td>Rp ${d.nominal.toLocaleString()}</td>
+        </tr>
+    `).join('');
+            }
+
+            function generateJurnalKredit() {
+                let kasBank = document.getElementById('kasBank');
+                let kodeKas = kasBank.value;
+                let namaKas = kasBank.options[kasBank.selectedIndex]?.text || "";
+                let ketKas = document.getElementById('ketKasBank').value;
+
+                if (!kodeKas || !ketKas.trim()) {
+                    Swal.fire("Oops", "Kas/Bank dan Keterangan wajib diisi", "warning");
+                    return;
+                }
+
+                if (transaksiKredit.length === 0) {
+                    Swal.fire("Oops", "Minimal 1 rincian debet harus ditambahkan", "warning");
+                    return;
+                }
+
+                let totalNominal = transaksiKredit.reduce((sum, d) => sum + d.nominal, 0);
+
+                let data = [];
+                // baris pertama: Kas/Bank (debit)
+                data.push({
+                    kode_akun: kodeKas,
+                    nama_akun: namaKas,
+                    keterangan: ketKas,
+                    debit: totalNominal,
+                    kredit: 0
+                });
+
+                // baris kredit
+                transaksiKredit.forEach(d => {
+                    data.push({
+                        kode_akun: d.kode_akun,
+                        nama_akun: d.nama_akun,
+                        keterangan: d.keterangan,
+                        debit: 0,
+                        kredit: d.nominal
+                    });
+                });
+
+                let btn = document.querySelector('[onclick="transaksiKeluar()"]');
+                let url = btn.dataset.url;
+                let token = btn.dataset.token;
+
+                fetch(url, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-TOKEN": token
+                        },
+                        body: JSON.stringify({
+                            transaksi: data
+                        })
+                    })
+                    .then(res => res.json())
+                    .then(res => {
+                        if (res.error) {
+                            Swal.fire("Error", "Gagal generate: " + res.error, "error");
+                        } else {
+                            Swal.fire("Sukses", "Data berhasil digenerate ke jurnal umum", "success");
+                            transaksiKredit = []; // reset array setelah sukses
+                            location.reload();
+                        }
+                    })
+                    .catch(err => {
+                        Swal.fire("Error", "Gagal generate: " + err.message, "error");
+                    });
+            }
+
             function transferBank() {
                 // buat form modal dengan sweetalert2
                 Swal.fire({
@@ -586,8 +531,12 @@
                                 <input value="{{ $today }}" type="date" name="tanggal" id="tanggal" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none" readonly>
                                 <div class="flex items-center w-[350px]">
                                     <label for="kode_akun" class="font-medium w-[35%]">Ke Kas/Bank</label>
-                                    <input type="text" name="kode_perkiraan" id="kode_akun" readonly
-                                    class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none">
+                                    <select name="to" id="" class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none appearance-none" required>
+                                <option selected disabled>-Pilih kas/bank-</option>
+                                @foreach ($bank as $item)
+                                    <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
+                                @endforeach
+                            </select>
                                 </div>
                             </div>
                         </div>
@@ -603,8 +552,11 @@
                         </div>
                         <div class="flex items-center mt-4">
                             <label for="kas/bank" class="font-medium w-[125px]">Dari Kas</label>
-                            <select name="" id="" class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none appearance-none" required>
+                            <select name="from" id="" class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none appearance-none" required>
                                 <option selected disabled>-Pilih kas/bank-</option>
+                                @foreach ($bank as $item)
+                                    <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="flex items-center mt-6 gap-x-4">
@@ -667,109 +619,6 @@
                     }
                 });
             }
-            // function transferBank() {
-            //     // buat form modal dengan sweetalert2
-            //     Swal.fire({
-            //         html: `
-            //         <form action="{{ route('jurnalUmums.storeCashOut') }}" method="POST" class="flex flex-col text-left" id="myForm">
-            //             @csrf
-            //             <h1 class="font-bold text-2xl mb-4">Transaksi Kas Bank</h1>
-            //             <div class="flex items-center mt-4">
-            //                 <label for="tanggal" class="font-medium w-[150px]">Tgl Transaksi</label>
-            //                 <div class="flex items-center w-full justify-between">
-            //                     <input value="{{ $today }}" type="date" name="tanggal" id="tanggal" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none" readonly>
-            //                     <div class="flex items-center w-[350px]">
-            //                         <label for="kode_akun" class="font-medium w-[35%]">Kode Akun</label>
-            //                         <input type="text" name="kode_perkiraan" id="kode_akun" readonly
-            //                         class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none">
-            //                     </div>
-            //                 </div>
-            //             </div>
-            //             <div class="flex items-center mt-4">
-            //                 <label for="keterangan" class="font-medium w-[150px]">Keterangan</label>
-            //                 <div class="flex items-center w-full justify-between">
-            //                     <input type="text" name="keterangan" id="keterangan" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none">
-            //                     <div class="flex items-center w-[350px]">
-            //                         <label for="sisa_saldo" class="font-medium w-[35%]">Sisa Saldo</label>
-            //                         <input type="text" name="sisa_saldo" id="sisa_saldo" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2 rupiah-format">
-            //                     </div>
-            //                 </div>
-            //             </div>
-            //             <div class="flex items-center mt-4">
-            //                 <label for="tanggal" class="font-medium w-[150px]">Nama Akun</label>
-            //                 <div class="flex items-center w-full justify-between">
-            //                     <select name="nama_perkiraan" id="nama_perkiraan" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none appearance-none">
-            //                     <option value="" disabled selected>-Pilih Nama Akun-</option>
-            //                      @foreach ($kredit as $item)
-            //                         <option value="{{ $item->nama_akun }}" data-kode="{{ $item->kode_akun }}">
-            //                             {{ $item->nama_akun }}
-            //                         </option>
-            //                     @endforeach
-            //                     </select>
-            //                     <div class="flex items-center w-[350px]">
-            //                         <label for="kredit" class="font-medium w-[35%]">Nominal</label>
-            //                         <input type="text" name="kredit" id="kredit" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2 rupiah-format">
-            //                     </div>
-            //                 </div>
-            //             </div>
-            //             <div class="flex items-center mt-6 gap-x-4">
-            //                 <div class="w-[110px]"></div>
-            //                 <button type="submit" class="border-[#3E98D0] border text-[#3E98D0] py-1 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
-            //                     <span class="">Simpan Data</span>
-            //                     <img src="{{ asset('assets/plus-circle-blue.png') }}" alt="arrow right blue icon" class="w-[30px]">
-            //                 </button>
-            //                 <button type="button" onclick="Swal.close()" class="border-[#DD4049] border text-[#DD4049] py-2 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
-            //                     <span class="">Batal</span>
-            //                     <img src="{{ asset('assets/close-circle-red.png') }}" alt="arrow right blue icon" class="w-[22px]">
-            //                 </button>
-            //             </div>
-            //         </form>
-            //         `,
-            //         width: '800px',
-            //         showCancelButton: false,
-            //         showCloseButton: false,
-            //         showConfirmButton: false,
-            //         didOpen: () => {
-            //             // pasang listener setelah modal muncul
-            //             const select = document.getElementById('nama_perkiraan');
-            //             const kodeInput = document.getElementById('kode_akun');
-
-            //             select.addEventListener('change', function() {
-            //                 let selectedOption = this.options[this.selectedIndex];
-            //                 let kode = selectedOption.getAttribute('data-kode');
-            //                 kodeInput.value = kode;
-            //             });
-
-            //             const rupiahFormat = document.querySelectorAll('.rupiah-format');
-            //             rupiahFormat.forEach(input => {
-            //                 input.addEventListener('input', function() {
-            //                     let value = this.value.replace(/[^,\d]/g, "").toString();
-            //                     let split = value.split(",");
-            //                     let sisa = split[0].length % 3;
-            //                     let rupiah = split[0].substr(0, sisa);
-            //                     let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-            //                     let separator = sisa ? "." : "";
-            //                     rupiah += separator + ribuan.join(".");
-            //                     rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
-            //                     this.value = rupiah ? "Rp. " + rupiah : "";
-            //                 });
-            //             });
-
-            //             const form = document.getElementById('myForm')
-            //             if (form) {
-            //                 form.addEventListener('submit', function(e) {
-            //                     const rupiahInputs = document.querySelectorAll('.rupiah-format');
-            //                     rupiahInputs.forEach(input => {
-            //                         let value = input.value;
-            //                         let cleanValue = parseInt(value.replace(/[^,\d]/g, ""));
-            //                         input.value = cleanValue;
-            //                         console.log(`Input name: ${input.name}, Clean value: ${input.value}`);
-            //                     })
-            //                 })
-            //             }
-            //         }
-            //     });
-            // }
         </script>
 
     </div>

@@ -6,6 +6,10 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>Admin</title>
         @vite('resources/css/app.css') @vite('resources/js/app.js')
+        <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
+
+
     </head>
     <body class="font-poppins">
         <section class="flex h-screen">

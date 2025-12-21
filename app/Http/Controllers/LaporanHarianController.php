@@ -19,13 +19,13 @@ class LaporanHarianController extends Controller
         $today = Carbon::now('Asia/Jakarta')->toDateString();
 
         $cashIn = JurnalUmum::whereDate('tanggal', $today)
-            ->where('kredit', '!=', 0)
+            ->where('debit', '!=', 0)
             ->whereNull('deleted_at')
             ->orderBy('tanggal', 'desc')
             ->get();
 
         // Cash In Global
-        $cashInGL = JurnalUmum::where('kredit', '!=', 0)
+        $cashInGL = JurnalUmum::where('debit', '!=', 0)
             ->whereNull('deleted_at')
             ->when($request->start_in && $request->end_in, function ($q) use ($request) {
                 $q->whereBetween('tanggal', [$request->start_in, $request->end_in]);
@@ -34,13 +34,13 @@ class LaporanHarianController extends Controller
             ->get();
 
         $cashOut = JurnalUmum::whereDate('tanggal', $today)
-            ->where('debit', '!=', 0)
+            ->where('kredit', '!=', 0)
             ->whereNull('deleted_at')
             ->orderBy('tanggal', 'desc')
             ->get();
 
         // Cash Out Global
-        $cashOutGL = JurnalUmum::where('debit', '!=', 0)
+        $cashOutGL = JurnalUmum::where('kredit', '!=', 0)
             ->whereNull('deleted_at')
             ->when($request->start_out && $request->end_out, function ($q) use ($request) {
                 $q->whereBetween('tanggal', [$request->start_out, $request->end_out]);
@@ -48,8 +48,8 @@ class LaporanHarianController extends Controller
             ->orderBy('tanggal', 'desc')
             ->get();
 
-        $totalDebit = $cashOut->sum('debit');
-        $totalKredit = $cashIn->sum('kredit');
+        $totalDebit = $cashOut->sum('kredit');
+        $totalKredit = $cashIn->sum('debit');
 
         $status = $totalDebit === $totalKredit ? 'Balance' : 'Tidak Balance';
         return view('admin.laporan-harian.data', compact('cashIn', 'cashOut', 'cashInGL', 'cashOutGL', 'today', 'totalDebit', 'totalKredit', 'status'));

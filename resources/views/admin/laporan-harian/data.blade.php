@@ -39,7 +39,7 @@
                         <th class="w-[6%] py-2">Kode</th>
                         <th class="w-[15%] py-2">Nama Proyek</th>
                         <th class="w-[7%] py-2">Kd Proyek</th>
-                        <th class="w-[10%] py-2">Kredit</th>
+                        <th class="w-[10%] py-2">Debit</th>
                         <th class="w-[10%] py-2">Action</th>
                     </thead>
                     <tbody>
@@ -51,7 +51,7 @@
                                 <td class="py-2">{{ $item->kode_perkiraan }}</td>
                                 <td class="py-2">{{ $item->nama_proyek }}</td>
                                 <td class="py-2">{{ $item->kode_proyek }}</td>
-                                <td class="py-2">{{ 'RP. ' . number_format($item->kredit, 0, ',', '.') }}</td>
+                                <td class="py-2">{{ 'RP. ' . number_format($item->debit, 0, ',', '.') }}</td>
                                 <td class="flex justify-center items-center gap-x-2 py-2">
                                     <button
                                         onclick="editLaporanKeuangan({{ $item->id }},
@@ -113,7 +113,7 @@
                                 <td class="py-2">{{ $item->kode_perkiraan }}</td>
                                 <td class="py-2">{{ $item->nama_proyek }}</td>
                                 <td class="py-2">{{ $item->kode_proyek }}</td>
-                                <td class="py-2">{{ 'RP. ' . number_format($item->debit, 0, ',', '.') }}</td>
+                                <td class="py-2">{{ 'RP. ' . number_format($item->kredit, 0, ',', '.') }}</td>
                                 <td class="flex justify-center items-center gap-x-2 py-2">
                                     <button
                                         onclick="editLaporanKeuangan({{ $item->id }},
@@ -176,7 +176,7 @@
                         <th class="w-[6%] py-2">Kode</th>
                         <th class="w-[15%] py-2">Nama Proyek</th>
                         <th class="w-[7%] py-2">Kd Proyek</th>
-                        <th class="w-[10%] py-2">Kredit</th>
+                        <th class="w-[10%] py-2">Debit</th>
                         <th class="w-[10%] py-2">Action</th>
                     </thead>
                     <tbody>
@@ -188,7 +188,7 @@
                                 <td class="py-2">{{ $item->kode_perkiraan }}</td>
                                 <td class="py-2">{{ $item->nama_proyek }}</td>
                                 <td class="py-2">{{ $item->kode_proyek }}</td>
-                                <td class="py-2">{{ 'RP. ' . number_format($item->kredit, 0, ',', '.') }}</td>
+                                <td class="py-2">{{ 'RP. ' . number_format($item->debit, 0, ',', '.') }}</td>
                                 <td class="flex justify-center items-center gap-x-2 py-2">
                                     @if ($item->tanggal == $today)
                                         <button
@@ -267,7 +267,7 @@
                                 <td class="py-2">{{ $item->kode_perkiraan }}</td>
                                 <td class="py-2">{{ $item->nama_proyek }}</td>
                                 <td class="py-2">{{ $item->kode_proyek }}</td>
-                                <td class="py-2">{{ 'RP. ' . number_format($item->debit, 0, ',', '.') }}</td>
+                                <td class="py-2">{{ 'RP. ' . number_format($item->kredit, 0, ',', '.') }}</td>
                                 <td class="flex justify-center items-center gap-x-2 py-2">
                                     @if ($item->tanggal == $today)
                                         <button
