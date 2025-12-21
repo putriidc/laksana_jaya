@@ -24,6 +24,7 @@
                     <select name="akun_header" id=""
                         class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2 appearance-none cursor-pointer">
                         <option disabled>-Pilih Akun Header-</option>
+                        <option value="asset_lancar_bank" {{ $akun->akun_header == 'asset_lancar_bank' ? 'selected' : '' }}>Kas / Bank</option>
                         <option value="asset_lancar" {{ $akun->akun_header == 'asset_lancar' ? 'selected' : '' }}>Asset
                             Lancar</option>
                         <option value="asset_tetap" {{ $akun->akun_header == 'asset_tetap' ? 'selected' : '' }}>Asset Tetap

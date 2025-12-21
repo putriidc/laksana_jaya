@@ -39,6 +39,7 @@
                     class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2 appearance-none cursor-pointer"
                 >
                     <option selected>-Pilih Akun Header-</option>
+                    <option value="asset_lancar_bank">Kas / Bank</option>
                     <option value="asset_lancar">Asset Lancar</option>
                     <option value="asset_tetap">Asset Tetap</option>
                     <option value="kewajiban">Kewajiban</option>

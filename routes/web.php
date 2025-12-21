@@ -59,6 +59,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('jurnalUmums', JurnalUmumController::class)->except(['show']);
     Route::post('jurnalUmums/storeCashIn', [JurnalUmumController::class, 'storeCashIn'])
         ->name('jurnalUmums.storeCashIn');
+    Route::post('jurnalUmums/storeDebit', [JurnalUmumController::class, 'storeDebit'])
+        ->name('jurnalUmums.storeDebit');
+    Route::post('jurnalUmums/storeKredit', [JurnalUmumController::class, 'storeKredit'])
+        ->name('jurnalUmums.storeKredit');
     Route::post('jurnalUmums/storeCashOut', [JurnalUmumController::class, 'storeCashOut'])
         ->name('jurnalUmums.storeCashOut');
     Route::post('jurnalUmums/storeBank', [JurnalUmumController::class, 'storeBank'])
