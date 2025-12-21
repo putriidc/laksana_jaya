@@ -289,6 +289,8 @@ Route::middleware('auth')->group(function () {
         ->name('create-pinjaman.edit');
     Route::get('/create-kasbon/{id}/edit', [AccOwnerController::class, 'editKasbon'])
         ->name('create-kasbon.edit');
+    Route::get('indexTukang', [AccOwnerController::class, 'indexTukang'])
+        ->name('accowner.indexTukang');
     Route::put('/accowner/{id}/updateKasbon', [AccOwnerController::class, 'updateKasbon'])
         ->name('accowner.updateKasbon');
 

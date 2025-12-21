@@ -48,6 +48,17 @@
                             <span>Pinjaman Karyawan</span>
                         </button>
                     </a>
+                    <a href="{{ route('accowner.indexTukang') }}" class="cursor-pointer">
+                        <button
+                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
+                        >
+                            <img
+                                src="{{ asset('assets/navbar/devices.png') }}"
+                                alt="devices icon"
+                            />
+                            <span>Kasbon Tukang</span>
+                        </button>
+                    </a>
                     <a href="/labarugi-owner" class="cursor-pointer">
                         <button
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
