@@ -164,7 +164,7 @@
                             <span>Data Management</span>
                         </button>
                     </a>
-                    <a href="/jurnal" class="cursor-pointer">
+                    <a href="{{ route('jurnalOwner.index') }}" class="cursor-pointer">
                         <button
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >

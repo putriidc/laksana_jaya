@@ -21,6 +21,7 @@ use App\Http\Controllers\KasbonContentController;
 use App\Http\Controllers\PiutangHutangController;
 use App\Http\Controllers\DataPerusahaanController;
 use App\Http\Controllers\EafController;
+use App\Http\Controllers\JurnalOwnerController;
 use App\Http\Controllers\LabaRugiController;
 use App\Http\Controllers\LaporanHarianController;
 use App\Http\Controllers\PinjamanContentController;
@@ -297,6 +298,15 @@ Route::middleware('auth')->group(function () {
     Route::resource('AccEafOwner', AccEafOwnerController::class);
     Route::post('/AcceafO/{id}/decline', [AccEafOwnerController::class, 'decline'])
         ->name('AcceafO.decline');
+
+
+    Route::resource('jurnalOwner', JurnalOwnerController::class)->except(['show']);
+    Route::post('jurnalOwner/storeDebit', [JurnalOwnerController::class, 'storeDebit'])
+        ->name('jurnalOwner.storeDebit');
+    Route::post('jurnalOwner/storeKredit', [JurnalOwnerController::class, 'storeKredit'])
+        ->name('jurnalOwner.storeKredit');
+    Route::post('jurnalOwner/storeBank', [JurnalOwnerController::class, 'storeBank'])
+        ->name('jurnalOwner.storeBank');
 
 
     Route::get('/owner-dashboard', function () {
