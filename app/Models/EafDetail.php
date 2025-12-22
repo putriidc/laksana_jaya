@@ -15,6 +15,7 @@ class EafDetail extends Model
         'kode_eaf',
         'tanggal',
         'keterangan',
+        'kategori',
         'kode_akun',
         'nama_akun',
         'debit',

@@ -149,7 +149,7 @@
                         <th class="w-[10%] py-2">Kd Proyek</th>
                         <th class="w-[10%] py-2">Debet</th>
                         <th class="w-[10%] py-2">Kredit</th>
-                        {{-- <th class="w-[10%] py-2">Action</th> --}}
+                        <th class="w-[10%] py-2">Action</th>
                     </thead>
                     <tbody>
                         @foreach ($jurnals as $jurnal)
@@ -162,7 +162,7 @@
                                 <td class="py-2">{{ $jurnal->kode_proyek }}</td>
                                 <td class="py-2">{{ 'RP. ' . number_format($jurnal->debit, 0, ',', '.') }}</td>
                                 <td class="py-2">{{ 'RP. ' . number_format($jurnal->kredit, 0, ',', '.') }}</td>
-                                {{-- <td class="flex justify-center items-center gap-x-2 py-2">
+                                <td class="flex justify-center items-center gap-x-2 py-2">
                                     @if ($jurnal->tanggal == $today)
                                         <a href="{{ route('jurnalUmums.edit', $jurnal->id) }}"
                                             class="btn btn-sm btn-primary">
@@ -182,8 +182,8 @@
                                     @else
                                         <span class="text-gray-600 font-bold" >Lewat <br> Tanggal</span>
                                     @endif
-                                </td> --}}
-                                {{-- <td class="flex justify-center items-center gap-x-2 py-2">{{ $jurnal->tanggal }} | {{ $today }}</td> --}}
+                                </td>
+                                 {{-- <td class="flex justify-center items-center gap-x-2 py-2">{{ $jurnal->tanggal }} | {{ $today }}</td> --}}
                             </tr>
                         @endforeach
                     </tbody>

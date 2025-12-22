@@ -106,7 +106,7 @@
                     </a>
                     <input type="checkbox" name="" id="triggerMe" class="hidden">
                     <div class="hidden flex-col items-center gap-y-3" id="dropdownDataProyek">
-                        <a href="/konsultan" class="cursor-pointer">
+                        <a href="{{ route('proyekOwner.index', ['kategori' => 'Konsultan']) }}" class="cursor-pointer">
                             <button
                                 class="bg-white text-[#353132] flex items-center justify-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)] hover:bg-linear-to-r hover:from-[#DD4049] hover:to-[#F9E52D] hover:text-white"
                             >
@@ -114,7 +114,7 @@
                                 <span class="text-center font-bold">Konsultan</span>
                             </button>
                         </a>
-                        <a href="/kontruksi" class="cursor-pointer">
+                        <a href="{{ route('proyekOwner.index', ['kategori' => 'Kontruksi']) }}" class="cursor-pointer">
                             <button
                                 class="bg-white text-[#353132] flex items-center justify-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)] hover:bg-linear-to-r hover:from-[#DD4049] hover:to-[#F9E52D] hover:text-white"
                             >
@@ -122,7 +122,7 @@
                                 <span class="text-center font-bold">Kontruksi</span>
                             </button>
                         </a>
-                        <a href="/barang-jasa" class="cursor-pointer">
+                        <a href="{{ route('proyekOwner.index', ['kategori' => 'Barang & Jasa']) }}" class="cursor-pointer">
                             <button
                                 class="bg-white text-[#353132] flex items-center justify-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)] hover:bg-linear-to-r hover:from-[#DD4049] hover:to-[#F9E52D] hover:text-white"
                             >
@@ -142,7 +142,7 @@
                             <span>Progress Proyek</span>
                         </button>
                     </a>
-                    <a href="/resume" class="cursor-pointer">
+                    <a href="{{ route('proyekOwner.indexResume') }}" class="cursor-pointer">
                         <button
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >
@@ -153,7 +153,7 @@
                             <span>Resume Proyek</span>
                         </button>
                     </a>
-                    <a href="/management" class="cursor-pointer">
+                    <a href="{{ route('proyekOwner.indexManage') }}" class="cursor-pointer">
                         <button
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >
@@ -173,6 +173,17 @@
                                 alt="devices icon"
                             />
                             <span>Jurnal</span>
+                        </button>
+                    </a>
+                    <a href="{{ route('laporanHarianOwner.index') }}" class="cursor-pointer">
+                        <button
+                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
+                        >
+                            <img
+                                src="{{ asset('assets/navbar-owner/book2.png') }}"
+                                alt="devices icon"
+                            />
+                            <span>Laporan Harian</span>
                         </button>
                     </a>
                     <a href="{{ route('AccEafOwner.index') }}" class="cursor-pointer">

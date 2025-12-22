@@ -68,7 +68,9 @@ class JurnalUmumController extends Controller
         if ($request->filled('filter_akun')) {
             $query->whereIn('nama_perkiraan', $request->filter_akun);
         }
-
+        // ambil semua nama_akun dari asset yang mau dikecualikan
+        $excludedAccounts = Asset::active()->whereIn('akun_header', ['asset_tetap', 'kewajiban', 'ekuitas', 'pendapatan']) ->pluck('nama_akun');
+        $query->whereNotIn('nama_perkiraan', $excludedAccounts);
 
         $jurnals = $query->orderBy('id', 'desc')->get();
 

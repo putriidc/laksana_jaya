@@ -1,33 +1,35 @@
 <?php
 
-use App\Http\Controllers\AccEafOwnerController;
-use App\Http\Controllers\AccEafSpvController;
-use App\Http\Controllers\AccOwnerController;
-use App\Http\Controllers\AccTukangSpvController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EafController;
 use App\Http\Controllers\AssetController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\ProyekController;
+use App\Http\Controllers\AccOwnerController;
 use App\Http\Controllers\KaryawanController;
+use App\Http\Controllers\LabaRugiController;
+use App\Http\Controllers\AccEafSpvController;
 use App\Http\Controllers\SampinganController;
 use App\Http\Controllers\JurnalUmumController;
 use App\Http\Controllers\MasterDataController;
 use App\Http\Controllers\PerusahaanController;
+use App\Http\Controllers\AccEafOwnerController;
 use App\Http\Controllers\BarangMasukController;
-use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\barangReturController;
-use App\Http\Controllers\KasbonContentController;
-use App\Http\Controllers\PiutangHutangController;
-use App\Http\Controllers\DataPerusahaanController;
-use App\Http\Controllers\EafController;
 use App\Http\Controllers\JurnalOwnerController;
-use App\Http\Controllers\LabaRugiController;
+use App\Http\Controllers\ProyekOwnerController;
+use App\Http\Controllers\AccTukangSpvController;
+use App\Http\Controllers\BarangKeluarController;
+use App\Http\Controllers\KasbonContentController;
 use App\Http\Controllers\LaporanHarianController;
+use App\Http\Controllers\PiutangHutangController;
+use App\Http\Controllers\TukangContentController;
+use App\Http\Controllers\DataPerusahaanController;
+use App\Http\Controllers\LaporanHarianOwnerController;
+use App\Http\Controllers\pinjamanTukangController;
 use App\Http\Controllers\PinjamanContentController;
 use App\Http\Controllers\PinjamanKaryawanController;
-use App\Http\Controllers\pinjamanTukangController;
-use App\Http\Controllers\TukangContentController;
 
 Route::get('/', function () {
     return view('login');
@@ -307,6 +309,25 @@ Route::middleware('auth')->group(function () {
         ->name('jurnalOwner.storeKredit');
     Route::post('jurnalOwner/storeBank', [JurnalOwnerController::class, 'storeBank'])
         ->name('jurnalOwner.storeBank');
+
+    // route dengan query parameter kategori
+    Route::get('/proyekOwner', [ProyekOwnerController::class, 'index'])->name('proyekOwner.index');
+    Route::get('/proyekOwner/indexManage', [ProyekOwnerController::class, 'indexManage'])->name('proyekOwner.indexManage');
+    Route::get('/proyekOwner/indexResume', [ProyekOwnerController::class, 'indexResume'])->name('proyekOwner.indexResume');
+    Route::resource('proyekOwner', ProyekOwnerController::class);
+    Route::post('/kontrak/storeKontrak', [ProyekOwnerController::class, 'storeKontrak']) ->name('kontrak.storeKontrak');
+
+    Route::get('laporanHarianOwner/printCashOut', [LaporanHarianOwnerController::class, 'printCashOut'])->name('laporanHarianOwner.printCashOut');
+    Route::get('laporanHarianOwner/printCashIn', [LaporanHarianOwnerController::class, 'printCashIn'])->name('laporanHarianOwner.printCashIn');
+    // Cash In Global
+    Route::get('laporanHarianOwner/printCashInGlobal', [LaporanHarianOwnerController::class, 'printCashInGlobal'])
+        ->name('laporanHarianOwner.printCashInGlobal');
+    // Cash Out Global
+    Route::get('laporanHarianOwner/printCashOutGlobal', [LaporanHarianOwnerController::class, 'printCashOutGlobal'])
+        ->name('laporanHarianOwner.printCashOutGlobal');
+    Route::resource('laporanHarianOwner', LaporanHarianOwnerController::class);
+    Route::put('laporanHarianOwner/{id}', [LaporanHarianOwnerController::class, 'update'])->name('laporanHarianOwner.update');
+
 
 
     Route::get('/owner-dashboard', function () {

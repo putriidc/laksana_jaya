@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 
-class LaporanHarianController extends Controller
+class LaporanHarianOwnerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,9 +18,9 @@ class LaporanHarianController extends Controller
     {
 
         $today = Carbon::now('Asia/Jakarta')->toDateString();
-        $excludedAccounts = Asset::active()->whereIn('akun_header', ['asset_tetap', 'kewajiban', 'ekuitas', 'pendapatan'])->pluck('nama_akun');
+
         $cashIn = JurnalUmum::whereDate('tanggal', $today)
-            ->whereNotIn('nama_perkiraan', $excludedAccounts)
+
             ->where('debit', '!=', 0)
             ->whereNull('deleted_at')
             ->orderBy('tanggal', 'desc')
@@ -29,7 +29,7 @@ class LaporanHarianController extends Controller
         // Cash In Global
         $cashInGL = JurnalUmum::where('debit', '!=', 0)
             ->whereNull('deleted_at')
-            ->whereNotIn('nama_perkiraan', $excludedAccounts)
+
             ->when($request->start_in && $request->end_in, function ($q) use ($request) {
                 $q->whereBetween('tanggal', [$request->start_in, $request->end_in]);
             })
@@ -38,7 +38,7 @@ class LaporanHarianController extends Controller
 
         $cashOut = JurnalUmum::whereDate('tanggal', $today)
             ->where('kredit', '!=', 0)
-            ->whereNotIn('nama_perkiraan', $excludedAccounts)
+
             ->whereNull('deleted_at')
             ->orderBy('tanggal', 'desc')
             ->get();
@@ -46,7 +46,7 @@ class LaporanHarianController extends Controller
         // Cash Out Global
         $cashOutGL = JurnalUmum::where('kredit', '!=', 0)
             ->whereNull('deleted_at')
-            ->whereNotIn('nama_perkiraan', $excludedAccounts)
+
             ->when($request->start_out && $request->end_out, function ($q) use ($request) {
                 $q->whereBetween('tanggal', [$request->start_out, $request->end_out]);
             })
@@ -57,19 +57,17 @@ class LaporanHarianController extends Controller
         $totalKredit = $cashIn->sum('debit');
 
         $status = $totalDebit === $totalKredit ? 'Balance' : 'Tidak Balance';
-        return view('admin.laporan-harian.data', compact('cashIn', 'cashOut', 'cashInGL', 'cashOutGL', 'today', 'totalDebit', 'totalKredit', 'status'));
+        return view('owner.laporan-harian.data', compact('cashIn', 'cashOut', 'cashInGL', 'cashOutGL', 'today', 'totalDebit', 'totalKredit', 'status'));
     }
 
     public function printCashIn(Request $request)
     {
         $today = Carbon::now('Asia/Jakarta')->toDateString();
         $hari = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y'); // → 15 Desember 2025
-        $excludedAccounts = Asset::active()->whereIn('akun_header', ['asset_tetap', 'kewajiban', 'ekuitas', 'pendapatan'])->pluck('nama_akun');
+
         $cashIn = JurnalUmum::whereDate('tanggal', $today)
             ->where('kredit', '!=', 0)
             ->whereNull('deleted_at')
-            ->whereNotIn('nama_perkiraan', $excludedAccounts)
-
             ->orderBy('tanggal', 'desc')
             ->get();
 
@@ -91,12 +89,10 @@ class LaporanHarianController extends Controller
     {
         $today = Carbon::now('Asia/Jakarta')->toDateString();
         $hari = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y'); // → 15 Desember 2025
-        $excludedAccounts = Asset::active()->whereIn('akun_header', ['asset_tetap', 'kewajiban', 'ekuitas', 'pendapatan'])->pluck('nama_akun');
+
         $cashOut = JurnalUmum::whereDate('tanggal', $today)
             ->where('debit', '!=', 0)
             ->whereNull('deleted_at')
-            ->whereNotIn('nama_perkiraan', $excludedAccounts)
-
             ->orderBy('tanggal', 'desc')
             ->get();
 
@@ -104,7 +100,7 @@ class LaporanHarianController extends Controller
         $role = Auth::user()->role ?? 'admin';
         $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
 
-        $pdf = Pdf::loadView('admin.laporan-harian.printCashOut', compact(
+        $pdf = Pdf::loadView('owner.laporan-harian.printCashOut', compact(
             'cashOut',
             'admin',
             'role',
@@ -119,11 +115,9 @@ class LaporanHarianController extends Controller
     {
         $start = $request->input('start_in');
         $end   = $request->input('end_in');
-        $excludedAccounts = Asset::active()->whereIn('akun_header', ['asset_tetap', 'kewajiban', 'ekuitas', 'pendapatan'])->pluck('nama_akun');
+
         $cashInGL = JurnalUmum::where('kredit', '!=', 0)
             ->whereNull('deleted_at')
-            ->whereNotIn('nama_perkiraan', $excludedAccounts)
-
             ->when($start && $end, fn($q) => $q->whereBetween('tanggal', [$start, $end]))
             ->orderBy('tanggal', 'desc')
             ->get();
@@ -132,7 +126,7 @@ class LaporanHarianController extends Controller
         $role = Auth::user()->role ?? 'admin';
         $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
 
-        $pdf = Pdf::loadView('admin.laporan-harian.printCashInGL', compact(
+        $pdf = Pdf::loadView('owner.laporan-harian.printCashInGL', compact(
             'cashInGL',
             'admin',
             'role',
@@ -148,11 +142,9 @@ class LaporanHarianController extends Controller
     {
         $start = $request->input('start_out');
         $end   = $request->input('end_out');
-        $excludedAccounts = Asset::active()->whereIn('akun_header', ['asset_tetap', 'kewajiban', 'ekuitas', 'pendapatan'])->pluck('nama_akun');
+
         $cashOutGL = JurnalUmum::where('debit', '!=', 0)
             ->whereNull('deleted_at')
-            ->whereNotIn('nama_perkiraan', $excludedAccounts)
-
             ->when($start && $end, fn($q) => $q->whereBetween('tanggal', [$start, $end]))
             ->orderBy('tanggal', 'desc')
             ->get();
@@ -161,7 +153,7 @@ class LaporanHarianController extends Controller
         $role = Auth::user()->role ?? 'admin';
         $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
 
-        $pdf = Pdf::loadView('admin.laporan-harian.printCashOutGL', compact(
+        $pdf = Pdf::loadView('owner.laporan-harian.printCashOutGL', compact(
             'cashOutGL',
             'admin',
             'role',
@@ -222,7 +214,7 @@ class LaporanHarianController extends Controller
         $laporan = JurnalUmum::findOrFail($id);
         $laporan->update($request->all());
 
-        return redirect()->route('laporanHarian.index')->with('success', 'Data berhasil diupdate');
+        return redirect()->route('laporanHarianOwner.index')->with('success', 'Data berhasil diupdate');
     }
 
 
@@ -239,7 +231,7 @@ class LaporanHarianController extends Controller
             'deleted_at' => Carbon::now('Asia/Jakarta'),
         ]);
 
-        return redirect()->route('laporanHarian.index')
+        return redirect()->route('laporanHarianOwner.index')
             ->with('success', 'Data jurnal berhasil dihapus (soft delete)');
     }
 }

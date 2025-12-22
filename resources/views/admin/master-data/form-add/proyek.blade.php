@@ -39,11 +39,10 @@
                 <label for="" class="w-[180px] font-medium">Perusahaan</label>
                 <select name="nama_perusahaan" id="" class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2 appearance-none cursor-pointer">
                     <option selected>-Pilih Perusahaan-</option>
-                    <option value="CV.Bakti Perdana">CV. Bakti Perdana</option>
-                    <option value="CV.ARN PURNAMA CONSULTAN">CV. ARN PURNAMA CONSULTAN</option>
-                    <option value="CV.ARN GUMILANG">CV. ARN GUMILANG</option>
-                    <option value="CV.MITRA UTAMA SEMESTA">CV.MITRA UTAMA SEMESTA</option>
-                    <option value="CV. FAJAR MAS JAYA">CV. FAJAR MAS JAYA</option>
+                    <option value="CV. Bakti Perdana">CV. Bakti Perdana</option>
+                    <option value="CV. ARN PURNAMA CONSULTAN">CV. ARN PURNAMA CONSULTAN</option>
+                    <option value="CV. ARN GUMILANG">CV. ARN GUMILANG</option>
+                    <option value="CV. MITRA UTAMA SEMESTA">CV.MITRA UTAMA SEMESTA</option>
                     <option value="CV. FAJAR MAS JAYA">CV. FAJAR MAS JAYA</option>
                     <option value="CV. LAKSANA JAYA">CV. LAKSANA JAYA</option>
                 </select>
