@@ -22,10 +22,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer('kepala-proyek.layout', function ($view) {
-        $view->with('sidebarPerusahaans', Perusahaan::whereNull('deleted_at')->get());
-    });
+            $view->with('sidebarPerusahaans', Perusahaan::whereNull('deleted_at')->get());
+        });
         View::composer('owner.layout', function ($view) {
-        $view->with('sidebarPerusahaans', Perusahaan::whereNull('deleted_at')->get());
-    });
+            $view->with('sidebarPerusahaans', Perusahaan::whereNull('deleted_at')->get());
+        });
     }
 }

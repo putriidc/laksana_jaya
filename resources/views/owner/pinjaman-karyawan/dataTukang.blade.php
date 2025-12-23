@@ -1,84 +1,49 @@
 @extends('owner.layout') @section('content')
     <div>
         <div class="flex flex-col mb-6">
-            <section class="mb-10">
-                <h1 class="font-bold text-2xl mb-4 text-[#C0C0C0]">Form Pengajuan Pinjaman Karyawan</h1>
+            <section class="mb-5 pb-10 border-b-2 border-[#B6B6B6]">
+                <h1 class="font-bold text-2xl mb-4 text-[#C0C0C0]">Form Pengajuan Pinjaman Tukang</h1>
                 <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
                     <table class="table-auto text-center text-sm w-full">
-                        <thead class="border-b-2 border-[#CCCCCC] bg-gray-100">
-                            <tr>
-                                <th class="py-2 w-[10%]">Tgl Pengajuan</th>
-                                <th class="py-2 w-[15%]">Nama Karyawan</th>
-                                <th class="py-2 w-[15%]">Kontrak</th>
-                                <th class="py-2 w-[20%]">Jumlah Pinjaman</th>
-                                <th class="py-2 w-[10%]">Action</th>
-                            </tr>
+                        <thead class="border-b-2 border-[#CCCCCC]">
+                            <th class="py-2 w-[10%]">Tgl Pengajuan</th>
+                            <th class="py-2 w-[15%]">Nama Tukang</th>
+                            <th class="py-2 w-[15%]">Proyek</th>
+                            <th class="py-2 w-[15%]">Kontrak</th>
+                            <th class="py-2 w-[20%]">Jumlah Pinjaman</th>
+                            <th class="py-2 w-[10%]">Action</th>
                         </thead>
                         <tbody>
-                            @foreach ($contentPinjams as $item)
-                                <tr class="bg-white border-b border-[#CCCCCC]">
+                            @php
+                                $noacca = 1;
+                            @endphp
+                            @foreach ($contents as $item)
+                                <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
                                     <td class="py-2">{{ $item->tanggal }}</td>
-                                    <td class="py-2">{{ $item->karyawanPinjaman->karyawan->nama }}</td>
+                                    <td class="py-2">{{ $item->kasbon->nama_tukang }}</td>
+                                    <td class="py-2">{{ $item->kasbon->nama_proyek }}</td>
                                     <td class="py-2">{{ $item->kontrak }}</td>
-                                    <td class="py-2">{{ 'Rp. ' . number_format($item->bayar, 0, ',', '.') }}</td>
-                                    <td class="py-2 flex justify-center items-center gap-2">
-                                        <form action="{{ route('accowner.storePinjam', $item->id) }}" method="POST">
+                                    <td class="py-2">{{ 'RP. ' . number_format($item->bayar, 0, ',', '.') }}</td>
+                                    <td class="py-2 flex justify-center items-center">
+                                        <form action="{{ route('accowner.store') }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="id_tukang_content" value="{{ $item->id }}">
                                             <button class="bg-[#8CE987] px-4 py-2 rounded-lg cursor-pointer">Accept</button>
                                         </form>
+
+                                        <span>&nbsp; &nbsp;</span>
+
                                         <button data-id="{{ $item->id }}"
-                                            class="bg-[#DD4049] px-4 py-2 rounded-lg cursor-pointer text-white declinePinjam-btn">
-                                            Decline
-                                        </button>
+                                            class="bg-[#DD4049] px-4 py-2 rounded-lg cursor-pointer text-white decline-btn">Decline</button>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-
-                </div>
-            </section>
-            <section class="mb-10">
-                <h1 class="font-bold text-2xl mb-4 text-[#C0C0C0]">Form Pengajuan Kasbon Karyawan</h1>
-                <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                    <table class="table-auto text-center text-sm w-full">
-                        <thead class="border-b-2 border-[#CCCCCC] bg-gray-100">
-                            <tr>
-                                <th class="py-2 w-[10%]">Tgl Pengajuan</th>
-                                <th class="py-2 w-[15%]">Nama Karyawan</th>
-                                <th class="py-2 w-[15%]">Kontrak</th>
-                                <th class="py-2 w-[20%]">Jumlah Pinjaman</th>
-                                <th class="py-2 w-[10%]">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($contentKasbons as $item)
-                                <tr class="bg-white border-b border-[#CCCCCC]">
-                                    <td class="py-2">{{ $item->tanggal }}</td>
-                                    <td class="py-2">{{ $item->karyawanKasbon->karyawan->nama }}</td>
-                                    <td class="py-2">{{ $item->kontrak }}</td>
-                                    <td class="py-2">{{ 'Rp. ' . number_format($item->bayar, 0, ',', '.') }}</td>
-                                    <td class="py-2 flex justify-center items-center gap-2">
-                                        <form action="{{ route('accowner.storeKasbon', $item->id) }}" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="id_tukang_content" value="{{ $item->id }}">
-                                            <button class="bg-[#8CE987] px-4 py-2 rounded-lg cursor-pointer">Accept</button>
-                                        </form>
-                                        <button data-id="{{ $item->id }}"
-                                            class="bg-[#DD4049] px-4 py-2 rounded-lg cursor-pointer text-white declineKasbon-btn">
-                                            Decline
-                                        </button>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-
                 </div>
             </section>
             <section class="mb-5">
-                <h1 class="font-bold text-2xl mb-4 text-[#C0C0C0]">Data Persetujuan Pinjaman Karyawan</h1>
+                <h1 class="font-bold text-2xl mb-4 text-[#C0C0C0]">Data Persetujuan Pinjaman Tukang</h1>
                 <a href=""
                     class="px-4 py-2 border-2 border-[#9A9A9A] rounded-lg w-fit flex items-center gap-x-2 mb-4">
                     <span class="text-[#72686B]">Cetak Laporan</span>
@@ -88,76 +53,36 @@
                     <table class="table-auto text-center text-sm w-full">
                         <thead class="border-b-2 border-[#CCCCCC]">
                             <th class="py-2 w-[10%]">Tgl Pengajuan</th>
-                            <th class="py-2 w-[15%]">Nama Karyawan</th>
+                            <th class="py-2 w-[15%]">Nama Tukang</th>
+                            <th class="py-2 w-[15%]">Proyek</th>
                             <th class="py-2 w-[15%]">Kontrak</th>
-                            <th class="py-2 w-[15%]">Ket Owner</th>
+                            <th class="py-2 w-[15%]">Status</th>
                             <th class="py-2 w-[20%]">Jumlah Pinjaman</th>
                             <th class="py-2 w-[10%]">Action</th>
                         </thead>
                         <tbody>
-                            @foreach ($pinjamans as $item)
+                            @php
+                                $noacc = 1;
+                            @endphp
+                            @foreach ($tukangs as $item)
                                 <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
                                     <td class="py-2">{{ $item->tanggal }}</td>
-                                    <td class="py-2">{{ $item->karyawanPinjaman->karyawan->nama }}</td>
+                                    <td class="py-2">{{ $item->kasbon->nama_tukang }}</td>
+                                    <td class="py-2">{{ $item->kasbon->nama_proyek }}</td>
                                     <td class="py-2">{{ $item->kontrak }}</td>
                                     <td class="py-2">{{ $item->ket_owner }}</td>
                                     <td class="py-2">{{ 'RP. ' . number_format($item->bayar, 0, ',', '.') }}</td>
                                     <td class="py-2 flex justify-center items-center gap-x-2">
                                         {{-- Status SPV --}}
-                                        @if ($item->menunggu == true)
+                                        @if ($item->status_owner === 'pending')
                                             <span
                                                 class="bg-[#999999] px-4 py-2 rounded-lg cursor-pointer text-white/60">Pending
                                             </span>
-                                        @elseif ($item->tolak == true)
+                                        @elseif ($item->status_owner === 'decline')
                                             <span
                                                 class="bg-[#DD4049] px-4 py-2 rounded-lg cursor-pointer text-white">Decline
                                             </span>
-                                        @elseif ($item->setuju == true)
-                                            <span class="bg-[#8CE987] px-4 py-2 rounded-lg cursor-pointer">Accept </span>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-            <section class="mb-5">
-                <h1 class="font-bold text-2xl mb-4 text-[#C0C0C0]">Data Persetujuan Kasbon Karyawan</h1>
-                <a href=""
-                    class="px-4 py-2 border-2 border-[#9A9A9A] rounded-lg w-fit flex items-center gap-x-2 mb-4">
-                    <span class="text-[#72686B]">Cetak Laporan</span>
-                    <img src="{{ asset('assets/printer.png') }}" alt="printer icon">
-                </a>
-                <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                    <table class="table-auto text-center text-sm w-full">
-                        <thead class="border-b-2 border-[#CCCCCC]">
-                            <th class="py-2 w-[10%]">Tgl Pengajuan</th>
-                            <th class="py-2 w-[15%]">Nama Karyawan</th>
-                            <th class="py-2 w-[15%]">Kontrak</th>
-                            <th class="py-2 w-[15%]">Ket Owner</th>
-                            <th class="py-2 w-[20%]">Jumlah Pinjaman</th>
-                            <th class="py-2 w-[10%]">Action</th>
-                        </thead>
-                        <tbody>
-                            @foreach ($kasbons as $item)
-                                <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
-                                    <td class="py-2">{{ $item->tanggal }}</td>
-                                    <td class="py-2">{{ $item->karyawanKasbon->karyawan->nama }}</td>
-                                    <td class="py-2">{{ $item->kontrak }}</td>
-                                    <td class="py-2">{{ $item->ket_owner }}</td>
-                                    <td class="py-2">{{ 'RP. ' . number_format($item->bayar, 0, ',', '.') }}</td>
-                                    <td class="py-2 flex justify-center items-center gap-x-2">
-                                        {{-- Status SPV --}}
-                                        @if ($item->menunggu == true)
-                                            <span
-                                                class="bg-[#999999] px-4 py-2 rounded-lg cursor-pointer text-white/60">Pending
-                                            </span>
-                                        @elseif ($item->tolak == true)
-                                            <span
-                                                class="bg-[#DD4049] px-4 py-2 rounded-lg cursor-pointer text-white">Decline
-                                            </span>
-                                        @elseif ($item->setuju == true)
+                                        @elseif ($item->status_owner === 'accept')
                                             <span class="bg-[#8CE987] px-4 py-2 rounded-lg cursor-pointer">Accept </span>
                                         @endif
                                     </td>

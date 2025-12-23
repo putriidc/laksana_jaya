@@ -62,7 +62,8 @@ class ProyekController extends Controller
     public function edit($id)
     {
         $proyek = Proyek::findOrFail($id);
-        return view('admin.master-data.form-edit.proyek', compact('proyek'));
+        $pic = PiutangHutang::where('akun_header', 'like', 'PIC%')->get();
+        return view('admin.master-data.form-edit.proyek', compact('proyek', 'pic'));
     }
 
     public function update(Request $request, $id)
@@ -74,6 +75,7 @@ class ProyekController extends Controller
             'hari_kalender'   => 'nullable|string|max:50',
             'nama_proyek'     => 'required|string|max:150',
             'nama_perusahaan' => 'required|string|max:150',
+            'pic'             => 'required|string|max:150',
             'kategori'        => 'nullable|string|max:50',
             'jenis'           => 'nullable|string|max:50',
             'nilai_kontrak'   => 'required|numeric|min:0',
@@ -88,6 +90,7 @@ class ProyekController extends Controller
             'hari_kalender'  => $request->hari_kalender,
             'nama_proyek'    => $request->nama_proyek,
             'nama_perusahaan' => $request->nama_perusahaan,
+            'pic'            => $request->pic,
             'kategori'       => $request->kategori,
             'jenis'          => $request->jenis,
             'nilai_kontrak'  => $request->nilai_kontrak,

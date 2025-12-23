@@ -42,6 +42,17 @@ class AccOwnerController extends Controller
             ->get();
         return view('owner.pinjaman-karyawan.data', compact('pinjamans', 'contents', 'pinjamans', 'kasbons', 'contentKasbons', 'contentPinjams'));
     }
+    public function indexTukang()
+    {
+        $tukangs = TukangContent::with('kasbon')->where('jenis', 'pinjam')
+            ->whereNull('deleted_at')
+            ->get();
+        $contents = TukangContent::with('kasbon')->where('jenis', 'pinjam')
+            ->whereNull('deleted_at')
+            ->where('status_owner', 'pending')
+            ->get();
+        return view('owner.pinjaman-karyawan.dataTukang', compact('contents', 'tukangs'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -107,7 +118,7 @@ class AccOwnerController extends Controller
             ]);
         }
 
-        return redirect()->route('accowner.index')
+        return redirect()->route('accowner.indexTukang')
             ->with('success', 'Status Owner berhasil disetujui');
     }
     public function storePinjam(Request $request)

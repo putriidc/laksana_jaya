@@ -15,6 +15,7 @@ class JurnalUmum extends Model
         'kode_jurnal',
         'tanggal',
         'keterangan',
+        'kategori',
         'nama_perkiraan',
         'kode_perkiraan',
         'nama_proyek',

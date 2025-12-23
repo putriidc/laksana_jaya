@@ -114,6 +114,7 @@ class EafController extends Controller
             'kode_akun'  => 'required|string',
             'nama_akun'  => 'required|string',
             'keterangan' => 'nullable|string',
+            'kategori' => 'nullable|string',
             'debit'      => 'nullable|numeric|min:0',
             'kredit'     => 'nullable|numeric|min:0',
         ]);
@@ -123,6 +124,7 @@ class EafController extends Controller
             'kode_eaf'   => $request->kode_eaf,
             'tanggal'    => $request->tanggal,
             'keterangan'    => $request->keterangan,
+            'kategori'    => $request->kategori,
             'kode_akun'  => $request->kode_akun,
             'nama_akun'  => $request->nama_akun,
             'debit'      => $request->debit ?? 0,
@@ -164,6 +166,7 @@ class EafController extends Controller
                 'nama_perkiraan'   => $detail->nama_akun,
                 'nama_proyek' => $namaProyek,
                 'keterangan'  => $detail->keterangan,
+                'kategori'  => $detail->kategori ?? null,
                 'debit'       => $detail->debit,
                 'kredit'      => $detail->kredit,
                 'created_by'  => Auth::user()->id ?? 'system',

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('id_content')->nullable();
             $table->string('id_pinjam')->nullable();
             $table->string('id_kasbon')->nullable();
+            $table->string('kategori')->nullable();
             $table->string('kode_jurnal');
             $table->date('tanggal');
             $table->string('keterangan')->nullable();

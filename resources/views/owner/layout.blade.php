@@ -1,126 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <title>{{ Auth::user()->role }}</title>
-        @vite('resources/css/app.css') @vite('resources/js/app.js')
-    </head>
-    <body class="font-poppins">
-        <section class="flex h-screen">
-            <nav
-                class="flex flex-col bg-white h-screen w-[350px] py-5 px-5 shadow-[1px_0px_5px_rgba(0,0,0,0.25)] items-center relative z-[99] overflow-y-auto overflow-x-hidden"
-            >
-                {{-- Logo --}}
-                <div class="flex justify-between items-center gap-x-1 mb-8">
-                    <img
-                        src="{{ asset('assets/ar4anSmallLogo.png') }}"
-                        alt="LOGO AR4N GROUP"
-                        class="w-[100px]"
-                    />
-                    <h1 class="leading-6 font-bold text-2xl text-[#353132]">
-                        AR4N <br />
-                        GROUP
-                    </h1>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>{{ Auth::user()->role }}</title>
+    @vite('resources/css/app.css') @vite('resources/js/app.js')
+</head>
+
+<body class="font-poppins">
+    <section class="flex h-screen">
+        <nav
+            class="flex flex-col bg-white h-screen w-[350px] py-5 px-5 shadow-[1px_0px_5px_rgba(0,0,0,0.25)] items-center relative z-[99] overflow-y-auto overflow-x-hidden">
+            {{-- Logo --}}
+            <div class="flex justify-between items-center gap-x-1 mb-8">
+                <img src="{{ asset('assets/ar4anSmallLogo.png') }}" alt="LOGO AR4N GROUP" class="w-[100px]" />
+                <h1 class="leading-6 font-bold text-2xl text-[#353132]">
+                    AR4N <br />
+                    GROUP
+                </h1>
+            </div>
+            {{-- logo --}}
+            <div class="flex flex-col gap-y-3 h-full">
+                <a href="/owner-dashboard" class="cursor-pointer">
+                    <button
+                        class="bg-linear-to-r from-[#DD4049] to-[#F9E52D] text-white flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]">
+                        <img src="{{ asset('assets/navbar/home-2.png') }}" alt="home icon" />
+                        <span>Dashboard</span>
+                    </button>
+                </a>
+                <a href="{{ route('accowner.index') }}" class="cursor-pointer">
+                    <button
+                        class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]">
+                        <img src="{{ asset('assets/navbar/devices.png') }}" alt="devices icon" />
+                        <span>Pinjaman Karyawan</span>
+                    </button>
+                </a>
+                <a href="{{ route('accowner.indexTukang') }}" class="cursor-pointer">
+                    <button
+                        class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]">
+                        <img src="{{ asset('assets/navbar/devices.png') }}" alt="devices icon" />
+                        <span>Kasbon Tukang</span>
+                    </button>
+                </a>
+                <a href="/labarugi-owner" class="cursor-pointer">
+                    <button
+                        class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]">
+                        <img src="{{ asset('assets/navbar-owner/document.png') }}" alt="devices icon" />
+                        <span>Laba Rugi</span>
+                    </button>
+                </a>
+                <a href="/bukubesar_owner/1231" class="cursor-pointer">
+                    <button
+                        class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]">
+                        <img src="{{ asset('assets/navbar-owner/book2.png') }}" alt="devices icon" />
+                        <span>Buku Besar</span>
+                    </button>
+                </a>
+                <a href="/neraca" class="cursor-pointer">
+                    <button
+                        class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]">
+                        <img src="{{ asset('assets/navbar-owner/diagram.png') }}" alt="devices icon" />
+                        <span>Neraca</span>
+                    </button>
+                </a>
+                <a href="#" onclick="triggerCheckbox(event)" class="cursor-pointer">
+                    <button
+                        class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]">
+                        <img src="{{ asset('assets/navbar-owner/buildings.png') }}" alt="devices icon" />
+                        <span>Data Proyek</span>
+                        <img src="{{ asset('assets/arrow-down.png') }}" alt=""
+                            class="ml-8 transition-all duration-300 ease-in-out" id="arrowDataProyek">
+                    </button>
+                </a>
+                <input type="checkbox" name="" id="triggerMe" class="hidden">
+                <div class="hidden flex-col items-center gap-y-3" id="dropdownDataProyek">
+                    <a href="{{ route('proyekOwner.index', ['kategori' => 'Konsultan']) }}" class="cursor-pointer">
+                        <button
+                            class="bg-white text-[#353132] flex items-center justify-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)] hover:bg-linear-to-r hover:from-[#DD4049] hover:to-[#F9E52D] hover:text-white">
+
+                            <span class="text-center font-bold">Konsultan</span>
+                        </button>
+                    </a>
+                    <a href="{{ route('proyekOwner.index', ['kategori' => 'Kontruksi']) }}" class="cursor-pointer">
+                        <button
+                            class="bg-white text-[#353132] flex items-center justify-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)] hover:bg-linear-to-r hover:from-[#DD4049] hover:to-[#F9E52D] hover:text-white">
+
+                            <span class="text-center font-bold">Kontruksi</span>
+                        </button>
+                    </a>
+                    <a href="{{ route('proyekOwner.index', ['kategori' => 'Barang & Jasa']) }}" class="cursor-pointer">
+                        <button
+                            class="bg-white text-[#353132] flex items-center justify-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)] hover:bg-linear-to-r hover:from-[#DD4049] hover:to-[#F9E52D] hover:text-white">
+
+                            <span class="text-center font-bold">Barang & Jasa</span>
+                        </button>
+                    </a>
                 </div>
-                {{-- logo --}}
-                <div class="flex flex-col gap-y-3 h-full">
-                    <a href="/owner-dashboard" class="cursor-pointer">
-                        <button
-                            class="bg-linear-to-r from-[#DD4049] to-[#F9E52D] text-white flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{ asset('assets/navbar/home-2.png') }}"
-                                alt="home icon"
-                            />
-                            <span>Dashboard</span>
-                        </button>
-                    </a>
-                    <a href="{{ route('accowner.index') }}" class="cursor-pointer">
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{ asset('assets/navbar/devices.png') }}"
-                                alt="devices icon"
-                            />
-                            <span>Pinjaman Karyawan</span>
-                        </button>
-                    </a>
-                    <a href="/labarugi-owner" class="cursor-pointer">
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{ asset('assets/navbar-owner/document.png') }}"
-                                alt="devices icon"
-                            />
-                            <span>Laba Rugi</span>
-                        </button>
-                    </a>
-                    <a href="/bukubesar_owner/1231" class="cursor-pointer">
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{ asset('assets/navbar-owner/book2.png') }}"
-                                alt="devices icon"
-                            />
-                            <span>Buku Besar</span>
-                        </button>
-                    </a>
-                    <a href="/neraca" class="cursor-pointer">
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{ asset('assets/navbar-owner/diagram.png') }}"
-                                alt="devices icon"
-                            />
-                            <span>Neraca</span>
-                        </button>
-                    </a>
-                    <a href="#" onclick="triggerCheckbox(event)" class="cursor-pointer">
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{ asset('assets/navbar-owner/buildings.png') }}"
-                                alt="devices icon"
-                            />
-                            <span>Data Proyek</span>
-                             <img src="{{ asset('assets/arrow-down.png') }}" alt="" class="ml-8 transition-all duration-300 ease-in-out" id="arrowDataProyek">
-                        </button>
-                    </a>
-                    <input type="checkbox" name="" id="triggerMe" class="hidden">
-                    <div class="hidden flex-col items-center gap-y-3" id="dropdownDataProyek">
-                        <a href="/konsultan" class="cursor-pointer">
+                <a href="#" onclick="triggerCheckbox2(event)" class="cursor-pointer">
+                    <button
+                        class="bg-white text-[#353132] flex items-center gap-x-2 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]">
+                        <img src="{{ asset('assets/navbar-owner/buildings.png') }}" alt="devices icon" />
+                        <span>Progress Proyek</span>
+                        <img src="{{ asset('assets/arrow-down.png') }}" alt=""
+                            class="ml-8 transition-all duration-300 ease-in-out" id="arrowDataProyek2">
+                    </button>
+                </a>
+                <input type="checkbox" name="" id="triggerMe" class="hidden">
+                <div class="hidden flex-col items-center gap-y-3" id="dropdownDataProyek2">
+                    @forelse($sidebarPerusahaans as $perusahaan)
+                        <a href="{{ route('progresOwner.show', $perusahaan->id) }}" class="cursor-pointer">
                             <button
-                                class="bg-white text-[#353132] flex items-center justify-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)] hover:bg-linear-to-r hover:from-[#DD4049] hover:to-[#F9E52D] hover:text-white"
-                            >
+                                class="bg-white text-[#353132] flex items-center justify-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)] hover:bg-linear-to-r hover:from-[#DD4049] hover:to-[#F9E52D] hover:text-white">
 
-                                <span class="text-center font-bold">Konsultan</span>
+                                <span class="text-center font-bold">{{ $perusahaan->nama_perusahaan }}</span>
                             </button>
                         </a>
-                        <a href="/kontruksi" class="cursor-pointer">
-                            <button
-                                class="bg-white text-[#353132] flex items-center justify-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)] hover:bg-linear-to-r hover:from-[#DD4049] hover:to-[#F9E52D] hover:text-white"
-                            >
-
-                                <span class="text-center font-bold">Kontruksi</span>
-                            </button>
-                        </a>
-                        <a href="/barang-jasa" class="cursor-pointer">
-                            <button
-                                class="bg-white text-[#353132] flex items-center justify-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)] hover:bg-linear-to-r hover:from-[#DD4049] hover:to-[#F9E52D] hover:text-white"
-                            >
-
-                                <span class="text-center font-bold">Barang & Jasa</span>
-                            </button>
-                        </a>
-                    </div>
-                    <a href="/progress" class="cursor-pointer">
+                    @empty
+                        <div
+                            class="text-sm text-red-600 px-4 py-2 transition-all duration-300 ease-in-out text-center italic">
+                            Belum ada perusahaan terdaftar</div>
+                    @endforelse
+                </div>
+                {{-- <a href="/progress" class="cursor-pointer">
                         <button
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >
@@ -130,154 +133,153 @@
                             />
                             <span>Progress Proyek</span>
                         </button>
-                    </a>
-                    <a href="/resume" class="cursor-pointer">
+                    </a> --}}
+                <a href="{{ route('proyekOwner.indexResume') }}" class="cursor-pointer">
+                    <button
+                        class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]">
+                        <img src="{{ asset('assets/navbar-owner/presention-chart.png') }}" alt="devices icon" />
+                        <span>Resume Proyek</span>
+                    </button>
+                </a>
+                <a href="{{ route('proyekOwner.indexManage') }}" class="cursor-pointer">
+                    <button
+                        class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]">
+                        <img src="{{ asset('assets/navbar-owner/menu-board.png') }}" alt="devices icon" />
+                        <span>Data Management</span>
+                    </button>
+                </a>
+                <a href="{{ route('jurnalOwner.index') }}" class="cursor-pointer">
+                    <button
+                        class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]">
+                        <img src="{{ asset('assets/navbar-owner/book2.png') }}" alt="devices icon" />
+                        <span>Jurnal</span>
+                    </button>
+                </a>
+                <a href="{{ route('laporanHarianOwner.index') }}" class="cursor-pointer">
+                    <button
+                        class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]">
+                        <img src="{{ asset('assets/navbar-owner/book2.png') }}" alt="devices icon" />
+                        <span>Laporan Harian</span>
+                    </button>
+                </a>
+                <a href="{{ route('AccEafOwner.index') }}" class="cursor-pointer">
+                    <button
+                        class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]">
+                        <img src="{{ asset('assets/navbar-owner/book2.png') }}" alt="devices icon" />
+                        <span>Pengajuan EAF</span>
+                    </button>
+                </a>
+                <div class="grow flex items-end pb-5">
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
                         <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{ asset('assets/navbar-owner/presention-chart.png') }}"
-                                alt="devices icon"
-                            />
-                            <span>Resume Proyek</span>
+                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]">
+                            <img src="{{ asset('assets/navbar/logout.png') }}" alt="logout icon" />
+                            <span>Logout</span>
                         </button>
-                    </a>
-                    <a href="/management" class="cursor-pointer">
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{ asset('assets/navbar-owner/menu-board.png') }}"
-                                alt="devices icon"
-                            />
-                            <span>Data Management</span>
-                        </button>
-                    </a>
-                    <a href="/jurnal" class="cursor-pointer">
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{ asset('assets/navbar-owner/book2.png') }}"
-                                alt="devices icon"
-                            />
-                            <span>Jurnal</span>
-                        </button>
-                    </a>
-                    <a href="{{ route('AccEafOwner.index') }}" class="cursor-pointer">
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{ asset('assets/navbar-owner/book2.png') }}"
-                                alt="devices icon"
-                            />
-                            <span>Pengajuan EAF</span>
-                        </button>
-                    </a>
-                    <div class="grow flex items-end pb-5">
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button
-                                class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
-                            >
-                                <img
-                                    src="{{
-                                        asset('assets/navbar/logout.png')
-                                    }}"
-                                    alt="logout icon"
-                                />
-                                <span>Logout</span>
-                            </button>
-                        </form>
-                    </div>
+                    </form>
                 </div>
-            </nav>
-            <div class="w-full flex flex-col relative">
-                {{-- header --}}
-                <header
-                    class="flex justify-between items-center px-10 py-4 shadow-[0px_1px_5px_rgba(0,0,0,0.25)]"
-                >
-                    <span class="text-base">pages / dashboard</span>
-                    <div class="flex items-center gap-x-4">
-                        <img
-                            src="{{ asset('assets/notification.png') }}"
-                            alt="notification icon"
-                            class="w-[30px] cursor-pointer"
-                        />
-                        <div class="flex items-center gap-x-2">
-                            <img
-                                src="{{ asset('assets/Ellipse 1.png') }}"
-                                alt="profile picture"
-                                class="w-[40px] h-[40px]"
-                            />
-                            <div class="flex flex-col text-sm">
-                                <span class="font-bold">Hi, Siska</span>
-                                <span>Admin Keuangan</span>
-                            </div>
+            </div>
+        </nav>
+        <div class="w-full flex flex-col relative">
+            {{-- header --}}
+            <header class="flex justify-between items-center px-10 py-4 shadow-[0px_1px_5px_rgba(0,0,0,0.25)]">
+                <span class="text-base">pages / dashboard</span>
+                <div class="flex items-center gap-x-4">
+                    <img src="{{ asset('assets/notification.png') }}" alt="notification icon"
+                        class="w-[30px] cursor-pointer" />
+                    <div class="flex items-center gap-x-2">
+                        <img src="{{ asset('assets/Ellipse 1.png') }}" alt="profile picture"
+                            class="w-[40px] h-[40px]" />
+                        <div class="flex flex-col text-sm">
+                            <span class="font-bold">Hi, Siska</span>
+                            <span>Admin Keuangan</span>
                         </div>
                     </div>
-                </header>
-                {{-- header --}}
-                <div class="px-6 pt-5 pb-16 overflow-y-auto">
-                    @yield('content')
                 </div>
-                <footer
-                    class="absolute bottom-0 z-50 flex justify-center w-full py-3 shadow-[0px_-1px_5px_rgba(0,0,0,0.25)] bg-white"
-                >
-                    <div class="text-center text-xs text-[#A8A8A8]">
-                        Copyright@AR4N GROUP
-                    </div>
-                </footer>
+            </header>
+            {{-- header --}}
+            <div class="px-6 pt-5 pb-16 overflow-y-auto">
+                @yield('content')
             </div>
-        </section>
-        <script>
-            // menyimpan focus pada sidebar ketika di klik
-            const link = document.querySelectorAll("nav a button");
-            const icon = document.querySelectorAll("nav a button img");
-            const sidebar = localStorage.getItem("sidebar");
-            const arrow = document.getElementById("arrowDataProyek");
-            const dropdownDataProyek = document.getElementById("dropdownDataProyek");
-            function triggerCheckbox(event) {
-                event.preventDefault(); // Mencegah scroll ke atas karena href="#"
+            <footer
+                class="absolute bottom-0 z-50 flex justify-center w-full py-3 shadow-[0px_-1px_5px_rgba(0,0,0,0.25)] bg-white">
+                <div class="text-center text-xs text-[#A8A8A8]">
+                    Copyright@AR4N GROUP
+                </div>
+            </footer>
+        </div>
+    </section>
+    <script>
+        // menyimpan focus pada sidebar ketika di klik
+        const link = document.querySelectorAll("nav a button");
+        const icon = document.querySelectorAll("nav a button img");
+        const sidebar = localStorage.getItem("sidebar");
+        const arrow = document.getElementById("arrowDataProyek");
+        const dropdownDataProyek = document.getElementById("dropdownDataProyek");
+        const arrow2 = document.getElementById("arrowDataProyek2");
+        const dropdownDataProyek2 = document.getElementById("dropdownDataProyek2");
 
-                const checkbox = document.getElementById("triggerMe");
-                console.log('test')
+        function triggerCheckbox(event) {
+            event.preventDefault(); // Mencegah scroll ke atas karena href="#"
 
-                // Cara 1: Meniru klik manusia (akan memicu event listener 'change' jika ada)
-                checkbox.click();
-                if (checkbox.checked) {
-                    dropdownDataProyek.classList.remove('hidden');
-                    dropdownDataProyek.classList.add('flex');
-                    arrow.classList.add('-rotate-90');
-                } else {
-                    dropdownDataProyek.classList.add('hidden');
-                    dropdownDataProyek.classList.remove('flex');
-                    arrow.classList.remove('-rotate-90');
-                }
+            const checkbox = document.getElementById("triggerMe");
+            console.log('test')
+
+            // Cara 1: Meniru klik manusia (akan memicu event listener 'change' jika ada)
+            checkbox.click();
+            if (checkbox.checked) {
+                dropdownDataProyek.classList.remove('hidden');
+                dropdownDataProyek.classList.add('flex');
+                arrow.classList.add('-rotate-90');
+            } else {
+                dropdownDataProyek.classList.add('hidden');
+                dropdownDataProyek.classList.remove('flex');
+                arrow.classList.remove('-rotate-90');
             }
+        }
 
-            link.forEach((item, index) => {
-                item.addEventListener("click", () => {
-                    localStorage.setItem("sidebar", index);
-                });
-                if (sidebar == index) {
-                    item.classList.add(
-                        "bg-linear-to-r",
-                        "from-[#DD4049]",
-                        "to-[#F9E52D]",
-                        "text-white"
-                    );
-                } else {
-                    item.classList.remove(
-                        "bg-linear-to-r",
-                        "from-[#DD4049]",
-                        "to-[#F9E52D]",
-                        "text-white"
-                    );
-                }
+        function triggerCheckbox2(event) {
+            event.preventDefault(); // Mencegah scroll ke atas karena href="#"
+
+            const checkbox = document.getElementById("triggerMe");
+            console.log('test')
+
+            // Cara 1: Meniru klik manusia (akan memicu event listener 'change' jika ada)
+            checkbox.click();
+            if (checkbox.checked) {
+                dropdownDataProyek2.classList.remove('hidden');
+                dropdownDataProyek2.classList.add('flex');
+                arrow2.classList.add('-rotate-90');
+            } else {
+                dropdownDataProyek2.classList.add('hidden');
+                dropdownDataProyek2.classList.remove('flex');
+                arrow2.classList.remove('-rotate-90');
+            }
+        }
+
+        link.forEach((item, index) => {
+            item.addEventListener("click", () => {
+                localStorage.setItem("sidebar", index);
             });
-        </script>
-        <script src="{{ asset('js/notification.js') }}"></script>
-    </body>
+            if (sidebar == index) {
+                item.classList.add(
+                    "bg-linear-to-r",
+                    "from-[#DD4049]",
+                    "to-[#F9E52D]",
+                    "text-white"
+                );
+            } else {
+                item.classList.remove(
+                    "bg-linear-to-r",
+                    "from-[#DD4049]",
+                    "to-[#F9E52D]",
+                    "text-white"
+                );
+            }
+        });
+    </script>
+    <script src="{{ asset('js/notification.js') }}"></script>
+</body>
+
 </html>

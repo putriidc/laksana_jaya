@@ -24,6 +24,7 @@ class Proyek extends Model
         'deleted_at',
     ];
 
+
     // Scope untuk ambil data aktif (belum dihapus)
     public function scopeActive($query)
     {

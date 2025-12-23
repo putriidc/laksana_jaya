@@ -40,7 +40,12 @@
              <div class="flex items-center">
                 <label for="" class="w-[180px] font-medium">PIC</label>
                 <select name="pic" id="" class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2 appearance-none cursor-pointer">
-                    <option selected>-Pilih PIC-</option>
+                    <option disabled>-Pilih PIC-</option>
+                    @foreach ($pic as $item)
+                        <option value="{{ $item->akun_header }}"
+                            {{ $proyek->akun_header == $item->akun_header ? 'selected' : '' }}>
+                            {{ $item->akun_header }}</option>
+                    @endforeach
                 </select>
             </div>
 
@@ -51,7 +56,9 @@
                     <option value="CV. Bakti Perdana" {{ $proyek->nama_perusahaan == 'CV. Bakti Perdana' ? 'selected' : '' }}>CV. Bakti Perdana</option>
                     <option value="CV. ARN PURNAMA CONSULTAN" {{ $proyek->nama_perusahaan == 'CV. ARN PURNAMA CONSULTAN' ? 'selected' : '' }}>CV. ARN PURNAMA CONSULTAN</option>
                     <option value="CV. ARN GUMILANG" {{ $proyek->nama_perusahaan == 'CV. ARN GUMILANG' ? 'selected' : '' }}>CV. ARN GUMILANG</option>
-                    <option value="CV.MITRA UTAMA SEMESTA" {{ $proyek->nama_perusahaan == 'CV.MITRA UTAMA SEMESTA' ? 'selected' : '' }}>CV.MITRA UTAMA SEMESTA</option>
+                    <option value="CV. MITRA UTAMA SEMESTA" {{ $proyek->nama_perusahaan == 'CV. MITRA UTAMA SEMESTA' ? 'selected' : '' }}>CV. MITRA UTAMA SEMESTA</option>
+                    <option value="CV. FAJAR MAS JAYA" {{ $proyek->nama_perusahaan == 'CV. FAJAR MAS JAYA' ? 'selected' : '' }}>CV. FAJAR MAS JAYA</option>
+                    <option value="CV. LAKSANA JAYA" {{ $proyek->nama_perusahaan == 'CV. LAKSANA JAYA' ? 'selected' : '' }}>CV. LAKSANA JAYA</option>
                 </select>
             </div>
 
@@ -59,9 +66,9 @@
                 <label class="w-[180px] font-medium">Kategori</label>
                 <select name="kategori" class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2 appearance-none cursor-pointer">
                     <option disabled>-Pilih Kategori-</option>
-                    <option value="Fisik" {{ $proyek->kategori == 'Fisik' ? 'selected' : '' }}>Fisik</option>
-                    <option value="Perencanaan" {{ $proyek->kategori == 'Perencanaan' ? 'selected' : '' }}>Perencanaan</option>
-                    <option value="Pengawasan" {{ $proyek->kategori == 'Pengawasan' ? 'selected' : '' }}>Pengawasan</option>
+                    <option value="Kontruksi" {{ $proyek->kategori == 'Kontruksi' ? 'selected' : '' }}>Kontruksi</option>
+                    <option value="Konsultan" {{ $proyek->kategori == 'Konsultan' ? 'selected' : '' }}>Konsultan</option>
+                    <option value="Barang & Jasa" {{ $proyek->kategori == 'Barang & Jasa' ? 'selected' : '' }}>Barang & Jasa</option>
                 </select>
             </div>
 

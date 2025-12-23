@@ -1,4 +1,4 @@
-@extends('admin.layout')
+@extends('owner.layout')
 @section('content')
     <div>
         <h1 class="text-2xl font-bold mb-8">Laporan Kuangan Harian</h1>

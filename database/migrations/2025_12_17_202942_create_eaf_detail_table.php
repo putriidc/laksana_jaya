@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('kode_akun');
             $table->string('nama_akun');
             $table->string('keterangan');
+            $table->string('kategori')->nullable();
             $table->integer('debit')->default(0)->nullable();
             $table->integer('kredit')->default(0)->nullable();
             $table->boolean('is_generate')->nullable();
