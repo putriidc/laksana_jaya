@@ -35,6 +35,7 @@ class JurnalUmumController extends Controller
                             ->whereIn('kode_akun', ['450', '451']);
                     });
             })
+
             ->get();
 
 
@@ -72,7 +73,9 @@ class JurnalUmumController extends Controller
         $excludedAccounts = Asset::active()->whereIn('akun_header', ['asset_tetap', 'kewajiban', 'ekuitas', 'pendapatan']) ->pluck('nama_akun');
         $query->whereNotIn('nama_perkiraan', $excludedAccounts);
 
-        $jurnals = $query->orderBy('id', 'desc')->get();
+        $jurnals = $query->orderBy('id', 'desc')
+        ->where('created_by',  '!=', 'owner')
+        ->get();
 
         $totalDebit = $jurnals->sum('debit');
         $totalKredit = $jurnals->sum('kredit');
@@ -278,8 +281,6 @@ class JurnalUmumController extends Controller
             'keterangan'      => 'nullable|string|max:255',
             'nama_perkiraan'  => 'nullable|string|max:100',
             'kode_perkiraan'  => 'nullable|string|max:50',
-            'nama_proyek'     => 'nullable|string|max:100',
-            'kode_proyek'     => 'nullable|string|max:50',
             'debit'           => 'nullable|numeric|min:0',
             'kredit'          => 'nullable|numeric|min:0',
         ]);
@@ -291,8 +292,6 @@ class JurnalUmumController extends Controller
             'keterangan'      => $request->keterangan,
             'nama_perkiraan'  => $request->nama_perkiraan,
             'kode_perkiraan'  => $request->kode_perkiraan,
-            'nama_proyek'     => $request->nama_proyek,
-            'kode_proyek'     => $request->kode_proyek,
             'debit'           => $request->debit,
             'kredit'          => $request->kredit,
         ]);

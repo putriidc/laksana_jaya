@@ -255,6 +255,16 @@
 </div>
 </div>
 </div>
+<div class="flex items-center mt-4">
+    <label class="font-medium w-[150px]">PPH</label>
+    <div class="flex items-center w-full justify-between">
+        <div class="w-[240px]">
+            <input type="text" name="pph" id="pph" required class="bg-[#D9D9D9]/40 rounded-lg h-[40px] w-[60%] px-4 outline-none rupiah-format" readonly>
+            <input type="number" name="pph_persen" id="pph_persen" value="0" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[30%] outline-none ml-2 mt-2" placeholder="%">
+        </div>
+    </div>
+</div>
+
 <div class="flex items-center mt-6">
 <label class="font-medium w-[125px]">Real Untung</label>
 <input type="text" name="real_untung" id="real_untung" required class="bg-[#D9D9D9]/40 rounded-lg h-[40px] px-4 w-[240px] outline-none rupiah-format" readonly>
@@ -284,6 +294,8 @@
                         const dpp = document.getElementById('dpp');
                         const ppn = document.getElementById('ppn');
                         const ppn_persen = document.getElementById('ppn_persen');
+                        const pph = document.getElementById('pph');
+                        const pph_persen = document.getElementById('pph_persen');
                         const sisa_potong_pajak = document.getElementById('sisa_potong_pajak');
                         const fee_dinas = document.getElementById('fee_dinas');
                         const fee_dinas_persen = document.getElementById('fee_dinas_persen');
@@ -295,12 +307,13 @@
                         function recalc() {
                             const nk = parseRupiah(nilai_kontrak.value);
                             const ppp = parseFloat(ppn_persen.value) || 0;
+                            const pphPersen = parseFloat(pph_persen.value) || 0;
                             const fdp = parseFloat(fee_dinas_persen.value) || 0;
                             const np = parseFloat(net_persen.value) || 0;
 
                             const dppVal = nk * 100 / 111;
                             const ppnVal = dppVal * (ppp / 100);
-                            const pphVal = 0;
+                            const pphVal = dppVal * (pphPersen / 100);
                             const sisaPotongVal = nk - ppnVal - pphVal;
                             const feeDinasVal = sisaPotongVal * (fdp / 100);
                             const netVal = sisaPotongVal * (np / 100);
@@ -309,6 +322,7 @@
 
                             dpp.value = fmt(dppVal);
                             ppn.value = fmt(ppnVal);
+                            pph.value = fmt(pphVal);
                             sisa_potong_pajak.value = fmt(sisaPotongVal);
                             fee_dinas.value = fmt(feeDinasVal);
                             net.value = fmt(netVal);
@@ -316,10 +330,12 @@
                             real_untung.value = fmt(realUntungVal);
                         }
 
-                        [nilai_kontrak, ppn_persen, fee_dinas_persen, net_persen].forEach(el => {
+
+                        [nilai_kontrak, ppn_persen, pph_persen, fee_dinas_persen, net_persen].forEach(el => {
                             el.addEventListener('input', recalc);
                             el.addEventListener('change', recalc);
                         });
+
 
                         // initial calc setelah modal dibuka
                         recalc();
@@ -327,12 +343,13 @@
                         // sebelum submit, ubah semua field rupiah jadi angka bersih
                         const form = document.getElementById('myForm');
                         form.addEventListener('submit', () => {
-                            [nilai_kontrak, dpp, ppn, sisa_potong_pajak, fee_dinas, net, keuntungan,
+                            [nilai_kontrak, dpp, ppn, pph, sisa_potong_pajak, fee_dinas, net, keuntungan,
                                 real_untung
                             ]
                             .forEach(el => {
                                 el.value = parseRupiah(el.value);
                             });
+
                         });
                     }
                 });

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->decimal('ppn_persen', 5, 2)->default(11.00);
             $table->bigInteger('ppn')->default(0);
             $table->bigInteger('pph')->default(0);
+            $table->decimal('pph_persen', 5, 2)->default(0);
             $table->bigInteger('sisa_potong_pajak')->default(0);
             $table->decimal('fee_dinas_persen', 5, 2)->default(0);
             $table->bigInteger('fee_dinas')->default(0);

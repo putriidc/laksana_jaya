@@ -164,6 +164,36 @@
                                 <td class="py-2">{{ 'RP. ' . number_format($jurnal->kredit, 0, ',', '.') }}</td>
                                 <td class="flex justify-center items-center gap-x-2 py-2">
                                     @if ($jurnal->tanggal == $today)
+                                        <button
+                                            onclick="editLaporanKeuangan({{ $jurnal->id }},
+                                        '{{ $jurnal->tanggal }}',
+                                        '{{ $jurnal->keterangan }}',
+                                        '{{ $jurnal->kode_perkiraan }}',
+                                        '{{ $jurnal->nama_perkiraan }}',
+                                        '{{ $jurnal->debit }}',
+                                        '{{ $jurnal->kredit }}',
+                                        '{{ route('jurnalUmums.update', $jurnal->id) }}'
+                                        )"
+                                            class="">
+                                            <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
+                                                class="w-[22px] cursor-pointer">
+                                        </button>
+                                        <span class="border-black border-l-[1px] h-[22px]"></span>
+                                        <form action="{{ route('jurnalUmums.destroy', $jurnal->id) }}" method="POST"
+                                            class="h-[22px]">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                                <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                    class="w-[22px] cursor-pointer">
+                                            </button>
+                                        </form>
+                                    @else
+                                        <span class="text-gray-600 font-bold">Lewat <br> Tanggal</span>
+                                    @endif
+                                </td>
+                                {{-- <td class="flex justify-center items-center gap-x-2 py-2">
+                                    @if ($jurnal->tanggal == $today)
                                         <a href="{{ route('jurnalUmums.edit', $jurnal->id) }}"
                                             class="btn btn-sm btn-primary">
                                             <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
@@ -182,7 +212,7 @@
                                     @else
                                         <span class="text-gray-600 font-bold" >Lewat <br> Tanggal</span>
                                     @endif
-                                </td>
+                                </td> --}}
                                  {{-- <td class="flex justify-center items-center gap-x-2 py-2">{{ $jurnal->tanggal }} | {{ $today }}</td> --}}
                             </tr>
                         @endforeach
@@ -190,6 +220,75 @@
                 </table>
             </div>
         </section>
+        <script>
+            function editLaporanKeuangan(id, tanggal, keterangan, kode_perkiraan, nama_perkiraan, debit, kredit, updateUrl) {
+                // buat form modal dengan sweetalert2
+                Swal.fire({
+                    html: `
+                    <form action="${updateUrl}" method="POST" class="flex flex-col text-left">
+                        @csrf
+                        @method('PUT')
+                        <h1 class="font-bold text-2xl mb-4">Edit Laporan Keuangan</h1>
+                        <div class="flex items-center mt-4">
+                            <label for="tanggal" class="font-medium w-[150px]">Tgl Relasi</label>
+                            <div class="flex items-center w-full justify-between">
+                                <input value="${tanggal}" type="date" name="tanggal" id="tanggal" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none">
+                                <div class="flex items-center w-[350px]">
+                                    <label for="keterangan" class="font-medium w-[35%]">Keterangan</label>
+                                    <input value="${keterangan}" type="text" name="keterangan" id="keterangan" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center mt-4">
+                            <label for="tanggal" class="font-medium w-[150px]">Kode Akun</label>
+                            <div class="flex items-center w-full justify-between">
+                                <input value="${kode_perkiraan}" type="text" name="kode_perkiraan" id="kode_perkiraan" readonly required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none">
+                                <div class="flex items-center w-[350px]">
+                                    <label for="keterangan" class="font-medium w-[35%]">Debet</label>
+                                    <input value="${debit}" type="number" name="debit" id="debet" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center mt-4">
+                            <label for="tanggal" class="font-medium w-[150px]">Nama Akun</label>
+                            <div class="flex items-center w-full justify-between">
+                                <select class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none appearance-none" name="nama_perkiraan" id="nama_perkiraan" onchange="syncKodePerkiraan(this)" >
+                                        <option value="${nama_perkiraan}" selected>${nama_perkiraan}</option>
+                                    @foreach ($akun as $item)
+                                        <option value="{{ $item->nama_akun }}" data-kode="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="flex items-center w-[350px]">
+                                    <label for="keterangan" class="font-medium w-[35%]">Kredit</label>
+                                    <input value="${kredit}" type="number" name="kredit" id="kredit" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center mt-6 gap-x-4">
+                            <div class="w-[110px]"></div>
+                            <button type="submit" class="border-[#3E98D0] border text-[#3E98D0] py-1 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
+                                <span class="">Simpan Data</span>
+                                <img src="{{ asset('assets/plus-circle-blue.png') }}" alt="arrow right blue icon" class="w-[30px]">
+                            </button>
+                            <button type="button" onclick="Swal.close()" class="border-[#DD4049] border text-[#DD4049] py-1 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
+                                <span class="">Batal</span>
+                                <img src="{{ asset('assets/close-circle-red.png') }}" alt="arrow right blue icon" class="w-[22px]">
+                            </button>
+                        </div>
+                    </form>
+                    `,
+                    width: '800px',
+                    showCancelButton: false,
+                    showCloseButton: false,
+                    showConfirmButton: false,
+                });
+            }
+            // fungsi sinkronisasi kode akun
+            function syncKodePerkiraan(select) {
+                let kode = select.options[select.selectedIndex].getAttribute('data-kode');
+                document.getElementById('kode_perkiraan').value = kode;
+            }
+        </script>
         <script>
             let transaksiDebet = [];
 

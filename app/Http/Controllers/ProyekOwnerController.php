@@ -86,6 +86,7 @@ class ProyekOwnerController extends Controller
                 'ppn_persen'         => 'required|numeric|min:0',
                 'ppn'                => 'required|integer|min:0',
                 'pph'                => 'nullable|integer|min:0',
+                'pph_persen' => 'required|numeric|min:0',
                 'sisa_potong_pajak'  => 'required|integer|min:0',
                 'fee_dinas_persen'   => 'required|numeric|min:0',
                 'fee_dinas'          => 'required|integer|min:0',

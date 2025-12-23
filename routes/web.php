@@ -30,6 +30,7 @@ use App\Http\Controllers\LaporanHarianOwnerController;
 use App\Http\Controllers\pinjamanTukangController;
 use App\Http\Controllers\PinjamanContentController;
 use App\Http\Controllers\PinjamanKaryawanController;
+use App\Http\Controllers\ProgresOwnerController;
 
 Route::get('/', function () {
     return view('login');
@@ -303,6 +304,10 @@ Route::middleware('auth')->group(function () {
 
 
     Route::resource('jurnalOwner', JurnalOwnerController::class)->except(['show']);
+    Route::post('jurnalOwner/storeCashIn', [JurnalOwnerController::class, 'storeCashIn'])
+        ->name('jurnalOwner.storeCashIn');
+    Route::post('jurnalOwner/storeCashOut', [JurnalOwnerController::class, 'storeCashOut'])
+        ->name('jurnalOwner.storeCashOut');
     Route::post('jurnalOwner/storeDebit', [JurnalOwnerController::class, 'storeDebit'])
         ->name('jurnalOwner.storeDebit');
     Route::post('jurnalOwner/storeKredit', [JurnalOwnerController::class, 'storeKredit'])
@@ -327,6 +332,8 @@ Route::middleware('auth')->group(function () {
         ->name('laporanHarianOwner.printCashOutGlobal');
     Route::resource('laporanHarianOwner', LaporanHarianOwnerController::class);
     Route::put('laporanHarianOwner/{id}', [LaporanHarianOwnerController::class, 'update'])->name('laporanHarianOwner.update');
+
+    Route::resource('progresOwner', ProgresOwnerController::class);
 
 
 
