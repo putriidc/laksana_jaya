@@ -27,6 +27,7 @@ use App\Http\Controllers\PinjamanContentController;
 use App\Http\Controllers\PinjamanKaryawanController;
 use App\Http\Controllers\pinjamanTukangController;
 use App\Http\Controllers\TukangContentController;
+use App\Http\Controllers\BukuBesarController;
 
 Route::get('/', function () {
     return view('login');
@@ -140,6 +141,15 @@ Route::middleware('auth')->group(function () {
     // Print detail pinjaman per karyawan
     Route::get('tukangContents/{id}/print', [TukangContentController::class, 'print'])
         ->name('tukangContents.print');
+    // buku besar
+    Route::get('bukubesar/{code}', [BukuBesarController::class, 'index'])
+        ->name('bukubesar.index');
+    Route::get('bukubesar/{code}/print', [BukuBesarController::class, 'print'])
+    ->name('buku-besar.print');
+    Route::get('bukubesar_owner/{code}', [BukuBesarController::class, 'index_owner'])
+        ->name('bukubesar_owner.index');
+    Route::get('bukubesar_owner/{code}/print', [BukuBesarController::class, 'print'])
+    ->name('bukubesar_owner.print');
 
     Route::get('labarugi/print', [LabaRugiController::class, 'print'])->name('labarugi.print');
 

@@ -180,7 +180,7 @@
                         </button>
                     </a>
                     <a
-                        href="/buku-besar"
+                        href="/bukubesar/111"
                         class="cursor-pointer"
                     >
                         <button

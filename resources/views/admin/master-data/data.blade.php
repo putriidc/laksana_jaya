@@ -11,37 +11,46 @@
         <h1 class="font-bold text-2xl mb-6">Master Data</h1>
         <section class="flex flex-col">
             <div class="flex justify-between items-center pb-4">
-                <label for="dropdown-toggle"
-                    class="bg-[#FFF494] select-none shadow-[0px_0px_15px_rgba(0,0,0,0.25)] rounded-lg cursor-pointer w-[180px] relative">
-                    <div class="flex justify-between py-2 px-4 items-center">
-                        <span>Tambah Data</span>
-                        <img src="{{ asset('assets/arrow-down.png') }}" alt="arrow down icon" id="icon-dropdown"
-                            class="w-[20px]">
-                        <input type="checkbox" id="dropdown-toggle" class="hidden" />
-                    </div>
-                    <div class="absolute w-[180px] bg-[#FFF494] shadow-2xl rounded-b-lg top-9 hidden" id="dropdown-menu">
-                        <a href="{{ route('akun.create') }}" class="py-2 px-4 block hover:bg-[#E9E9E9]">
-                            <p class="truncate">
-                                Asset Lancar, Asset Tetap, Kewajiban, Ekuitas, Pendatan & HPP Proyek
-                            </p>
-                        </a>
-                        <a href="{{ route('piutangHutang.create') }}" class="py-2 px-4 block hover:bg-[#E9E9E9]">
-                            <p class="truncate">
-                                Piutang & Hutang Usaha
-                            </p>
-                        </a>
-                        <a href="{{ route('karyawan.create') }}" class="py-2 px-4 block hover:bg-[#E9E9E9]">
-                            <p class="truncate">
-                                Karyawan
-                            </p>
-                        </a>
-                        <a href="{{ route('proyek.create') }}" class="py-2 px-4 block hover:bg-[#E9E9E9]">
-                            <p class="truncate">
-                                Proyek
-                            </p>
-                        </a>
-                    </div>
-                </label>
+                <div class="flex items-center gap-x-2">
+                    <select name="" id="selectMasterData" class="py-2 w-[200px] px-4 appearance-none border-2 border-[#9A9A9A] rounded-xl cursor-pointer outline-none">
+                        <option disabled selected>-Pilih Data-</option>
+                        <option value="data-asset">Data Asset</option>
+                        <option value="data-piutang">Data Piutang</option>
+                        <option value="data-karyawan">Data Karyawan</option>
+                        <option value="data-proyek">Data Proyek</option>
+                    </select>
+                    <label for="dropdown-toggle"
+                        class="border-2 border-[#9A9A9A] rounded-xl select-none cursor-pointer w-[200px] z-[999]">
+                        <div class="flex justify-between py-2 px-4 items-center">
+                            <span>Tambah Data</span>
+                            <img src="{{ asset('assets/arrow-down.png') }}" alt="arrow down icon" id="icon-dropdown"
+                                class="w-[20px]">
+                            <input type="checkbox" id="dropdown-toggle" class="hidden" />
+                        </div>
+                        <div class="absolute w-[200px] bg-white border-x-2 border-b-2 border-[#9A9A9A] shadow-2xl rounded-b-lg top-[185px] hidden" id="dropdown-menu">
+                            <a href="{{ route('akun.create') }}" class="py-2 px-4 block hover:bg-[#E9E9E9]">
+                                <p class="truncate">
+                                    Asset Lancar, Asset Tetap, Kewajiban, Ekuitas, Pendatan & HPP Proyek
+                                </p>
+                            </a>
+                            <a href="{{ route('piutangHutang.create') }}" class="py-2 px-4 block hover:bg-[#E9E9E9]">
+                                <p class="truncate">
+                                    Piutang & Hutang Usaha
+                                </p>
+                            </a>
+                            <a href="{{ route('karyawan.create') }}" class="py-2 px-4 block hover:bg-[#E9E9E9]">
+                                <p class="truncate">
+                                    Karyawan
+                                </p>
+                            </a>
+                            <a href="{{ route('proyek.create') }}" class="py-2 px-4 block hover:bg-[#E9E9E9]">
+                                <p class="truncate">
+                                    Proyek
+                                </p>
+                            </a>
+                        </div>
+                    </label>
+                </div>
                 <form action="" class="flex items-center gap-x-2">
                     <input type="text" name="" id="" placeholder="Cari Data..."
                         class="border-[#9A9A9A] border-2 rounded-lg py-2 px-4 outline-none">
@@ -51,7 +60,7 @@
                     </button>
                 </form>
             </div>
-            <div class="flex flex-col pb-4">
+            <div class="flex-col pb-4 tabelMasterData hidden" id="data-asset">
                 <h1 class="text-[#C0C0C0] font-bold text-xl">Data Asset Lancar, Asset Tetap, Kewajiban, Ekuitas, Pendatan &
                     HPP Proyek</h1>
                 <div class="w-full flex flex-col justify-center py-8 gap-y-8 shadow-[1px_1px_5px_rgba(0,0,0,0.25)] rounded-lg mt-2 items-center">
@@ -333,7 +342,7 @@
                     </div>
                 </div>
             </div>
-            <div class="flex flex-col pb-4">
+            <div class="flex-col pb-4 tabelMasterData hidden" id="data-piutang">
                 <h1 class="text-[#C0C0C0] font-bold text-xl">Piutang & Hutang Usaha</h1>
                 <div class="w-full flex justify-center pt-2 pb-4 shadow-[1px_1px_5px_rgba(0,0,0,0.25)] rounded-lg mt-2">
                     <table class="table-fixed w-[80%] text-center">
@@ -379,7 +388,7 @@
                     </table>
                 </div>
             </div>
-            <div class="flex flex-col pb-4">
+            <div class="flex-col pb-4 tabelMasterData hidden" id="data-karyawan">
                 <h1 class="text-[#C0C0C0] font-bold text-xl">Data Karyawan</h1>
                 <div class="w-full flex justify-center pt-2 pb-4 shadow-[1px_1px_5px_rgba(0,0,0,0.25)] rounded-lg mt-2">
                     <table class="table-fixed w-[80%] text-center">
@@ -429,7 +438,7 @@
                     </table>
                 </div>
             </div>
-            <div class="flex flex-col pb-4">
+            <div class="flex-col pb-4 tabelMasterData hidden" id="data-proyek">
                 <h1 class="text-[#C0C0C0] font-bold text-xl">Proyek</h1>
                 <div class="w-full flex justify-center pt-2 pb-4 shadow-[1px_1px_5px_rgba(0,0,0,0.25)] rounded-lg mt-2">
                     <table class="table-fixed w-[80%] text-center">
@@ -480,6 +489,22 @@
                 </div>
             </div>
         </section>
+        <script>
+            const tabelMasterData = document.querySelectorAll('.tabelMasterData');
+            const selectMasterData = document.getElementById('selectMasterData');
+
+            selectMasterData.addEventListener('change', () => {
+                tabelMasterData.forEach((tabel, index) => {
+                    if (selectMasterData.value === `${tabel.id}`) {
+                        tabel.classList.remove('hidden');
+                        tabel.classList.add('flex');
+                    } else {
+                        tabel.classList.add('hidden');
+                        tabel.classList.remove('flex');
+                    }
+                });
+            });
+        </script>
         <script src="{{ asset('js/dropdown.js') }}"></script>
     </div>
 @endsection
