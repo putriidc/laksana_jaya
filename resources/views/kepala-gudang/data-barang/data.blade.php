@@ -1,5 +1,18 @@
 @extends('kepala-gudang.layout') @section('content')
     <div>
+        @if (session('success'))
+            <div
+                id="flash-message"
+                data-type="success"
+                data-message="{{ session('success') }}"
+            ></div>
+        @elseif (session('error'))
+            <div
+                id="flash-message"
+                data-type="error"
+                data-message="{{ session('error') }}"
+            ></div>
+        @endif
         <h1 class="font-bold text-2xl mb-4">Data Barang</h1>
         <div class="flex justify-between items-center mb-6">
             <a href="{{ route('barangs.create') }}" class="block px-4 py-2 border-2 border-[#9A9A9A] rounded-lg">Input Barang
@@ -21,7 +34,7 @@
         <section class="flex flex-wrap gap-2">
             @foreach ($barangs as $item)
                 <div
-                    class="flex items-center justify-between w-[320px] h-[120px] border-[#DADADA] border-[3px] rounded-2xl py-4 pr-3 pl-1">
+                    class="flex items-center justify-between w-[320px] h-[120px] border-[#DADADA] border-[3px] rounded-2xl py-4 px-3">
                     <img src="{{ asset('storage/' . $item->foto) }}" alt="gambar barang" class="w-[100px]">
                     <div class="flex flex-col gap-y-1">
                         <h1 class="font-bold">{{ $item->nama_barang }}</h1>
@@ -30,7 +43,7 @@
                     <a href="{{ route('barangs.show', $item->id) }}"
                         class="bg-white shadow-[0px_0px_5px_rgba(0,0,0,0.25)] px-[5px] h-full flex items-center rounded-lg">
                         <img src="{{ asset('assets/dashboard-kepala-gudang/arrow-right.png') }}" alt="arrow icon"
-                            class="w-[40px]">
+                            class="w-[30px]">
                     </a>
                 </div>
             @endforeach

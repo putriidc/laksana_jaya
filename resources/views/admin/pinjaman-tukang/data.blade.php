@@ -1,6 +1,19 @@
 @extends('admin.layout')
 @section('content')
     <div>
+        @if (session('success'))
+            <div
+                id="flash-message"
+                data-type="success"
+                data-message="{{ session('success') }}"
+            ></div>
+        @elseif (session('error'))
+            <div
+                id="flash-message"
+                data-type="error"
+                data-message="{{ session('error') }}"
+            ></div>
+        @endif
         <h1 class="font-bold text-2xl mb-6">Pinjaman Tukang</h1>
         <div class="flex items-center gap-x-4 mb-6 pb-6 border-b-2 border-[#B6B6B6]">
             <a href="{{ route('pinjamanTukangs.create') }}" class="px-4 py-2 border-2 border-[#9A9A9A] rounded-lg">Tambah Data

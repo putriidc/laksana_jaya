@@ -166,7 +166,11 @@
                     if (index == 0) {
                         item.children[0].src = "{{ asset('assets/navbar/home-click.png') }}";
                     } else if (index == 1) {
-                        item.children[0].src = "{{ asset('assets/navbar/devices-click.png') }}";
+                        item.children[0].src = "{{ asset('assets/navbar-kepala-gudang/3d-cube-scan-click.png') }}";
+                    } else if (index == 2) {
+                        item.children[0].src = "{{ asset('assets/navbar-kepala-gudang/wallet-minus-click.png') }}";
+                    } else if (index == 3) {
+                        item.children[0].src = "{{ asset('assets/navbar-kepala-gudang/wallet-minus-click.png') }}";
                     }
                 } else {
                     item.classList.remove(

@@ -3,7 +3,7 @@
     <div class="flex flex-col items-center">
         <h1 class="text-2xl font-bold mb-6 w-full">Form Pengembalian Pinjaman Tukang</h1>
         <div class="shadow-[0px_0px_15px_rgba(0,0,0,0.25)] w-full p-10 rounded-lg bg-white">
-            <form method="POST" action="{{ route('tukangContents.storeBayar') }}" class="flex flex-col gap-y-4">
+            <form method="POST" action="{{ route('tukangContents.storeBayar') }}" class="flex flex-col gap-y-4" id="myForm">
                 @csrf
                 <input type="hidden" name="kode_karyawan" value="{{ $pinjaman->id }}">
                 <div class="flex items-center">
@@ -29,8 +29,8 @@
                 </div> --}}
                 <div class="flex items-center">
                     <label for="" class="w-[200px] font-medium">Nominal</label>
-                    <input type="number" name="bayar" id=""
-                        class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
+                    <input type="text" name="bayar" id=""
+                        class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2 rupiah-format">
                 </div>
                 <div class="flex mt-4">
                     <div class="w-[200px]"></div>
@@ -50,5 +50,6 @@
                 </div>
             </form>
         </div>
+        <script src="{{ asset('js/form.js') }}"></script>
     </div>
 @endsection

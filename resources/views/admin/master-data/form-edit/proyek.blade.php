@@ -3,7 +3,7 @@
 <div class="flex flex-col items-center">
     <h1 class="text-2xl font-bold mb-4 w-full">Edit Proyek</h1>
     <div class="shadow-[0px_0px_15px_rgba(0,0,0,0.25)] w-full p-10 rounded-lg bg-white">
-        <form method="POST" action="{{ route('proyek.update', $proyek->id) }}" class="flex flex-col gap-y-4">
+        <form method="POST" action="{{ route('proyek.update', $proyek->id) }}" class="flex flex-col gap-y-4" id="myForm">
             @csrf
             @method('PUT')
 
@@ -84,8 +84,8 @@
 
             <div class="flex items-center">
                 <label class="w-[180px] font-medium">Nilai Kontrak</label>
-                <input type="number" name="nilai_kontrak" value="{{ old('nilai_kontrak', $proyek->nilai_kontrak) }}"
-                       class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
+                <input type="text" name="nilai_kontrak" value="{{ old('nilai_kontrak', $proyek->nilai_kontrak) }}"
+                       class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2 rupiah-format">
             </div>
 
             <div class="flex mt-4">
@@ -97,5 +97,6 @@
             </div>
         </form>
     </div>
+    <script src="{{ asset('js/form.js') }}"></script>
 </div>
 @endsection

@@ -65,77 +65,19 @@
                         <span>Neraca</span>
                     </button>
                 </a>
-                <a href="#" onclick="triggerCheckbox(event)" class="cursor-pointer">
-                    <button
-                        class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]">
-                        <img src="{{ asset('assets/navbar-owner/buildings.png') }}" alt="devices icon" />
-                        <span>Data Proyek</span>
-                        <img src="{{ asset('assets/arrow-down.png') }}" alt=""
-                            class="ml-8 transition-all duration-300 ease-in-out" id="arrowDataProyek">
-                    </button>
-                </a>
-                <input type="checkbox" name="" id="triggerMe" class="hidden">
-                <div class="hidden flex-col items-center gap-y-3" id="dropdownDataProyek">
-                    <a href="{{ route('proyekOwner.index', ['kategori' => 'Konsultan']) }}" class="cursor-pointer">
-                        <button
-                            class="bg-white text-[#353132] flex items-center justify-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)] hover:bg-linear-to-r hover:from-[#DD4049] hover:to-[#F9E52D] hover:text-white">
-
-                            <span class="text-center font-bold">Konsultan</span>
-                        </button>
-                    </a>
-                    <a href="{{ route('proyekOwner.index', ['kategori' => 'Kontruksi']) }}" class="cursor-pointer">
-                        <button
-                            class="bg-white text-[#353132] flex items-center justify-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)] hover:bg-linear-to-r hover:from-[#DD4049] hover:to-[#F9E52D] hover:text-white">
-
-                            <span class="text-center font-bold">Kontruksi</span>
-                        </button>
-                    </a>
-                    <a href="{{ route('proyekOwner.index', ['kategori' => 'Barang & Jasa']) }}" class="cursor-pointer">
-                        <button
-                            class="bg-white text-[#353132] flex items-center justify-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)] hover:bg-linear-to-r hover:from-[#DD4049] hover:to-[#F9E52D] hover:text-white">
-
-                            <span class="text-center font-bold">Barang & Jasa</span>
-                        </button>
-                    </a>
-                </div>
-                <a href="#" onclick="triggerCheckbox2(event)" class="cursor-pointer">
-                    <button
-                        class="bg-white text-[#353132] flex items-center gap-x-2 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]">
-                        <img src="{{ asset('assets/navbar-owner/buildings.png') }}" alt="devices icon" />
-                        <span>Progress Proyek</span>
-                        <img src="{{ asset('assets/arrow-down.png') }}" alt=""
-                            class="ml-8 transition-all duration-300 ease-in-out" id="arrowDataProyek2">
-                    </button>
-                </a>
-                <input type="checkbox" name="" id="triggerMe" class="hidden">
-                <div class="hidden flex-col items-center gap-y-3" id="dropdownDataProyek2">
-                    @forelse($sidebarPerusahaans as $perusahaan)
-                        <a href="{{ route('progresOwner.show', $perusahaan->id) }}" class="cursor-pointer">
-                            <button
-                                class="bg-white text-[#353132] flex items-center justify-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)] hover:bg-linear-to-r hover:from-[#DD4049] hover:to-[#F9E52D] hover:text-white">
-
-                                <span class="text-center font-bold">{{ $perusahaan->nama_perusahaan }}</span>
-                            </button>
-                        </a>
-                    @empty
-                        <div
-                            class="text-sm text-red-600 px-4 py-2 transition-all duration-300 ease-in-out text-center italic">
-                            Belum ada perusahaan terdaftar</div>
-                    @endforelse
-                </div>
                 {{-- <a href="/progress" class="cursor-pointer">
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{ asset('assets/navbar-owner/buildings.png') }}"
-                                alt="devices icon"
-                            />
-                            <span>Progress Proyek</span>
-                        </button>
-                    </a> --}}
-                <a href="{{ route('proyekOwner.indexResume') }}" class="cursor-pointer">
                     <button
+                    class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
+                    >
+                    <img
+                    src="{{ asset('assets/navbar-owner/buildings.png') }}"
+                    alt="devices icon"
+                    />
+                    <span>Progress Proyek</span>
+                </button>
+            </a> --}}
+            <a href="{{ route('proyekOwner.indexResume') }}" class="cursor-pointer">
+                <button
                         class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]">
                         <img src="{{ asset('assets/navbar-owner/presention-chart.png') }}" alt="devices icon" />
                         <span>Resume Proyek</span>
@@ -164,11 +106,69 @@
                 </a>
                 <a href="{{ route('AccEafOwner.index') }}" class="cursor-pointer">
                     <button
-                        class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]">
-                        <img src="{{ asset('assets/navbar-owner/book2.png') }}" alt="devices icon" />
-                        <span>Pengajuan EAF</span>
+                    class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]">
+                    <img src="{{ asset('assets/navbar-owner/book2.png') }}" alt="devices icon" />
+                    <span>Pengajuan EAF</span>
+                </button>
+            </a>
+            <a href="#" onclick="triggerCheckbox(event)" class="cursor-pointer">
+                <button
+                    class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]">
+                    <img src="{{ asset('assets/navbar-owner/buildings.png') }}" alt="devices icon" />
+                    <span>Data Proyek</span>
+                    <img src="{{ asset('assets/arrow-down.png') }}" alt=""
+                        class="ml-8 transition-all duration-300 ease-in-out" id="arrowDataProyek">
+                </button>
+            </a>
+            <input type="checkbox" name="" id="triggerMe" class="hidden">
+            <div class="hidden flex-col items-center gap-y-3" id="dropdownDataProyek">
+                <a href="{{ route('proyekOwner.index', ['kategori' => 'Konsultan']) }}" class="cursor-pointer">
+                    <button
+                        class="bg-white text-[#353132] flex items-center justify-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)] hover:bg-linear-to-r hover:from-[#DD4049] hover:to-[#F9E52D] hover:text-white">
+
+                        <span class="text-center font-bold">Konsultan</span>
                     </button>
                 </a>
+                <a href="{{ route('proyekOwner.index', ['kategori' => 'Kontruksi']) }}" class="cursor-pointer">
+                    <button
+                        class="bg-white text-[#353132] flex items-center justify-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)] hover:bg-linear-to-r hover:from-[#DD4049] hover:to-[#F9E52D] hover:text-white">
+
+                        <span class="text-center font-bold">Kontruksi</span>
+                    </button>
+                </a>
+                <a href="{{ route('proyekOwner.index', ['kategori' => 'Barang & Jasa']) }}" class="cursor-pointer">
+                    <button
+                        class="bg-white text-[#353132] flex items-center justify-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)] hover:bg-linear-to-r hover:from-[#DD4049] hover:to-[#F9E52D] hover:text-white">
+
+                        <span class="text-center font-bold">Barang & Jasa</span>
+                    </button>
+                </a>
+            </div>
+            <a href="#" onclick="triggerCheckbox2(event)" class="cursor-pointer">
+                <button
+                    class="bg-white text-[#353132] flex items-center gap-x-2 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]">
+                    <img src="{{ asset('assets/navbar-owner/buildings.png') }}" alt="devices icon" />
+                    <span>Progress Proyek</span>
+                    <img src="{{ asset('assets/arrow-down.png') }}" alt=""
+                        class="ml-8 transition-all duration-300 ease-in-out" id="arrowDataProyek2">
+                </button>
+            </a>
+            <input type="checkbox" name="" id="triggerMe" class="hidden">
+            <div class="hidden flex-col items-center gap-y-3" id="dropdownDataProyek2">
+                @forelse($sidebarPerusahaans as $perusahaan)
+                    <a href="{{ route('progresOwner.show', $perusahaan->id) }}" class="cursor-pointer">
+                        <button
+                            class="bg-white text-[#353132] flex items-center justify-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)] hover:bg-linear-to-r hover:from-[#DD4049] hover:to-[#F9E52D] hover:text-white">
+
+                            <span class="text-center font-bold">{{ $perusahaan->nama_perusahaan }}</span>
+                        </button>
+                    </a>
+                @empty
+                    <div
+                        class="text-sm text-red-600 px-4 py-2 transition-all duration-300 ease-in-out text-center italic">
+                        Belum ada perusahaan terdaftar</div>
+                @endforelse
+            </div>
                 <div class="grow flex items-end pb-5">
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
@@ -269,6 +269,30 @@
                     "to-[#F9E52D]",
                     "text-white"
                 );
+                // ganti icon navbar sesuai indexnya
+                    if (index == 0) {
+                        item.children[0].src = "{{ asset('assets/navbar/home-click.png') }}";
+                    } else if (index == 1) {
+                        item.children[0].src = "{{ asset('assets/navbar/devices-click.png') }}";
+                    } else if (index == 2) {
+                        item.children[0].src = "{{ asset('assets/navbar/devices-click.png') }}";
+                    } else if (index == 3) {
+                        item.children[0].src = "{{ asset('assets/navbar-owner/document-click.png') }}";
+                    } else if (index == 4) {
+                        item.children[0].src = "{{ asset('assets/navbar-owner/book2-click.png') }}";
+                    } else if (index == 5) {
+                        item.children[0].src = "{{ asset('assets/navbar-owner/diagram-click.png') }}";
+                    } else if (index == 6) {
+                        item.children[0].src = "{{ asset('assets/navbar-owner/presention-chart-click.png') }}";
+                    } else if (index == 7) {
+                        item.children[0].src = "{{ asset('assets/navbar-owner/menu-board-click.png') }}";
+                    } else if (index == 8) {
+                        item.children[0].src = "{{ asset('assets/navbar-owner/book2-click.png') }}";
+                    } else if (index == 9) {
+                        item.children[0].src = "{{ asset('assets/navbar-owner/book2-click.png') }}";
+                    } else if (index == 10) {
+                        item.children[0].src = "{{ asset('assets/navbar-owner/book2-click.png') }}";
+                    }
             } else {
                 item.classList.remove(
                     "bg-linear-to-r",

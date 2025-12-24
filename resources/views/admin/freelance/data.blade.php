@@ -1,6 +1,19 @@
 @extends('admin.layout')
 @section('content')
     <div>
+       @if (session('success'))
+            <div
+                id="flash-message"
+                data-type="success"
+                data-message="{{ session('success') }}"
+            ></div>
+        @elseif (session('error'))
+            <div
+                id="flash-message"
+                data-type="error"
+                data-message="{{ session('error') }}"
+            ></div>
+        @endif
         <h1 class="font-bold text-2xl mb-6">Freelance</h1>
         <section>
             <div class="flex items-center pb-4 justify-between">
@@ -32,8 +45,8 @@
                     <thead class="border-b-2 border-[#CCCCCC]">
                         <th class="w-[5%] py-2">No</th>
                         <th class="w-[10%] py-2">Nama</th>
-                        <th class="w-[10%] py-2">Tgl Mulai</th>
-                        <th class="w-[10%] py-2">Tgl Selesai</th>
+                        <th class="w-[13%] py-2">Tgl Mulai</th>
+                        <th class="w-[13%] py-2">Tgl Selesai</th>
                         <th class="w-[15%] py-2">Salary</th>
                         <th class="w-[5%] py-2">Day</th>
                         <th class="w-[15%] py-2">Total Salary</th>

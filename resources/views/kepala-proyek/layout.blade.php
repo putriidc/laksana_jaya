@@ -90,7 +90,7 @@
                 {{-- dropdown baru --}}
                 <!-- Include this script tag or install `@tailwindplus/elements` via npm: -->
                 <!-- <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script> -->
-                <el-dropdown class="inline-block">
+                {{-- <el-dropdown class="inline-block">
                 <button class="bg-linear-to-r from-[#DD4049] to-[#F9E52D] text-white flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_15px_rgba(0,0,0,0.25)]">
                     <img src="{{ asset('assets/navbar-kepala-gudang/home-2.png') }}"
                             alt="home icon" />
@@ -109,7 +109,33 @@
                     @endforelse
                     </div>
                 </el-menu>
-                </el-dropdown>
+                </el-dropdown> --}}
+
+                <a href="#" onclick="triggerCheckbox2(event)" class="cursor-pointer">
+                    <button
+                        class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]">
+                        <img src="{{ asset('assets/navbar-kepala-gudang/home-2.png') }}" alt="devices icon" />
+                        <span>Data Proyek</span>
+                        <img src="{{ asset('assets/arrow-down.png') }}" alt=""
+                            class="ml-8 transition-all duration-300 ease-in-out" id="arrowDataProyek2">
+                    </button>
+                </a>
+                <input type="checkbox" name="" id="triggerMe" class="hidden">
+                <div class="hidden flex-col items-center gap-y-3" id="dropdownDataProyek2">
+                    @forelse($sidebarPerusahaans as $perusahaan)
+                        <a href="{{ route('perusahaan.show', $perusahaan->id) }}" class="cursor-pointer">
+                            <button
+                                class="bg-white text-[#353132] flex items-center justify-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)] hover:bg-linear-to-r hover:from-[#DD4049] hover:to-[#F9E52D] hover:text-white">
+
+                                <span class="text-center font-bold">{{ $perusahaan->nama_perusahaan }}</span>
+                            </button>
+                        </a>
+                    @empty
+                        <div
+                            class="text-sm text-red-600 px-4 py-2 transition-all duration-300 ease-in-out text-center italic">
+                            Belum ada perusahaan terdaftar</div>
+                    @endforelse
+                </div>
 
                 <button id="modal-add"
                             class="bg-white text-[#353132] shadow-[0px_0px_15px_rgba(0,0,0,0.25)] flex items-center justify-center w-[250px] py-3 px-5 cursor-pointer rounded-lg transition-all duration-300 ease-in-out">
@@ -167,7 +193,7 @@
     </section>
     <script>
         // menyimpan focus pada sidebar ketika di klik
-        const link = document.querySelectorAll("#link-clicked");
+        const link = document.querySelectorAll("nav a button");
         const icon = document.querySelectorAll("nav a button img");
         const sidebar = localStorage.getItem("sidebar");
         link.forEach((item, index) => {
@@ -181,6 +207,12 @@
                     "to-[#F9E52D]",
                     "text-white"
                 );
+                // ganti icon navbar sesuai indexnya
+                    if (index == 0) {
+                        item.children[0].src = "{{ asset('assets/navbar/home-click.png') }}";
+                    } else if (index == 1) {
+                        item.children[0].src = "{{ asset('assets/navbar/home-click.png') }}";
+                    } 
             } else {
                 item.classList.remove(
                     "bg-linear-to-r",
@@ -197,7 +229,27 @@
         const dropdownContent = document.getElementById("dropdown-content");
         const arrowNavbar = document.getElementById("arrow-navbar");
         const modalAdd = document.getElementById('modal-add');
+        const arrow2 = document.getElementById("arrowDataProyek2");
+        const dropdownDataProyek2 = document.getElementById("dropdownDataProyek2");
 
+        function triggerCheckbox2(event) {
+            event.preventDefault(); // Mencegah scroll ke atas karena href="#"
+
+            const checkbox = document.getElementById("triggerMe");
+            console.log('test')
+
+            // Cara 1: Meniru klik manusia (akan memicu event listener 'change' jika ada)
+            checkbox.click();
+            if (checkbox.checked) {
+                dropdownDataProyek2.classList.remove('hidden');
+                dropdownDataProyek2.classList.add('flex');
+                arrow2.classList.add('-rotate-90');
+            } else {
+                dropdownDataProyek2.classList.add('hidden');
+                dropdownDataProyek2.classList.remove('flex');
+                arrow2.classList.remove('-rotate-90');
+            }
+        }
         // // pada awal load, sembunyikan semua children dari dropdowncontent
         // Array.from(dropdownContent.children).forEach((item, index) => {
         //     item.classList.add(`-translate-y-[${(index + 1) * 60}px]`);

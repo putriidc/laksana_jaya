@@ -1,6 +1,19 @@
 @extends('admin.layout')
 @section('content')
     <div>
+        @if (session('success'))
+            <div
+                id="flash-message"
+                data-type="success"
+                data-message="{{ session('success') }}"
+            ></div>
+        @elseif (session('error'))
+            <div
+                id="flash-message"
+                data-type="error"
+                data-message="{{ session('error') }}"
+            ></div>
+        @endif
         <h1 class="font-bold text-2xl mb-6">Pinjaman Tukang</h1>
         <div class="flex items-center gap-x-2 mb-6 pb-6 border-b-2 border-[#B6B6B6]">
             <div class="flex items-center gap-x-2">
@@ -16,16 +29,18 @@
         <div class="flex flex-col mb-8">
             <div class="flex justify-between items-center">
                 <h1 class="font-bold text-2xl">Pengajuan Pinjaman</h1>
-                <a href="{{ route('tukangContents.pinjam', $pinjaman->id) }}"
-                    class="border-2 border-[#9A9A9A] px-4 py-2 flex items-center gap-x-4 rounded-lg">
-                    <span>Tambah Pinjaman +</span>
-                    <img src="{{ asset('assets/card-receive.png') }}" alt="card receive icon" class="w-[20px] h-[20px]">
-                </a>
-                <a href="{{ route('tukangContents.bayar', $pinjaman->id) }}"
-                    class="border-2 border-[#9A9A9A] px-4 py-2 flex items-center gap-x-4 rounded-lg">
-                    <span>Bayar Pinjaman -</span>
-                    <img src="{{ asset('assets/card-receive.png') }}" alt="card receive icon" class="w-[20px] h-[20px]">
-                </a>
+                <div class="flex items-center gap-x-2">
+                    <a href="{{ route('tukangContents.pinjam', $pinjaman->id) }}"
+                        class="border-2 border-[#9A9A9A] px-4 py-2 flex items-center gap-x-4 rounded-lg">
+                        <span>Tambah Pinjaman</span>
+                        <img src="{{ asset('assets/card-receive.png') }}" alt="card receive icon" class="w-[20px] h-[20px]">
+                    </a>
+                    <a href="{{ route('tukangContents.bayar', $pinjaman->id) }}"
+                        class="border-2 border-[#9A9A9A] px-4 py-2 flex items-center gap-x-4 rounded-lg">
+                        <span>Bayar Pinjaman</span>
+                        <img src="{{ asset('assets/card-receive.png') }}" alt="card receive icon" class="w-[20px] h-[20px]">
+                    </a>
+                </div>
             </div>
             <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 mt-4">
                 <table class="table-auto text-center text-sm w-full">

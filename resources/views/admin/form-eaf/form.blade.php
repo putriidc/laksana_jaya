@@ -1,8 +1,21 @@
 @extends('admin.layout')
 @section('content')
     <div>
+        @if (session('success'))
+            <div
+                id="flash-message"
+                data-type="success"
+                data-message="{{ session('success') }}"
+            ></div>
+        @elseif (session('error'))
+            <div
+                id="flash-message"
+                data-type="error"
+                data-message="{{ session('error') }}"
+            ></div>
+        @endif
         <h1 class="text-2xl font-bold mb-5">Form Pengajuan EAF</h1>
-        <form method="POST" action="{{ route('eaf.store') }}" class="flex flex-col gap-y-5 pb-10 border-b border-gray-300">
+        <form method="POST" action="{{ route('eaf.store') }}" class="flex flex-col gap-y-5 pb-10 border-b border-gray-300" id="myForm">
             @csrf
             <div class="flex items-center">
                 <label for="" class="w-[200px]">Tanggal Pengajuan</label>
@@ -32,8 +45,8 @@
             </div>
             <div class="flex items-center">
                 <label for="" class="w-[200px]">Nominal</label>
-                <input type="number" placeholder="Rp." name="nominal" id=""
-                    class="bg-[#D9D9D9]/40 px-6 py-2 rounded-lg w-full">
+                <input type="text" placeholder="Rp." name="nominal" id=""
+                    class="bg-[#D9D9D9]/40 px-6 py-2 rounded-lg w-full rupiah-format">
             </div>
             <div class="flex items-center">
                 <label for="" class="w-[200px]">Kas / Bank</label>
@@ -168,5 +181,6 @@
                 document.getElementById('pic').value = pic;
             });
         </script>
+        <script src="{{ asset('js/form.js') }}"></script>
     </div>
 @endsection

@@ -1,10 +1,23 @@
 @extends('kepala-gudang.layout')
 @section('content')
     <div>
+        @if (session('success'))
+            <div
+                id="flash-message"
+                data-type="success"
+                data-message="{{ session('success') }}"
+            ></div>
+        @elseif (session('error'))
+            <div
+                id="flash-message"
+                data-type="error"
+                data-message="{{ session('error') }}"
+            ></div>
+        @endif
         <h1 class="font-bold text-2xl mb-10">Detail Data Barang</h1>
         <div class="flex flex-col gap-y-7 pb-14 mb-8 border-b-2 border-[#B6B6B6]">
-            <div class="flex">
-                <span class="w-[120px]">Image</span>
+            <div class="flex mb-5">
+                <span class="w-[150px]">Image</span>
                 <div class="flex gap-x-14 w-full">
                     <img src="{{ asset('storage/' . $barang->foto) }}" alt="gambar barang"
                         class="w-44 h-44 object-cover rounded-md scale-125" />

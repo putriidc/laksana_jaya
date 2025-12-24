@@ -27,7 +27,7 @@
                                 class="w-[20px]">
                             <input type="checkbox" id="dropdown-toggle" class="hidden" />
                         </div>
-                        <div class="absolute w-[200px] bg-white border-x-2 border-b-2 border-[#9A9A9A] shadow-2xl rounded-b-lg top-[185px] hidden" id="dropdown-menu">
+                        <div class="absolute w-[200px] bg-white border-2 border-[#9A9A9A] shadow-2xl rounded-lg top-[195px] hidden" id="dropdown-menu">
                             <a href="{{ route('akun.create') }}" class="py-2 px-4 block hover:bg-[#E9E9E9]">
                                 <p class="truncate">
                                     Asset Lancar, Asset Tetap, Kewajiban, Ekuitas, Pendatan & HPP Proyek
@@ -391,14 +391,14 @@
             <div class="flex-col pb-4 tabelMasterData hidden" id="data-karyawan">
                 <h1 class="text-[#C0C0C0] font-bold text-xl">Data Karyawan</h1>
                 <div class="w-full flex justify-center pt-2 pb-4 shadow-[1px_1px_5px_rgba(0,0,0,0.25)] rounded-lg mt-2">
-                    <table class="table-fixed w-[80%] text-center">
+                    <table class="table-fixed w-full text-center">
                         <thead class="border-b-2 border-[#CCCCCC]">
                             <th class="py-2 w-[10%]">No</th>
-                            <th class="py-2 w-[15%]">Kode Akun</th>
-                            <th class="py-2 w-[10%]">nama</th>
+                            <th class="py-2 w-[8%]">Kode Akun</th>
+                            <th class="py-2 w-[15%]">nama</th>
                             <th class="py-2 w-[20%]">alamat</th>
                             <th class="py-2 w-[15%]">No. HP</th>
-                            <th class="py-2 w-[15%]">Email</th>
+                            <th class="py-2 w-[20%]">Email</th>
                             <th class="py-2 w-[20%]">Action</th>
                         </thead>
                         <tbody>
@@ -413,24 +413,26 @@
                                     <td class="py-2">{{ $karyawan->alamat }}</td>
                                     <td class="py-2">{{ $karyawan->no_hp }}</td>
                                     <td class="py-2">{{ $karyawan->email }}</td>
-                                    <td class="flex justify-center items-center gap-x-2 py-2">
-                                        {{-- Tombol Edit --}}
-                                        <a href="{{ route('karyawan.edit', $karyawan->id) }}"
-                                            class="btn btn-sm btn-primary">
-                                            <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
-                                                class="w-[22px] cursor-pointer">
-                                        </a>
-                                        <span class="border-black border-l-[1px] h-[22px]"></span>
-                                        {{-- Tombol Delete --}}
-                                        <form action="{{ route('karyawan.destroy', $karyawan->id) }}" method="POST"
-                                            class="h-[22px]">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                    <td class="py-2">
+                                        <div class="flex items-center justify-center gap-x-2">
+                                            {{-- Tombol Edit --}}
+                                            <a href="{{ route('karyawan.edit', $karyawan->id) }}"
+                                                class="btn btn-sm btn-primary">
+                                                <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
                                                     class="w-[22px] cursor-pointer">
-                                            </button>
-                                        </form>
+                                            </a>
+                                            <span class="border-black border-l-[1px] h-[22px]"></span>
+                                            {{-- Tombol Delete --}}
+                                            <form action="{{ route('karyawan.destroy', $karyawan->id) }}" method="POST"
+                                                class="h-[22px]">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                                    <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                        class="w-[22px] cursor-pointer">
+                                                </button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

@@ -67,9 +67,9 @@
                             <th class="py-2 w-[15%]">Nama Proyek</th>
                             <th class="py-2 w-[15%]">PIC</th>
                             <th class="py-2 w-[15%]">Sumber Dana</th>
-                            <th class="py-2 w-[20%]">Nominal</th>
-                            <th class="py-2 w-[20%]">Ket. Spv</th>
-                            <th class="py-2 w-[15%]">Detail Biaya</th>
+                            <th class="py-2 w-[10%]">Nominal</th>
+                            <th class="py-2 w-[10%]">Ket. Spv</th>
+                            <th class="py-2 w-[10%]">Detail Biaya</th>
                             <th class="py-2 w-[15%]">Status</th>
                         </thead>
                         <tbody>
@@ -92,7 +92,7 @@
                                         </span>
                                     </td>
                                     <td class="py-2">
-                                        <div class="flex gap-x-1 items-center">
+                                        <div class="flex gap-x-1 items-center justify-center">
                                         {{-- Status spv --}}
                                         @if ($item->acc_spv === 'accept')
                                             <span class="bg-[#8CE987] px-4 py-2 rounded-lg cursor-pointer">Accept</span>

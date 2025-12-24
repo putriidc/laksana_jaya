@@ -127,14 +127,14 @@ kasbonInput.addEventListener("input", () => {
 // FORM FREELANCE ADD
 // ===============================================
 
-
-
 // ===============================================
 // Jalankan otomatis saat halaman edit dibuka
 document.addEventListener("DOMContentLoaded", () => {
     rupiahFormatElements.forEach((element) => {
         if (element.value) {
-            element.value = formatNumberToRupiah(parseRupiahToNumber(element.value));
+            element.value = formatNumberToRupiah(
+                parseRupiahToNumber(element.value)
+            );
         }
     });
 

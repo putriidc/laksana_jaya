@@ -1,6 +1,19 @@
 @extends('admin.layout')
 @section('content')
     <div>
+        @if (session('success'))
+            <div
+                id="flash-message"
+                data-type="success"
+                data-message="{{ session('success') }}"
+            ></div>
+        @elseif (session('error'))
+            <div
+                id="flash-message"
+                data-type="error"
+                data-message="{{ session('error') }}"
+            ></div>
+        @endif
         <h1 class="font-bold text-2xl mb-6">Jurnal Umum</h1>
         <section>
             <div class="flex items-center justify-between mb-5 pb-5 border-b-[1px] border-[#CCCCCC]">
@@ -295,36 +308,47 @@
             function transaksiMasuk() {
                 Swal.fire({
                     html: `
-                    <form id="formKasBank" class="flex flex-col gap-y-4">
+                    <form id="formKasBank" class="flex flex-col items-start gap-y-4">
                     <h1 class="font-bold text-2xl mb-4">Transaksi Jurnal Debet</h1>
 
-                    <label>Kas/Bank</label>
-                    <select id="kasBank" class="bg-gray-200 rounded-lg px-4 py-2">
-                        <option disabled selected>-Pilih Kas-</option>
-                        @foreach ($bank as $item)
-                        <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
-                         @endforeach
-                    </select>
-
-                    <label>Keterangan</label>
-                    <input type="text" id="ketKasBank" class="bg-gray-200 rounded-lg px-4 py-2">
-
-                    <hr class="my-4">
-
-                    <h2 class="font-bold">Tambah Rincian Debet</h2>
-                    <div class="flex gap-x-2">
-                    <select id="namaPerkiraan" class="bg-gray-200 rounded-lg px-4 py-2 w-1/2">
-                    <option></option>
-                    @foreach ($akun as $item)
-                        <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
-                    @endforeach
-                    </select>
-                    <input type="text" id="ketPerkiraan" placeholder="Keterangan" class="bg-gray-200 rounded-lg px-4 py-2 w-1/4">
-                    <input type="number" id="nominal" placeholder="Nominal" class="bg-gray-200 rounded-lg px-4 py-2 w-1/4">
-                    <button type="button" onclick="addDebet()" class="bg-blue-500 text-white px-3 rounded">+</button>
+                    <div class="flex flex-col w-full items-start gap-y-2">
+                        <label>Kas/Bank</label>
+                        <select id="kasBank" class="bg-gray-200 rounded-lg px-4 py-2 w-full appearance-none cursor-pointer">
+                            <option disabled selected>-Pilih Kas-</option>
+                            @foreach ($bank as $item)
+                            <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
+                            @endforeach
+                        </select>    
                     </div>
 
-                    <table id="tableDebet" class="mt-4 w-full text-sm border">
+                    <div class="flex flex-col w-full items-start gap-y-2 pb-5 border-b border-gray">
+                        <label>Keterangan</label>
+                        <input type="text" id="ketKasBank" class="bg-gray-200 rounded-lg px-4 py-2 w-full">    
+                    </div>
+
+                    <h2 class="font-bold text-xl">Tambah Rincian Debet</h2>
+                    <div class="flex flex-col w-full gap-y-3">
+                        <div class="flex flex-col items-start w-full gap-y-1">
+                            <label>Nama Akun</label>
+                            <select id="namaPerkiraan" class="bg-gray-200 rounded-lg px-4 py-2 w-full text-start">
+                                <option></option>
+                                @foreach ($akun as $item)
+                                    <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
+                                @endforeach
+                            </select>    
+                        </div>
+                        <div class="flex flex-col items-start w-full gap-y-1">
+                             <label>Keterangan</label>
+                            <input type="text" id="ketPerkiraan" placeholder="Keterangan" class="bg-gray-200 rounded-lg px-4 py-2 w-full">
+                        </div>
+                        <div class="flex flex-col items-start w-full gap-y-1">
+                            <label>Nominal</label>
+                            <input type="text" id="nominal" placeholder="Nominal" class="bg-gray-200 rounded-lg px-4 py-2 w-full rupiah-format">
+                        </div>
+                        <button type="button" onclick="addDebet()" class="bg-blue-500 text-white px-3 py-2 rounded w-fit cursor-pointer">Tambah Data +</button>
+                    </div>
+
+                    <table id="tableDebet" class="mt-4 w-full text-sm">
                         <thead>
                         <tr class="bg-gray-300">
                         <th>No</th><th>Akun</th><th>Keterangan</th><th>Nominal</th>
@@ -334,12 +358,12 @@
                     </table>
 
                     <div class="flex gap-x-4 mt-4">
-                    <button type="button" onclick="generateJurnal()" class="bg-green-500 text-white px-4 py-2 rounded">Generate</button>
-                    <button type="button" onclick="Swal.close()" class="bg-red-500 text-white px-4 py-2 rounded">Batal</button>
+                    <button type="button" onclick="generateJurnal()" class="bg-green-500 text-white px-4 py-2 rounded cursor-pointer">Generate</button>
+                    <button type="button" onclick="Swal.close()" class="bg-red-500 text-white px-4 py-2 rounded cursor-pointer">Batal</button>
                     </div>
                     </form>
                     `,
-                    width: '900px',
+                    width: '700px',
                     showConfirmButton: false,
                     didOpen: () => {
                         new TomSelect('#namaPerkiraan', {
@@ -354,6 +378,34 @@
                             }
                         });
 
+                         // membuat format rupiah
+                        const rupiahFormat = document.querySelectorAll('.rupiah-format');
+                        rupiahFormat.forEach(item => {
+                            item.addEventListener('input', function(e) {
+                                // hapus karakter yang bukan angka atau koma
+                                let value = this.value.replace(/[^,\d]/g, "").toString();
+                                // pisahkan antara angka dan koma
+                                let split = value.split(",");
+                                // format angka menjadi rupiah
+                                let sisa = split[0].length % 3;
+                                // ambil angka yang tidak termasuk dalam kelipatan 3
+                                let rupiah = split[0].substr(0, sisa);
+                                // ambil angka yang termasuk dalam kelipatan 3
+                                let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+                                // tambahkan titik sebagai pemisah ribuan
+                                if (ribuan) {
+                                    let separator = sisa ? "." : "";
+                                    rupiah += separator + ribuan.join(".");
+                                }
+
+                                // tambahkan kembali koma dan angka di belakangnya jika ada
+                                rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+                                // tampilkan hasil format rupiah pada input
+                                this.value = rupiah ? "Rp. " + rupiah : "";
+                            });
+                        });
+
                     }
                 });
             }
@@ -363,13 +415,19 @@
                 let kode = akun.value;
                 let nama = akun.options[akun.selectedIndex].text;
                 let ket = document.getElementById('ketPerkiraan').value;
-                let nominal = parseInt(document.getElementById('nominal').value);
+                // let nominal = parseInt(document.getElementById('nominal').value);
+                let nominal = document.getElementById('nominal').value.replace(/[^0-9]/g, '');
+                
+                // ubah nominal yang tadi format rupiah menjadi number
+                let cleanNominal = nominal.replace(/[^0-9]/g, '');
+
+                let nominalInt = parseInt(cleanNominal);
 
                 transaksiDebet.push({
                     kode_akun: kode,
                     nama_akun: nama,
                     keterangan: ket,
-                    nominal: nominal
+                    nominal: nominalInt,
                 });
 
                 let tbody = document.querySelector('#tableDebet tbody');
@@ -460,36 +518,48 @@
                 // buat form modal dengan sweetalert2
                 Swal.fire({
                     html: `
-                    <form id="formKasBank" class="flex flex-col gap-y-4">
+                    <form id="formKasBank" class="flex flex-col items-start gap-y-4">
                     <h1 class="font-bold text-2xl mb-4">Transaksi Jurnal Kredit</h1>
-
-                    <label>Kas/Bank</label>
-                    <select id="kasBank" class="bg-gray-200 rounded-lg px-4 py-2">
-                        <option disabled selected>-Pilih Kas-</option>
-                        @foreach ($bank as $item)
-                        <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
-                         @endforeach
-                    </select>
-
-                    <label>Keterangan</label>
-                    <input type="text" id="ketKasBank" class="bg-gray-200 rounded-lg px-4 py-2">
-
-                    <hr class="my-4">
-
-                    <h2 class="font-bold">Tambah Rincian Debet</h2>
-                    <div class="flex gap-x-2">
-                    <select id="namaPerkiraan" class="bg-gray-200 rounded-lg px-4 py-2 w-1/2">
-                    <option></option>
-                    @foreach ($akun as $item)
-                        <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
-                    @endforeach
-                    </select>
-                    <input type="text" id="ketPerkiraan" placeholder="Keterangan" class="bg-gray-200 rounded-lg px-4 py-2 w-1/4">
-                    <input type="number" id="nominal" placeholder="Nominal" class="bg-gray-200 rounded-lg px-4 py-2 w-1/4">
-                    <button type="button" onclick="addKredit()" class="bg-blue-500 text-white px-3 rounded">+</button>
+                    
+                    <div class="flex flex-col w-full items-start gap-y-2">
+                        <label>Kas/Bank</label>
+                        <select id="kasBank" class="bg-gray-200 rounded-lg px-4 py-2 w-full appearance-none cursor-pointer">
+                            <option disabled selected>-Pilih Kas-</option>
+                            @foreach ($bank as $item)
+                            <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
+                            @endforeach
+                        </select>    
                     </div>
 
-                    <table id="tableKredit" class="mt-4 w-full text-sm border">
+                    <div class="flex flex-col w-full items-start gap-y-2 pb-5 border-b border-gray">
+                        <label>Keterangan</label>
+                        <input type="text" id="ketKasBank" class="bg-gray-200 rounded-lg px-4 py-2 w-full">    
+                    </div>
+
+
+                    <h2 class="font-bold text-xl">Tambah Rincian Kredit</h2>
+                    <div class="flex flex-col w-full gap-y-3">
+                        <div class="flex flex-col items-start w-full gap-y-1">
+                            <label>Nama Akun</label>
+                            <select id="namaPerkiraan" class="bg-gray-200 rounded-lg px-4 py-2 w-full text-start">
+                                <option></option>
+                                @foreach ($akun as $item)
+                                    <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
+                                @endforeach
+                            </select>    
+                        </div>
+                        <div class="flex flex-col items-start w-full gap-y-1">
+                             <label>Keterangan</label>
+                            <input type="text" id="ketPerkiraan" placeholder="Keterangan" class="bg-gray-200 rounded-lg px-4 py-2 w-full">
+                        </div>
+                        <div class="flex flex-col items-start w-full gap-y-1">
+                            <label>Nominal</label>
+                            <input type="text" id="nominal" placeholder="Nominal" class="bg-gray-200 rounded-lg px-4 py-2 w-full rupiah-format">
+                        </div>
+                        <button type="button" onclick="addKredit()" class="bg-blue-500 text-white px-3 py-2 rounded w-fit cursor-pointer">Tambah Data +</button>
+                    </div>
+
+                    <table id="tableKredit" class="mt-4 w-full text-sm">
                         <thead>
                         <tr class="bg-gray-300">
                         <th>No</th><th>Akun</th><th>Keterangan</th><th>Nominal</th>
@@ -504,7 +574,7 @@
                     </div>
                     </form>
                     `,
-                    width: '900px',
+                    width: '700px',
                     showConfirmButton: false,
                     didOpen: () => {
                         new TomSelect('#namaPerkiraan', {
@@ -519,6 +589,35 @@
                             }
                         });
 
+                        // membuat format rupiah
+                        const rupiahFormat = document.querySelectorAll('.rupiah-format');
+                        rupiahFormat.forEach(item => {
+                            item.addEventListener('input', function(e) {
+                                // hapus karakter yang bukan angka atau koma
+                                let value = this.value.replace(/[^,\d]/g, "").toString();
+                                // pisahkan antara angka dan koma
+                                let split = value.split(",");
+                                // format angka menjadi rupiah
+                                let sisa = split[0].length % 3;
+                                // ambil angka yang tidak termasuk dalam kelipatan 3
+                                let rupiah = split[0].substr(0, sisa);
+                                // ambil angka yang termasuk dalam kelipatan 3
+                                let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+                                // tambahkan titik sebagai pemisah ribuan
+                                if (ribuan) {
+                                    let separator = sisa ? "." : "";
+                                    rupiah += separator + ribuan.join(".");
+                                }
+
+                                // tambahkan kembali koma dan angka di belakangnya jika ada
+                                rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+                                // tampilkan hasil format rupiah pada input
+                                this.value = rupiah ? "Rp. " + rupiah : "";
+                            });
+                        });
+
+
                     }
                 });
             }
@@ -529,13 +628,19 @@
                 let kode = akun.value;
                 let nama = akun.options[akun.selectedIndex].text;
                 let ket = document.getElementById('ketPerkiraan').value;
-                let nominal = parseInt(document.getElementById('nominal').value);
+               // let nominal = parseInt(document.getElementById('nominal').value);
+                let nominal = document.getElementById('nominal').value.replace(/[^0-9]/g, '');
+                
+                // ubah nominal yang tadi format rupiah menjadi number
+                let cleanNominal = nominal.replace(/[^0-9]/g, '');
+
+                let nominalInt = parseInt(cleanNominal);
 
                 transaksiKredit.push({
                     kode_akun: kode,
                     nama_akun: nama,
                     keterangan: ket,
-                    nominal: nominal
+                    nominal: nominalInt
                 });
 
                 let tbody = document.querySelector('#tableKredit tbody');
@@ -645,7 +750,7 @@
                                 <input type="text" name="keterangan" id="keterangan" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none">
                                 <div class="flex items-center w-[350px]">
                                     <label for="nominal" class="font-medium w-[35%]">Nominal</label>
-                                    <input type="text" name="nominal" id="nominal" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2 rupiah-format">
+                                    <input type="text" name="nominal" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2 rupiah-format">
                                 </div>
                             </div>
                         </div>
@@ -689,14 +794,26 @@
                         const rupiahFormat = document.querySelectorAll('.rupiah-format');
                         rupiahFormat.forEach(input => {
                             input.addEventListener('input', function() {
+                                // hapus karakter yang bukan angka atau koma
                                 let value = this.value.replace(/[^,\d]/g, "").toString();
+                                // pisahkan antara angka dan koma
                                 let split = value.split(",");
+                                // format angka menjadi rupiah
                                 let sisa = split[0].length % 3;
+                                // ambil angka yang tidak termasuk dalam kelipatan 3
                                 let rupiah = split[0].substr(0, sisa);
+                                // ambil angka yang termasuk dalam kelipatan 3
                                 let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-                                let separator = sisa ? "." : "";
-                                rupiah += separator + ribuan.join(".");
+
+                                // tambahkan titik sebagai pemisah ribuan
+                                if (ribuan) {
+                                    let separator = sisa ? "." : "";
+                                    rupiah += separator + ribuan.join(".");
+                                }
+
+                                // tambahkan kembali koma dan angka di belakangnya jika ada
                                 rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+                                // tampilkan hasil format rupiah pada input
                                 this.value = rupiah ? "Rp. " + rupiah : "";
                             });
                         });
