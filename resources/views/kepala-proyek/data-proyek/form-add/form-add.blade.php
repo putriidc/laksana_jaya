@@ -1,16 +1,16 @@
 @extends('kepala-proyek.layout')
 @section('content')
     <div>
-        <h1 class="font-bold text-2xl mb-4">Form Input Data Proyek {{ $perusahaan->nama_perusahaan }}</h1>
+        <h1 class="font-bold text-2xl mb-4 max-[600px]:text-xl">Form Input Data Proyek {{ $perusahaan->nama_perusahaan }}</h1>
         <div class="w-full p-8 shadow-[1px_1px_10px_rgba(0,0,0,0.1)] rounded-lg">
             <form action="{{ route('data-perusahaan.store') }}" method="POST" class="flex flex-col w-full gap-y-5">
                 @csrf
-                <div class="flex items-center gap-x-5">
+                <div class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-1">
                     <label for="" class="w-[200px]">Nama Paket</label>
                     <input type="text" name="nama_paket" id=""
                         class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" />
                 </div>
-                <div class="flex items-center gap-x-5">
+                <div class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-1">
                     <label for="" class="w-[200px]">Perusahaan</label>
                     <select name="kode_perusahaan"
                         class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none appearance-none cursor-pointer">
@@ -19,7 +19,7 @@
                         </option>
                     </select>
                 </div>
-                <div class="flex items-center gap-x-5">
+                <div class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-1">
                     <label for="" class="w-[200px]">Pengawas</label>
                     <select name="pic"
                         class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none appearance-none cursor-pointer">
@@ -29,36 +29,36 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="flex items-center gap-x-5">
+                <div class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-1">
                     <label for="" class="w-[200px]">No Hp</label>
                     <input type="text" name="no_hp" id=""
                         class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" />
                 </div>
-                <div class="flex items-center gap-x-5">
+                <div class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-1">
                     <label for="" class="w-[200px]">MC 0</label>
-                    <input type="date" name="mc0" id=""
+                    <input type="text" data-flatpickr placeholder="Isi Tanggal" name="mc0" id=""
                         class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" />
                 </div>
-                <div class="flex items-center gap-x-5">
+                <div class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-1">
                     <label for="" class="w-[200px]">Korlap</label>
                     <input type="text" name="korlap" id=""
                         class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" />
                 </div>
-                <div class="flex items-center gap-x-5">
+                <div class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-1">
                     <label for="" class="w-[200px]">Kontraktor</label>
                     <input type="text" name="kontraktor" id=""
                         class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" />
                 </div>
                 <div class="flex items-center gap-x-5">
-                    <div class="w-[200px]"></div>
+                    <div class="w-[200px] max-[600px]:hidden"></div>
                     <span class="font-bold text-left text-lg w-full">Progress</span>
                 </div>
-                <div class="flex items-center gap-x-5">
+                <div class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-1">
                     <label for="" class="w-[200px]">Minggu</label>
                     <input type="number" name="minggu" id=""
                         class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" />
                 </div>
-                <div class="flex items-center gap-x-5">
+                <div class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-1">
                     <label for="" class="w-[200px]">Persentase</label>
                     <div class="flex w-full items-center">
                         <input type="number" name="persen" id=""
@@ -66,23 +66,23 @@
                         <div class="px-2 text-xl">%</div>
                     </div>
                 </div>
-                <div class="flex items-center gap-x-5">
+                <div class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-1">
                     <label for="" class="w-[200px]">Tgl PHO</label>
-                    <input type="date" name="tgl_pho" id=""
+                    <input type="text" data-flatpickr placeholder="Tanggal PHO" name="tgl_pho" id=""
                         class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" />
                 </div>
-                <div class="flex items-center gap-x-5">
+                <div class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-1">
                     <label for="" class="w-[200px]">Tgl Kontraktor Ambil</label>
-                    <input type="date" name="tgl_ambil" id=""
+                    <input type="text" data-flatpickr placeholder="Tanggal kontraktor Ambil" name="tgl_ambil" id=""
                         class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" />
                 </div>
-                <div class="flex items-center gap-x-5">
+                <div class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-1">
                     <label for="" class="w-[200px]">Kendala</label>
                     <input type="text" name="kendala" id=""
                         class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" />
                 </div>
                 <div class="flex items-center gap-x-5">
-                    <div class="w-[200px]"></div>
+                    <div class="w-[200px] max-[600px]:hidden"></div>
                     <div class="w-full flex flex-wrap gap-8">
                         <div class="flex items-center gap-x-3">
                             <label for="" class="text-sm">PHO</label>
@@ -124,7 +124,7 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-x-5 mt-8">
-                    <div class="w-[200px]"></div>
+                    <div class="w-[200px] max-[600px]:hidden"></div>
                     <div class="w-full">
                         <div class="flex items-center gap-x-4">
                             <button type="submit"
