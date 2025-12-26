@@ -17,21 +17,25 @@
         data-message="{{ session('success') }}"
     ></div>
     @endif
-    <section class="flex h-screen">
+    <section class="flex h-screen max-[550px]:overflow-x-hidden">
         <nav
-            class="max-[1200px]:absolute flex flex-col max-[1200px]:items-center bg-white h-screen w-[350px] max-[1200px]:w-[60px] py-5 px-5 shadow-[1px_0px_8px_rgba(0,0,0,0.25)] items-center relative z-[99] overflow-y-auto overflow-x-hidden max-[1200px]:overflow-x-hidden max-[1200px]:transition-all max-[1200px]:ease-in-out max-[1200px]:duration-300" id="sideNavbar"> {{-- Bagian yang di responsive --}}
+            class="max-[1200px]:absolute flex flex-col max-[1200px]:items-center bg-white h-screen w-[350px] max-[1200px]:w-[60px] max-[550px]:w-full max-[550px]:translate-x-[-100vw] py-5 px-5 shadow-[1px_0px_8px_rgba(0,0,0,0.25)] items-center relative z-[99] overflow-y-auto overflow-x-hidden max-[1200px]:overflow-x-hidden max-[1200px]:transition-all max-[1200px]:ease-in-out max-[1200px]:duration-200" id="sideNavbar"> {{-- Bagian yang di responsive --}}
             {{-- button view --}}
-            <button class="min-[1200px]:hidden bg-white shadow-[0px_1px_8px_rgba(0,0,0,0.25)] rounded-full p-2 fixed top-[50%] left-10 rotate-[-90deg] z-[99] transition-all duration-300 ease-in-out" id="buttonView">
+            <button class="min-[1200px]:hidden max-[550px]:hidden bg-white shadow-[0px_1px_8px_rgba(0,0,0,0.25)] rounded-full p-2 fixed top-[50%] left-10 rotate-[-90deg] z-[99] transition-all duration-200 ease-in-out" id="buttonView">
                 <img src="{{ asset('assets/arrow-down.png') }}" alt="arrow view">
             </button>
             {{-- button view --}}
             {{-- Logo --}}
-            <div class="flex justify-between items-center gap-x-1 mb-8 max-[1200px]:hidden" id="logoFull"> {{-- bagian yang di responsive --}}
-                <img src="{{ asset('assets/ar4anSmallLogo.png') }}" alt="LOGO AR4N GROUP" />
-                <h1 class="leading-6 font-bold text-2xl text-[#353132]">
-                    AR4N <br />
+            <div class="flex justify-between items-center gap-x-1 mb-8 max-[1200px]:hidden max-[550px]:w-full max-[550px]:px-2" id="logoFull"> {{-- bagian yang di responsive --}}
+                <img src="{{ asset('assets/ar4anSmallLogo.png') }}" alt="LOGO AR4N GROUP" class="max-[550px]:w-[70px]" />
+                <h1 class="leading-6 font-bold text-2xl text-[#353132] max-[550px]:text-xl">
+                    AR4N <br class="max-[550px]:hidden"/>
                     GROUP
                 </h1>
+                <button class="min-[550px]:hidden w-[30px] flex flex-col gap-y-[7px]" id="buttonClose">
+                    <span class="border-t-[3px] border-gray-400 w-full rotate-45 translate-y-[5px]"></span>
+                    <span class="border-b-[3px] border-gray-400 w-full -rotate-45 -translate-y-[5px]"></span>
+                </button>
             </div>
             <img src="{{ asset('assets/ar4anSmallLogo.png') }}" alt="LOGO AR4N GROUP" class="w-[60px] min-[1200px]:hidden mb-8 scale-200" id="justLogo"/> {{-- Bagian yang muncul karena responsive --}}
             {{-- logo --}}
@@ -173,13 +177,16 @@
         </nav>
         <div class="w-full flex flex-col relative">
             {{-- header --}}
-            <header class="flex justify-between items-center px-10 max-[420px]:px-4 py-4 shadow-[0px_1px_5px_rgba(0,0,0,0.25)] max-[1200px]:w-[calc(100%-60px)] max-[1200px]:ml-[60px] "> {{-- Bagian yang di responsive --}}
-                <img src="{{ asset('assets/notification.png') }}" alt="notification icon"
-                        class="w-[30px] cursor-pointer min-[420px]:hidden" />
+            <header class="flex justify-between items-center px-10 max-[550px]:px-4 py-4 shadow-[0px_1px_5px_rgba(0,0,0,0.25)] max-[1200px]:w-[calc(100%-60px)] max-[550px]:w-full max-[1200px]:ml-[60px] max-[550px]:ml-0 "> {{-- Bagian yang di responsive --}}
+                <button class="min-[550px]:hidden w-[30px] flex flex-col gap-y-[7px]" id="buttonBurger">
+                    <span class="w-full border border-gray-400"></span>
+                    <span class="w-full border border-gray-400"></span>
+                    <span class="w-full border border-gray-400"></span>
+                </button>
                 <span class="text-base">pages / dashboard</span>
-                <div class="flex items-center gap-x-4">
+                <div class="flex items-center gap-x-4 max-[420px]:gap-x-2">
                     <img src="{{ asset('assets/notification.png') }}" alt="notification icon"
-                        class="w-[30px] cursor-pointer max-[420px]:hidden" />
+                        class="w-[30px] cursor-pointer" />
                     <div class="flex items-center gap-x-2">
                         <img src="{{ asset('assets/Ellipse 1.png') }}" alt="profile picture"
                             class="w-[40px] h-[40px] max-[640px]:hidden" />
@@ -199,7 +206,7 @@
                 </div>
             </header>
             {{-- header --}}
-            <div class="px-6 pt-5 pb-16 overflow-y-auto max-[1200px]:w-[calc(100vw-60px)] max-[1200px]:ml-[60px]"> {{-- Bagian yang di responsive --}}
+            <div class="px-6 pt-5 pb-16 overflow-y-auto max-[1200px]:w-[calc(100vw-60px)] max-[550px]:w-full max-[1200px]:ml-[60px] max-[550px]:ml-0"> {{-- Bagian yang di responsive --}}
                 @yield('content')
             </div>
             <footer
@@ -251,6 +258,66 @@
                 item.classList.toggle("max-[1200px]:ml-[-67px]");
             })
         });
+
+        const buttonBurger = document.getElementById("buttonBurger");
+        buttonBurger.addEventListener("click", () => {
+            nav.classList.toggle("max-[550px]:translate-x-[-100vw]");
+            sideNavbarContent.classList.toggle("max-[550px]:w-full")
+            logoFull.classList.toggle("max-[1200px]:hidden");
+            justLogo.classList.toggle("max-[1200px]:hidden");
+            sideNavbarContent.classList.toggle("max-[1200px]:items-center");
+            arrow2.classList.toggle("max-[1200px]:hidden");
+            arrow2.classList.toggle("max-[1200px]:scale-200");
+            arrow2.classList.toggle("max-[1200px]:ml-8");
+            arrow2.classList.toggle("max-[550px]:ml-auto")
+            modalAdd.classList.toggle("max-[1200px]:py-1");
+            // sideNavbarContent.classList.toggle('max-[1200px]:')
+            // di sideNavbarContent terdapat beberapa tombol link yang akan kita manipulasi secara bersamaan
+            children.forEach((item, index) => {
+                item.classList.toggle("max-[1200px]:w-[50px]");
+                item.classList.toggle("max-[550px]:w-full");
+            })
+            imgChild.forEach((item, index) => {
+                item.classList.toggle("max-[1200px]:scale-200");
+            })
+            spanChild.forEach((item, index) => {
+                item.classList.toggle("max-[1200px]:hidden");
+            })
+            childDropdown.forEach((item, index) => {
+                item.classList.toggle("max-[1200px]:ml-[-67px]");
+                item.classList.toggle("max-[550px]:ml-0");
+            })
+        })
+
+        const buttonClose = document.getElementById("buttonClose");
+        buttonClose.addEventListener("click", () => {
+            nav.classList.toggle("max-[550px]:translate-x-[-100vw]");
+            sideNavbarContent.classList.toggle("max-[550px]:w-full")
+            logoFull.classList.toggle("max-[1200px]:hidden");
+            justLogo.classList.toggle("max-[1200px]:hidden");
+            sideNavbarContent.classList.toggle("max-[1200px]:items-center");
+            arrow2.classList.toggle("max-[1200px]:hidden");
+            arrow2.classList.toggle("max-[1200px]:scale-200");
+            arrow2.classList.toggle("max-[1200px]:ml-8");
+            arrow2.classList.toggle("max-[550px]:ml-auto")
+            modalAdd.classList.toggle("max-[1200px]:py-1");
+            // sideNavbarContent.classList.toggle('max-[1200px]:')
+            // di sideNavbarContent terdapat beberapa tombol link yang akan kita manipulasi secara bersamaan
+            children.forEach((item, index) => {
+                item.classList.toggle("max-[1200px]:w-[50px]");
+                item.classList.toggle("max-[550px]:w-full");
+            })
+            imgChild.forEach((item, index) => {
+                item.classList.toggle("max-[1200px]:scale-200");
+            })
+            spanChild.forEach((item, index) => {
+                item.classList.toggle("max-[1200px]:hidden");
+            })
+            childDropdown.forEach((item, index) => {
+                item.classList.toggle("max-[1200px]:ml-[-67px]");
+                item.classList.toggle("max-[550px]:ml-0");
+            })
+        })
 
         // profil button
         const profilButton = document.getElementById("profilButton");
