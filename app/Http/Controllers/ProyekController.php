@@ -19,7 +19,7 @@ class ProyekController extends Controller
 
     public function create()
     {
-        $pic = PiutangHutang::where('akun_header', 'like', 'PIC%')->get();
+        $pic = Karyawan::active()->get();
         return view('admin.master-data.form-add.proyek', compact('pic'));
     }
 
@@ -63,7 +63,7 @@ class ProyekController extends Controller
     public function edit($id)
     {
         $proyek = Proyek::findOrFail($id);
-        $pic = Karyawan::whereNull('deleted_at')->get();
+        $pic = Karyawan::active()->get();
         return view('admin.master-data.form-edit.proyek', compact('proyek', 'pic'));
     }
 

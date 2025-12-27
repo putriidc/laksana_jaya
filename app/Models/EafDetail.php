@@ -24,6 +24,7 @@ class EafDetail extends Model
         'created_by',
         'deleted_at'
     ];
+    protected $casts = [ 'is_generate' => 'boolean', ];
 
     public function eaf()
     {

@@ -53,6 +53,21 @@ class EafController extends Controller
             'detail_biaya' => 'nullable|string',
         ]);
 
+        $existingEaf = Eaf::where('nama_proyek', $request->nama_proyek)
+            ->whereNull('deleted_at')
+            ->latest()
+            ->first();
+        $hasPending = EafDetail::where('kode_eaf', $existingEaf->kode_eaf)
+            ->where('is_generate', 0)
+            ->whereNull('deleted_at')
+            ->exists();
+
+        if ($existingEaf && $hasPending) {
+            return redirect()->back()->with('error', 'Tidak bisa ajukan EAF baru, masih ada detail yang belum digenerate.');
+        }
+
+
+
         $kodeEaf = 'EAF-' . Carbon::now('Asia/Jakarta')->format('YmdHis');
 
         Eaf::create([
