@@ -12,6 +12,8 @@ class JurnalUmum extends Model
         'id_content',
         'id_pinjam',
         'id_kasbon',
+        'detail_eaf_id',
+        'detail_order',
         'kode_jurnal',
         'tanggal',
         'keterangan',
@@ -31,4 +33,13 @@ class JurnalUmum extends Model
     {
         return $query->whereNull('deleted_at');
     }
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function detailEaf() {
+        return $this->belongsTo(EafDetail::class, 'detail_eaf_id');
+    }
+
 }

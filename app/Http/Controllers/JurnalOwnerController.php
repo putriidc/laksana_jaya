@@ -14,7 +14,7 @@ class JurnalOwnerController extends Controller
 {
     public function index(Request $request)
     {
-        $query = JurnalUmum::active();
+        $query = JurnalUmum::active()->where('created_by', 'owner');
 
         // Cek apakah user isi tanggal
         if ($request->filled('start') && $request->filled('end')) {

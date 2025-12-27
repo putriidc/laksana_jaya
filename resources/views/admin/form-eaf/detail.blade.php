@@ -20,7 +20,10 @@
             <div class="flex justify-between items-center mb-5">
                 <h1 class="text-2xl font-bold">Tabel Rincian</h1>
                 <div class="flex items-center gap-x-2">
-                     @if($eaf->details->where('is_generate', true)->isEmpty())
+                    @php
+                    $detailTanggal = $eaf->details->first()?->tanggal;
+                    @endphp
+                    @if($detailTanggal == $today)
                     <button data-id="{{ $eaf->id }}" data-kode="{{ $eaf->kode_eaf }}" onclick="modalAddRincian(this)"
                         class="flex items-center gap-x-2 border border-[#3E98D0] px-4 py-2 rounded-lg cursor-pointer">
                         <span class="text-[#3E98D0]">Tambah Rincian +</span>
@@ -60,7 +63,7 @@
                                 <td>{{ 'RP. ' . number_format($item->debit, 0, ',', '.') }}</td>
                                 <td>{{ 'RP. ' . number_format($item->kredit, 0, ',', '.') }}</td>
                                 <td>
-                                     @if ($loop->iteration > 2 && !$item->is_generate)
+                                     @if ($loop->iteration > 2 && $detailTanggal == $today)
                                         <div class="flex items-center gap-x-2 justify-center">
                                             {{-- Tombol Delete --}}
                                             <form action="{{ route('eaf.destroy', $item->id) }}" method="POST"
@@ -148,7 +151,7 @@
                     </div>
                     <div class="flex items-center">
                         <label class="w-[240px] text-start">Keterangan</label>
-                        <input type="text" name="keterangan"
+                        <input type="text" name="keterangan" required
                             class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
                     </div>
                     <div class="flex items-center">

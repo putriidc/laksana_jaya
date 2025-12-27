@@ -573,7 +573,7 @@
     //         }
     //     </script>
 
-    //     <script>
+         <script>
     //         let transaksiKredit = [];
 
     //         function transaksiKeluar() {
