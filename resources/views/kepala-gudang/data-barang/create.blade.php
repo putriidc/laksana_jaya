@@ -5,12 +5,12 @@
             <form enctype="multipart/form-data" method="POST" action="{{ route('barangs.store') }}"
                 class="flex flex-col gap-y-4">
                 @csrf
-                <div class="flex items-center">
+                <div class="flex items-center max-[650px]:flex-col max-[650px]:gap-y-2 max-[650px]:items-start">
                     <label for="" class="w-[180px] font-medium">Nama Barang</label>
                     <input type="text" name="nama_barang" id=""
                         class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2" />
                 </div>
-                <div class="flex items-center">
+                <div class="flex items-center max-[650px]:flex-col max-[650px]:gap-y-2 max-[650px]:items-start">
                     <label for="" class="w-[180px] font-medium">Kategori Barang</label>
                     <select name="kategori" id=""
                         class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2 appearance-none cursor-pointer">
@@ -37,12 +37,12 @@
                     </select>
 
                 </div>
-                <div class="flex items-center">
+                <div class="flex items-center max-[650px]:flex-col max-[650px]:gap-y-2 max-[650px]:items-start">
                     <label for="" class="w-[180px] font-medium">Spesifikasi</label>
                     <input type="text" name="spesifikasi" id=""
                         class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2" />
                 </div>
-                <div class="flex items-center">
+                <div class="flex items-center max-[650px]:flex-col max-[650px]:gap-y-2 max-[650px]:items-start">
                     <label for="" class="w-[180px] font-medium">Satuan</label>
                     <select name="satuan" id=""
                         class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2 appearance-none cursor-pointer">
@@ -99,18 +99,18 @@
                     </select>
 
                 </div>
-                <div class="flex items-center">
+                <div class="flex items-center max-[650px]:flex-col max-[650px]:gap-y-2 max-[650px]:items-start">
                     <label for="" class="w-[180px] font-medium">Stok</label>
                     <input type="number" name="stok" id=""
                         class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2" />
                 </div>
-                <div class="flex items-center">
+                <div class="flex items-center max-[650px]:flex-col max-[650px]:gap-y-2 max-[650px]:items-start">
                     <label for="" class="w-[180px] font-medium">Foto</label>
                     <input type="file" name="foto" id=""
                         class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2" />
                 </div>
                 <div class="flex mt-4">
-                    <div class="w-[180px]"></div>
+                    <div class="w-[180px] max-[650px]:hidden"></div>
                     <div class="w-full flex gap-x-2">
                         <button type="submit" class="bg-[#FFF494] px-6 py-2 rounded-lg cursor-pointer">
                             Simpan Data

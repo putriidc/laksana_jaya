@@ -3,8 +3,8 @@
         <div class="flex flex-col mb-6">
             <section class="mb-5 pb-10 border-b-2 border-[#B6B6B6]">
                 <h1 class="font-bold text-2xl mb-4 text-[#C0C0C0]">Form Pengajuan Pinjaman Tukang</h1>
-                <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                    <table class="table-auto text-center text-sm w-full">
+                <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1100px]:overflow-x-scroll">
+                    <table class="table-auto text-center text-sm w-full max-[1100px]:w-[1100px]">
                         <thead class="border-b-2 border-[#CCCCCC]">
                             <th class="py-2 w-[10%]">Tgl Pengajuan</th>
                             <th class="py-2 w-[15%]">Nama Tukang</th>
@@ -50,8 +50,8 @@
                     <span class="text-[#72686B]">Cetak Laporan</span>
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon">
                 </a>
-                <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                    <table class="table-auto text-center text-sm w-full">
+                <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1100px]:overflow-x-scroll">
+                    <table class="table-auto text-center text-sm w-full max-[1100px]:w-[1100px]">
                         <thead class="border-b-2 border-[#CCCCCC]">
                             <th class="py-2 w-[10%]">Tgl Pengajuan</th>
                             <th class="py-2 w-[15%]">Nama Tukang</th>

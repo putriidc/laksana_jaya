@@ -8,13 +8,13 @@
                 @csrf
                 @method('PUT')
 
-                <div class="flex items-center">
+                <div class="flex items-center max-[650px]:flex-col max-[650px]:gap-y-2 max-[650px]:items-start">
                     <label class="w-[180px] font-medium">Nama Barang</label>
                     <input type="text" name="nama_barang" value="{{ $barang->nama_barang }}"
                         class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2" />
                 </div>
 
-                <div class="flex items-center">
+                <div class="flex items-center max-[650px]:flex-col max-[650px]:gap-y-2 max-[650px]:items-start">
                     <label class="w-[180px] font-medium">Kategori Barang</label>
                     <select name="kategori"
                         class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2 appearance-none cursor-pointer">
@@ -67,13 +67,13 @@
                     </select>
                 </div>
 
-                <div class="flex items-center">
+                <div class="flex items-center max-[650px]:flex-col max-[650px]:gap-y-2 max-[650px]:items-start">
                     <label class="w-[180px] font-medium">Spesifikasi</label>
                     <input type="text" name="spesifikasi" value="{{ $barang->spesifikasi }}"
                         class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2" />
                 </div>
 
-                <div class="flex items-center">
+                <div class="flex items-center max-[650px]:flex-col max-[650px]:gap-y-2 max-[650px]:items-start">
                     <label class="w-[180px] font-medium">Satuan</label>
                     <select name="satuan"
                         class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2 appearance-none cursor-pointer">
@@ -119,13 +119,13 @@
                     </select>
                 </div>
 
-                <div class="flex items-center">
+                <div class="flex items-center max-[650px]:flex-col max-[650px]:gap-y-2 max-[650px]:items-start">
                     <label class="w-[180px] font-medium">Stok</label>
                     <input type="number" name="stok" value="{{ $barang->stok }}"
                         class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2" />
                 </div>
 
-                <div class="flex items-center">
+                <div class="flex items-center max-[650px]:flex-col max-[650px]:gap-y-2 max-[650px]:items-start">
                     <label class="w-[180px] font-medium">Foto</label>
                     <div class="flex w-full">
                         <input type="file" name="foto" class="w-[80%] outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2" />

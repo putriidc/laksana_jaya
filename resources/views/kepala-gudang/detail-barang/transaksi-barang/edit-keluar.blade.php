@@ -7,13 +7,13 @@
                 @csrf
                 @method('PUT')
 
-                <div class="flex items-center">
+                <div class="flex items-center max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-2">
                     <label class="w-[180px] font-medium">Tgl Keluar</label>
                     <input type="date" name="tanggal" value="{{ $barangMasuk->tanggal }}"
                         class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
                 </div>
 
-                <div class="flex items-center">
+                <div class="flex items-center max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-2">
                     <label class="w-[180px] font-medium">Nama Barang</label>
                     <input type="text" value="{{ $barangMasuk->barang->nama_barang }}"
                         class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2" readonly>
@@ -21,20 +21,20 @@
                 </div>
 
 
-                <div class="flex items-center">
+                <div class="flex items-center max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-2">
                     <label class="w-[180px] font-medium">Keterangan</label>
                     <input type="text" name="keterangan" value="{{ $barangMasuk->keterangan }}"
                         class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
                 </div>
 
-                <div class="flex items-center">
+                <div class="flex items-center max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-2">
                     <label class="w-[180px] font-medium">Jumlah keluar</label>
                     <input type="number" name="qty" value="{{ $barangMasuk->qty }}"
                         class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
                 </div>
 
                 <div class="flex mt-4">
-                    <div class="w-[180px]"></div>
+                    <div class="w-[180px] max-[600px]:hidden"></div>
                     <div class="w-full flex gap-x-2">
                         <button type="submit" class="bg-[#FFF494] px-6 py-2 rounded-lg cursor-pointer">Update Data</button>
                     </div>

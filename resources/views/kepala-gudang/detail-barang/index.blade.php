@@ -16,26 +16,27 @@
         @endif
         <h1 class="font-bold text-2xl mb-10">Detail Data Barang</h1>
         <div class="flex flex-col gap-y-7 pb-14 mb-8 border-b-2 border-[#B6B6B6]">
-            <div class="flex mb-5">
-                <span class="w-[150px]">Image</span>
-                <div class="flex gap-x-14 w-full">
+            <div class="flex mb-5 max-[900px]:mb-0 max-[900px]:flex-col max-[900px]:items-center">
+                <span class="w-[150px] max-[900px]:text-center max-[900px]:hidden">Image</span>
+                <span class="w-[150px] max-[900px]:text-center min-[900px]:hidden text-xl mb-3">Gambar Barang</span>
+                <div class="flex gap-x-14 w-full max-[900px]:flex-col max-[900px]:items-center">
                     <img src="{{ asset('storage/' . $barang->foto) }}" alt="gambar barang"
-                        class="w-44 h-44 object-cover rounded-md scale-125" />
-                    <div class="flex flex-col w-full justify-between">
-                        <div class="flex items-center">
+                        class="w-44 h-44 object-cover rounded-md scale-125 max-[900px]:scale-100 max-[900px]:w-52 max-[900px]:h-52 max-[900px]:mb-7" />
+                    <div class="flex flex-col w-full justify-between max-[900px]:gap-y-7">
+                        <div class="flex items-center max-[900px]:flex-col max-[900px]:items-start max-[900px]:gap-y-2">
                             <span class="w-[200px]">Tanggal Masuk</span>
                             <div class="bg-[#D9D9D9]/40 h-fit px-5 py-2 w-full rounded-lg">
                                 {{ $barang->tanggal ?? '-' }}
 
                             </div>
                         </div>
-                        <div class="flex items-center">
+                        <div class="flex items-center max-[900px]:flex-col max-[900px]:items-start max-[900px]:gap-y-2">
                             <span class="w-[200px]">Nama Barang</span>
                             <div class="bg-[#D9D9D9]/40 h-fit px-5 py-2 w-full rounded-lg">
                                 {{ $barang->nama_barang }}
                             </div>
                         </div>
-                        <div class="flex items-center">
+                        <div class="flex items-center max-[900px]:flex-col max-[900px]:items-start max-[900px]:gap-y-2">
                             <span class="w-[200px]">Kategori Barang</span>
                             <div class="bg-[#D9D9D9]/40 h-fit px-5 py-2 w-full rounded-lg">
                                 {{ $barang->kategori }}
@@ -44,26 +45,26 @@
                     </div>
                 </div>
             </div>
-            <div class="flex items-center">
+            <div class="flex items-center max-[900px]:flex-col max-[900px]:items-start max-[900px]:gap-y-2">
                 <span class="w-[120px]">Spesifikasi</span>
                 <div class="bg-[#D9D9D9]/40 h-fit px-5 py-2 w-full rounded-lg">
                     {{ $barang->spesifikasi }}
                 </div>
             </div>
-            <div class="flex items-center">
+            <div class="flex items-center max-[900px]:flex-col max-[900px]:items-start max-[900px]:gap-y-2">
                 <span class="w-[120px]">Satuan</span>
                 <div class="bg-[#D9D9D9]/40 h-fit px-5 py-2 w-full rounded-lg">
                     {{ $barang->satuan }}
                 </div>
             </div>
-            <div class="flex items-center">
+            <div class="flex items-center max-[900px]:flex-col max-[900px]:items-start max-[900px]:gap-y-2">
                 <span class="w-[120px]">Stok</span>
                 <div class="bg-[#D9D9D9]/40 h-fit px-5 py-2 w-full rounded-lg">
                     {{ $barang->stok }}
                 </div>
             </div>
         </div>
-        <div class="flex gap-x-4 mb-10">
+        <div class="flex gap-x-4 mb-10 max-[600px]:flex-wrap max-[600px]:gap-y-2 max-[600px]:gap-x-2">
             <a href="{{ route('barang-masuk.create.for-barang', $barang->kode_barang) }}"
                 class="block bg-white border-2 border-[#9A9A9A] rounded-lg w-fit py-2 px-5">Tambah Stok +</a>
             <a href="{{ route('barang-keluar.create.for-barang', $barang->kode_barang) }}"
@@ -75,29 +76,40 @@
         <div class="border-b-2 border-[#B6B6B6] pb-8 mb-10">
             <h1 class="font-bold text-2xl mb-6">Data Stok Masuk</h1>
             {{-- Barang Masuk --}}
-            <form method="GET" action="{{ route('barangs.show', $barang->id) }}" class="flex gap-x-2 mb-4">
-                <input type="date" name="start_masuk" value="{{ request('start_masuk') }}"
+            <form method="GET" action="{{ route('barangs.show', $barang->id) }}" class="flex gap-x-2 mb-4 max-[600px]:flex-wrap max-[600px]:gap-y-2">
+                <input type="text" data-flatpickr placeholder="Pilih tanggal awal" name="start_masuk" value="{{ request('start_masuk') }}"
                     class="border-2 border-[#9A9A9A] rounded-lg px-3 py-2">
-                <input type="date" name="end_masuk" value="{{ request('end_masuk') }}"
+                <input type="text" data-flatpickr placeholder="Pilih tanggal akhir" name="end_masuk" value="{{ request('end_masuk') }}"
                     class="border-2 border-[#9A9A9A] rounded-lg px-3 py-2">
-                <button type="submit" class="border-2 border-[#9A9A9A] rounded-lg px-3 py-2 bg-white">
+                <button type="submit" class="border-2 border-[#9A9A9A] rounded-lg px-3 py-2 bg-white max-[600px]:hidden">
                     <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" />
                 </button>
                 {{-- Print Barang Masuk --}}
                 <a href="{{ route('barangs.printMasuk', ['id' => $barang->id, 'start_masuk' => request('start_masuk'), 'end_masuk' => request('end_masuk')]) }}"
                     target="_blank"
-                    class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
+                    class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer max-[600px]:hidden">
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
                 </a>
+                <div class="min-[600px]:hidden flex gap-x-2">
+                    <button type="submit" class="border-2 border-[#9A9A9A] rounded-lg px-3 py-2 bg-white">
+                        <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" />
+                    </button>
+                    {{-- Print Barang Masuk --}}
+                    <a href="{{ route('barangs.printMasuk', ['id' => $barang->id, 'start_masuk' => request('start_masuk'), 'end_masuk' => request('end_masuk')]) }}"
+                        target="_blank"
+                        class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
+                        <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
+                    </a>
+                </div>
             </form>
-            <div class="rounded-lg shadow-[1px_1px_10px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                <table class="table-fixed text-center text-sm w-full">
+            <div class="rounded-lg shadow-[1px_1px_10px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[900px]:overflow-x-scroll">
+                <table class="table-fixed text-center text-sm w-full max-[900px]:w-[900px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
-                        <th class="py-2 w-[20%] pl-36">No</th>
+                        <th class="py-2 w-[20%] pl-36 max-[1100px]:pl-0">No</th>
                         <th class="py-2 w-[20%]">Tgl Masuk</th>
                         <th class="py-2 w-[20%]">Qty</th>
                         <th class="py-2 w-[20%]">Keterangan</th>
-                        <th class="py-2 w-[25%] pr-36">Action</th>
+                        <th class="py-2 w-[25%] pr-36 max-[1100px]:pr-0">Action</th>
                     </thead>
                     <tbody>
                         @php
@@ -105,11 +117,11 @@
                         @endphp
                         @foreach ($barangMasuks as $item)
                             <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
-                                <td class="py-2 pl-36">{{ $nomasuk++ }}</td>
+                                <td class="py-2 pl-36 max-[1100px]:pl-0">{{ $nomasuk++ }}</td>
                                 <td class="py-2">{{ $item->tanggal }}</td>
                                 <td class="py-2">{{ $item->qty }}</td>
                                 <td class="py-2">{{ $item->keterangan }}</td>
-                                <td class="py-2 pr-36">
+                                <td class="py-2 pr-36 max-[1100px]:pr-0">
                                     <div class="flex justify-center items-center gap-x-2 ">
                                         {{-- Tombol Edit --}}
                                         <a href="{{ route('barang-masuk.edit', $item->id) }}"
@@ -139,29 +151,40 @@
         <div class="border-b-2 border-[#B6B6B6] pb-8 mb-10">
             <h1 class="font-bold text-2xl mb-6">Data Stok Keluar</h1>
             {{-- Barang Keluar --}}
-            <form method="GET" action="{{ route('barangs.show', $barang->id) }}" class="flex gap-x-2 mb-4">
-                <input type="date" name="start_keluar" value="{{ request('start_keluar') }}"
+            <form method="GET" action="{{ route('barangs.show', $barang->id) }}" class="flex gap-x-2 mb-4 max-[600px]:flex-wrap max-[600px]:gap-y-2">
+                <input type="text" data-flatpickr placeholder="Pilih tanggal awal" name="start_keluar" value="{{ request('start_keluar') }}"
                     class="border-2 border-[#9A9A9A] rounded-lg px-3 py-2">
-                <input type="date" name="end_keluar" value="{{ request('end_keluar') }}"
+                <input type="text" data-flatpickr placeholder="Pilih tanggal akhir" name="end_keluar" value="{{ request('end_keluar') }}"
                     class="border-2 border-[#9A9A9A] rounded-lg px-3 py-2">
-                <button type="submit" class="border-2 border-[#9A9A9A] rounded-lg px-3 py-2 bg-white">
+                <button type="submit" class="border-2 border-[#9A9A9A] rounded-lg px-3 py-2 bg-white max-[600px]:hidden">
                     <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" />
                 </button>
                 {{-- Print Barang Keluar --}}
                 <a href="{{ route('barangs.printKeluar', ['id' => $barang->id, 'start_keluar' => request('start_keluar'), 'end_keluar' => request('end_keluar')]) }}"
                     target="_blank"
-                    class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
+                    class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer max-[600px]:hidden">
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
                 </a>
+                <div class="min-[600px]:hidden flex gap-x-2">
+                    <button type="submit" class="border-2 border-[#9A9A9A] rounded-lg px-3 py-2 bg-white">
+                        <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" />
+                    </button>
+                    {{-- Print Barang Keluar --}}
+                    <a href="{{ route('barangs.printKeluar', ['id' => $barang->id, 'start_keluar' => request('start_keluar'), 'end_keluar' => request('end_keluar')]) }}"
+                        target="_blank"
+                        class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
+                        <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
+                    </a>
+                </div>
             </form>
-            <div class="rounded-lg shadow-[1px_1px_10px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                <table class="table-fixed text-center text-sm w-full">
+            <div class="rounded-lg shadow-[1px_1px_10px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[900px]:overflow-x-scroll">
+                <table class="table-fixed text-center text-sm w-full max-[900px]:w-[900px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
-                        <th class="py-2 w-[20%] pl-36">No</th>
+                        <th class="py-2 w-[20%] pl-36 max-[1100px]:pl-0">No</th>
                         <th class="py-2 w-[20%]">Tgl Keluar</th>
                         <th class="py-2 w-[20%]">Qty</th>
                         <th class="py-2 w-[20%]">Keterangan</th>
-                        <th class="py-2 w-[25%] pr-36">Action</th>
+                        <th class="py-2 w-[25%] pr-36 max-[1100px]:pr-0">Action</th>
                     </thead>
                     <tbody>
                         @php
@@ -169,11 +192,11 @@
                         @endphp
                         @foreach ($barangKeluars as $item)
                             <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
-                                <td class="py-2 pl-36">{{ $nokeluar++ }}</td>
+                                <td class="py-2 pl-36 max-[1100px]:pl-0">{{ $nokeluar++ }}</td>
                                 <td class="py-2">{{ $item->tanggal }}</td>
                                 <td class="py-2">{{ $item->qty }}</td>
                                 <td class="py-2">{{ $item->keterangan }}</td>
-                                <td class="py-2 pr-36">
+                                <td class="py-2 pr-36 max-[1100px]:pr-0">
                                     <div class="flex justify-center items-center gap-x-2 ">
                                         {{-- Tombol Edit --}}
                                         <a href="{{ route('barang-keluar.edit', $item->id) }}"
@@ -203,29 +226,40 @@
         <div class="border-b-2 border-[#B6B6B6] pb-8 mb-10">
             <h1 class="font-bold text-2xl mb-6">Data Return Stok</h1>
             {{-- Barang Retur --}}
-            <form method="GET" action="{{ route('barangs.show', $barang->id) }}" class="flex gap-x-2 mb-4">
-                <input type="date" name="start_retur" value="{{ request('start_retur') }}"
+            <form method="GET" action="{{ route('barangs.show', $barang->id) }}" class="flex gap-x-2 mb-4 max-[600px]:flex-wrap max-[600px]:gap-y-2">
+                <input type="text" data-flatpickr placeholder="Pilih tanggal awal" name="start_retur" value="{{ request('start_retur') }}"
                     class="border-2 border-[#9A9A9A] rounded-lg px-3 py-2">
-                <input type="date" name="end_retur" value="{{ request('end_retur') }}"
+                <input type="text" data-flatpickr placeholder="Pilih tanggal akhir" name="end_retur" value="{{ request('end_retur') }}"
                     class="border-2 border-[#9A9A9A] rounded-lg px-3 py-2">
-                <button type="submit" class="border-2 border-[#9A9A9A] rounded-lg px-3 py-2 bg-white">
+                <button type="submit" class="border-2 border-[#9A9A9A] rounded-lg px-3 py-2 bg-white max-[600px]:hidden">
                     <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" />
                 </button>
                 {{-- Print Barang Retur --}}
                 <a href="{{ route('barangs.printRetur', ['id' => $barang->id, 'start_retur' => request('start_retur'), 'end_retur' => request('end_retur')]) }}"
                     target="_blank"
-                    class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
+                    class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer max-[600px]:hidden">
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
                 </a>
+                <div class="min-[600px]:hidden flex gap-x-2">
+                    <button type="submit" class="border-2 border-[#9A9A9A] rounded-lg px-3 py-2 bg-white">
+                        <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" />
+                    </button>
+                    {{-- Print Barang Retur --}}
+                    <a href="{{ route('barangs.printRetur', ['id' => $barang->id, 'start_retur' => request('start_retur'), 'end_retur' => request('end_retur')]) }}"
+                        target="_blank"
+                        class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
+                        <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
+                    </a>
+                </div>
             </form>
-            <div class="rounded-lg shadow-[1px_1px_10px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                <table class="table-fixed text-center text-sm w-full">
+            <div class="rounded-lg shadow-[1px_1px_10px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[900px]:overflow-x-scroll">
+                <table class="table-fixed text-center text-sm w-full max-[900px]:w-[900px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
-                        <th class="py-2 w-[20%] pl-36">No</th>
+                        <th class="py-2 w-[20%] pl-36 max-[1100px]:pl-0">No</th>
                         <th class="py-2 w-[20%]">Tgl Retur</th>
                         <th class="py-2 w-[20%]">Qty</th>
                         <th class="py-2 w-[20%]">Keterangan</th>
-                        <th class="py-2 w-[25%] pr-36">Action</th>
+                        <th class="py-2 w-[25%] pr-36 max-[1100px]:pr-0">Action</th>
                     </thead>
                     <tbody>
                         @php
@@ -233,11 +267,11 @@
                         @endphp
                         @foreach ($barangReturs as $item)
                             <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
-                                <td class="py-2 pl-36">{{ $noretur++ }}</td>
+                                <td class="py-2 pl-36 max-[1100px]:pl-0">{{ $noretur++ }}</td>
                                 <td class="py-2">{{ $item->tanggal }}</td>
                                 <td class="py-2">{{ $item->qty }}</td>
                                 <td class="py-2">{{ $item->keterangan }}</td>
-                                <td class="py-2 pr-36">
+                                <td class="py-2 pr-36 max-[1100px]:pr-0">
                                     <div class="flex justify-center items-center gap-x-2 ">
                                         {{-- Tombol Edit --}}
                                         <a href="{{ route('barang-retur.edit', $item->id) }}"

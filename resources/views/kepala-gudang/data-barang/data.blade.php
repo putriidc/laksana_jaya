@@ -14,7 +14,7 @@
             ></div>
         @endif
         <h1 class="font-bold text-2xl mb-4">Data Barang</h1>
-        <div class="flex justify-between items-center mb-6">
+        <div class="flex justify-between items-center mb-6 max-[600px]:flex-col max-[600px]:gap-y-2 max-[600px]:items-start">
             <a href="{{ route('barangs.create') }}" class="block px-4 py-2 border-2 border-[#9A9A9A] rounded-lg">Input Barang
                 +</a>
             <form method="GET" action="{{ route('barangs.index') }}" class="flex items-center gap-x-2" id="myForm">
@@ -26,8 +26,8 @@
                     <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" class="w-[20px]">
                 </button>
                 <a href="" class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
-                <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
-            </a>
+                    <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
+                </a>
             </form>
 
         </div>
@@ -35,7 +35,9 @@
             @foreach ($barangs as $item)
                 <div
                     class="flex items-center justify-between w-[320px] h-[120px] border-[#DADADA] border-[3px] rounded-2xl py-4 px-3">
-                    <img src="{{ asset('storage/' . $item->foto) }}" alt="gambar barang" class="w-[100px]">
+                    <div class="rounded-lg w-auto overflow-hidden">
+                        <img src="{{ asset('storage/' . $item->foto) }}" alt="gambar barang" class="w-[100px] h-[65px]">
+                    </div>
                     <div class="flex flex-col gap-y-1">
                         <h1 class="font-bold">{{ $item->nama_barang }}</h1>
                         <p class="text-xs">{{ $item->spesifikasi }}</p>
