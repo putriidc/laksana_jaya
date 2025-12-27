@@ -25,9 +25,9 @@
                         class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none appearance-none cursor-pointer">
                         <option disabled>-Pilih Pengawas-</option>
                         @foreach ($pics as $p)
-                            <option value="{{ $p->akun_header }}"
-                                {{ $p->akun_header == $dataPerusahaan->pic ? 'selected' : '' }}>
-                                {{ $p->akun_header }}
+                            <option value="{{ $p->nama }}"
+                                {{ $p->nama == $dataPerusahaan->pic ? 'selected' : '' }}>
+                                {{ $p->nama }}
                             </option>
                         @endforeach
                     </select>

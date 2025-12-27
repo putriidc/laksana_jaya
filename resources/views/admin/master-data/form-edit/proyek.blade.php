@@ -42,9 +42,9 @@
                 <select name="pic" id="" class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2 appearance-none cursor-pointer">
                     <option disabled>-Pilih PIC-</option>
                     @foreach ($pic as $item)
-                        <option value="{{ $item->akun_header }}"
-                            {{ $proyek->akun_header == $item->akun_header ? 'selected' : '' }}>
-                            {{ $item->akun_header }}</option>
+                        <option value="{{ $item->nama }}"
+                            {{ $proyek->pic == $item->nama ? 'selected' : '' }}>
+                            {{ $item->nama }}</option>
                     @endforeach
                 </select>
             </div>

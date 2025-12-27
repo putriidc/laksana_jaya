@@ -25,25 +25,38 @@ class PiutangHutangController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'kode_akun'   => 'required|string|max:50',
             'nama_akun'   => 'required|string|max:100',
             'akun_header' => 'required|string|max:50',
-            'nama_pic' => 'nullable',
         ]);
-        // logika gabung akun_header + nama_pic kalau pilih PIC
-        $akunHeader = $request->akun_header === 'PIC' && $request->nama_pic
-            ? 'PIC ' . $request->nama_pic
-            : $request->akun_header;
+
+        // Tentukan prefix
+        $prefix = strtolower($request->akun_header) === 'piutang' ? 'PI-' : 'HU-';
+
+        // Cari kode terakhir untuk header ini
+        $lastKode = PiutangHutang::where('akun_header', $request->akun_header)
+            ->orderBy('id', 'desc')
+            ->value('kode_akun');
+
+        if ($lastKode) {
+            $lastNumber = (int) substr($lastKode, 3);
+            $nextNumber = $lastNumber + 1;
+        } else {
+            $nextNumber = 1;
+        }
+
+        $newKode = $prefix . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
+
         PiutangHutang::create([
-            'kode_akun'   => $request->kode_akun,
+            'kode_akun'   => $newKode,
             'nama_akun'   => $request->nama_akun,
-            'akun_header' => $akunHeader,
-            'created_by' => Auth::user()->id ?? null, // kalau ada user login
+            'akun_header' => $request->akun_header,
+            'created_by'  => Auth::id(),
         ]);
 
         return redirect()->route('master-data.index')
             ->with('success', 'Data Piutang/Hutang berhasil disimpan');
     }
+
 
     public function edit($id)
     {
@@ -54,7 +67,7 @@ class PiutangHutangController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'kode_akun'   => 'required|string|max:50',
+
             'nama_akun'   => 'required|string|max:100',
             'akun_header' => 'required|string|max:50',
         ]);
@@ -62,7 +75,7 @@ class PiutangHutangController extends Controller
         $piutangHutang = PiutangHutang::findOrFail($id);
 
         $piutangHutang->update([
-            'kode_akun'   => $request->kode_akun,
+
             'nama_akun'   => $request->nama_akun,
             'akun_header' => $request->akun_header,
         ]);

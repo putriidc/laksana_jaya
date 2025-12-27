@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Progres;
+use App\Models\Karyawan;
 use App\Models\Perusahaan;
 use Illuminate\Http\Request;
 use App\Models\PiutangHutang;
@@ -24,7 +25,7 @@ class DataPerusahaanController extends Controller
         $perusahaan = Perusahaan::where('kode_perusahaan', $kode_perusahaan)->firstOrFail();
 
         // Ambil PIC dari PiutangHutang (akun_header yang diawali 'PIC')
-        $pics = PiutangHutang::where('akun_header', 'like', 'PIC%')->get();
+        $pics = Karyawan::whereNull('deleted_at')->get();
 
         return view('kepala-proyek.data-proyek.form-add.form-add', compact('perusahaan', 'pics'));
     }

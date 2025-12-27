@@ -6,11 +6,6 @@
             <form method="POST" action="{{ route('piutangHutang.store') }}" class="flex flex-col gap-y-4">
                 @csrf
                 <div class="flex items-center">
-                    <label for="" class="w-[180px] font-medium">Kode Akun</label>
-                    <input type="text" name="kode_akun" id=""
-                        class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
-                </div>
-                <div class="flex items-center">
                     <label for="" class="w-[180px] font-medium">Nama Akun</label>
                     <input type="text" name="nama_akun" id=""
                         class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
@@ -22,18 +17,9 @@
                         <option selected>-Pilih Akun Header-</option>
                         <option value="Piutang">Piutang</option>
                         <option value="Hutang">Hutang</option>
-                        <option value="PIC">PIC</option>
                     </select>
                 </div>
-                <div class="flex items-center" id="nama-pic-wrapper" style="display: none;">
-                    <label class="w-[180px] font-medium">Nama PIC</label>
-                    <select name="nama_pic"
-                        class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2 appearance-none cursor-pointer">
-                        @foreach ($karyawans as $karyawan)
-                            <option value="{{ $karyawan->nama }}">{{ $karyawan->nama }}</option>
-                        @endforeach
-                    </select>
-                </div>
+
                 <div class="flex mt-4">
                     <div class="w-[180px]"></div>
                     <div class="w-full flex gap-x-2">
