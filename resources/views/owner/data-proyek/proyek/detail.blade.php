@@ -74,6 +74,7 @@
                     class="w-full bg-[#D9D9D9]/40 px-4 py-2 rounded-lg" disabled>
             </div>
             {{-- button manage kontrak(sebelum isi manage kontrak) --}}
+            @if (!$proyek->kontrak)
             <div class="flex items-center gap-x-2 select-none mt-2">
                 <label for="" class="w-[165px]"></label>
                 <button class="border-2 border-[#3E98D0] flex items-center gap-x-2 py-1 px-4 rounded-lg cursor-pointer"
@@ -82,6 +83,7 @@
                     <img src="{{ asset('assets/plus-circle-blue.png') }}" alt="plus icon">
                 </button>
             </div>
+            @endif
             {{-- button manage kontrak --}}
 
             {{-- setelah isi manage kontrak --}}

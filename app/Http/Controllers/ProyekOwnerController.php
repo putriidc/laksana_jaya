@@ -49,6 +49,7 @@ class ProyekOwnerController extends Controller
             $net = $kontrak->net;
             return [
             'nama_proyek' => $proyek->nama_proyek,
+            'nilai_kontrak' => $proyek->nilai_kontrak,
             'tgl_mulai' => $proyek->tgl_mulai,
             'jenis_proyek' => $proyek->jenis ?? '-',
             'total_pengeluaran' => $totalPengeluaran,
@@ -111,7 +112,7 @@ class ProyekOwnerController extends Controller
      */
     public function show($id)
     {
-        $proyek = Proyek::findOrFail($id);
+       $proyek = Proyek::with('kontrak')->findOrFail($id);
 
         // ambil semua nama akun dari Asset dengan akun_header = asset_lancar_bank
         $assetBankAccounts = Asset::where('akun_header', 'asset_lancar_bank')
