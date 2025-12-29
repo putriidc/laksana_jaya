@@ -8,8 +8,8 @@
                     <span class="text-[#72686B]">Cetak Data</span>
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
                 </button></a>
-            <div class="rounded-lg shadow-[1px_1px_10px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                <table class="table-auto text-center text-sm w-full">
+            <div class="rounded-lg shadow-[1px_1px_10px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1200px]:overflow-x-auto">
+                <table class="table-auto text-center text-sm w-full max-[1200px]:w-[1200px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
                         <th class="py-2 w-[15%]">No</th>
                         <th class="py-2 w-[20%]">Tgl Mulai</th>
@@ -99,41 +99,41 @@
     Swal.fire({
         html: `
             <section class="py-3">
-                <h1 class="font-bold text-2xl mb-8 uppercase text-start">Detail Resume Proyek</h1>
+                <h1 class="font-bold text-2xl mb-8 uppercase text-start max-[570px]:text-xl">Detail Resume Proyek</h1>
                 <div class="flex flex-col gap-y-5">
-                    <div class="flex justify-between items-center">
+                    <div class="flex justify-between items-center max-[570px]:flex-col max-[570px]:gap-y-2 max-[570px]:items-start">
                         <span class="font-semibold w-[240px] text-start">Nama Proyek</span>
                         <span class="font-medium w-full bg-[#D9D9D9]/40 px-6 py-2 rounded-lg">${nama}</span>
                     </div>
-                    <div class="flex justify-between items-center">
+                    <div class="flex justify-between items-center max-[570px]:flex-col max-[570px]:gap-y-2 max-[570px]:items-start">
                         <span class="font-semibold w-[240px] text-start">Tanggal Mulai</span>
                         <span class="font-medium w-full bg-[#D9D9D9]/40 px-6 py-2 rounded-lg">${tglMulai}</span>
                     </div>
-                    <div class="flex justify-between items-center">
+                    <div class="flex justify-between items-center max-[570px]:flex-col max-[570px]:gap-y-2 max-[570px]:items-start">
                         <span class="font-semibold w-[240px] text-start">Total Pengeluaran</span>
                         <span class="font-medium w-full bg-[#D9D9D9]/40 px-6 py-2 rounded-lg">Rp. ${totalPengeluaran}</span>
                     </div>
-                    <div class="flex justify-between items-center">
+                    <div class="flex justify-between items-center max-[570px]:flex-col max-[570px]:gap-y-2 max-[570px]:items-start">
                         <span class="font-semibold w-[240px] text-start">Piutang Vendor</span>
                         <span class="font-medium w-full bg-[#D9D9D9]/40 px-6 py-2 rounded-lg">Rp. ${piutangVendor}</span>
                     </div>
-                    <div class="flex justify-between items-center">
+                    <div class="flex justify-between items-center max-[570px]:flex-col max-[570px]:gap-y-2 max-[570px]:items-start">
                         <span class="font-semibold w-[240px] text-start">Total TP + PV</span>
                         <span class="font-medium w-full bg-[#D9D9D9]/40 px-6 py-2 rounded-lg">Rp. ${totalTPPV}</span>
                     </div>
-                    <div class="flex justify-between items-center">
+                    <div class="flex justify-between items-center max-[570px]:flex-col max-[570px]:gap-y-2 max-[570px]:items-start">
                         <span class="font-semibold w-[240px] text-start">Jenis Proyek</span>
                         <span class="font-medium w-full bg-[#D9D9D9]/40 px-6 py-2 rounded-lg">${jenisProyek}</span>
                     </div>
-                    <div class="flex justify-between items-center">
+                    <div class="flex justify-between items-center max-[570px]:flex-col max-[570px]:gap-y-2 max-[570px]:items-start">
                         <span class="font-semibold w-[240px] text-start">NETT</span>
                         <span class="font-medium w-full bg-[#D9D9D9]/40 px-6 py-2 rounded-lg">Rp. ${nett}</span>
                     </div>
-                    <div class="flex justify-between items-center">
+                    <div class="flex justify-between items-center max-[570px]:flex-col max-[570px]:gap-y-2 max-[570px]:items-start">
                         <span class="font-semibold w-[240px] text-start">Persentase</span>
                         <span class="font-medium w-full bg-[#D9D9D9]/40 px-6 py-2 rounded-lg">${persentase}%</span>
                     </div>
-                    <div class="flex justify-between items-center">
+                    <div class="flex justify-between items-center max-[570px]:flex-col max-[570px]:gap-y-2 max-[570px]:items-start">
                         <span class="font-semibold w-[240px] text-start">Sisa</span>
                         <span class="font-medium w-full bg-[#D9D9D9]/40 px-6 py-2 rounded-lg">Rp. ${sisa}</span>
                     </div>

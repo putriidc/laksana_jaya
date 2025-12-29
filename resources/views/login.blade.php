@@ -15,23 +15,23 @@
             data-message="{{ session('error') }}"
         ></div>
         @endif
-        <section class="flex items-center w-[90vw]">
-            <div class="w-[55%] overflow-hidden">
+        <section class="flex items-center w-[90vw] max-[1040px]:justify-center">
+            <div class="w-[55%] max-[1200px]:w-[45%] overflow-hidden max-[1040px]:hidden">
                 <img
                     src="{{ asset('assets/ar4anBigLogo.png') }}"
                     alt="LOGO AR4N GROUP"
                     class="scale-[130%] translate-x-[30px]"
                 />
             </div>
-            <div class="flex flex-col w-[35%]">
-                <h1 class="text-5xl leading-10 text-[#353132] mb-8">
+            <div class="flex flex-col w-[35%] max-[1200px]:w-[40%] max-[1040px]:w-[60%] max-[600px]:w-[80%] max-[430px]:w-[90%]">
+                <h1 class="text-5xl max-[800px]:text-3xl max-[600px]:text-2xl max-[430px]:text-xl leading-10 max-[430px]:leading-6 max-[600px]:leading-8 text-[#353132] mb-8 max-[800px]:mb-4 max-[600px]:mb-3">
                     Welcome to, <br />
-                    <span class="font-extrabold text-6xl">AR4N Group</span>
+                    <span class="font-extrabold text-6xl max-[800px]:text-5xl max-[600px]:text-4xl max-[430px]:text-3xl">AR4N Group</span>
                 </h1>
                 <form
                     method="POST"
                     action="{{ route('login') }}"
-                    class="flex flex-col gap-y-5 mb-4"
+                    class="flex flex-col gap-y-5 mb-4 max-[600px]:gap-y-2"
                 >
                     @csrf
                     <div

@@ -1,4 +1,10 @@
 // Rupiah format
+
+// syarat agar format rupiah berjalan
+// 1. jika ada input yang mamasukkan nominal, maka ketik di class rupiah-format.
+// 2. dan tulis id pada tag form yaitu id="myForm" gunanya untuk mengambil semua elemen dengan class rupiah-format dan ubah menjadi number.
+// 3. fungsi format rupiah ini hanya bisa untuk halaman form, untuk modal form tidak bisa, harus isi manual dengan js.
+
 // buat variabel untuk semua elemen dengan class rupiah-format
 const rupiahFormatElements = document.querySelectorAll(".rupiah-format");
 // lakukan iterasi pada setiap elemen dan tambahkan event listener
@@ -81,6 +87,24 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // ===============================================
+// Jalankan otomatis saat halaman edit dibuka
+document.addEventListener("DOMContentLoaded", () => {
+    rupiahFormatElements.forEach((element) => {
+        if (element.value) {
+            element.value = formatNumberToRupiah(
+                parseRupiahToNumber(element.value)
+            );
+        }
+    });
+
+    // Trigger perhitungan awal biar field readonly langsung terisi
+    dayInput.dispatchEvent(new Event("input"));
+    tambahanInput.dispatchEvent(new Event("input"));
+    kasbonInput.dispatchEvent(new Event("input"));
+});
+// ===============================================
+
+// ===============================================
 // FORM FREELANCE ADD
 // Hitung total salary, dari salary x day
 const salaryInput = document.getElementById("salary");
@@ -126,20 +150,3 @@ kasbonInput.addEventListener("input", () => {
 // End Hitung total seluruh
 // FORM FREELANCE ADD
 // ===============================================
-
-// ===============================================
-// Jalankan otomatis saat halaman edit dibuka
-document.addEventListener("DOMContentLoaded", () => {
-    rupiahFormatElements.forEach((element) => {
-        if (element.value) {
-            element.value = formatNumberToRupiah(
-                parseRupiahToNumber(element.value)
-            );
-        }
-    });
-
-    // Trigger perhitungan awal biar field readonly langsung terisi
-    dayInput.dispatchEvent(new Event("input"));
-    tambahanInput.dispatchEvent(new Event("input"));
-    kasbonInput.dispatchEvent(new Event("input"));
-});

@@ -2,10 +2,10 @@
     <div>
         <div class="flex flex-col mb-6">
             <section class="mb-10">
-                <h1 class="font-bold text-2xl mb-4 text-[#C0C0C0]">Form Pengajuan Pinjaman Karyawan</h1>
-                <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                    <table class="table-auto text-center text-sm w-full">
-                        <thead class="border-b-2 border-[#CCCCCC] bg-gray-100">
+                <h1 class="font-bold text-2xl mb-4 text-[#C0C0C0] max-[500px]:text-xl">Form Pengajuan Pinjaman Karyawan</h1>
+                <div class="rounded-lg shadow-[0px_0px_5px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1200px]:overflow-x-scroll max-[1200px]:overflow-x-scroll">
+                    <table class="table-auto text-center text-sm w-full max-[1200px]:w-[1200px]">
+                        <thead class="border-b-2 border-[#CCCCCC]">
                             <tr>
                                 <th class="py-2 w-[10%]">Tgl Pengajuan</th>
                                 <th class="py-2 w-[15%]">Nama Karyawan</th>
@@ -40,10 +40,10 @@
                 </div>
             </section>
             <section class="mb-10">
-                <h1 class="font-bold text-2xl mb-4 text-[#C0C0C0]">Form Pengajuan Kasbon Karyawan</h1>
-                <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                    <table class="table-auto text-center text-sm w-full">
-                        <thead class="border-b-2 border-[#CCCCCC] bg-gray-100">
+                <h1 class="font-bold text-2xl mb-4 text-[#C0C0C0] max-[500px]:text-xl">Form Pengajuan Kasbon Karyawan</h1>
+                <div class="rounded-lg shadow-[0px_0px_5px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1200px]:overflow-x-scroll">
+                    <table class="table-auto text-center text-sm w-full max-[1200px]:w-[1200px]">
+                        <thead class="border-b-2 border-[#CCCCCC]">
                             <tr>
                                 <th class="py-2 w-[10%]">Tgl Pengajuan</th>
                                 <th class="py-2 w-[15%]">Nama Karyawan</th>
@@ -78,14 +78,14 @@
                 </div>
             </section>
             <section class="mb-5">
-                <h1 class="font-bold text-2xl mb-4 text-[#C0C0C0]">Data Persetujuan Pinjaman Karyawan</h1>
+                <h1 class="font-bold text-2xl mb-4 text-[#C0C0C0] max-[500px]:text-xl">Data Persetujuan Pinjaman Karyawan</h1>
                 <a href=""
                     class="px-4 py-2 border-2 border-[#9A9A9A] rounded-lg w-fit flex items-center gap-x-2 mb-4">
                     <span class="text-[#72686B]">Cetak Laporan</span>
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon">
                 </a>
-                <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                    <table class="table-auto text-center text-sm w-full">
+                <div class="rounded-lg shadow-[0px_0px_5px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1200px]:overflow-x-scroll">
+                    <table class="table-auto text-center text-sm w-full max-[1200px]:w-[1200px]">
                         <thead class="border-b-2 border-[#CCCCCC]">
                             <th class="py-2 w-[10%]">Tgl Pengajuan</th>
                             <th class="py-2 w-[15%]">Nama Karyawan</th>
@@ -123,14 +123,14 @@
                 </div>
             </section>
             <section class="mb-5">
-                <h1 class="font-bold text-2xl mb-4 text-[#C0C0C0]">Data Persetujuan Kasbon Karyawan</h1>
+                <h1 class="font-bold text-2xl mb-4 text-[#C0C0C0] max-[500px]:text-xl">Data Persetujuan Kasbon Karyawan</h1>
                 <a href=""
                     class="px-4 py-2 border-2 border-[#9A9A9A] rounded-lg w-fit flex items-center gap-x-2 mb-4">
                     <span class="text-[#72686B]">Cetak Laporan</span>
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon">
                 </a>
-                <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                    <table class="table-auto text-center text-sm w-full">
+                <div class="rounded-lg shadow-[0px_0px_5px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1200px]:overflow-x-scroll">
+                    <table class="table-auto text-center text-sm w-full max-[1200px]:w-[1200px]">
                         <thead class="border-b-2 border-[#CCCCCC]">
                             <th class="py-2 w-[10%]">Tgl Pengajuan</th>
                             <th class="py-2 w-[15%]">Nama Karyawan</th>
@@ -245,8 +245,8 @@
                         Swal.fire({
                             title: 'Tolak Pengajuan Pinjaman',
                             html: `
-                                    <textarea id="ket_owner" class="swal2-textarea" placeholder="Tuliskan alasan penolakan..."></textarea>
-                                    <div class="flex justify-center gap-4 mt-4">
+                                    <textarea id="ket_owner" class="w-full border-gray-400 border-2 rounded-lg outline-none p-2" rows="6" placeholder="Tuliskan alasan penolakan..."></textarea>
+                                    <div class="flex justify-center gap-4 max-[600px]:gap-0 max-[600px]:flex-wrap mt-4">
                                         <button id="btn-tolak" class="swal2-confirm swal2-styled" style="background:#DD4049">Tolak</button>
                                         <button id="btn-ajukan" class="swal2-deny swal2-styled" style="background:#8CE987">Ajukan Nominal Baru</button>
                                         <button id="btn-batal" class="swal2-cancel swal2-styled">Batal</button>
@@ -313,8 +313,8 @@
                         Swal.fire({
                             title: 'Tolak Pengajuan Kasbon',
                             html: `
-                                    <textarea id="ket_owner" class="swal2-textarea" placeholder="Tuliskan alasan penolakan..."></textarea>
-                                    <div class="flex justify-center gap-4 mt-4">
+                                    <textarea id="ket_owner" class="w-full border-gray-400 border-2 rounded-lg outline-none p-2" rows="6" placeholder="Tuliskan alasan penolakan..."></textarea>
+                                    <div class="flex justify-center gap-4 mt-4 max-[600px]:gap-0 max-[600px]:flex-wrap">
                                         <button id="btn-tolak" class="swal2-confirm swal2-styled" style="background:#DD4049">Tolak</button>
                                         <button id="btn-ajukan" class="swal2-deny swal2-styled" style="background:#8CE987">Ajukan Nominal Baru</button>
                                         <button id="btn-batal" class="swal2-cancel swal2-styled">Batal</button>

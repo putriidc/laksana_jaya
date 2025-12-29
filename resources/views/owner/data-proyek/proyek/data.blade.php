@@ -7,7 +7,7 @@
     @foreach ($proyeks as $nama_perusahaan => $listProyek)
     <div class="pb-5 border-b border-gray-400 mb-8">
         <h1 class="text-2xl font-bold mb-5 uppercase">{{ $nama_perusahaan }}</h1>
-        <form action="" method="post" class="flex justify-between items-center gap-x-1 mb-5">
+        <form action="" method="post" class="flex justify-between items-center gap-x-1 mb-5 max-[440px]:flex-col max-[440px]:items-start max-[440px]:gap-y-2">
             <div class="flex items-center gap-x-2">
                 <div class="w-[180px] px-1 border-[#9A9A9A] border-2 rounded-lg">
                     <select name="" id="" class="w-full cursor-pointer outline-none py-2">
@@ -25,8 +25,8 @@
                 <img src="{{ asset('assets/printer.png') }}" alt="printer icon">
             </a>
         </form>
-        <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-            <table class="table-fixed text-center text-sm w-full">
+        <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1200px]:overflow-x-auto">
+            <table class="table-fixed text-center text-sm w-full max-[1200px]:w-[1200px]">
                 <thead class="border-b-2 border-[#CCCCCC]">
                     <th class="w-[5%] py-2">No</th>
                     <th class="w-[10%] py-2">Tgl Mulai</th>
@@ -52,7 +52,7 @@
                                 {{-- Tombol Edit --}}
                                 <a href="{{ route('proyekOwner.show', $proyek->id) }}" class="btn btn-sm btn-primary">
                                     <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
-                                        class="w-[22px] cursor-pointer">
+                                        class="w-[30px] cursor-pointer">
                                 </a>
                             </div>
                         </td>

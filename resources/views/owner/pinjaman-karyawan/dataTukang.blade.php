@@ -2,9 +2,9 @@
     <div>
         <div class="flex flex-col mb-6">
             <section class="mb-5 pb-10 border-b-2 border-[#B6B6B6]">
-                <h1 class="font-bold text-2xl mb-4 text-[#C0C0C0]">Form Pengajuan Pinjaman Tukang</h1>
-                <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                    <table class="table-auto text-center text-sm w-full">
+                <h1 class="font-bold text-2xl mb-4 text-[#C0C0C0] max-[500px]:text-xl">Form Pengajuan Pinjaman Tukang</h1>
+                <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1200px]:overflow-x-scroll">
+                    <table class="table-auto text-center text-sm w-full max-[1200px]:w-[1200px]">
                         <thead class="border-b-2 border-[#CCCCCC]">
                             <th class="py-2 w-[10%]">Tgl Pengajuan</th>
                             <th class="py-2 w-[15%]">Nama Tukang</th>
@@ -43,14 +43,14 @@
                 </div>
             </section>
             <section class="mb-5">
-                <h1 class="font-bold text-2xl mb-4 text-[#C0C0C0]">Data Persetujuan Pinjaman Tukang</h1>
+                <h1 class="font-bold text-2xl mb-4 text-[#C0C0C0] max-[500px]:text-xl">Data Persetujuan Pinjaman Tukang</h1>
                 <a href=""
                     class="px-4 py-2 border-2 border-[#9A9A9A] rounded-lg w-fit flex items-center gap-x-2 mb-4">
                     <span class="text-[#72686B]">Cetak Laporan</span>
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon">
                 </a>
-                <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                    <table class="table-auto text-center text-sm w-full">
+                <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1200px]:overflow-x-scroll">
+                    <table class="table-auto text-center text-sm w-full max-[1200px]:w-[1200px]">
                         <thead class="border-b-2 border-[#CCCCCC]">
                             <th class="py-2 w-[10%]">Tgl Pengajuan</th>
                             <th class="py-2 w-[15%]">Nama Tukang</th>

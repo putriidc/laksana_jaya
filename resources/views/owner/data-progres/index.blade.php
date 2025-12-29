@@ -46,8 +46,8 @@
                 </div> --}}
             </div>
              <h1 class="font-bold text-2xl my-4">{{ $perusahaan->nama_perusahaan }}</h1>
-            <div class="rounded-lg shadow-[1px_1px_10px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                <table class="table-auto text-center text-sm w-full">
+            <div class="rounded-lg shadow-[1px_1px_10px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1200px]:overflow-x-auto">
+                <table class="table-auto text-center text-sm w-full max-[1200px]:w-[1200px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
                         <th class="py-2 w-[5%]">No</th>
                         <th class="py-2 w-[20%]">Nama Paket</th>
@@ -74,7 +74,7 @@
                                 <td class="py-2">{{ $item->kontraktor ?? '-' }}</td>
                                 <td class="py-2">{{ $progressTotals[$item->id] ?? 0 }}%</td>
                                 <td class="py-2">
-                                    <div class="flex items-center justify-between w-[90px] m-auto">
+                                    <div class="flex items-center justify-center w-[90px] m-auto">
                                     {{-- Tombol Edit --}}
                                     {{-- <a href="{{ route('data-perusahaan.edit', $item->id) }}"
                                         class="btn btn-sm btn-primary">
@@ -87,7 +87,7 @@
                                     <a href="{{ route('progresOwner.edit', $item->id) }}"
                                         class="btn btn-sm btn-primary">
                                         <img src="{{ asset('assets/more-circle.png') }}" alt="detail icon"
-                                            class="w-[20px] cursor-pointer">
+                                            class="w-[30px] cursor-pointer">
                                     </a>
                                     {{-- <span class="border-black border-l-[1px] h-[22px]"></span> --}}
                                     {{-- Tombol Delete --}}

@@ -18,63 +18,63 @@
         </div>
     </div> --}}
         <div class="py-10 px-10 rounded-lg shadow-[0px_0px_10px_rgba(0,0,0,0.1)] flex flex-col gap-y-5 mb-8">
-            <div class="flex items-center gap-x-2 select-none">
+            <div class="flex items-center gap-x-2 select-none max-[540px]:flex-col max-[540px]:items-start max-[540px]:gap-y-2">
                 <label for="" class="w-[200px]">Kode Akun</label>
                 <input type="text" name="" id="" value="{{ $proyek->kode_akun }}"
                     class="w-full bg-[#D9D9D9]/40 px-4 py-2 rounded-lg" disabled>
             </div>
-            <div class="flex items-center gap-x-2 select-none">
+            <div class="flex items-center gap-x-2 select-none max-[540px]:flex-col max-[540px]:items-start max-[540px]:gap-y-2">
                 <label for="" class="w-[200px]">Tgl Mulai</label>
                 <input type="text" name="" id="" value="{{ $proyek->tgl_mulai }}"
                     class="w-full bg-[#D9D9D9]/40 px-4 py-2 rounded-lg" disabled>
             </div>
-            <div class="flex items-center gap-x-2 select-none">
+            <div class="flex items-center gap-x-2 select-none max-[540px]:flex-col max-[540px]:items-start max-[540px]:gap-y-2">
                 <label for="" class="w-[200px]">Tgl Selesai</label>
                 <input type="text" name="" id="" value="{{ $proyek->tgl_selesai }}"
                     class="w-full bg-[#D9D9D9]/40 px-4 py-2 rounded-lg" disabled>
             </div>
-            <div class="flex items-center gap-x-2 select-none">
+            <div class="flex items-center gap-x-2 select-none max-[540px]:flex-col max-[540px]:items-start max-[540px]:gap-y-2">
                 <label for="" class="w-[200px]">No Kontrak</label>
                 <input type="text" name="" id="" value="{{ $proyek->no_kontrak }}"
                     class="w-full bg-[#D9D9D9]/40 px-4 py-2 rounded-lg" disabled>
             </div>
-            <div class="flex items-center gap-x-2 select-none">
+            <div class="flex items-center gap-x-2 select-none max-[540px]:flex-col max-[540px]:items-start max-[540px]:gap-y-2">
                 <label for="" class="w-[200px]">Hari Kalender</label>
                 <input type="text" name="" id="" value="{{ $proyek->hari_kalender }}"
                     class="w-full bg-[#D9D9D9]/40 px-4 py-2 rounded-lg" disabled>
             </div>
-            <div class="flex items-center gap-x-2 select-none">
+            <div class="flex items-center gap-x-2 select-none max-[540px]:flex-col max-[540px]:items-start max-[540px]:gap-y-2">
                 <label for="" class="w-[200px]">Nama Proyek</label>
                 <input type="text" name="" id="" value="{{ $proyek->nama_proyek }}"
                     class="w-full bg-[#D9D9D9]/40 px-4 py-2 rounded-lg" disabled>
             </div>
-            <div class="flex items-center gap-x-2 select-none">
+            <div class="flex items-center gap-x-2 select-none max-[540px]:flex-col max-[540px]:items-start max-[540px]:gap-y-2">
                 <label for="" class="w-[200px]">PIC</label>
                 <input type="text" name="" id="" value="{{ $proyek->pic }}"
                     class="w-full bg-[#D9D9D9]/40 px-4 py-2 rounded-lg" disabled>
             </div>
-            <div class="flex items-center gap-x-2 select-none">
+            <div class="flex items-center gap-x-2 select-none max-[540px]:flex-col max-[540px]:items-start max-[540px]:gap-y-2">
                 <label for="" class="w-[200px]">Perusahaan</label>
                 <input type="text" name="" id="" value="{{ $proyek->nama_perusahaan }}"
                     class="w-full bg-[#D9D9D9]/40 px-4 py-2 rounded-lg" disabled>
             </div>
-            <div class="flex items-center gap-x-2 select-none">
+            <div class="flex items-center gap-x-2 select-none max-[540px]:flex-col max-[540px]:items-start max-[540px]:gap-y-2">
                 <label for="" class="w-[200px]">Kategori</label>
                 <input type="text" name="" id="" value="{{ $proyek->kategori }}"
                     class="w-full bg-[#D9D9D9]/40 px-4 py-2 rounded-lg" disabled>
             </div>
-            <div class="flex items-center gap-x-2 select-none">
+            <div class="flex items-center gap-x-2 select-none max-[540px]:flex-col max-[540px]:items-start max-[540px]:gap-y-2">
                 <label for="" class="w-[200px]">Jenis</label>
                 <input type="text" name="" id="" value="{{ $proyek->jenis }}"
                     class="w-full bg-[#D9D9D9]/40 px-4 py-2 rounded-lg" disabled>
             </div>
-            <div class="flex items-center gap-x-2 select-none">
+            <div class="flex items-center gap-x-2 select-none max-[540px]:flex-col max-[540px]:items-start max-[540px]:gap-y-2">
                 <label for="" class="w-[200px]">Nilai Kontrak</label>
-                <input type="text" name="" id="" value="{{ $proyek->nilai_kontrak }}"
+                <input type="text" name="" id="" value="Rp. {{ number_format($proyek->nilai_kontrak, 0, ',', '.') }}"
                     class="w-full bg-[#D9D9D9]/40 px-4 py-2 rounded-lg" disabled>
             </div>
             {{-- button manage kontrak(sebelum isi manage kontrak) --}}
-            <div class="flex items-center gap-x-2 select-none mt-2">
+            <div class="flex items-center gap-x-2 select-none max-[540px]:flex-col max-[540px]:items-start max-[540px]:gap-y-2 mt-2">
                 <label for="" class="w-[165px]"></label>
                 <button class="border-2 border-[#3E98D0] flex items-center gap-x-2 py-1 px-4 rounded-lg cursor-pointer"
                     onclick="manageKontrak()">
@@ -149,12 +149,12 @@
         </div>
         <div>
             <h1 class="text-2xl font-bold mb-5">Tabel Pengeluaran</h1>
-            <div class="flex items-center justify-between mb-5">
+            <div class="flex items-center justify-between mb-5 max-[540px]:flex-col max-[540px]:items-start max-[540px]:gap-y-2">
                 <span>Nama Proyek : {{ $proyek->nama_proyek }}</span>
                 <span>Total Pengeluaran : <b>{{ 'RP. ' . number_format($totalDebit, 0, ',', '.') }}</b> </span>
             </div>
-            <div class="rounded-lg shadow-[0px_0px_10px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                <table class="table-fixed text-center text-sm w-full">
+            <div class="rounded-lg shadow-[0px_0px_10px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1200px]:overflow-x-auto">
+                <table class="table-fixed text-center text-sm w-full max-[1200px]:w-[1200px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
                         <th class="w-[5%] py-2">No</th>
                         <th class="w-[10%] py-2">Tanggal</th>
@@ -204,83 +204,94 @@
             function manageKontrak() {
                 Swal.fire({
                     html: `
-                            <div class="flex flex-col">
-                                <form action="/kontrak/storeKontrak" method="POST" id="myForm">
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                              <h1 class="font-bold text-2xl mb-4">Manage Kontrak</h1>
-                                            <input value="{{ $proyek->kode_akun }}" type="hidden" name="kode_proyek">
-                                 <div class="flex items-center mt-4">
-                             <label class="font-medium w-[150px]">Nama Proyek</label>
-                                        <div class="flex items-center w-full justify-between">
-                                     <input value="{{ $proyek->nama_proyek }}" type="text" name="nama_proyek" required class="bg-[#D9D9D9]/40 rounded-lg h-[40px] px-4 w-[240px] outline-none">
+                    <div class="flex flex-col">
+                        <form action="/kontrak/storeKontrak" method="POST" id="myForm">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <h1 class="font-bold text-2xl max-[420px]:text-xl mb-4">Manage Kontrak</h1>
+                            <input value="{{ $proyek->kode_akun }}" type="hidden" name="kode_proyek">
 
-                                     <div class="flex items-center w-[430px]">
-                                     <label class="font-medium w-[45%]">Sisa Potong Pajak</label>
-                                      <input type="text" name="sisa_potong_pajak" id="sisa_potong_pajak" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[70%] outline-none mt-2 rupiah-format" readonly>
-                                 </div>
-                                 </div>
-                                 </div>
-                                <div class="flex items-center mt-4">
-                                <label class="font-medium w-[150px]">Nilai Kontrak</label>
-                             <div class="flex items-center w-full justify-between">
-                                <input value="{{ $proyek->nilai_kontrak }}" type="text" name="nilai_kontrak" id="nilai_kontrak" required class="bg-[#D9D9D9]/40 rounded-lg h-[40px] px-4 w-[240px] outline-none rupiah-format">
-                                <div class="flex items-center w-[430px]">
-                                    <label class="font-medium w-[45%]">Fee Dinas</label>
-                                    <input type="text" name="fee_dinas" id="fee_dinas" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[45%] outline-none mt-2 rupiah-format" readonly>
-                                <input type="number" name="fee_dinas_persen" id="fee_dinas_persen" value="0" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[21%] outline-none ml-2 mt-2" placeholder="%">
-                                     </div>
-                             </div>
-                                 </div>
-                             <div class="flex items-center mt-4">
-                                 <label class="font-medium w-[150px]">DPP</label>
-                              <div class="flex items-center w-full justify-between">
-                                    <input type="text" name="dpp" id="dpp" required class="bg-[#D9D9D9]/40 rounded-lg h-[40px] px-4 w-[240px] outline-none rupiah-format" readonly>
-                                 <div class="flex items-center w-[430px]">
-                                     <label class="font-medium w-[45%]">Target Dana/NETT</label>
-                                 <input type="text" name="net" id="net" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[45%] outline-none mt-2 rupiah-format" readonly>
-                                     <input type="number" name="net_persen" id="net_persen" value="0" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[21%] outline-none ml-2 mt-2" placeholder="%">
-                                 </div>
-                             </div>
+                            <div class="flex items-center mt-4 max-[950px]:flex-col max-[950px]:items-start max-[950px]:gap-y-2">
+                                <label class="max-[950px]:text-start font-medium w-[150px] max-[950px]:w-full">Nama Proyek</label>
+                                <div class="flex items-center w-full justify-between max-[950px]:flex-col max-[950px]:items-start max-[950px]:gap-y-4">
+                                    <input value="{{ $proyek->nama_proyek }}" type="text" name="nama_proyek" required class="bg-[#D9D9D9]/40 rounded-lg h-[40px] px-4 w-[240px] max-[950px]:w-full outline-none">
+
+                                    <div class="flex items-center w-[430px] max-[950px]:w-full max-[950px]:flex-col max-[950px]:items-start max-[950px]:gap-y-2">
+                                        <label class="max-[950px]:text-start font-medium w-[45%] max-[950px]:w-full">Sisa Potong Pajak</label>
+                                        <input type="text" name="sisa_potong_pajak" id="sisa_potong_pajak" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[70%] max-[950px]:w-full outline-none mt-2 max-[950px]:mt-0 rupiah-format" readonly>
+                                    </div>
                                 </div>
-                                  <div class="flex items-center mt-4">
-                             <label class="font-medium w-[150px]">PPN</label>
-                                <div class="flex items-center w-full justify-between">
-                                     <div class="w-[240px]">
-                                        <input type="text" name="ppn" id="ppn" required class="bg-[#D9D9D9]/40 rounded-lg h-[40px] w-[60%] px-4 outline-none rupiah-format" readonly>
-                                    <input type="number" name="ppn_persen" id="ppn_persen" value="11" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[30%] outline-none ml-2 mt-2" placeholder="%">
-                                  </div>
-                                 <div class="flex items-center w-[430px]">
-<label class="font-medium w-[45%]">Keuntungan</label>
-<input type="text" name="keuntungan" id="keuntungan" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[70%] outline-none mt-2 rupiah-format" readonly>
-</div>
-</div>
-</div>
-<div class="flex items-center mt-4">
-    <label class="font-medium w-[150px]">PPH</label>
-    <div class="flex items-center w-full justify-between">
-        <div class="w-[240px]">
-            <input type="text" name="pph" id="pph" required class="bg-[#D9D9D9]/40 rounded-lg h-[40px] w-[60%] px-4 outline-none rupiah-format" readonly>
-            <input type="number" name="pph_persen" id="pph_persen" value="0" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[30%] outline-none ml-2 mt-2" placeholder="%">
-        </div>
-    </div>
-</div>
+                            </div>
 
-<div class="flex items-center mt-6">
-<label class="font-medium w-[125px]">Real Untung</label>
-<input type="text" name="real_untung" id="real_untung" required class="bg-[#D9D9D9]/40 rounded-lg h-[40px] px-4 w-[240px] outline-none rupiah-format" readonly>
-</div>
-<div class="flex items-center mt-6 gap-x-4">
-<div class="w-[110px]"></div>
-<button type="submit" class="border-[#3E98D0] border text-[#3E98D0] py-1 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
-<span>Simpan Data</span>
-</button>
-<button type="button" onclick="Swal.close()" class="border-[#DD4049] border text-[#DD4049] py-2 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
-<span>Batal</span>
-</button>
-</div>
-</form>
-</div>
-`,
+                            <div class="flex items-center mt-4 max-[950px]:flex-col max-[950px]:items-start max-[950px]:gap-y-2">
+                                <label class="max-[950px]:text-start font-medium w-[150px] max-[950px]:w-full">Nilai Kontrak</label>
+                                <div class="flex items-center w-full justify-between max-[950px]:flex-col max-[950px]:items-start max-[950px]:gap-y-4">
+                                    <input value="{{ $proyek->nilai_kontrak }}" type="text" name="nilai_kontrak" id="nilai_kontrak" required class="bg-[#D9D9D9]/40 rounded-lg h-[40px] px-4 w-[240px] max-[950px]:w-full outline-none rupiah-format">
+                                    
+                                    <div class="flex items-center w-[430px] max-[950px]:w-full max-[950px]:flex-col max-[950px]:items-start max-[950px]:gap-y-2">
+                                        <label class="max-[950px]:text-start font-medium w-[45%] max-[950px]:w-full">Fee Dinas</label>
+                                        <div class="flex items-center w-[70%] max-[950px]:w-full gap-x-2 mt-2 max-[950px]:mt-0">
+                                            <input type="text" name="fee_dinas" id="fee_dinas" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-full outline-none rupiah-format" readonly>
+                                            <input type="number" name="fee_dinas_persen" id="fee_dinas_persen" value="0" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[60px] max-[950px]:w-[100px] outline-none" placeholder="%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center mt-4 max-[950px]:flex-col max-[950px]:items-start max-[950px]:gap-y-2">
+                                <label class="max-[950px]:text-start font-medium w-[150px] max-[950px]:w-full">DPP</label>
+                                <div class="flex items-center w-full justify-between max-[950px]:flex-col max-[950px]:items-start max-[950px]:gap-y-4">
+                                    <input type="text" name="dpp" id="dpp" required class="bg-[#D9D9D9]/40 rounded-lg h-[40px] px-4 w-[240px] max-[950px]:w-full outline-none rupiah-format" readonly>
+                                    
+                                    <div class="flex items-center w-[430px] max-[950px]:w-full max-[950px]:flex-col max-[950px]:items-start max-[950px]:gap-y-2">
+                                        <label class="max-[950px]:text-start font-medium w-[45%] max-[950px]:w-full">Target Dana/NETT</label>
+                                        <div class="flex items-center w-[70%] max-[950px]:w-full gap-x-2 mt-2 max-[950px]:mt-0">
+                                            <input type="text" name="net" id="net" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-full outline-none rupiah-format" readonly>
+                                            <input type="number" name="net_persen" id="net_persen" value="0" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[60px] max-[950px]:w-[100px] outline-none" placeholder="%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center mt-4 max-[950px]:flex-col max-[950px]:items-start max-[950px]:gap-y-2">
+                                <label class="max-[950px]:text-start font-medium w-[150px] max-[950px]:w-full">PPN</label>
+                                <div class="flex items-center w-full justify-between max-[950px]:flex-col max-[950px]:items-start max-[950px]:gap-y-4">
+                                    <div class="flex items-center w-[240px] max-[950px]:w-full gap-x-2">
+                                        <input type="text" name="ppn" id="ppn" required class="bg-[#D9D9D9]/40 rounded-lg h-[40px] w-full px-4 outline-none rupiah-format" readonly>
+                                        <input type="number" name="ppn_persen" id="ppn_persen" value="11" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[60px] max-[950px]:w-[100px] outline-none" placeholder="%">
+                                    </div>
+                                    
+                                    <div class="flex items-center w-[430px] max-[950px]:w-full max-[950px]:flex-col max-[950px]:items-start max-[950px]:gap-y-2">
+                                        <label class="max-[950px]:text-start font-medium w-[45%] max-[950px]:w-full">Keuntungan</label>
+                                        <input type="text" name="keuntungan" id="keuntungan" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[70%] max-[950px]:w-full outline-none mt-2 max-[950px]:mt-0 rupiah-format" readonly>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center mt-4 max-[950px]:flex-col max-[950px]:items-start max-[950px]:gap-y-2">
+                                <label class="max-[950px]:text-start font-medium w-[150px] max-[950px]:w-full">PPH</label>
+                                <div class="flex items-center w-[240px] max-[950px]:w-full gap-x-2">
+                                    <input type="text" name="pph" id="pph" required class="bg-[#D9D9D9]/40 rounded-lg h-[40px] w-full px-4 outline-none rupiah-format" readonly>
+                                    <input type="number" name="pph_persen" id="pph_persen" value="0" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[60px] max-[950px]:w-[100px] outline-none" placeholder="%">
+                                </div>
+                            </div>
+
+                            <div class="flex items-center mt-6 max-[950px]:flex-col max-[950px]:items-start max-[950px]:gap-y-2">
+                                <label class="max-[950px]:text-start font-medium w-[150px] max-[950px]:w-full">Real Untung</label>
+                                <input type="text" name="real_untung" id="real_untung" required class="bg-[#D9D9D9]/40 rounded-lg h-[40px] px-4 w-[240px] max-[950px]:w-full outline-none rupiah-format" readonly>
+                            </div>
+
+                            <div class="flex items-center mt-8 gap-x-4 max-[420px]:flex-col max-[420px]:items-stretch max-[420px]:gap-y-2">
+                                <div class="w-[150px] max-[950px]:hidden"></div>
+                                <button type="submit" class="border-[#3E98D0] border text-[#3E98D0] py-2 px-6 rounded-lg font-semibold hover:bg-[#3E98D0] hover:text-white transition-all cursor-pointer">
+                                    Simpan Data
+                                </button>
+                                <button type="button" onclick="Swal.close()" class="border-[#DD4049] border text-[#DD4049] py-2 px-6 rounded-lg font-semibold hover:bg-[#DD4049] hover:text-white transition-all cursor-pointer">
+                                    Batal
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    `,
                     width: '900px',
                     showConfirmButton: false,
                     didOpen: () => {

@@ -1,7 +1,7 @@
 @extends('owner.layout')
 @section('content')
 <div>
-    <div class="mb-5 flex items-center justify-between pb-5 border-b-2 border-[#CCCCCC]">
+    <div class="mb-5 flex items-center justify-between pb-5 border-b-2 border-[#CCCCCC] max-[420px]:flex-wrap max-[420px]:gap-2">
         <h1 class="text-2xl font-bold">Data Neraca</h1>
         <select name="" id="pilih-neraca" class="py-2 w-[200px] px-4 appearance-none border-2 border-[#9A9A9A] rounded-xl cursor-pointer outline-none">
             <option disabled selected>-Pilih Data Neraca-</option>
@@ -10,15 +10,15 @@
         </select>
     </div>
     <div class="hidden" id="neraca-lajur">
-        <div class="flex justify-between items-center mb-5">
+        <div class="flex justify-between items-center mb-5 max-[380px]:gap-2 max-[380px]:flex-wrap">
             <h1 class="text-2xl font-bold">Neraca Lajur</h1>
             <a href="" class="flex items-center gap-x-2 border-2 border-[#9A9A9A] rounded-lg px-4 py-2">
                 <span class="text-[#72686B]">Cetak Laporan</span>
                 <img src="{{ asset('assets/printer.png') }}" alt="">
             </a>
         </div>
-        <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-        <table class="table-fixed text-center text-sm w-full">
+        <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1200px]:overflow-x-scroll">
+        <table class="table-fixed text-center text-sm w-full max-[1200px]:w-[1200px]">
             <thead class="border-b-2 border-[#CCCCCC]">
                 <tr>
                     <th rowspan="2">Kode Akun</th>
@@ -67,9 +67,9 @@
         </table>
         </div>
     </div>
-    <div class="hidden" id="neraca-saldo">
+    <div id="neraca-saldo" class="hidden">
             <h1 class="font-bold text-2xl mb-5">Neraca Saldo</h1>
-            <form action="" class="flex gap-x-2 mb-5">
+            <form action="" class="flex gap-2 mb-5 max-[420px]:flex-wrap">
                 <select name="" id="" class="border-2 border-[#9A9A9A] rounded-lg py-2 px-4 appearance-none w-[200px] outline-none cursor-pointer">
                     <option selected disabled>-Pilih Bulan-</option>
                     <option value="Januari">Januari</option>
@@ -92,202 +92,204 @@
                     <img src="{{ asset('assets/printer.png') }}" alt="" class="">
                 </a>
             </form>
-            <div class="py-10 w-full rounded-xl shadow-[0px_0px_20px_rgba(0,0,0,0.1)]">
-                <div class="w-full flex bg-[#E9E9E9] py-2 px-6 mb-3">
-                    <span class="font-bold w-[50%]">ASSET LANCAR</span>
-                    <span class="font-bold w-[50%]">KEWAJIBAN/EKUITAS</span>
+            <div class="py-10 w-full rounded-xl shadow-[0px_0px_20px_rgba(0,0,0,0.1)] max-[630px]:overflow-x-scroll">
+                <div class="max-[630px]:w-[630px]">
+                    <div class="w-full flex bg-[#E9E9E9] py-2 px-6 mb-3">
+                    <span class="font-bold w-[50%] max-[900px]:text-sm">ASSET LANCAR</span>
+                    <span class="font-bold w-[50%] max-[900px]:text-sm">KEWAJIBAN/EKUITAS</span>
                 </div>
-                <div class="px-6 flex mb-3">
+                <div class="px-6 flex mb-3 max-[1250px]:gap-x-4">
                     <div class="w-[50%] flex flex-col gap-y-2">
-                        <span class="w-full flex items-center justify-between">
-                            <p>Aktiva Lancar</p>
-                            <p class="w-[180px] text-[#9A9A9A]">Rp.</p>
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Aktiva Lancar</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
                         </span>
 
-                        <span class="w-full flex items-center justify-between">
-                            <p>Kas Besar</p>
-                            <p class="w-[180px] text-[#9A9A9A]">Rp.</p>
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Kas Besar</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
                         </span>
 
-                        <span class="w-full flex items-center justify-between">
-                            <p>Kas Kecil</p>
-                            <p class="w-[180px] text-[#9A9A9A]">Rp.</p>
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Kas Kecil</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
                         </span>
 
-                        <span class="w-full flex items-center justify-between">
-                            <p>Kas Bank BCA</p>
-                            <p class="w-[180px] text-[#9A9A9A]">Rp.</p>
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Kas Bank BCA</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
                         </span>
 
-                        <span class="w-full flex items-center justify-between">
-                            <p>Piutang Usaha</p>
-                            <p class="w-[180px] text-[#9A9A9A]">Rp.</p>
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Piutang Usaha</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
                         </span>
 
-                        <span class="w-full flex items-center justify-between">
-                            <p>Piutang Proyek</p>
-                            <p class="w-[180px] text-[#9A9A9A]">Rp.</p>
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Piutang Proyek</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
                         </span>
 
-                        <span class="w-full flex items-center justify-between">
-                            <p>Piutang Karyawan</p>
-                            <p class="w-[180px] text-[#9A9A9A]">Rp.</p>
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Piutang Karyawan</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
                         </span>
 
-                        <span class="w-full flex items-center justify-between">
-                            <p>Persediaan Material</p>
-                            <p class="w-[180px] text-[#9A9A9A]">Rp.</p>
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Persediaan Material</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
                         </span>
 
-                        <span class="w-full flex items-center justify-between">
-                            <p>Uang Muka PPh</p>
-                            <p class="w-[180px] text-[#9A9A9A]">Rp.</p>
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Uang Muka PPh</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
                         </span>
 
-                        <span class="w-full flex items-center justify-between">
-                            <p>Kas Flip</p>
-                            <p class="w-[180px] text-[#9A9A9A]">Rp.</p>
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Kas Flip</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
                         </span>
 
-                        <span class="w-full flex items-center justify-between">
-                            <p>Piutang Pihak Lain</p>
-                            <p class="w-[180px] text-[#9A9A9A]">Rp.</p>
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Piutang Pihak Lain</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
                         </span>
 
-                        <span class="w-full flex items-center justify-between">
-                            <p>Piutang Mando/Tukang</p>
-                            <p class="w-[180px] text-[#9A9A9A]">Rp.</p>
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Piutang Mando/Tukang</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
                         </span>
                     </div>
                     <div class="w-[50%] flex flex-col gap-y-2">
-                        <span class="w-full flex items-center justify-between">
-                            <p>Kewajiban Lancar</p>
-                            <p class="w-[180px] text-[#9A9A9A]">Rp.</p>
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Kewajiban Lancar</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
                         </span>
 
-                        <span class="w-full flex items-center justify-between">
-                            <p>Hutang Usaha</p>
-                            <p class="w-[180px] text-[#9A9A9A]">Rp.</p>
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Hutang Usaha</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
                         </span>
 
-                        <span class="w-full flex items-center justify-between">
-                            <p>Hutang Pihak ke-3</p>
-                            <p class="w-[180px] text-[#9A9A9A]">Rp.</p>
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Hutang Pihak ke-3</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
                         </span>
 
-                        <span class="w-full flex items-center justify-between">
-                            <p>Hutang PPN</p>
-                            <p class="w-[180px] text-[#9A9A9A]">Rp.</p>
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Hutang PPN</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
                         </span>
 
-                        <span class="w-full flex items-center justify-between">
-                            <p>Uang Muka Proyek</p>
-                            <p class="w-[180px] text-[#9A9A9A]">Rp.</p>
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Uang Muka Proyek</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
                         </span>
 
-                        <span class="w-full flex items-center justify-between">
-                            <p>Hutang Bank</p>
-                            <p class="w-[180px] text-[#9A9A9A]">Rp.</p>
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Hutang Bank</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
                         </span>
                     </div>
                 </div>
-                <div class="w-full flex bg-[#E9E9E9] py-2 px-6 mb-6">
-                    <span class="font-bold w-[50%] flex items-center justify-between">
-                        <p>JUMLAH AKTIVA LANCAR</p>
-                        <p class="w-[180px]">Rp.</p>
+                <div class="w-full flex items-center bg-[#E9E9E9] py-2 px-6 mb-6 max-[900px]:gap-x-4">
+                    <span class="font-bold w-[50%] flex items-center justify-between max-[830px]:flex-col max-[830px]:items-start">
+                        <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">JUMLAH AKTIVA LANCAR</p>
+                        <p class="w-[180px] max-[900px]:w-auto max-[900px]:text-xs max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
                     </span>
-                    <span class="font-bold w-[50%] flex items-center justify-between">
-                        <p>JUMLAH KEWAJIBAN</p>
-                        <p class="w-[180px]">Rp.</p>
+                    <span class="font-bold w-[50%] flex items-center justify-between max-[830px]:flex-col max-[830px]:items-start">
+                        <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">JUMLAH KEWAJIBAN</p>
+                        <p class="w-[180px] max-[900px]:w-auto max-[900px]:text-xs max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
                     </span>
-                </div>
-                <div class="w-full flex bg-[#E9E9E9] py-2 px-6 mb-3">
-                    <span class="font-bold w-[50%]">AKTIVA TETAP</span>
-                    <span class="font-bold w-[50%]">MODAL</span>
-                </div>
-                <div class="px-6 flex mb-3">
-                    <div class="w-[50%] flex flex-col gap-y-2">
-                        <span class="w-full flex items-center justify-between">
-                            <p>Tanah</p>
-                            <p class="w-[180px] text-[#9A9A9A]">Rp.</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between">
-                            <p>Bangunan</p>
-                            <p class="w-[180px] text-[#9A9A9A]">Rp.</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between">
-                            <p>Peralatan Kantor</p>
-                            <p class="w-[180px] text-[#9A9A9A]">Rp.</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between">
-                            <p>Peralatan Workshop Interior</p>
-                            <p class="w-[180px] text-[#9A9A9A]">Rp.</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between">
-                            <p>Kendaraan Operasional</p>
-                            <p class="w-[180px] text-[#9A9A9A]">Rp.</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between">
-                            <p>Akum. Peny. Bangunan</p>
-                            <p class="w-[180px] text-[#9A9A9A]">Rp.</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between">
-                            <p>Akum. Peny. Peralatan Kantor</p>
-                            <p class="w-[180px] text-[#9A9A9A]">Rp.</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between">
-                            <p>Akum. Peny. Mesin & Peralatan Pompa</p>
-                            <p class="w-[180px] text-[#9A9A9A]">Rp.</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between">
-                            <p>Akum. Peny. Kendaraan Operasional</p>
-                            <p class="w-[180px] text-[#9A9A9A]">Rp.</p>
-                        </span>
-                    </div>
-                    <div class="w-[50%] flex flex-col gap-y-2">
-                        <span class="w-full flex items-center justify-between">
-                            <p>Modal</p>
-                            <p class="w-[180px] text-[#9A9A9A]">Rp.</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between">
-                            <p>Laba Ditahan</p>
-                            <p class="w-[180px] text-[#9A9A9A]">Rp.</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between">
-                            <p>Laba Tahun Berjalan</p>
-                            <p class="w-[180px] text-[#9A9A9A]">Rp.</p>
-                        </span>
-                    </div>
                 </div>
                 <div class="w-full flex bg-[#E9E9E9] py-2 px-6 mb-3">
-                    <span class="font-bold w-[50%] flex items-center justify-between">
-                        <p>JUMLAH AKTIVA TETAP</p>
-                        <p class="w-[180px]">Rp.</p>
+                    <span class="font-bold w-[50%] max-[900px]:text-sm">AKTIVA TETAP</span>
+                    <span class="font-bold w-[50%] max-[900px]:text-sm">MODAL</span>
+                </div>
+                <div class="px-6 flex mb-3 max-[1250px]:gap-x-4">
+                    <div class="w-[50%] flex flex-col gap-y-2">
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Tanah</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
+                        </span>
+
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Bangunan</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
+                        </span>
+
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Peralatan Kantor</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
+                        </span>
+
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Peralatan Workshop Interior</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
+                        </span>
+
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Kendaraan Operasional</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
+                        </span>
+
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Akum. Peny. Bangunan</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
+                        </span>
+
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Akum. Peny. Peralatan Kantor</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
+                        </span>
+
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Akum. Peny. Mesin & Peralatan Pompa</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
+                        </span>
+
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Akum. Peny. Kendaraan Operasional</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
+                        </span>
+                    </div>
+                    <div class="w-[50%] flex flex-col gap-y-2">
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Modal</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
+                        </span>
+
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Laba Ditahan</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
+                        </span>
+
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Laba Tahun Berjalan</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
+                        </span>
+                    </div>
+                </div>
+                <div class="w-full flex bg-[#E9E9E9] max-[900px]:gap-x-4 py-2 px-6 mb-3">
+                    <span class="font-bold w-[50%] flex items-center justify-between max-[830px]:flex-col max-[830px]:items-start">
+                        <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">JUMLAH AKTIVA TETAP</p>
+                        <p class="w-[180px] max-[900px]:w-auto max-[900px]:text-xs max-[830px]:text-base max-[630px]:text-sm">Rp.</p>
                     </span>
-                    <span class="font-bold w-[50%] flex items-center justify-between">
-                        <p>JUMLAH MODAL</p>
-                        <p class="w-[180px]">Rp.</p>
+                    <span class="font-bold w-[50%] flex items-center justify-between max-[830px]:flex-col max-[830px]:items-start">
+                        <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">JUMLAH MODAL</p>
+                        <p class="w-[180px] max-[900px]:w-auto max-[900px]:text-xs max-[830px]:text-base max-[630px]:text-sm">Rp.</p>
                     </span>
                 </div>
-                <div class="w-full flex bg-[#E9E9E9] py-2 px-6">
-                    <span class="font-bold w-[50%] flex items-center justify-between">
-                        <p>TOTAL AKTIVA</p>
-                        <p class="w-[180px]">Rp.</p>
+                <div class="w-full flex bg-[#E9E9E9] max-[900px]:gap-x-4 py-2 px-6">
+                    <span class="font-bold w-[50%] flex items-center justify-between max-[830px]:flex-col max-[830px]:items-start">
+                        <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">TOTAL AKTIVA</p>
+                        <p class="w-[180px] max-[900px]:w-auto max-[900px]:text-xs max-[830px]:text-base max-[630px]:text-sm">Rp.</p>
                     </span>
-                    <span class="font-bold w-[50%] flex items-center justify-between">
-                        <p>TOTAL PASIVA</p>
-                        <p class="w-[180px]">Rp.</p>
+                    <span class="font-bold w-[50%] flex items-center justify-between max-[830px]:flex-col max-[830px]:items-start">
+                        <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">TOTAL PASIVA</p>
+                        <p class="w-[180px] max-[900px]:w-auto max-[900px]:text-xs max-[830px]:text-base max-[630px]:text-sm">Rp.</p>
                     </span>
+                </div>
                 </div>
             </div>
     </div>

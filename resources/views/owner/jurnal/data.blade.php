@@ -3,32 +3,34 @@
     <div>
         <h1 class="font-bold text-2xl mb-6">Jurnal Umum</h1>
         <section>
-            <div class="flex items-center justify-between mb-5 pb-5 border-b-[1px] border-[#CCCCCC]">
-                <div class="flex items-center gap-x-4">
+            <div class="flex items-center justify-between mb-5 pb-5 border-b-[1px] border-[#CCCCCC] max-[790px]:flex-wrap max-[820px]:gap-4 max-[820px]:justify-start">
+                <div class="flex items-center gap-x-4 max-[1080px]:flex-col max-[1080px]:items-start max-[1080px]:gap-y-1">
                     <span class="font-medium">Saldo Debet</span>
                     <span
                         class="bg-[#E9E9E9] py-[6px] px-4 w-[200px] rounded-lg font-semibold text-gray-500">{{ 'RP. ' . number_format($totalDebit, 0, ',', '.') }}</span>
                 </div>
-                <div class="flex items-center gap-x-4">
+                <div class="flex items-center gap-x-4 max-[1080px]:flex-col max-[1080px]:items-start max-[1080px]:gap-y-1">
                     <span class="font-medium">Saldo Kredit</span>
                     <span
                         class="bg-[#E9E9E9] py-[6px] px-4 w-[200px] rounded-lg font-semibold text-gray-500">{{ 'RP. ' . number_format($totalKredit, 0, ',', '.') }}</span>
                 </div>
-                <div class="flex items-center gap-x-1">
+                <div class="flex items-center gap-x-1 max-[1080px]:flex-col max-[1080px]:items-start max-[1080px]:gap-y-1">
                     <span class="font-medium mr-4">Status</span>
-                    <span
+                    <div class="flex gap-x-1">
+                        <span
                         class="bg-[#E9E9E9] py-[6px] px-8 rounded-lg font-semibold text-gray-500">{{ $status }}</span>
-                    <div
-                        class="{{ $status === 'Balance' ? 'bg-[#45D03E] w-[80px] h-[35px] rounded-lg' : 'bg-[#f80707] w-[80px] h-[35px] rounded-lg' }}">
+                        <div
+                            class="{{ $status === 'Balance' ? 'bg-[#45D03E] w-[80px] h-[35px] rounded-lg' : 'bg-[#f80707] w-[80px] h-[35px] rounded-lg' }}">
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="flex justify-between items-center pb-4">
+            <div class="flex justify-between items-center pb-4 max-[820px]:gap-x-8 max-[360px]:gap-x-2 max-[820px]:items-start">
                 {{-- <a href="{{ route('jurnalUmums.create') }}"
                     class="border-[#9A9A9A] border-2 rounded-lg px-4 py-2 shadow-[0px_0px_10px_rgba(0,0,0,0.1)]">
                     <button class="cursor-pointer">Tambah Data +</button>
                 </a> --}}
-                <div class="flex items-center gap-x-2">
+                <div class="flex items-center gap-2 max-[500px]:flex-col max-[820px]:items-start">
                     <button onclick="transaksiMasuk()" data-url="{{ route('jurnalOwner.storeDebit') }}"
                         data-token="{{ csrf_token() }}"
                         class="flex items-center gap-x-3 border-2 border-[#9A9A9A] px-4 py-2 rounded-lg cursor-pointer">
@@ -47,25 +49,27 @@
                         <img src="{{ asset('assets/money-send.png') }}" alt="card receive icon" class="w-[20px]">
                     </button> --}}
                 </div>
-                <form action="{{ route('jurnalOwner.index') }}" method="GET" class="flex items-center gap-x-2">
+                <form action="{{ route('jurnalOwner.index') }}" method="GET" class="flex items-center gap-2 max-[820px]:flex-col max-[820px]:justify-end max-[820px]:items-end">
                     <input type="text" name="start" data-flatpickr placeholder="Tgl Mulai"
                         value="{{ request('start') }}"
                         class="border-[#9A9A9A] border-2 rounded-lg py-2 px-4 w-[170px] outline-none">
                     <input type="text" name="end" data-flatpickr placeholder="Tgl Selesai"
                         value="{{ request('end') }}"
                         class="border-[#9A9A9A] border-2 rounded-lg py-2 px-4 w-[170px] outline-none">
-                    <button type="submit"
-                        class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
-                        <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" class="w-[20px]">
-                    </button>
-                    <a href="{{ route('jurnalUmums.print', ['start' => request('start'), 'end' => request('end')]) }}"
-                        class="flex items-center gap-x-3 border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer "
-                        target="_blank"><img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
-                    </a>
+                    <div class="flex gap-x-2">
+                        <button type="submit"
+                            class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
+                            <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" class="w-[20px]">
+                        </button>
+                        <a href="{{ route('jurnalUmums.print', ['start' => request('start'), 'end' => request('end')]) }}"
+                            class="flex items-center gap-x-3 border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer "
+                            target="_blank"><img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
+                        </a>
+                    </div>
                 </form>
             </div>
-            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                <table class="table-fixed text-center text-sm w-full">
+            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1200px]:overflow-x-auto">
+                <table class="table-fixed text-center text-sm w-full max-[1200px]:w-[1200px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
                         <th class="w-[12%] py-2">
                             Tanggal
@@ -204,54 +208,61 @@
                 // buat form modal dengan sweetalert2
                 Swal.fire({
                     html: `
-                    <form action="${updateUrl}" method="POST" class="flex flex-col text-left">
+                    <form action="${updateUrl}" method="POST" class="flex flex-col text-left" id="myForm">
                         @csrf
                         @method('PUT')
-                        <h1 class="font-bold text-2xl mb-4">Edit Laporan Keuangan</h1>
-                        <div class="flex items-center mt-4">
-                            <label for="tanggal" class="font-medium w-[150px]">Tgl Relasi</label>
-                            <div class="flex items-center w-full justify-between">
-                                <input value="${tanggal}" type="date" name="tanggal" id="tanggal" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none">
-                                <div class="flex items-center w-[350px]">
-                                    <label for="keterangan" class="font-medium w-[35%]">Keterangan</label>
-                                    <input value="${keterangan}" type="text" name="keterangan" id="keterangan" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2">
+                        <h1 class="font-bold text-2xl max-[420px]:text-xl mb-4">Edit Laporan Keuangan</h1>
+
+                        <div class="flex items-center mt-4 max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-2 max-[850px]:order-3">
+                            <label for="tanggal" class="font-medium w-[150px] max-[850px]:w-full">Tgl Relasi</label>
+                            <div class="flex items-center w-full justify-between max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-4">
+                                <input value="${tanggal}" type="date" name="tanggal" id="tanggal" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] max-[850px]:w-full outline-none">
+                                
+                                <div class="flex items-center w-[350px] max-[850px]:w-full max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-2">
+                                    <label for="keterangan" class="font-medium w-[35%] max-[850px]:w-full">Keterangan</label>
+                                    <input value="${keterangan}" type="text" name="keterangan" id="keterangan" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] max-[850px]:w-full outline-none mt-2 max-[850px]:mt-0">
                                 </div>
                             </div>
                         </div>
-                        <div class="flex items-center mt-4">
-                            <label for="tanggal" class="font-medium w-[150px]">Kode Akun</label>
-                            <div class="flex items-center w-full justify-between">
-                                <input value="${kode_perkiraan}" type="text" name="kode_perkiraan" id="kode_perkiraan" readonly required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none">
-                                <div class="flex items-center w-[350px]">
-                                    <label for="keterangan" class="font-medium w-[35%]">Debet</label>
-                                    <input value="${debit}" type="number" name="debit" id="debet" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2">
+
+                        <div class="flex items-center mt-4 max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-2 max-[850px]:order-2">
+                            <label for="kode_perkiraan" class="font-medium w-[150px] max-[850px]:w-full">Kode Akun</label>
+                            <div class="flex items-center w-full justify-between max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-4">
+                                <input value="${kode_perkiraan}" type="text" name="kode_perkiraan" id="kode_perkiraan" readonly required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] max-[850px]:w-full outline-none">
+                                
+                                <div class="flex items-center w-[350px] max-[850px]:w-full max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-2">
+                                    <label for="debet" class="font-medium w-[35%] max-[850px]:w-full">Debet</label>
+                                    <input value="${debit}" type="text" name="debit" id="debet" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] max-[850px]:w-full outline-none mt-2 max-[850px]:mt-0 rupiah-format">
                                 </div>
                             </div>
                         </div>
-                        <div class="flex items-center mt-4">
-                            <label for="tanggal" class="font-medium w-[150px]">Nama Akun</label>
-                            <div class="flex items-center w-full justify-between">
-                                <select class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none appearance-none" name="nama_perkiraan" id="nama_perkiraan" onchange="syncKodePerkiraan(this)" >
-                                        <option value="${nama_perkiraan}" selected>${nama_perkiraan}</option>
+
+                        <div class="flex items-center mt-4 max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-2 max-[850px]:order-1">
+                            <label for="nama_perkiraan" class="font-medium w-[150px] max-[850px]:w-full">Nama Akun</label>
+                            <div class="flex items-center w-full justify-between max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-4">
+                                <select class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none appearance-none max-[850px]:w-full" name="nama_perkiraan" id="nama_perkiraan" onchange="syncKodePerkiraan(this)">
+                                    <option value="${nama_perkiraan}" selected>${nama_perkiraan}</option>
                                     @foreach ($akun as $item)
                                         <option value="{{ $item->nama_akun }}" data-kode="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
                                     @endforeach
                                 </select>
-                                <div class="flex items-center w-[350px]">
-                                    <label for="keterangan" class="font-medium w-[35%]">Kredit</label>
-                                    <input value="${kredit}" type="number" name="kredit" id="kredit" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2">
+                                
+                                <div class="flex items-center w-[350px] max-[850px]:w-full max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-2">
+                                    <label for="kredit" class="font-medium w-[35%] max-[850px]:w-full">Kredit</label>
+                                    <input value="${kredit}" type="text" name="kredit" id="kredit" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] max-[850px]:w-full outline-none mt-2 max-[850px]:mt-0 rupiah-format">
                                 </div>
                             </div>
                         </div>
-                        <div class="flex items-center mt-6 gap-x-4">
-                            <div class="w-[110px]"></div>
+
+                        <div class="flex items-center mt-6 gap-x-4 max-[420px]:flex-col max-[420px]:items-start max-[420px]:gap-y-2 max-[850px]:order-4">
+                            <div class="w-[110px] max-[850px]:hidden"></div>
                             <button type="submit" class="border-[#3E98D0] border text-[#3E98D0] py-1 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
-                                <span class="">Simpan Data</span>
-                                <img src="{{ asset('assets/plus-circle-blue.png') }}" alt="arrow right blue icon" class="w-[30px]">
+                                <span>Simpan Data</span>
+                                <img src="{{ asset('assets/plus-circle-blue.png') }}" alt="plus icon" class="w-[30px]">
                             </button>
-                            <button type="button" onclick="Swal.close()" class="border-[#DD4049] border text-[#DD4049] py-1 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
-                                <span class="">Batal</span>
-                                <img src="{{ asset('assets/close-circle-red.png') }}" alt="arrow right blue icon" class="w-[22px]">
+                            <button type="button" onclick="Swal.close()" class="border-[#DD4049] border text-[#DD4049] py-2 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
+                                <span>Batal</span>
+                                <img src="{{ asset('assets/close-circle-red.png') }}" alt="close icon" class="w-[22px]">
                             </button>
                         </div>
                     </form>
@@ -260,6 +271,64 @@
                     showCancelButton: false,
                     showCloseButton: false,
                     showConfirmButton: false,
+                    didOpen: () => {
+                        const rupiahFormatElements = document.querySelectorAll(".rupiah-format");
+                        rupiahFormatElements.forEach((element) => {
+                            element.addEventListener("input", function (e) {
+                                let value = this.value.replace(/[^,\d]/g, "").toString();
+                                let split = value.split(",");
+                                let sisa = split[0].length % 3;
+                                let rupiah = split[0].substr(0, sisa);
+                                let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+                                if (ribuan) {
+                                    let separator = sisa ? "." : "";
+                                    rupiah += separator + ribuan.join(".");
+                                }
+                                rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+                                this.value = rupiah ? "Rp. " + rupiah : "";
+                            });
+                        });
+
+                        const form = document.getElementById('myForm')
+                        if (form) {
+                            form.addEventListener('submit', function(e) {
+                                const rupiahInputs = document.querySelectorAll('.rupiah-format');
+                                rupiahInputs.forEach(input => {
+                                    let value = input.value;
+                                    let cleanValue = parseInt(value.replace(/[^,\d]/g, ""));
+                                    input.value = cleanValue;
+                                    console.log(
+                                        `Input name: ${input.name}, Clean value: ${input.value}`
+                                    );
+                                })
+                            })
+                        }
+
+                        function parseRupiahToNumber(rupiahString) {
+                            if (!rupiahString) return 0;
+                            return parseInt(rupiahString.replace(/[^0-9]/g, "")) || 0;
+                        }
+                        // End string to number
+
+                        // number to rupiah format
+                        function formatNumberToRupiah(number) {
+                            if (!number) return "";
+                            return "Rp. " + number.toLocaleString("id-ID");
+                        }
+
+                        rupiahFormatElements.forEach((element) => {
+                            // Ubah string value ke number dulu untuk dicek
+                            const numericValue = parseRupiahToNumber(element.value);
+
+                            // Hanya jalankan format jika ada isinya DAN nilainya bukan 0
+                            if (element.value && numericValue !== 0) {
+                                element.value = formatNumberToRupiah(numericValue);
+                            } else if (numericValue === 0) {
+                                // Jika nilainya 0, pastikan tampilannya bersih (hanya angka 0 saja)
+                                element.value = "Rp. " + 0; 
+                            }
+                        });
+                    }
                 });
             }
             // fungsi sinkronisasi kode akun
@@ -273,33 +342,33 @@
                 // buat form modal dengan sweetalert2
                 Swal.fire({
                     html: `
-                    <form action="{{ route('jurnalOwner.storeCashIn') }}" method="POST" class="flex flex-col text-left">
+                    <form action="{{ route('jurnalOwner.storeCashIn') }}" method="POST" class="flex flex-col text-left" id="myForm">
                         @csrf
-                        <h1 class="font-bold text-2xl mb-4">Transaksi Jurnal - Debet</h1>
-                        <div class="flex items-center mt-4">
-                            <label for="tanggal" class="font-medium w-[150px]">Tgl Transaksi</label>
-                            <div class="flex items-center w-full justify-between">
-                                <input value="{{ $today }}" type="date" name="tanggal" id="tanggal" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none" readonly>
-                                <div class="flex items-center w-[350px]">
-                                    <label for="kode_akun" class="font-medium w-[35%]">Kode Akun</label>
+                        <h1 class="font-bold text-2xl max-[420px]:text-xl mb-4">Transaksi Jurnal - Pendapatan</h1>
+                        <div class="flex items-center mt-4 max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-2 max-[850px]:order-2">
+                            <label for="tanggal" class="font-medium w-[150px] max-[850px]:w-full">Tgl Transaksi</label>
+                            <div class="flex items-center w-full justify-between max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-4">
+                                <input value="{{ $today }}" type="date" name="tanggal" id="tanggal" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] max-[850px]:w-full outline-none" readonly>
+                                <div class="flex items-center w-[350px] max-[850px]:w-full max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-2">
+                                    <label for="kode_akun" class="font-medium w-[35%] max-[850px]:w-full">Kode Akun</label>
                                     <input type="text" name="kode_perkiraan" id="kode_akun" readonly
-                                    class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none">
+                                    class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] max-[850px]:w-full outline-none">
                                 </div>
                             </div>
                         </div>
-                        <div class="flex items-center mt-4">
-                            <label for="keterangan" class="font-medium w-[150px]">Keterangan</label>
-                            <div class="flex items-center w-full justify-between">
-                                <input type="text" name="keterangan" id="keterangan" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none">
-                                <div class="flex items-center w-[350px]">
-                                    <label for="debit" class="font-medium w-[35%]">Nominal</label>
-                                    <input type="number" name="debit" id="debit" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2">
+                        <div class="flex items-center mt-4 max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-2 max-[850px]:order-3">
+                            <label for="keterangan" class="font-medium w-[150px] max-[850px]:w-full">Keterangan</label>
+                            <div class="flex items-center w-full justify-between max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-4">
+                                <input type="text" name="keterangan" id="keterangan" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] max-[850px]:w-full outline-none">
+                                <div class="flex items-center w-[350px] max-[850px]:w-full max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-2">
+                                    <label for="debit" class="font-medium w-[35%] max-[850px]:w-full">Nominal</label>
+                                    <input type="text" name="debit" id="debit" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] max-[850px]:w-full outline-none mt-2 max-[850px]:mt-0 rupiah-format">
                                 </div>
                             </div>
                         </div>
-                        <div class="flex items-center mt-4">
-                            <label for="tanggal" class="font-medium w-[125px]">Nama Akun</label>
-                            <select name="nama_perkiraan" id="nama_perkiraan" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none appearance-none">
+                        <div class="flex items-center mt-4 max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-2 max-[850px]:order-1">
+                            <label for="tanggal" class="font-medium w-[125px] max-[850px]:w-full">Nama Akun</label>
+                            <select name="nama_perkiraan" id="nama_perkiraan" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none appearance-none max-[850px]:w-full">
                                 <option value="" disabled selected>-Pilih Nama Akun-</option>
                                  @foreach ($akun as $item)
                                     <option value="{{ $item->nama_akun }}" data-kode="{{ $item->kode_akun }}">
@@ -308,13 +377,13 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="flex items-center mt-6 gap-x-4">
-                            <div class="w-[110px]"></div>
+                        <div class="flex items-center mt-6 gap-x-4 max-[420px]:flex-col max-[420px]:items-start max-[420px]:gap-y-2 max-[850px]:order-4">
+                            <div class="w-[110px] max-[850px]:hidden"></div>
                             <button type="submit" class="border-[#3E98D0] border text-[#3E98D0] py-1 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
                                 <span class="">Simpan Data</span>
                                 <img src="{{ asset('assets/plus-circle-blue.png') }}" alt="arrow right blue icon" class="w-[30px]">
                             </button>
-                            <button type="button" onclick="Swal.close()" class="border-[#DD4049] border text-[#DD4049] py-1 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
+                            <button type="button" onclick="Swal.close()" class="border-[#DD4049] border text-[#DD4049] py-2 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
                                 <span class="">Batal</span>
                                 <img src="{{ asset('assets/close-circle-red.png') }}" alt="arrow right blue icon" class="w-[22px]">
                             </button>
@@ -335,6 +404,63 @@
                             let kode = selectedOption.getAttribute('data-kode');
                             kodeInput.value = kode;
                         });
+
+                        const rupiahFormatElements = document.querySelectorAll(".rupiah-format");
+                        rupiahFormatElements.forEach((element) => {
+                            element.addEventListener("input", function (e) {
+                                let value = this.value.replace(/[^,\d]/g, "").toString();
+                                let split = value.split(",");
+                                let sisa = split[0].length % 3;
+                                let rupiah = split[0].substr(0, sisa);
+                                let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+                                if (ribuan) {
+                                    let separator = sisa ? "." : "";
+                                    rupiah += separator + ribuan.join(".");
+                                }
+                                rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+                                this.value = rupiah ? "Rp. " + rupiah : "";
+                            });
+                        });
+
+                        const form = document.getElementById('myForm')
+                        if (form) {
+                            form.addEventListener('submit', function(e) {
+                                const rupiahInputs = document.querySelectorAll('.rupiah-format');
+                                rupiahInputs.forEach(input => {
+                                    let value = input.value;
+                                    let cleanValue = parseInt(value.replace(/[^,\d]/g, ""));
+                                    input.value = cleanValue;
+                                    console.log(
+                                        `Input name: ${input.name}, Clean value: ${input.value}`
+                                    );
+                                })
+                            })
+                        }
+
+                        function parseRupiahToNumber(rupiahString) {
+                            if (!rupiahString) return 0;
+                            return parseInt(rupiahString.replace(/[^0-9]/g, "")) || 0;
+                        }
+                        // End string to number
+
+                        // number to rupiah format
+                        function formatNumberToRupiah(number) {
+                            if (!number) return "";
+                            return "Rp. " + number.toLocaleString("id-ID");
+                        }
+
+                        rupiahFormatElements.forEach((element) => {
+                            // Ubah string value ke number dulu untuk dicek
+                            const numericValue = parseRupiahToNumber(element.value);
+
+                            // Hanya jalankan format jika ada isinya DAN nilainya bukan 0
+                            if (element.value && numericValue !== 0) {
+                                element.value = formatNumberToRupiah(numericValue);
+                            } else if (numericValue === 0) {
+                                // Jika nilainya 0, pastikan tampilannya bersih (hanya angka 0 saja)
+                                element.value = "Rp. " + 0; 
+                            }
+                        });
                     }
                 });
             }
@@ -343,50 +469,54 @@
                 // buat form modal dengan sweetalert2
                 Swal.fire({
                     html: `
-                    <form action="{{ route('jurnalOwner.storeCashOut') }}" method="POST" class="flex flex-col text-left">
+                    <form action="{{ route('jurnalOwner.storeCashOut') }}" method="POST" class="flex flex-col text-left" id="myForm">
                         @csrf
-                        <h1 class="font-bold text-2xl mb-4">Transaksi Jurnal - Kredit</h1>
-                        <div class="flex items-center mt-4">
-                            <label for="tanggal" class="font-medium w-[150px]">Tgl Transaksi</label>
-                            <div class="flex items-center w-full justify-between">
-                                <input value="{{ $today }}" type="date" name="tanggal" id="tanggal" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none" readonly>
-                                <div class="flex items-center w-[350px]">
-                                    <label for="kode_akun" class="font-medium w-[35%]">Kode Akun</label>
-                                    <input type="text" name="kode_perkiraan" id="kode_akun" readonly
-                                    class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none">
+                        <h1 class="font-bold text-2xl max-[420px]:text-xl mb-4">Transaksi Jurnal - Pengeluaran</h1>
+                        <div class="flex items-center mt-4 max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-2 max-[850px]:order-2">
+                            <label for="tanggal" class="font-medium w-[150px] max-[850px]:w-full">Tgl Transaksi</label>
+                            <div class="flex items-center w-full justify-between max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-4">
+                                <input value="{{ $today }}" type="date" name="tanggal" id="tanggal" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] max-[850px]:w-full outline-none" readonly>
+                                
+                                <div class="flex items-center w-[350px] max-[850px]:w-full max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-2">
+                                    <label for="kode_akun" class="font-medium w-[35%] max-[850px]:w-full">Kode Akun</label>
+                                    <input type="text" name="kode_perkiraan" id="kode_akun" readonly class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] max-[850px]:w-full outline-none">
                                 </div>
                             </div>
                         </div>
-                        <div class="flex items-center mt-4">
-                            <label for="keterangan" class="font-medium w-[150px]">Keterangan</label>
-                            <div class="flex items-center w-full justify-between">
-                                <input type="text" name="keterangan" id="keterangan" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none">
-                                <div class="flex items-center w-[350px]">
-                                    <label for="kredit" class="font-medium w-[35%]">Nominal</label>
-                                    <input type="number" name="kredit" id="kredit" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2">
+
+                        <div class="flex items-center mt-4 max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-2 max-[850px]:order-3">
+                            <label for="keterangan" class="font-medium w-[150px] max-[850px]:w-full">Keterangan</label>
+                            <div class="flex items-center w-full justify-between max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-4">
+                                <input type="text" name="keterangan" id="keterangan" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] max-[850px]:w-full outline-none">
+                                
+                                <div class="flex items-center w-[350px] max-[850px]:w-full max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-2">
+                                    <label for="kredit" class="font-medium w-[35%] max-[850px]:w-full">Nominal</label>
+                                    <input type="text" name="kredit" id="kredit" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] max-[850px]:w-full outline-none mt-2 max-[850px]:mt-0 rupiah-format">
                                 </div>
                             </div>
                         </div>
-                        <div class="flex items-center mt-4">
-                            <label for="tanggal" class="font-medium w-[125px]">Nama Akun</label>
-                            <select name="nama_perkiraan" id="nama_perkiraan" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none appearance-none">
+
+                        <div class="flex items-center mt-4 max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-2 max-[850px]:order-1">
+                            <label for="nama_perkiraan" class="font-medium w-[125px] max-[850px]:w-full">Nama Akun</label>
+                            <select name="nama_perkiraan" id="nama_perkiraan" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none appearance-none max-[850px]:w-full">
                                 <option value="" disabled selected>-Pilih Nama Akun-</option>
-                                 @foreach ($akun as $item)
+                                @foreach ($akun as $item)
                                     <option value="{{ $item->nama_akun }}" data-kode="{{ $item->kode_akun }}">
                                         {{ $item->nama_akun }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
-                        <div class="flex items-center mt-6 gap-x-4">
-                            <div class="w-[110px]"></div>
+
+                        <div class="flex items-center mt-6 gap-x-4 max-[420px]:flex-col max-[420px]:items-start max-[420px]:gap-y-2 max-[850px]:order-4">
+                            <div class="w-[110px] max-[850px]:hidden"></div>
                             <button type="submit" class="border-[#3E98D0] border text-[#3E98D0] py-1 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
-                                <span class="">Simpan Data</span>
-                                <img src="{{ asset('assets/plus-circle-blue.png') }}" alt="arrow right blue icon" class="w-[30px]">
+                                <span>Simpan Data</span>
+                                <img src="{{ asset('assets/plus-circle-blue.png') }}" alt="plus icon" class="w-[30px]">
                             </button>
-                            <button type="button" onclick="Swal.close()" class="border-[#DD4049] border text-[#DD4049] py-1 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
-                                <span class="">Batal</span>
-                                <img src="{{ asset('assets/close-circle-red.png') }}" alt="arrow right blue icon" class="w-[22px]">
+                            <button type="button" onclick="Swal.close()" class="border-[#DD4049] border text-[#DD4049] py-2 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
+                                <span>Batal</span>
+                                <img src="{{ asset('assets/close-circle-red.png') }}" alt="close icon" class="w-[22px]">
                             </button>
                         </div>
                     </form>
@@ -404,6 +534,63 @@
                             let selectedOption = this.options[this.selectedIndex];
                             let kode = selectedOption.getAttribute('data-kode');
                             kodeInput.value = kode;
+                        });
+
+                        const rupiahFormatElements = document.querySelectorAll(".rupiah-format");
+                        rupiahFormatElements.forEach((element) => {
+                            element.addEventListener("input", function (e) {
+                                let value = this.value.replace(/[^,\d]/g, "").toString();
+                                let split = value.split(",");
+                                let sisa = split[0].length % 3;
+                                let rupiah = split[0].substr(0, sisa);
+                                let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+                                if (ribuan) {
+                                    let separator = sisa ? "." : "";
+                                    rupiah += separator + ribuan.join(".");
+                                }
+                                rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+                                this.value = rupiah ? "Rp. " + rupiah : "";
+                            });
+                        });
+
+                        const form = document.getElementById('myForm')
+                        if (form) {
+                            form.addEventListener('submit', function(e) {
+                                const rupiahInputs = document.querySelectorAll('.rupiah-format');
+                                rupiahInputs.forEach(input => {
+                                    let value = input.value;
+                                    let cleanValue = parseInt(value.replace(/[^,\d]/g, ""));
+                                    input.value = cleanValue;
+                                    console.log(
+                                        `Input name: ${input.name}, Clean value: ${input.value}`
+                                    );
+                                })
+                            })
+                        }
+
+                        function parseRupiahToNumber(rupiahString) {
+                            if (!rupiahString) return 0;
+                            return parseInt(rupiahString.replace(/[^0-9]/g, "")) || 0;
+                        }
+                        // End string to number
+
+                        // number to rupiah format
+                        function formatNumberToRupiah(number) {
+                            if (!number) return "";
+                            return "Rp. " + number.toLocaleString("id-ID");
+                        }
+
+                        rupiahFormatElements.forEach((element) => {
+                            // Ubah string value ke number dulu untuk dicek
+                            const numericValue = parseRupiahToNumber(element.value);
+
+                            // Hanya jalankan format jika ada isinya DAN nilainya bukan 0
+                            if (element.value && numericValue !== 0) {
+                                element.value = formatNumberToRupiah(numericValue);
+                            } else if (numericValue === 0) {
+                                // Jika nilainya 0, pastikan tampilannya bersih (hanya angka 0 saja)
+                                element.value = "Rp. " + 0; 
+                            }
                         });
                     }
                 });
@@ -573,7 +760,7 @@
     //         }
     //     </script>
 
-    //     <script>
+            <script>
     //         let transaksiKredit = [];
 
     //         function transaksiKeluar() {
@@ -839,6 +1026,5 @@
                 });
             }
         </script>
-
     </div>
 @endsection

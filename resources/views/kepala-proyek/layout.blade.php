@@ -21,8 +21,8 @@
         <nav
             class="max-[1200px]:absolute flex flex-col max-[1200px]:items-center bg-white h-screen w-[350px] max-[1200px]:w-[60px] max-[550px]:w-full max-[550px]:translate-x-[-100vw] py-5 px-5 shadow-[1px_0px_8px_rgba(0,0,0,0.25)] items-center relative z-[99] overflow-y-auto overflow-x-hidden max-[1200px]:overflow-x-hidden max-[1200px]:transition-all max-[1200px]:ease-in-out max-[1200px]:duration-200" id="sideNavbar"> {{-- Bagian yang di responsive --}}
             {{-- button view --}}
-            <button class="min-[1200px]:hidden max-[550px]:hidden bg-white shadow-[0px_1px_8px_rgba(0,0,0,0.25)] rounded-full p-2 fixed top-[50%] left-10 rotate-[-90deg] z-[99] transition-all duration-200 ease-in-out" id="buttonView">
-                <img src="{{ asset('assets/arrow-down.png') }}" alt="arrow view">
+            <button class="min-[1200px]:hidden cursor-pointer max-[550px]:hidden bg-white shadow-[0px_1px_8px_rgba(0,0,0,0.25)] rounded-full p-2 fixed top-[50%] left-11 rotate-[-90deg] z-[99] transition-all duration-200 ease-in-out" id="buttonView">
+                <img src="{{ asset('assets/arrow-down.png') }}" alt="arrow view" class="w-[15px]">
             </button>
             {{-- button view --}}
             {{-- Logo --}}

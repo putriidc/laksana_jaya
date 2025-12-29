@@ -3,8 +3,8 @@
         <div class="flex flex-col mb-6">
             <section class="mb-5 pb-10 border-b-2 border-[#B6B6B6]">
                 <h1 class="font-bold text-2xl mb-4 text-[#C0C0C0]">Form Pengajuan EAF</h1>
-                <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                    <table class="table-auto text-center text-sm w-full">
+                <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1200px]:overflow-x-auto">
+                    <table class="table-auto text-center text-sm w-full max-[1200px]:w-[1200px]">
                         <thead class="border-b-2 border-[#CCCCCC]">
                             <th class="py-2 w-[5%]">No</th>
                             <th class="py-2 w-[10%]">Tgl Pengajuan</th>
@@ -60,8 +60,8 @@
                     <span class="text-[#72686B]">Cetak Laporan</span>
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon">
                 </a>
-                <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                    <table class="table-auto text-center text-sm w-full">
+                <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1200px]:overflow-x-auto">
+                    <table class="table-auto text-center text-sm w-full max-[1200px]:w-[1200px]">
                         <thead class="border-b-2 border-[#CCCCCC]">
                             <th class="py-2">No</th>
                             <th class="py-2 ">Tgl Pengajuan</th>
@@ -93,7 +93,7 @@
                                         </span>
                                     </td>
                                     <td class="py-2">
-                                        <div class="flex gap-x-1 items-center">
+                                        <div class="flex justify-center gap-x-1 items-center">
                                         {{-- Status spv --}}
                                         @if ($item->acc_owner === 'accept')
                                             <span class="bg-[#8CE987] px-4 py-2 rounded-lg cursor-pointer">Accept</span>
