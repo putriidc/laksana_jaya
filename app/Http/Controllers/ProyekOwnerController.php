@@ -48,17 +48,17 @@ class ProyekOwnerController extends Controller
             $kontrak = KontrakProyek::where('kode_proyek', $proyek->kode_akun)->first();
             $net = $kontrak->net;
             return [
-            'nama_proyek' => $proyek->nama_proyek,
-            'nilai_kontrak' => $proyek->nilai_kontrak,
-            'tgl_mulai' => $proyek->tgl_mulai,
-            'jenis_proyek' => $proyek->jenis ?? '-',
-            'total_pengeluaran' => $totalPengeluaran,
-            'piutang_vendor' => $piutangVendor,
-            'total_tp_pv' => $totalPengeluaran + $piutangVendor,
-            'persentase' => ($totalPengeluaran / $net) * 100,
-            'sisa' => $net - $totalPengeluaran,
-            'net' => $net,
-        ];
+                'nama_proyek' => $proyek->nama_proyek,
+                'nilai_kontrak' => $proyek->nilai_kontrak,
+                'tgl_mulai' => $proyek->tgl_mulai,
+                'jenis_proyek' => $proyek->jenis ?? '-',
+                'total_pengeluaran' => $totalPengeluaran,
+                'piutang_vendor' => $piutangVendor,
+                'total_tp_pv' => $totalPengeluaran + $piutangVendor,
+                'persentase' => ($totalPengeluaran / $net) * 100,
+                'sisa' => $net - $totalPengeluaran,
+                'net' => $net,
+            ];
         });
 
         return view('owner.resume.data', compact('resume'));
@@ -107,12 +107,45 @@ class ProyekOwnerController extends Controller
         }
     }
 
+    public function updateKontrak(Request $request, $id)
+    {
+        try {
+            $validated = $request->validate([
+                'kode_proyek'        => 'required|string',
+                'nama_proyek'        => 'required|string',
+                'nilai_kontrak'      => 'required|integer|min:0',
+                'dpp'                => 'required|integer|min:0',
+                'ppn_persen'         => 'required|numeric|min:0',
+                'ppn'                => 'required|integer|min:0',
+                'pph'                => 'nullable|integer|min:0',
+                'pph_persen'         => 'required|numeric|min:0',
+                'sisa_potong_pajak'  => 'required|integer|min:0',
+                'fee_dinas_persen'   => 'required|numeric|min:0',
+                'fee_dinas'          => 'required|integer|min:0',
+                'net_persen'         => 'required|numeric|min:0',
+                'net'                => 'required|integer|min:0',
+                'keuntungan'         => 'required|integer|min:0',
+                'real_untung'        => 'required|integer|min:0',
+            ]);
+
+            $validated['created_by'] = Auth::id();
+
+            $kontrak = KontrakProyek::findOrFail($id);
+            $kontrak->update($validated);
+
+            return redirect()->back()->with('success', 'Data kontrak berhasil diperbarui.');
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('error', 'Gagal memperbarui kontrak: ' . $e->getMessage());
+        }
+    }
+
+
     /**
      * Display the specified resource.
      */
     public function show($id)
     {
-       $proyek = Proyek::with('kontrak')->findOrFail($id);
+        $proyek = Proyek::with('kontrak')->findOrFail($id);
 
         // ambil semua nama akun dari Asset dengan akun_header = asset_lancar_bank
         $assetBankAccounts = Asset::where('akun_header', 'asset_lancar_bank')
