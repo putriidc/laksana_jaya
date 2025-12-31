@@ -296,4 +296,25 @@ class JurnalOwnerController extends Controller
         ]);
         return redirect()->route('jurnalOwner.index')->with('success', 'Jurnal berhasil ditambahkan');
     }
+
+    public function bulkDelete(Request $request)
+    {
+        $ids = $request->ids; // Menerima array ID dari JavaScript
+
+        if (!$ids || count($ids) == 0) {
+            return response()->json(['success' => false, 'message' => 'Tidak ada data dipilih']);
+        }
+
+        try {
+            // Menghapus semua data yang ID-nya ada di dalam array
+            JurnalUmum::whereIn('id', $ids)->update(['deleted_at' => Carbon::now('Asia/Jakarta')]); // manual soft delete
+
+            return response()->json([
+                'success' => true, 
+                'message' => count($ids) . ' Data berhasil dihapus secara masal.'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Gagal menghapus data']);
+        }
+    }
 }

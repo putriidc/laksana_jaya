@@ -32,6 +32,7 @@ use App\Http\Controllers\PinjamanContentController;
 use App\Http\Controllers\PinjamanKaryawanController;
 use App\Http\Controllers\BukuBesarController;
 use App\Http\Controllers\ProgresOwnerController;
+use App\Models\JurnalUmum;
 
 Route::get('/', function () {
     return view('login');
@@ -72,6 +73,8 @@ Route::middleware('auth')->group(function () {
         ->name('jurnalUmums.storeCashOut');
     Route::post('jurnalUmums/storeBank', [JurnalUmumController::class, 'storeBank'])
         ->name('jurnalUmums.storeBank');
+    Route::post('/jurnalUmums/bulk-delete', [JurnalUmumController::class, 'bulkDelete'])
+        ->name('jurnalUmums.bulk-delete');
     Route::get('jurnalUmums/print', [JurnalUmumController::class, 'print'])->name('jurnalUmums.print');
 
     Route::get('laporanHarian/printCashOut', [LaporanHarianController::class, 'printCashOut'])->name('laporanHarian.printCashOut');
@@ -324,6 +327,8 @@ Route::middleware('auth')->group(function () {
         ->name('jurnalOwner.storeKredit');
     Route::post('jurnalOwner/storeBank', [JurnalOwnerController::class, 'storeBank'])
         ->name('jurnalOwner.storeBank');
+    Route::post('/jurnalOwner/bulk-delete', [JurnalOwnerController::class, 'bulkDelete'])
+        ->name('jurnalOwner.bulk-delete');
 
     // route dengan query parameter kategori
     Route::get('/proyekOwner', [ProyekOwnerController::class, 'index'])->name('proyekOwner.index');

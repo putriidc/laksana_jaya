@@ -95,7 +95,7 @@ class LabaRugiController extends Controller
         $totalBiaya      = $biayaFinal->sum('total');
         $totalLabaRugi   = $totalPendapatan - $totalBiaya;
 
-        return view('admin.laba-rugi.data', compact(
+        return view('owner.laba-rugi.data', compact(
             'pendapatanFinal',
             'biayaFinal',
             'totalPendapatan',
