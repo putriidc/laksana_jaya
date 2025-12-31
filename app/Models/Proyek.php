@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -29,5 +30,9 @@ class Proyek extends Model
     public function scopeActive($query)
     {
         return $query->whereNull('deleted_at');
+    }
+    public function kontrak()
+    {
+        return $this->hasOne(KontrakProyek::class, 'kode_proyek', 'kode_akun');
     }
 }

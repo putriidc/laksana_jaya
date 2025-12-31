@@ -7,10 +7,7 @@
             @csrf
             @method('PUT')
 
-            <div class="flex items-center">
-                <label class="w-[180px] font-medium">Kode Akun</label>
-                <input type="text" name="kode_akun" value="{{ old('kode_akun', $piutangHutang->kode_akun) }}" class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
-            </div>
+
 
             <div class="flex items-center">
                 <label class="w-[180px] font-medium">Nama Akun</label>
@@ -23,7 +20,7 @@
                     <option disabled>-Pilih Akun Header-</option>
                     <option value="Piutang" {{ $piutangHutang->akun_header == 'Piutang' ? 'selected' : '' }}>Piutang</option>
                     <option value="Hutang" {{ $piutangHutang->akun_header == 'Hutang' ? 'selected' : '' }}>Hutang</option>
-                    <option value="PIC" {{ $piutangHutang->akun_header == 'PIC' ? 'selected' : '' }}>PIC</option>
+
                 </select>
             </div>
 

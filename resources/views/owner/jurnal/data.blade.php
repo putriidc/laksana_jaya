@@ -224,7 +224,7 @@
                             <label for="tanggal" class="font-medium w-[150px] max-[850px]:w-full">Tgl Relasi</label>
                             <div class="flex items-center w-full justify-between max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-4">
                                 <input value="${tanggal}" type="date" name="tanggal" id="tanggal" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] max-[850px]:w-full outline-none">
-                                
+
                                 <div class="flex items-center w-[350px] max-[850px]:w-full max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-2">
                                     <label for="keterangan" class="font-medium w-[35%] max-[850px]:w-full">Keterangan</label>
                                     <input value="${keterangan}" type="text" name="keterangan" id="keterangan" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] max-[850px]:w-full outline-none mt-2 max-[850px]:mt-0">
@@ -236,7 +236,7 @@
                             <label for="kode_perkiraan" class="font-medium w-[150px] max-[850px]:w-full">Kode Akun</label>
                             <div class="flex items-center w-full justify-between max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-4">
                                 <input value="${kode_perkiraan}" type="text" name="kode_perkiraan" id="kode_perkiraan" readonly required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] max-[850px]:w-full outline-none">
-                                
+
                                 <div class="flex items-center w-[350px] max-[850px]:w-full max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-2">
                                     <label for="debet" class="font-medium w-[35%] max-[850px]:w-full">Debet</label>
                                     <input value="${debit}" type="text" name="debit" id="debet" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] max-[850px]:w-full outline-none mt-2 max-[850px]:mt-0 rupiah-format">
@@ -253,7 +253,7 @@
                                         <option value="{{ $item->nama_akun }}" data-kode="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
                                     @endforeach
                                 </select>
-                                
+
                                 <div class="flex items-center w-[350px] max-[850px]:w-full max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-2">
                                     <label for="kredit" class="font-medium w-[35%] max-[850px]:w-full">Kredit</label>
                                     <input value="${kredit}" type="text" name="kredit" id="kredit" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] max-[850px]:w-full outline-none mt-2 max-[850px]:mt-0 rupiah-format">
@@ -332,7 +332,7 @@
                                 element.value = formatNumberToRupiah(numericValue);
                             } else if (numericValue === 0) {
                                 // Jika nilainya 0, pastikan tampilannya bersih (hanya angka 0 saja)
-                                element.value = "Rp. " + 0; 
+                                element.value = "Rp. " + 0;
                             }
                         });
                     }
@@ -343,7 +343,7 @@
                 let kode = select.options[select.selectedIndex].getAttribute('data-kode');
                 document.getElementById('kode_perkiraan').value = kode;
             }
-       
+
             function transaksiMasuk() {
                 // buat form modal dengan sweetalert2
                 Swal.fire({
@@ -464,7 +464,7 @@
                                 element.value = formatNumberToRupiah(numericValue);
                             } else if (numericValue === 0) {
                                 // Jika nilainya 0, pastikan tampilannya bersih (hanya angka 0 saja)
-                                element.value = "Rp. " + 0; 
+                                element.value = "Rp. " + 0;
                             }
                         });
                     }
@@ -482,7 +482,7 @@
                             <label for="tanggal" class="font-medium w-[150px] max-[850px]:w-full">Tgl Transaksi</label>
                             <div class="flex items-center w-full justify-between max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-4">
                                 <input value="{{ $today }}" type="date" name="tanggal" id="tanggal" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] max-[850px]:w-full outline-none" readonly>
-                                
+
                                 <div class="flex items-center w-[350px] max-[850px]:w-full max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-2">
                                     <label for="kode_akun" class="font-medium w-[35%] max-[850px]:w-full">Kode Akun</label>
                                     <input type="text" name="kode_perkiraan" id="kode_akun" readonly class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] max-[850px]:w-full outline-none">
@@ -494,7 +494,7 @@
                             <label for="keterangan" class="font-medium w-[150px] max-[850px]:w-full">Keterangan</label>
                             <div class="flex items-center w-full justify-between max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-4">
                                 <input type="text" name="keterangan" id="keterangan" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] max-[850px]:w-full outline-none">
-                                
+
                                 <div class="flex items-center w-[350px] max-[850px]:w-full max-[850px]:flex-col max-[850px]:items-start max-[850px]:gap-y-2">
                                     <label for="kredit" class="font-medium w-[35%] max-[850px]:w-full">Nominal</label>
                                     <input type="text" name="kredit" id="kredit" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] max-[850px]:w-full outline-none mt-2 max-[850px]:mt-0 rupiah-format">
@@ -595,7 +595,7 @@
                                 element.value = formatNumberToRupiah(numericValue);
                             } else if (numericValue === 0) {
                                 // Jika nilainya 0, pastikan tampilannya bersih (hanya angka 0 saja)
-                                element.value = "Rp. " + 0; 
+                                element.value = "Rp. " + 0;
                             }
                         });
                     }
@@ -762,7 +762,7 @@
     //                     Swal.fire("Error", "Gagal generate: " + err.message, "error");
     //                 });
     //         }
-    //    
+    //
     //         let transaksiKredit = [];
 
     //         function transaksiKeluar() {
@@ -1040,7 +1040,7 @@
                 const selectedCount = document.querySelectorAll('.data-checkbox:checked').length;
                 const btn = document.getElementById('btn-bulk-delete');
                 const span = document.getElementById('count-selected');
-                
+
                 if (selectedCount > 0) {
                     btn.classList.remove('hidden');
                     span.innerText = selectedCount;

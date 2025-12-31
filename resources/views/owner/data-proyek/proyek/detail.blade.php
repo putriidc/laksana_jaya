@@ -74,6 +74,7 @@
                     class="w-full bg-[#D9D9D9]/40 px-4 py-2 rounded-lg" disabled>
             </div>
             {{-- button manage kontrak(sebelum isi manage kontrak) --}}
+            @if (!$proyek->kontrak)
             <div class="flex items-center gap-x-2 select-none max-[540px]:flex-col max-[540px]:items-start max-[540px]:gap-y-2 mt-2">
                 <label for="" class="w-[165px]"></label>
                 <button class="border-2 border-[#3E98D0] flex items-center gap-x-2 py-1 px-4 rounded-lg cursor-pointer"
@@ -82,6 +83,7 @@
                     <img src="{{ asset('assets/plus-circle-blue.png') }}" alt="plus icon">
                 </button>
             </div>
+            @endif
             {{-- button manage kontrak --}}
 
             {{-- setelah isi manage kontrak --}}
@@ -226,7 +228,7 @@
                                 <label class="max-[950px]:text-start font-medium w-[150px] max-[950px]:w-full">Nilai Kontrak</label>
                                 <div class="flex items-center w-full justify-between max-[950px]:flex-col max-[950px]:items-start max-[950px]:gap-y-4">
                                     <input value="{{ $proyek->nilai_kontrak }}" type="text" name="nilai_kontrak" id="nilai_kontrak" required class="bg-[#D9D9D9]/40 rounded-lg h-[40px] px-4 w-[240px] max-[950px]:w-full outline-none rupiah-format">
-                                    
+
                                     <div class="flex items-center w-[430px] max-[950px]:w-full max-[950px]:flex-col max-[950px]:items-start max-[950px]:gap-y-2">
                                         <label class="max-[950px]:text-start font-medium w-[45%] max-[950px]:w-full">Fee Dinas</label>
                                         <div class="flex items-center w-[70%] max-[950px]:w-full gap-x-2 mt-2 max-[950px]:mt-0">
@@ -241,7 +243,7 @@
                                 <label class="max-[950px]:text-start font-medium w-[150px] max-[950px]:w-full">DPP</label>
                                 <div class="flex items-center w-full justify-between max-[950px]:flex-col max-[950px]:items-start max-[950px]:gap-y-4">
                                     <input type="text" name="dpp" id="dpp" required class="bg-[#D9D9D9]/40 rounded-lg h-[40px] px-4 w-[240px] max-[950px]:w-full outline-none rupiah-format" readonly>
-                                    
+
                                     <div class="flex items-center w-[430px] max-[950px]:w-full max-[950px]:flex-col max-[950px]:items-start max-[950px]:gap-y-2">
                                         <label class="max-[950px]:text-start font-medium w-[45%] max-[950px]:w-full">Target Dana/NETT</label>
                                         <div class="flex items-center w-[70%] max-[950px]:w-full gap-x-2 mt-2 max-[950px]:mt-0">
@@ -259,7 +261,7 @@
                                         <input type="text" name="ppn" id="ppn" required class="bg-[#D9D9D9]/40 rounded-lg h-[40px] w-full px-4 outline-none rupiah-format" readonly>
                                         <input type="number" name="ppn_persen" id="ppn_persen" value="11" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[60px] max-[950px]:w-[100px] outline-none" placeholder="%">
                                     </div>
-                                    
+
                                     <div class="flex items-center w-[430px] max-[950px]:w-full max-[950px]:flex-col max-[950px]:items-start max-[950px]:gap-y-2">
                                         <label class="max-[950px]:text-start font-medium w-[45%] max-[950px]:w-full">Keuntungan</label>
                                         <input type="text" name="keuntungan" id="keuntungan" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[70%] max-[950px]:w-full outline-none mt-2 max-[950px]:mt-0 rupiah-format" readonly>

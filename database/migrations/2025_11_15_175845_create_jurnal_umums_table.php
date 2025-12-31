@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('id_content')->nullable();
             $table->string('id_pinjam')->nullable();
             $table->string('id_kasbon')->nullable();
+            $table->unsignedBigInteger('detail_eaf_id')->nullable()->index();
+            $table->unsignedInteger('detail_order')->nullable();
             $table->string('kategori')->nullable();
             $table->string('kode_jurnal');
             $table->date('tanggal');

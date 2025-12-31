@@ -14,6 +14,7 @@
                         <th class="py-2 w-[15%]">No</th>
                         <th class="py-2 w-[20%]">Tgl Mulai</th>
                         <th class="py-2 w-[25%]">Nama Proyek</th>
+                        <th class="py-2 w-[25%]">Nilai Proyek</th>
                         <th class="py-2 w-[15%]">Status</th>
                         <th class="py-2 2-[10%]">Detail</th>
                     </thead>
@@ -23,6 +24,7 @@
                                 <td class="py-2">{{ $i + 1 }}</td>
                                 <td class="py-2">{{ \Carbon\Carbon::parse($item['tgl_mulai'])->format('d/m/Y') }}</td>
                                 <td class="py-2">{{ $item['nama_proyek'] }}</td>
+                                <td class="py-2">Rp. {{ number_format($item['nilai_kontrak'], 0, ',', '.') }}</td>
                                 <td class="py-2">
                                     @php $persen = $item['persentase']; @endphp
                                     @if ($persen >= 100)

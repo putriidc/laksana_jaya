@@ -10,6 +10,7 @@ use App\Models\EafDetail;
 use App\Models\JurnalUmum;
 use Illuminate\Http\Request;
 use App\Models\PiutangHutang;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class EafController extends Controller
@@ -51,6 +52,21 @@ class EafController extends Controller
             'nominal'      => 'required|numeric|min:1',
             'detail_biaya' => 'nullable|string',
         ]);
+
+        $existingEaf = Eaf::where('nama_proyek', $request->nama_proyek)
+            ->whereNull('deleted_at')
+            ->latest()
+            ->first();
+        $hasPending = EafDetail::where('kode_eaf', $existingEaf->kode_eaf)
+            ->where('is_generate', 0)
+            ->whereNull('deleted_at')
+            ->exists();
+
+        if ($existingEaf && $hasPending) {
+            return redirect()->back()->with('error', 'Tidak bisa ajukan EAF baru, masih ada detail yang belum digenerate.');
+        }
+
+
 
         $kodeEaf = 'EAF-' . Carbon::now('Asia/Jakarta')->format('YmdHis');
 
@@ -139,47 +155,49 @@ class EafController extends Controller
 
     public function generate(Request $request, $id)
     {
-        $eaf = Eaf::with('details')->findOrFail($id);
+        DB::transaction(function () use ($id) {
+            $eaf = Eaf::with('details')->findOrFail($id);
 
-        $proyek = Proyek::whereNull('deleted_at')
-            ->where('nama_proyek', $eaf->nama_proyek)
-            ->firstOrFail();
+            $proyek = Proyek::whereNull('deleted_at')
+                ->where('nama_proyek', $eaf->nama_proyek)
+                ->firstOrFail();
 
-        // Loop semua detail, termasuk baris pertama
-        foreach ($eaf->details as $index => $detail) {
+            // Hapus dulu jurnal yang sudah ada dari EAF ini
+            JurnalUmum::whereIn('detail_eaf_id', $eaf->details->pluck('id'))
+                ->delete(); // kalau pakai softDeletes, ini otomatis soft delete
 
-            // Tentukan kode/nama proyek
-            $kodeProyek = $index === 0 ? '-' : $proyek->kode_akun;
-            $namaProyek = $index === 0 ? '-' : $proyek->nama_proyek;
+            // Loop semua detail
+            foreach ($eaf->details as $index => $detail) {
+                $kodeProyek = $index === 0 ? '-' : $proyek->kode_akun;
+                $namaProyek = $index === 0 ? '-' : $proyek->nama_proyek;
 
-            // generate kode jurnal J-00{id terakhir + 1}
-            $lastId = JurnalUmum::max('id') ?? 0;
-            $nextId = $lastId + 1;
-            $kodeJurnal = 'J-' . str_pad($nextId, 3, '0', STR_PAD_LEFT);
+                $lastId = JurnalUmum::max('id') ?? 0; // kalau soft delete
+                $nextId = $lastId + 1;
+                $kodeJurnal = 'J-' . str_pad($nextId, 3, '0', STR_PAD_LEFT);
 
-            // Insert ke jurnal umum
-            JurnalUmum::create([
-                'kode_jurnal'     => $kodeJurnal,
-                'tanggal'     => $detail->tanggal,
-                'kode_perkiraan'   => $detail->kode_akun,
-                'kode_proyek' => $kodeProyek,
-                'nama_perkiraan'   => $detail->nama_akun,
-                'nama_proyek' => $namaProyek,
-                'keterangan'  => $detail->keterangan,
-                'kategori'  => $detail->kategori ?? null,
-                'debit'       => $detail->debit,
-                'kredit'      => $detail->kredit,
-                'created_by'  => Auth::user()->id ?? 'system',
-            ]);
+                JurnalUmum::create([
+                    'detail_eaf_id' => $detail->id,
+                    'detail_order' => $index + 1,
+                    'kode_jurnal'   => $kodeJurnal,
+                    'tanggal'       => $detail->tanggal,
+                    'kode_perkiraan' => $detail->kode_akun,
+                    'kode_proyek'   => $kodeProyek,
+                    'nama_perkiraan' => $detail->nama_akun,
+                    'nama_proyek'   => $namaProyek,
+                    'keterangan'    => $detail->keterangan,
+                    'kategori'      => $detail->kategori ?? null,
+                    'debit'         => $detail->debit,
+                    'kredit'        => $detail->kredit,
+                    'created_by'    => Auth::id() ?? 'system',
+                ]);
 
-            // Update flag is_generate di EafDetail
-            $detail->update(['is_generate' => true]);
-        }
+                $detail->update(['is_generate' => true]);
+            }
+        });
 
         return redirect()->route('eaf.show', $id)
             ->with('success', 'Data berhasil digenerate ke jurnal umum');
     }
-
 
 
     /**

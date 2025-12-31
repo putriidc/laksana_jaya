@@ -84,6 +84,9 @@
                         <th class="w-[12%] py-2">
                             Tanggal
                         </th>
+                        <th class="w-[12%] py-2">
+                            Created by
+                        </th>
                         <th class="w-[22%] py-2">Keterangan</th>
                         <th class="w-[15%] py-2">
                             <div class="flex items-center justify-center">
@@ -172,6 +175,7 @@
                                     <input type="checkbox" class="data-checkbox" value="{{ $jurnal->id }}" onchange="updateBulkButton()">
                                 </td>
                                 <td class="py-2">{{ $jurnal->tanggal }}</td>
+                                <td class="py-2">{{ $jurnal->creator?->name ?? '-' }}</td>
                                 <td class="py-2">{{ $jurnal->keterangan }}</td>
                                 <td class="py-2">{{ $jurnal->nama_perkiraan }}</td>
                                 <td class="py-2">{{ $jurnal->kode_perkiraan }}</td>
@@ -180,7 +184,10 @@
                                 <td class="py-2">{{ 'RP. ' . number_format($jurnal->debit, 0, ',', '.') }}</td>
                                 <td class="py-2">{{ 'RP. ' . number_format($jurnal->kredit, 0, ',', '.') }}</td>
                                 <td class="flex justify-center items-center gap-x-2 py-2">
-                                    @if ($jurnal->tanggal == $today)
+                                     @php
+                                        $detail = $jurnal->detailEaf;
+                                    @endphp
+                                    @if ($jurnal->tanggal == $today && $jurnal->detail_order > 2)
                                         <button
                                             onclick="editLaporanKeuangan({{ $jurnal->id }},
                                         '{{ $jurnal->tanggal }}',

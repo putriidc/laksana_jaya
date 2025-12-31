@@ -23,6 +23,7 @@ class LaporanHarianController extends Controller
             ->whereNotIn('nama_perkiraan', $excludedAccounts)
             ->where('debit', '!=', 0)
             ->where('created_by',  '!=', 'owner')
+            ->where('created_by', Auth::user()->id)
             ->whereNull('deleted_at')
             ->orderBy('tanggal', 'desc')
             ->get();
@@ -31,6 +32,7 @@ class LaporanHarianController extends Controller
         $cashInGL = JurnalUmum::where('debit', '!=', 0)
             ->whereNull('deleted_at')
             ->where('created_by',  '!=', 'owner')
+            ->where('created_by', Auth::user()->id)
             ->whereNotIn('nama_perkiraan', $excludedAccounts)
             ->when($request->start_in && $request->end_in, function ($q) use ($request) {
                 $q->whereBetween('tanggal', [$request->start_in, $request->end_in]);
@@ -43,6 +45,7 @@ class LaporanHarianController extends Controller
             ->whereNotIn('nama_perkiraan', $excludedAccounts)
             ->whereNull('deleted_at')
             ->where('created_by',  '!=', 'owner')
+            ->where('created_by', Auth::user()->id)
             ->orderBy('tanggal', 'desc')
             ->get();
 
@@ -50,6 +53,7 @@ class LaporanHarianController extends Controller
         $cashOutGL = JurnalUmum::where('kredit', '!=', 0)
             ->whereNull('deleted_at')
             ->where('created_by',  '!=', 'owner')
+            ->where('created_by', Auth::user()->id)
             ->whereNotIn('nama_perkiraan', $excludedAccounts)
             ->when($request->start_out && $request->end_out, function ($q) use ($request) {
                 $q->whereBetween('tanggal', [$request->start_out, $request->end_out]);

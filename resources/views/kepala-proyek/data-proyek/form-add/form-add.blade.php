@@ -25,7 +25,7 @@
                         class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none appearance-none cursor-pointer">
                         <option selected disabled>-Pilih Pengawas-</option>
                         @foreach ($pics as $p)
-                            <option value="{{ $p->akun_header }}">{{ $p->akun_header }}</option>
+                            <option value="{{ $p->nama }}">{{ $p->nama }}</option>
                         @endforeach
                     </select>
                 </div>
