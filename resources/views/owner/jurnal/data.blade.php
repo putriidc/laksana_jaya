@@ -34,13 +34,13 @@
                     <button onclick="transaksiMasuk()" data-url="{{ route('jurnalOwner.storeDebit') }}"
                         data-token="{{ csrf_token() }}"
                         class="flex items-center gap-x-3 border-2 border-[#9A9A9A] px-4 py-2 rounded-lg cursor-pointer">
-                        <span class="text-gray-700">Debit</span>
+                        <span class="text-gray-700">Pendapatan</span>
                         <img src="{{ asset('assets/card-receive.png') }}" alt="card receive icon" class="w-[20px]">
                     </button>
                     <button onclick="transaksiKeluar()" data-url="{{ route('jurnalOwner.storeKredit') }}"
                         data-token="{{ csrf_token() }}"
                         class="flex items-center gap-x-3 border-2 border-[#9A9A9A] px-4 py-2 rounded-lg cursor-pointer">
-                        <span class="text-gray-700">Kredit</span>
+                        <span class="text-gray-700">Pengeluaran</span>
                         <img src="{{ asset('assets/card-receive.png') }}" alt="card receive icon" class="w-[20px]">
                     </button>
                     {{-- <button onclick="transferBank()"
@@ -71,6 +71,7 @@
             <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1200px]:overflow-x-auto">
                 <table class="table-fixed text-center text-sm w-full max-[1200px]:w-[1200px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
+                        <th class="w-[5%]"><input type="checkbox" id="check-all"></th>
                         <th class="w-[12%] py-2">
                             Tanggal
                         </th>
@@ -158,6 +159,9 @@
                     <tbody>
                         @foreach ($jurnals as $jurnal)
                             <tr class="bg-[#E9E9E9] border-b-[1px] border-[#CCCCCC]">
+                                <td class="py-2">
+                                    <input type="checkbox" class="data-checkbox" value="{{ $jurnal->id }}" onchange="updateBulkButton()">
+                                </td>
                                 <td class="py-2">{{ $jurnal->tanggal }}</td>
                                 <td class="py-2">{{ $jurnal->keterangan }}</td>
                                 <td class="py-2">{{ $jurnal->nama_perkiraan }}</td>
@@ -201,6 +205,9 @@
                         @endforeach
                     </tbody>
                 </table>
+            </div>
+            <div class="mt-2">
+                <button ype="button" onclick="bulkDelete()" id="btn-bulk-delete" class="border border-[#FF4B45] rounded-lg p-2 text-[#FF4B45] cursor-pointer">Hapus <span id="count-selected">0</span> Data</button>
             </div>
         </section>
         <script>
@@ -336,8 +343,7 @@
                 let kode = select.options[select.selectedIndex].getAttribute('data-kode');
                 document.getElementById('kode_perkiraan').value = kode;
             }
-        </script>
-        <script>
+       
             function transaksiMasuk() {
                 // buat form modal dengan sweetalert2
                 Swal.fire({
@@ -595,8 +601,6 @@
                     }
                 });
             }
-        </script>
-        <script>
     //         let transaksiDebet = [];
 
     //         function transaksiMasuk() {
@@ -758,9 +762,7 @@
     //                     Swal.fire("Error", "Gagal generate: " + err.message, "error");
     //                 });
     //         }
-    //     </script>
-
-            <script>
+    //    
     //         let transaksiKredit = [];
 
     //         function transaksiKeluar() {
@@ -1022,6 +1024,61 @@
                                 })
                             })
                         }
+                    }
+                });
+            }
+
+            // Fitur Check All
+            document.getElementById('check-all').addEventListener('change', function() {
+                const checkboxes = document.querySelectorAll('.data-checkbox');
+                checkboxes.forEach(cb => cb.checked = this.checked);
+                updateBulkButton();
+            });
+
+            // Update tampilan tombol hapus
+            function updateBulkButton() {
+                const selectedCount = document.querySelectorAll('.data-checkbox:checked').length;
+                const btn = document.getElementById('btn-bulk-delete');
+                const span = document.getElementById('count-selected');
+                
+                if (selectedCount > 0) {
+                    btn.classList.remove('hidden');
+                    span.innerText = selectedCount;
+                } else {
+                    btn.classList.add('hidden');
+                }
+            }
+
+            // Fungsi Eksekusi Hapus Masal
+            function bulkDelete() {
+                const selectedIds = Array.from(document.querySelectorAll('.data-checkbox:checked'))
+                                        .map(cb => cb.value);
+
+                Swal.fire({
+                    title: 'Hapus data terpilih?',
+                    text: `Anda akan menghapus ${selectedIds.length} data sekaligus!`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Hapus Semua!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Gunakan Fetch API untuk mengirim data ke Backend
+                        fetch("{{ route('jurnalOwner.bulk-delete') }}", {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({ ids: selectedIds })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire('Berhasil!', data.message, 'success')
+                                    .then(() => location.reload()); // Refresh halaman
+                            }
+                        });
                     }
                 });
             }

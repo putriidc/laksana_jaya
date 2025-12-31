@@ -83,6 +83,7 @@
                         </button>
                     </a>
                     --}}
+                    @if ( Auth::user()->name != "Novi" )
                     <a
                         href="{{ route('sampingans.index') }}"
                         class="cursor-pointer"
@@ -100,21 +101,23 @@
                         </button>
                     </a>
                     <a
-                        href="{{ route('pinjamanKaryawans.index') }}"
-                        class="cursor-pointer"
+                    href="{{ route('pinjamanKaryawans.index') }}"
+                    class="cursor-pointer"
                     >
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{
+                    <button
+                    class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
+                    >
+                    <img
+                    src="{{
                                     asset('assets/navbar/receipt-item.png')
-                                }}"
+                                    }}"
                                 alt="receipt2 icon"
-                            />
-                            <span>Pinjaman Karyawan</span>
-                        </button>
-                    </a>
+                                />
+                                <span>Pinjaman Karyawan</span>
+                            </button>
+                        </a>
+                    @endif
+                    @if (Auth::user()->name != "Siska")     
                     <a
                         href="{{ route('pinjamanTukangs.index') }}"
                         class="cursor-pointer"
@@ -131,6 +134,7 @@
                             <span>Pinjaman Tukang</span>
                         </button>
                     </a>
+                    @endif
                     <a
                         href="{{ route('eaf.index') }}"
                         class="cursor-pointer"
@@ -145,22 +149,6 @@
                                 alt="receipt2 icon"
                             />
                             <span>Form EAF</span>
-                        </button>
-                    </a>
-                    <a
-                        href="{{ route('labarugi.index') }}"
-                        class="cursor-pointer"
-                    >
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{
-                                    asset('assets/navbar/status-up.png')
-                                }}"
-                                alt="receipt2 icon"
-                            />
-                            <span>Laba Rugi</span>
                         </button>
                     </a>
                     <a
@@ -257,8 +245,8 @@
                                 class="w-[40px] h-[40px]"
                             />
                             <div class="flex flex-col text-sm">
-                                <span class="font-bold">Hi, Siska</span>
-                                <span>Admin Keuangan</span>
+                                <span class="font-bold">Hi, {{ Auth::user()->name }}</span>
+                                <span>{{ Auth::user()->role }}</span>
                             </div>
                         </div>
                     </div>
@@ -283,6 +271,8 @@
             const link = document.querySelectorAll("nav a button");
             const icon = document.querySelectorAll("nav a button img");
             const sidebar = localStorage.getItem("sidebar");
+            const user = @json(Auth::user()->name);
+            console.log(user);
             link.forEach((item, index) => {
                 item.addEventListener("click", () => {
                     localStorage.setItem("sidebar", index);
@@ -295,26 +285,60 @@
                         "text-white"
                     );
                     // ganti icon navbar sesuai indexnya
-                    if (index == 0) {
-                        item.children[0].src = "{{ asset('assets/navbar/home-click.png') }}";
-                    } else if (index == 1) {
-                        item.children[0].src = "{{ asset('assets/navbar/devices-click.png') }}";
-                    } else if (index == 2) {
-                        item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
-                    } else if (index == 3) {
-                        item.children[0].src = "{{ asset('assets/navbar/home-hashtag-click.png') }}";
-                    } else if (index == 4) {
-                        item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
-                    } else if (index == 5) {
-                        item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
-                    } else if (index == 6) {
-                        item.children[0].src = "{{ asset('assets/navbar/receipt-click.png') }}";
-                    } else if (index == 7) {
-                        item.children[0].src = "{{ asset('assets/navbar/status-up-click.png') }}";
-                    } else if (index == 8) {
-                        item.children[0].src = "{{ asset('assets/navbar/status-up-click.png') }}";
-                    } else if (index == 9) {
-                        item.children[0].src = "{{ asset('assets/navbar/book-click.png') }}";
+                    if (user == "Novi") {
+                        if (index == 0) {
+                            item.children[0].src = "{{ asset('assets/navbar/home-click.png') }}";
+                        } else if (index == 1) {
+                            item.children[0].src = "{{ asset('assets/navbar/devices-click.png') }}";
+                        } else if (index == 2) {
+                            item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
+                        } else if (index == 3) {
+                            item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
+                        } else if (index == 4) {
+                            item.children[0].src = "{{ asset('assets/navbar/receipt-click.png') }}";
+                        } else if (index == 5) {
+                            item.children[0].src = "{{ asset('assets/navbar/status-up-click.png') }}";
+                        } else if (index == 6) {
+                            item.children[0].src = "{{ asset('assets/navbar/book-click.png') }}";
+                        }
+                    } else if (user == "Siska") {
+                        if (index == 0) {
+                            item.children[0].src = "{{ asset('assets/navbar/home-click.png') }}";
+                        } else if (index == 1) {
+                            item.children[0].src = "{{ asset('assets/navbar/devices-click.png') }}";
+                        } else if (index == 2) {
+                            item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
+                        } else if (index == 3) {
+                            item.children[0].src = "{{ asset('assets/navbar/home-hashtag-click.png') }}";
+                        } else if (index == 4) {
+                            item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
+                        } else if (index == 5) {
+                            item.children[0].src = "{{ asset('assets/navbar/receipt-click.png') }}";
+                        } else if (index == 6) {
+                            item.children[0].src = "{{ asset('assets/navbar/status-up-click.png') }}";
+                        } else if (index == 7) {
+                            item.children[0].src = "{{ asset('assets/navbar/book-click.png') }}";
+                        }
+                    } else {
+                        if (index == 0) {
+                            item.children[0].src = "{{ asset('assets/navbar/home-click.png') }}";
+                        } else if (index == 1) {
+                            item.children[0].src = "{{ asset('assets/navbar/devices-click.png') }}";
+                        } else if (index == 2) {
+                            item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
+                        } else if (index == 3) {
+                            item.children[0].src = "{{ asset('assets/navbar/home-hashtag-click.png') }}";
+                        } else if (index == 4) {
+                            item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
+                        } else if (index == 5) {
+                            item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
+                        } else if (index == 6) {
+                            item.children[0].src = "{{ asset('assets/navbar/receipt-click.png') }}";
+                        } else if (index == 7) {
+                            item.children[0].src = "{{ asset('assets/navbar/status-up-click.png') }}";
+                        } else if (index == 8) {
+                            item.children[0].src = "{{ asset('assets/navbar/book-click.png') }}";
+                        }
                     }
                 } else {
                     item.classList.remove(

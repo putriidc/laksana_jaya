@@ -32,31 +32,35 @@
         <div class="flex flex-col gap-y-1 max-[415px]:gap-y-2">
             <div class="text-[#9A9A9A] flex items-center justify-between max-[550px]:gap-x-4">
                 <span class="font-bold max-[660px]:text-sm max-[415px]:w-[150px]">PENDAPATAN</span>
-                <span class="font-bold max-[660px]:text-xs">Rp. 5.000.000</span>
+                <span class="font-bold max-[660px]:text-xs">Rp. {{ number_format($totalPendapatan, 0, ',', '.') }}</span>
             </div>
+            @foreach ($pendapatanFinal as $item)
             <div class="text-[#9A9A9A] flex items-center justify-between max-[550px]:gap-x-4">
-                <span class="max-[660px]:text-sm max-[415px]:w-[150px]">Pendapatan Proyek Fisik</span>
-                <span class=" mr-20 w-[200px] max-[850px]:mr-0 max-[850px]:w-auto max-[660px]:text-xs">Rp. 3.000.000</span>
+                <span class="max-[660px]:text-sm max-[415px]:w-[150px]">{{ $item['nama_perkiraan'] }}</span>
+                <span class=" mr-20 w-[200px] max-[850px]:mr-0 max-[850px]:w-auto max-[660px]:text-xs">Rp. {{ number_format($item['total'], 0, ',', '.') }}</span>
             </div>
-            <div class="text-[#9A9A9A] flex items-center justify-between max-[550px]:gap-x-4">
+            @endforeach
+            {{-- <div class="text-[#9A9A9A] flex items-center justify-between max-[550px]:gap-x-4">
                 <span class="max-[660px]:text-sm max-[415px]:w-[150px]">Pendapatan Konsultan</span>
                 <span class=" mr-20 w-[200px] max-[850px]:mr-0 max-[850px]:w-auto max-[660px]:text-xs">Rp. 1.500.000</span>
             </div>
             <div class="text-[#9A9A9A] flex items-center justify-between max-[550px]:gap-x-4">
                 <span class="max-[660px]:text-sm max-[415px]:w-[150px]">Pendapatan Mining</span>
                 <span class=" mr-20 w-[200px] max-[850px]:mr-0 max-[850px]:w-auto max-[660px]:text-xs">Rp. 500.000</span>
-            </div>
+            </div> --}}
         </div>
         <div class="flex flex-col gap-y-1 max-[415px]:gap-y-2">
             <div class="text-[#9A9A9A] flex items-center justify-between max-[550px]:gap-x-4">
                 <span class="font-bold max-[660px]:text-sm max-[415px]:w-[150px]">HARGA POKOK PROYEK</span>
-                <span class="font-bold max-[660px]:text-xs">Rp.</span>
+                <span class="font-bold max-[660px]:text-xs">Rp. {{ number_format($totalBiaya, 0, ',', '.') }}</span>
             </div>
+            @foreach ($biayaFinal as $item)
             <div class="text-[#9A9A9A] flex items-center justify-between max-[550px]:gap-x-4">
-                <span class="max-[660px]:text-sm max-[415px]:w-[150px]">Biaya Material</span>
-                <span class=" mr-20 w-[200px] max-[850px]:mr-0 max-[850px]:w-auto max-[660px]:text-xs">Rp.</span>
+                <span class="max-[660px]:text-sm max-[415px]:w-[150px]">{{ $item['nama_perkiraan'] }}</span>
+                <span class=" mr-20 w-[200px] max-[850px]:mr-0 max-[850px]:w-auto max-[660px]:text-xs">Rp. {{ number_format($item['total'], 0, ',', '.') }}</span>
             </div>
-            <div class="text-[#9A9A9A] flex items-center justify-between max-[550px]:gap-x-4">
+            @endforeach
+            {{-- <div class="text-[#9A9A9A] flex items-center justify-between max-[550px]:gap-x-4">
                 <span class="max-[660px]:text-sm max-[415px]:w-[150px]">Biaya Gaji Tukang & Pengawas Lap</span>
                 <span class=" mr-20 w-[200px] max-[850px]:mr-0 max-[850px]:w-auto max-[660px]:text-xs">Rp.</span>
             </div>
@@ -107,12 +111,12 @@
             <div class="text-[#9A9A9A] flex items-center justify-between max-[550px]:gap-x-4">
                 <span class="max-[660px]:text-sm max-[415px]:w-[150px]">Beban PPh</span>
                 <span class=" mr-20 w-[200px] max-[850px]:mr-0 max-[850px]:w-auto max-[660px]:text-xs">Rp.</span>
-            </div>
+            </div> --}}
         </div>
         <div class="flex flex-col gap-y-1">
             <div class="text-[#9A9A9A] flex items-center justify-between max-[550px]:gap-x-4">
                 <span class="font-bold max-[660px]:text-sm max-[415px]:w-[150px]">TOTAL LABA RUGI</span>
-                <span class="font-bold max-[660px]:text-xs">Rp.</span>
+                <span class="font-bold max-[660px]:text-xs">Rp. {{ number_format($totalLabaRugi, 0, ',', '.') }}</span>
             </div>
         </div>
     </section>

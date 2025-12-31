@@ -17,7 +17,8 @@
         }
 
         .logo {
-            width: 100px;
+            width: 150px;
+            height: 40px;
         }
 
         h2 {
@@ -48,7 +49,7 @@
             background-color: rgba(240, 240, 240, 0.95);
         }
 
-        .footer {
+        .footer-right {
             margin-top: 40px;
             font-size: 11px;
             width: 100px;
@@ -56,16 +57,25 @@
             text-align: center;
             float: right;
         }
+        .footer-left {
+            margin-top: 40px;
+            font-size: 11px;
+            width: 100px;
+            /* atau sesuai lebar yang kamu mau */
+            text-align: center;
+            float: left;
+        }
     </style>
 
 
 </head>
 
 <body>
-    <div class="logo-container">
-        <img src="{{ public_path('assets/ar4anSmallLogo.png') }}" class="logo">
+    <<div class="logo-container">
+        <img src="{{ public_path('assets/logo-font.png') }}" class="logo">
     </div>
-    <h2>LAPORAN HARIAN CASH IN <br> {{ $start }} s/d {{ $end }}<br>AR4N GROUP</h2>
+    <h2 style="font-size: 20px; font-weight: bolder; margin-top: 20px;">LAPORAN KEUANGAN HARIAN</h2>
+    <h2 style="font-size: 18px; margin-top: 10px; font-weight: normal; margin-bottom: 20px;">CASH IN GLOBAL</h2>
 
     <table>
         <thead>
@@ -96,9 +106,13 @@
         </tbody>
     </table>
 
-    <div class="footer">
-        <p>Dicetak oleh,<br>{{ $role }} - {{ $admin }}</p>
-        <p style="margin-top: 70px">{{ \Carbon\Carbon::parse($tanggalCetak)->translatedFormat('d F Y') }}</p>
+    <div class="footer-right">
+        <p>{{ $role }} Keuangan</p>
+        <p style="margin-top: 70px">{{ $admin }}</p>
+    </div>
+    <div class="footer-left">
+        <p>Owner</p>
+        <p style="margin-top: 70px">Rian Purnama</p>
     </div>
 </body>
 
