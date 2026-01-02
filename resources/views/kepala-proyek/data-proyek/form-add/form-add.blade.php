@@ -1,15 +1,34 @@
 @extends('kepala-proyek.layout')
 @section('content')
     <div>
-        <h1 class="font-bold text-2xl mb-4 max-[600px]:text-xl">Form Input Data Proyek {{ $perusahaan->nama_perusahaan }}</h1>
+        <h1 class="font-bold text-2xl mb-4 max-[600px]:text-xl">Form Input Data Proyek {{ $perusahaan->nama_perusahaan }}
+        </h1>
         <div class="w-full p-8 shadow-[1px_1px_10px_rgba(0,0,0,0.1)] rounded-lg">
             <form action="{{ route('data-perusahaan.store') }}" method="POST" class="flex flex-col w-full gap-y-5">
                 @csrf
                 <div class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-1">
-                    <label for="" class="w-[200px]">Nama Paket</label>
-                    <input type="text" name="nama_paket" id=""
-                        class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" />
+                    <label for="nama_paket" class="w-[200px]">Nama Paket</label>
+
+                    <!-- Select default -->
+                    <select id="selectPaket"
+                        class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none appearance-none cursor-pointer">
+                        <option selected disabled>-Pilih Paket-</option>
+                        @foreach ($proyek as $p)
+                            <option value="{{ $p->nama_proyek }}">{{ $p->nama_proyek }}</option>
+                        @endforeach
+                    </select>
+
+                    <input id="inputPaket" type="text"
+                        class="hidden bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none"
+                        placeholder="Ketik nama paket manual">
+
+                    <button type="button" id="togglePaket" class="ml-2 text-blue-500 underline cursor-pointer">
+                        Input manual
+                    </button>
+
                 </div>
+
+
                 <div class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-1">
                     <label for="" class="w-[200px]">Perusahaan</label>
                     <select name="kode_perusahaan"
@@ -73,8 +92,8 @@
                 </div>
                 <div class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-1">
                     <label for="" class="w-[200px]">Tgl Kontraktor Ambil</label>
-                    <input type="text" data-flatpickr placeholder="Tanggal kontraktor Ambil" name="tgl_ambil" id=""
-                        class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" />
+                    <input type="text" data-flatpickr placeholder="Tanggal kontraktor Ambil" name="tgl_ambil"
+                        id="" class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" />
                 </div>
                 <div class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-1">
                     <label for="" class="w-[200px]">Kendala</label>
@@ -163,5 +182,29 @@
                 addInputSection.parentNode.insertBefore(newInput, addInputSection.nextSibling);
             });
         </script>
+        <script>
+            const toggleBtn = document.getElementById('togglePaket');
+            const selectEl = document.getElementById('selectPaket');
+            const inputEl = document.getElementById('inputPaket');
+
+            toggleBtn.addEventListener('click', () => {
+                if (selectEl.classList.contains('hidden')) {
+                    // balik ke select
+                    selectEl.classList.remove('hidden');
+                    selectEl.setAttribute('name', 'nama_paket');
+                    inputEl.classList.add('hidden');
+                    inputEl.removeAttribute('name');
+                    toggleBtn.textContent = 'Input manual';
+                } else {
+                    // ganti ke input manual
+                    selectEl.classList.add('hidden');
+                    selectEl.removeAttribute('name');
+                    inputEl.classList.remove('hidden');
+                    inputEl.setAttribute('name', 'nama_paket');
+                    toggleBtn.textContent = 'Pilih dari daftar';
+                }
+            });
+        </script>
+
     </div>
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Proyek;
 use App\Models\Progres;
 use App\Models\Karyawan;
 use App\Models\Perusahaan;
@@ -27,7 +28,11 @@ class DataPerusahaanController extends Controller
         // Ambil PIC dari PiutangHutang (akun_header yang diawali 'PIC')
         $pics = Karyawan::whereNull('deleted_at')->get();
 
-        return view('kepala-proyek.data-proyek.form-add.form-add', compact('perusahaan', 'pics'));
+        $proyek = Proyek::whereNull('deleted_at')
+        ->where('nama_perusahaan', $perusahaan->nama_perusahaan)
+        ->get();
+
+        return view('kepala-proyek.data-proyek.form-add.form-add', compact('perusahaan', 'pics', 'proyek'));
     }
 
     public function store(Request $request)
@@ -112,7 +117,11 @@ class DataPerusahaanController extends Controller
     public function edit($id)
     {
         $dataPerusahaan = DataPerusahaan::with('perusahaan')->findOrFail($id);
-        $pics = PiutangHutang::where('akun_header', 'like', 'PIC%')->get();
+        $perusahaan = Perusahaan::where('kode_perusahaan', $dataPerusahaan->kode_perusahaan)->firstOrFail();
+        $pics = Karyawan::whereNull('deleted_at')->get();
+         $proyek = Proyek::whereNull('deleted_at')
+        ->where('nama_perusahaan', $perusahaan->nama_perusahaan)
+        ->get();
         $progres = Progres::where('kode_paket', $dataPerusahaan->kode_paket)
             ->whereNull('deleted_at')
             ->orderBy('minggu', 'asc')
@@ -120,7 +129,7 @@ class DataPerusahaanController extends Controller
 
         $totalProgress = min($progres->sum('persen'), 100);
 
-        return view('kepala-proyek.data-proyek.form-edit.form-edit', compact('progres', 'totalProgress', 'dataPerusahaan',  'pics'));
+        return view('kepala-proyek.data-proyek.form-edit.form-edit', compact('progres', 'totalProgress', 'dataPerusahaan',  'pics', 'proyek'));
     }
 
     public function update(Request $request, $id)

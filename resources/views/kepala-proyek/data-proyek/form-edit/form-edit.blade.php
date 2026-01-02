@@ -9,10 +9,33 @@
                 @method('PUT')
 
                 <div class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-1">
-                    <label class="w-[200px]">Nama Paket</label>
-                    <input type="text" name="nama_paket" value="{{ $dataPerusahaan->nama_paket }}"
-                        class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" />
+                    <label for="nama_paket" class="w-[200px]">Nama Paket</label>
+
+                    <!-- Select default -->
+                    <select id="selectPaket"
+                        class="{{ in_array($dataPerusahaan->nama_paket, $proyek->pluck('nama_proyek')->toArray()) ? '' : 'hidden' }} bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none appearance-none cursor-pointer"
+                        {{ in_array($dataPerusahaan->nama_paket, $proyek->pluck('nama_proyek')->toArray()) ? 'name=nama_paket' : '' }}>
+                        <option disabled>-Pilih Paket-</option>
+                        @foreach ($proyek as $p)
+                            <option value="{{ $p->nama_proyek }}"
+                                {{ $dataPerusahaan->nama_paket == $p->nama_proyek ? 'selected' : '' }}>
+                                {{ $p->nama_proyek }}
+                            </option>
+                        @endforeach
+                    </select>
+
+                    <!-- Input manual -->
+                    <input id="inputPaket" type="text"
+                        class="{{ in_array($dataPerusahaan->nama_paket, $proyek->pluck('nama_proyek')->toArray()) ? 'hidden' : '' }} bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none"
+                        {{ in_array($dataPerusahaan->nama_paket, $proyek->pluck('nama_proyek')->toArray()) ? '' : 'name=nama_paket' }}
+                        value="{{ $dataPerusahaan->nama_paket }}" placeholder="Ketik nama paket manual">
+
+                    <!-- Toggle button -->
+                    <button type="button" id="togglePaket" class="ml-2 text-blue-500 underline cursor-pointer">
+                        {{ in_array($dataPerusahaan->nama_paket, $proyek->pluck('nama_proyek')->toArray()) ? 'Input manual' : 'Pilih dari daftar' }}
+                    </button>
                 </div>
+
                 <div class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-1">
                     <label class="w-[200px]">Perusahaan</label>
                     <input type="text" value="{{ $dataPerusahaan->perusahaan->nama_perusahaan }}"
@@ -25,8 +48,7 @@
                         class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none appearance-none cursor-pointer">
                         <option disabled>-Pilih Pengawas-</option>
                         @foreach ($pics as $p)
-                            <option value="{{ $p->nama }}"
-                                {{ $p->nama == $dataPerusahaan->pic ? 'selected' : '' }}>
+                            <option value="{{ $p->nama }}" {{ $p->nama == $dataPerusahaan->pic ? 'selected' : '' }}>
                                 {{ $p->nama }}
                             </option>
                         @endforeach
@@ -73,7 +95,7 @@
                     <span class="font-bold text-left text-lg w-full">Progress</span>
                 </div>
 
-                 <div class="flex items-center gap-x-5 min-[810px]:hidden">
+                <div class="flex items-center gap-x-5 min-[810px]:hidden">
                     <div class="w-[200px] max-[810px]:hidden"></div>
                     <div class="w-full border-b border-[#BEBEBE]"></div>
                 </div>
@@ -97,12 +119,14 @@
                         </div>
                     </div>
                     <div class="flex items-start flex-col w-full gap-y-5 add-input-section min-[810px]:hidden">
-                        <div class="flex items-center gap-x-5 w-full max-[810px]:flex-col max-[810px]:items-start max-[810px]:gap-y-1">
+                        <div
+                            class="flex items-center gap-x-5 w-full max-[810px]:flex-col max-[810px]:items-start max-[810px]:gap-y-1">
                             <label for="" class="w-[200px]">Minggu</label>
                             <input type="text" name="kendala" id="" value="{{ $p->minggu }}"
                                 class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" />
                         </div>
-                        <div class="flex items-center gap-x-5 w-full max-[810px]:flex-col max-[810px]:items-start max-[810px]:gap-y-1">
+                        <div
+                            class="flex items-center gap-x-5 w-full max-[810px]:flex-col max-[810px]:items-start max-[810px]:gap-y-1">
                             <label for="" class="w-[200px]">Persentase</label>
                             <input type="text" name="kendala" id="" value="{{ $p->persen }}%"
                                 class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" />
@@ -120,7 +144,8 @@
                 </div>
                 <div class="flex items-center gap-x-5">
                     <div class="w-[200px] max-[810px]:hidden"></div>
-                    <div class="w-full flex justify-between max-[810px]:items-center max-[540px]:flex-col max-[540px]:items-start max-[540px]:gap-y-4">
+                    <div
+                        class="w-full flex justify-between max-[810px]:items-center max-[540px]:flex-col max-[540px]:items-start max-[540px]:gap-y-4">
                         <button type="button"
                             class="border-[#45D03E] border py-1 px-2 rounded-lg flex items-center justify-center cursor-pointer"
                             id="modal-progres">
@@ -235,6 +260,7 @@
                 }
             });
         });
+
         function editProgres(id, minggu, persen) {
             Swal.fire({
                 html: `
@@ -262,4 +288,28 @@
             });
         }
     </script>
+    <script>
+    const toggleBtn = document.getElementById('togglePaket');
+    const selectEl = document.getElementById('selectPaket');
+    const inputEl = document.getElementById('inputPaket');
+
+    toggleBtn.addEventListener('click', () => {
+        if (selectEl.classList.contains('hidden')) {
+            // balik ke select
+            selectEl.classList.remove('hidden');
+            selectEl.setAttribute('name', 'nama_paket');
+            inputEl.classList.add('hidden');
+            inputEl.removeAttribute('name');
+            toggleBtn.textContent = 'Input manual';
+        } else {
+            // ganti ke input manual
+            selectEl.classList.add('hidden');
+            selectEl.removeAttribute('name');
+            inputEl.classList.remove('hidden');
+            inputEl.setAttribute('name', 'nama_paket');
+            toggleBtn.textContent = 'Pilih dari daftar';
+        }
+    });
+</script>
+
 @endsection

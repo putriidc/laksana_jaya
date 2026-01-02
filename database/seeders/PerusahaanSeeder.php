@@ -12,13 +12,13 @@ class PerusahaanSeeder extends Seeder
     {
         Perusahaan::create([
             'kode_perusahaan' => 'PR-0001',
-            'nama_perusahaan' => 'CV ARS GUMILANG',
+            'nama_perusahaan' => 'CV. ARN GUMILANG',
             'created_by' => 'system',
         ]);
 
         Perusahaan::create([
             'kode_perusahaan' => 'PR-0002',
-            'nama_perusahaan' => 'CV ARN PURNAMA',
+            'nama_perusahaan' => 'CV. ARN PURNAMA CONSULTAN',
             'created_by' => 'system',
         ]);
     }

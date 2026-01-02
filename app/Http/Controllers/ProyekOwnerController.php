@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Asset;
 use App\Models\Proyek;
+use App\Models\Progres;
 use App\Models\JurnalUmum;
 use Illuminate\Http\Request;
 use App\Models\KontrakProyek;
+use App\Models\DataPerusahaan;
 use Illuminate\Support\Facades\Auth;
 
 class ProyekOwnerController extends Controller
@@ -46,7 +48,21 @@ class ProyekOwnerController extends Controller
             $totalPengeluaran = $jurnal->sum('debit');
             $piutangVendor = 0;
             $kontrak = KontrakProyek::where('kode_proyek', $proyek->kode_akun)->first();
-            $net = $kontrak->net;
+            $net = $kontrak->net ?? 0;
+
+            $dataPerusahaan = DataPerusahaan::whereNull('deleted_at')->where('nama_paket', $proyek->nama_proyek)->first();
+
+            // Ambil semua progres yang terkait dengan kode_paket
+            $progres = Progres::where('kode_paket', $dataPerusahaan->kode_paket)
+            ->whereNull('deleted_at')
+            ->orderBy('minggu', 'asc')
+            ->get();
+
+        // Hitung total progres (maksimal 100%)
+        $totalProgress = $progres->sum('persen');
+        if ($totalProgress > 100) {
+            $totalProgress = 100;
+        }
             return [
                 'nama_proyek' => $proyek->nama_proyek,
                 'nilai_kontrak' => $proyek->nilai_kontrak,
@@ -55,9 +71,10 @@ class ProyekOwnerController extends Controller
                 'total_pengeluaran' => $totalPengeluaran,
                 'piutang_vendor' => $piutangVendor,
                 'total_tp_pv' => $totalPengeluaran + $piutangVendor,
-                'persentase' => ($totalPengeluaran / $net) * 100,
+                'persentase' => $net > 0 ? ($totalPengeluaran / $net) * 100 : 0,
                 'sisa' => $net - $totalPengeluaran,
                 'net' => $net,
+                'total_progres' => $totalProgress ?? 0,
             ];
         });
 

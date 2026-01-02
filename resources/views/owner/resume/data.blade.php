@@ -50,6 +50,7 @@
                 '{{ $item['jenis_proyek'] }}',
                 '{{ number_format($item['net'], 0, ',', '.') }}',
                 '{{ number_format($item['persentase'], 2, ',', '.') }}',
+                '{{ number_format($item['total_progres'], 2, ',', '.') }}',
                 '{{ number_format($item['sisa'], 0, ',', '.') }}',
                 '{{ $persen >= 100 ? 'FULL' : ($persen >= 80 ? 'WARNING' : ($persen >= 50 ? 'CAREFULL' : ($persen <= 25 ? 'SAVE' : 'CAREFULL'))) }}'
                     )">
@@ -97,7 +98,7 @@
             </div>
         </section>
         <script>
-            function detailResume(nama, tglMulai, totalPengeluaran, piutangVendor, totalTPPV, jenisProyek, nett, persentase, sisa, status) {
+            function detailResume(nama, tglMulai, totalPengeluaran, piutangVendor, totalTPPV, jenisProyek, nett, persentase, total_progres, sisa, status) {
     Swal.fire({
         html: `
             <section class="py-3">
@@ -134,6 +135,10 @@
                     <div class="flex justify-between items-center max-[570px]:flex-col max-[570px]:gap-y-2 max-[570px]:items-start">
                         <span class="font-semibold w-[240px] text-start">Persentase</span>
                         <span class="font-medium w-full bg-[#D9D9D9]/40 px-6 py-2 rounded-lg">${persentase}%</span>
+                    </div>
+                    <div class="flex justify-between items-center max-[570px]:flex-col max-[570px]:gap-y-2 max-[570px]:items-start">
+                        <span class="font-semibold w-[240px] text-start">Bobot</span>
+                        <span class="font-medium w-full bg-[#D9D9D9]/40 px-6 py-2 rounded-lg">${total_progres}%</span>
                     </div>
                     <div class="flex justify-between items-center max-[570px]:flex-col max-[570px]:gap-y-2 max-[570px]:items-start">
                         <span class="font-semibold w-[240px] text-start">Sisa</span>
