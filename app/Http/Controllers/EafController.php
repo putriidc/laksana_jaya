@@ -26,6 +26,7 @@ class EafController extends Controller
             ->get();
         $bank = Asset::Active()
             ->where('akun_header', 'asset_lancar_bank')
+            ->where('nama_akun', '!=', 'Kas BJB')
             ->get();
         return view('admin.form-eaf.form', compact('eaf', 'today', 'proyek', 'bank'));
     }

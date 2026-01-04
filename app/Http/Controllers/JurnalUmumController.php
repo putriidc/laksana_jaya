@@ -41,6 +41,7 @@ class JurnalUmumController extends Controller
 
         $bank = Asset::Active()
             ->where('akun_header', 'asset_lancar_bank')
+            ->where('nama_akun', '!=', 'Kas BJB')
             ->get();
         $kredit = Asset::Active()
             ->whereIn('nama_akun', [
@@ -137,6 +138,7 @@ class JurnalUmumController extends Controller
 
         JurnalUmum::create([
             'kode_jurnal'     => $kodeJurnal,
+            'detail_order' => 3,
             'tanggal'         => $request->tanggal,
             'keterangan'      => $request->keterangan,
             'nama_perkiraan'  => $request->nama_perkiraan,
@@ -167,6 +169,7 @@ class JurnalUmumController extends Controller
 
         JurnalUmum::create([
             'kode_jurnal'     => $kodeJurnal,
+            'detail_order' => 3,
             'tanggal'         => $request->tanggal,
             'keterangan'      => $request->keterangan,
             'nama_perkiraan'  => $request->nama_perkiraan,
@@ -196,6 +199,7 @@ class JurnalUmumController extends Controller
 
         JurnalUmum::create([
             'kode_jurnal'     => $kodeJurnal,
+            'detail_order' => 3,
             'tanggal'         => $request->tanggal,
             'keterangan'      => $request->keterangan,
             'nama_perkiraan'  => $request->nama_perkiraan,
@@ -228,6 +232,7 @@ class JurnalUmumController extends Controller
             // baris 1: kredit dari kas/bank asal
             JurnalUmum::create([
                 'kode_jurnal'   => $kodeJurnal,
+                'detail_order' => 3,
                 'tanggal'       => $tanggal,
                 'kode_perkiraan' => $akunFrom->kode_akun ?? '-',
                 'nama_perkiraan' => $akunFrom->nama_akun ?? '-',
@@ -242,6 +247,7 @@ class JurnalUmumController extends Controller
             // baris 2: debit ke kas/bank tujuan
             JurnalUmum::create([
                 'kode_jurnal'   => $kodeJurnal,
+                'detail_order' => 3,
                 'tanggal'       => $tanggal,
                 'kode_perkiraan' => $akunTo->kode_akun ?? '-',
                 'nama_perkiraan' => $akunTo->nama_akun ?? '-',
@@ -331,6 +337,7 @@ class JurnalUmumController extends Controller
                 JurnalUmum::create([
                     'kode_jurnal'   => $kodeJurnal,
                     'tanggal'       => now('Asia/Jakarta'),
+                    'detail_order' => 3,
                     'kode_perkiraan'     => $row['kode_akun'] ?? '-',
                     'nama_perkiraan'     => $row['nama_akun'] ?? '-',
                     'keterangan'    => $row['keterangan'] ?? '-',
@@ -358,6 +365,7 @@ class JurnalUmumController extends Controller
             foreach ($transaksi as $row) {
                 JurnalUmum::create([
                     'kode_jurnal'   => $kodeJurnal,
+                    'detail_order' => 3,
                     'tanggal'       => now('Asia/Jakarta'),
                     'kode_perkiraan'     => $row['kode_akun'] ?? '-',
                     'nama_perkiraan'     => $row['nama_akun'] ?? '-',
@@ -389,7 +397,7 @@ class JurnalUmumController extends Controller
             JurnalUmum::whereIn('id', $ids)->update(['deleted_at' => Carbon::now('Asia/Jakarta')]); // manual soft delete
 
             return response()->json([
-                'success' => true, 
+                'success' => true,
                 'message' => count($ids) . ' Data berhasil dihapus secara masal.'
             ]);
         } catch (\Exception $e) {
