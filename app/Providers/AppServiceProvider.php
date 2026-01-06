@@ -28,7 +28,5 @@ class AppServiceProvider extends ServiceProvider
         View::composer('owner.layout', function ($view) {
             $view->with('sidebarPerusahaans', Perusahaan::whereNull('deleted_at')->get());
         });
-
-        Vite::useBuildDirectory('build');
     }
 }
