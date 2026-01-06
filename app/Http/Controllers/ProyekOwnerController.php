@@ -205,6 +205,8 @@ class ProyekOwnerController extends Controller
                 'kredit'        => 0,
                 'created_by'    => 'owner',
             ]);
+
+            $manag->update(['is_generate' => true]);
             return redirect()->back()->with('success', 'Data kontrak berhasil diperbarui.');
         } catch (\Throwable $e) {
             return redirect()->back()->with('error', 'Gagal memperbarui kontrak: ' . $e->getMessage());

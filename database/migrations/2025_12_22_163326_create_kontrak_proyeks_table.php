@@ -28,6 +28,7 @@ return new class extends Migration
             $table->bigInteger('net')->default(0);
             $table->bigInteger('keuntungan')->default(0);
             $table->bigInteger('real_untung')->default(0);
+            $table->boolean('is_generate')->nullable();
             $table->string('created_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
