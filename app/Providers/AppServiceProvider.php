@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Perusahaan;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,5 +28,7 @@ class AppServiceProvider extends ServiceProvider
         View::composer('owner.layout', function ($view) {
             $view->with('sidebarPerusahaans', Perusahaan::whereNull('deleted_at')->get());
         });
+
+        Vite::useBuildDirectory('build');
     }
 }
