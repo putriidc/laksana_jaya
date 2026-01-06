@@ -11,13 +11,14 @@
             <div class="rounded-lg shadow-[1px_1px_10px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1200px]:overflow-x-auto">
                 <table class="table-auto text-center text-sm w-full max-[1200px]:w-[1200px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
-                        <th class="py-2 w-[10%]">No</th>
-                        <th class="py-2 w-[20%]">Nama Proyek</th>
-                        <th class="py-2 w-[18%]">Nilai Kontrak</th>
-                        <th class="py-2 w-[18%]">Keuntungan</th>
-                        <th class="py-2 w-[18%]">Real Untung</th>
+                        <th class="py-2">No</th>
+                        <th class="py-2 w-[15%]">Nama Proyek</th>
+                        <th class="py-2 w-[15%]">Nilai Kontrak</th>
+                        <th class="py-2 w-[15%]">Keuntungan</th>
+                        <th class="py-2 w-[15%]">Real Untung</th>
                         <th class="py-2 2-[15%]">Detail</th>
                         <th class="py-2 2-[15%]">Action</th>
+                        <th class="py-2 2-[15%]">Status</th>
                     </thead>
                     <tbody>
                         @foreach ($kontrak as $i => $item)
@@ -47,7 +48,7 @@
 
                                 <td>
                                     <button
-                                    onclick="manageKontrak(
+                                        onclick="manageKontrak(
     '{{ $item->id }}',
      '{{ $item->kode_proyek }}',
      '{{ $item->nama_proyek }}',
@@ -57,9 +58,15 @@
      '{{ $item->fee_dinas_persen }}',
      '{{ $item->net_persen }}',
 )">
-                                    <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
-                                        class="w-[22px] cursor-pointer">
-                                </button>
+                                        <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
+                                            class="w-[22px] cursor-pointer">
+                                    </button>
+                                </td>
+                                <td>
+                                    <button id="modal-generate" data-id="{{ $item->id }}"
+                                        class=" gap-x-2 border border-[#45D03E] px-2 py-2 rounded-lg cursor-pointer">
+                                        <span class="text-[#45D03E]">Proyek Selesai</span>
+                                    </button>
                                 </td>
 
                             </tr>
@@ -127,7 +134,8 @@
             }
         </script>
         <script>
-            function manageKontrak(id, kode_proyek, nama_proyek, nilai_kontrak, ppn_persen, pph_persen, fee_dinas_persen, net_persen) {
+            function manageKontrak(id, kode_proyek, nama_proyek, nilai_kontrak, ppn_persen, pph_persen, fee_dinas_persen,
+                net_persen) {
                 Swal.fire({
                     html: `
                             <div class="flex flex-col">
@@ -281,6 +289,31 @@
                     }
                 });
             }
+        </script>
+        <script>
+            const modalGenerate = document.getElementById('modal-generate');
+            modalGenerate.addEventListener('click', function(e) {
+                e.preventDefault();
+                const id = this.dataset.id;
+                Swal.fire({
+                    html: `
+            <div>
+                <h1 class="font-bold text-2xl text-center mb-5">Apakah Proyek Telah Selesai?</h1>
+                <div class="w-full flex justify-center items-center">
+                    <form action="/proyekOwner/proyekSelesai" method="POST">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="id" value="${id}">
+                        <button type="submit" class="bg-[#8CE987] w-[100px] py-2 font-semibold rounded-lg cursor-pointer mx-2">YA</button>
+                    </form>
+                    <button onclick="Swal.close()" class="bg-[#DD4049] w-[100px] py-2 font-semibold rounded-lg cursor-pointer mx-2">BATAL</button>
+                </div>
+            </div>
+        `,
+                    showCancelButton: false,
+                    showCloseButton: false,
+                    showConfirmButton: false,
+                })
+            });
         </script>
     </div>
 @endsection

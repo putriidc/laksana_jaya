@@ -125,7 +125,7 @@ class JurnalOwnerController extends Controller
                 'kode_proyek'   => '-',
                 'debit'         => 0,
                 'kredit'        => $nominal,
-                'created_by'    => Auth::id(),
+                'created_by'    => 'owner',
             ]);
 
             // baris 2: debit ke kas/bank tujuan
@@ -139,7 +139,7 @@ class JurnalOwnerController extends Controller
                 'kode_proyek'   => '-',
                 'debit'         => $nominal,
                 'kredit'        => 0,
-                'created_by'    => Auth::id(),
+                'created_by'    => 'owner',
             ]);
 
             return redirect()->back()->with('success', 'Transfer kas/bank berhasil dicatat.');
@@ -200,7 +200,7 @@ class JurnalOwnerController extends Controller
                     'kode_proyek'   => '-',
                     'debit'         => $row['debit'] ?? 0,
                     'kredit'        => $row['kredit'] ?? 0,
-                    'created_by'    => Auth::id() ?? 0,
+                    'created_by'    => 'owner',
                 ]);
             }
 
@@ -228,7 +228,7 @@ class JurnalOwnerController extends Controller
                     'kode_proyek'   => '-',
                     'debit'         => $row['debit'] ?? 0,
                     'kredit'        => $row['kredit'] ?? 0,
-                    'created_by'    => Auth::id() ?? 0,
+                    'created_by'    => 'owner',
                 ]);
             }
 
@@ -310,7 +310,7 @@ class JurnalOwnerController extends Controller
             JurnalUmum::whereIn('id', $ids)->update(['deleted_at' => Carbon::now('Asia/Jakarta')]); // manual soft delete
 
             return response()->json([
-                'success' => true, 
+                'success' => true,
                 'message' => count($ids) . ' Data berhasil dihapus secara masal.'
             ]);
         } catch (\Exception $e) {

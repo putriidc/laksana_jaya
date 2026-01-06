@@ -65,6 +65,52 @@
                     HPP Proyek</h1>
                 <div class="w-full flex flex-col justify-center py-8 gap-y-8 shadow-[1px_1px_5px_rgba(0,0,0,0.25)] rounded-lg mt-2 items-center">
                     <div class="flex flex-col w-[80%] gap-y-3">
+                    <h1 class="text-[#C0C0C0] font-bold text-xl">Data Kas / Bank</h1>
+                    <table class="table-fixed w-[80%] text-center w-full">
+                        <thead class="border-b-2 border-[#CCCCCC]">
+                            <th class="py-2 w-[10%]">No</th>
+                            <th class="py-2 w-[15%]">Kode Akun</th>
+                            <th class="py-2 w-[25%]">Nama Akun</th>
+                            <th class="py-2 w-[20%]">Post Saldo</th>
+                            <th class="py-2 w-[20%]">Post Laporan</th>
+                            <th class="py-2 w-[20%]">Action</th>
+                        </thead>
+                        <tbody>
+                            @php
+                                $nobank = 1;
+                            @endphp
+                            @foreach ($banks as $lancar)
+                                <tr class="bg-white">
+                                    <td class="py-2">{{ $nobank++ }}</td>
+                                    <td class="py-2">{{ $lancar->kode_akun }}</td>
+                                    <td class="py-2">{{ $lancar->nama_akun }}</td>
+                                    <td class="py-2">{{ $lancar->post_saldo }}</td>
+                                    <td class="py-2">{{ $lancar->post_laporan }}</td>
+                                    <td class="flex justify-center items-center gap-x-2 py-2">
+                                        {{-- Tombol Edit --}}
+                                        <a href="{{ route('akun.edit', $lancar->id) }}" class="btn btn-sm btn-primary">
+                                            <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
+                                                class="w-[22px] cursor-pointer">
+                                        </a>
+                                        <span class="border-black border-l-[1px] h-[22px]"></span>
+
+                                        {{-- Tombol Delete --}}
+                                        <form action="{{ route('akun.destroy', $lancar->id) }}" method="POST"
+                                            class="h-[22px]">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                                <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                    class="w-[22px] cursor-pointer">
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    </div>
+                    <div class="flex flex-col w-[80%] gap-y-3">
                     <h1 class="text-[#C0C0C0] font-bold text-xl">Data Asset Lancar</h1>
                     <table class="table-fixed w-[80%] text-center w-full">
                         <thead class="border-b-2 border-[#CCCCCC]">

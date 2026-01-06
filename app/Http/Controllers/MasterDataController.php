@@ -18,6 +18,8 @@ class MasterDataController extends Controller
     {
         $lancars = Asset::where('akun_header', 'asset_lancar')
         ->whereNull('deleted_at')->get();
+        $banks = Asset::where('akun_header', 'asset_lancar_bank')
+        ->whereNull('deleted_at')->get();
         $tetaps = Asset::where('akun_header', 'asset_tetap')
         ->whereNull('deleted_at')->get();
         $kewajibans = Asset::where('akun_header', 'kewajiban')
@@ -34,6 +36,7 @@ class MasterDataController extends Controller
 
         return view('admin.master-data.data', compact(
             'lancars',
+            'banks',
             'tetaps',
             'kewajibans',
             'ekuitass',

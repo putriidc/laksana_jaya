@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Asset;
 use App\Models\Proyek;
 use App\Models\Progres;
@@ -54,15 +55,15 @@ class ProyekOwnerController extends Controller
 
             // Ambil semua progres yang terkait dengan kode_paket
             $progres = Progres::where('kode_paket', $dataPerusahaan->kode_paket)
-            ->whereNull('deleted_at')
-            ->orderBy('minggu', 'asc')
-            ->get();
+                ->whereNull('deleted_at')
+                ->orderBy('minggu', 'asc')
+                ->get();
 
-        // Hitung total progres (maksimal 100%)
-        $totalProgress = $progres->sum('persen');
-        if ($totalProgress > 100) {
-            $totalProgress = 100;
-        }
+            // Hitung total progres (maksimal 100%)
+            $totalProgress = $progres->sum('persen');
+            if ($totalProgress > 100) {
+                $totalProgress = 100;
+            }
             return [
                 'nama_proyek' => $proyek->nama_proyek,
                 'nilai_kontrak' => $proyek->nilai_kontrak,
@@ -150,6 +151,60 @@ class ProyekOwnerController extends Controller
             $kontrak = KontrakProyek::findOrFail($id);
             $kontrak->update($validated);
 
+            return redirect()->back()->with('success', 'Data kontrak berhasil diperbarui.');
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('error', 'Gagal memperbarui kontrak: ' . $e->getMessage());
+        }
+    }
+
+    function ProyekSelesai(Request $request)
+    {
+        try {
+            $validated = $request->validate([
+                'id' => 'required|integer|exists:kontrak_proyeks,id',
+            ]);
+
+
+            $manag = KontrakProyek::findOrFail($validated['id']);
+
+            $lastId = JurnalUmum::max('id') ?? 0;
+            $nextId = $lastId + 1;
+            $kodeJurnal = 'J-' . str_pad($nextId, 3, '0', STR_PAD_LEFT);
+
+            $today = Carbon::now('Asia/Jakarta')->toDateString();
+
+
+
+
+
+            JurnalUmum::create([
+                'kode_jurnal'   => $kodeJurnal,
+                'detail_order' => 3,
+                'tanggal'       => $today,
+                'kode_perkiraan' => '122',
+                'nama_perkiraan' => 'Piutang Kontrak',
+                'keterangan'    => 'Pendapatan Proyek'. $manag->nama_proyek,
+                'nama_proyek'   => $manag->nama_proyek,
+                'kode_proyek'   => $manag->kode_proyek,
+                'debit'         => 0,
+                'kredit'        => $manag->real_untung,
+                'created_by'    => 'owner',
+            ]);
+
+
+            JurnalUmum::create([
+                'kode_jurnal'   => $kodeJurnal,
+                'detail_order' => 3,
+                'tanggal'       => $today,
+                'kode_perkiraan' => '410',
+                'nama_perkiraan' => 'Pendapatan Proyek Fisik',
+                'keterangan'    => 'Pendapatan Proyek'. $manag->nama_proyek,
+                'nama_proyek'   => $manag->nama_proyek,
+                'kode_proyek'   => $manag->kode_proyek,
+                'debit'         => $manag->real_untung,
+                'kredit'        => 0,
+                'created_by'    => 'owner',
+            ]);
             return redirect()->back()->with('success', 'Data kontrak berhasil diperbarui.');
         } catch (\Throwable $e) {
             return redirect()->back()->with('error', 'Gagal memperbarui kontrak: ' . $e->getMessage());

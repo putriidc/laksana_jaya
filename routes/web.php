@@ -337,6 +337,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('proyekOwner', ProyekOwnerController::class);
     Route::post('/kontrak/storeKontrak', [ProyekOwnerController::class, 'storeKontrak']) ->name('kontrak.storeKontrak');
     Route::put('/kontrak/updateKontrak/{id}', [ProyekOwnerController::class, 'updateKontrak'])->name('kontrak.update');
+    Route::post('/proyekOwner/proyekSelesai', [ProyekOwnerController::class, 'ProyekSelesai']) ->name('proyekOwner.proyekSelesai');
+
 
     Route::get('laporanHarianOwner/printCashOut', [LaporanHarianOwnerController::class, 'printCashOut'])->name('laporanHarianOwner.printCashOut');
     Route::get('laporanHarianOwner/printCashIn', [LaporanHarianOwnerController::class, 'printCashIn'])->name('laporanHarianOwner.printCashIn');
