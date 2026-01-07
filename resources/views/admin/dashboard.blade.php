@@ -20,7 +20,7 @@
                 class="bg-linear-to-b from-[#DD4049] to-[#F9E52D] p-4 rounded-lg"
             >
                 <img
-                    src="{{ asset('assets/card-send.png') }}"
+                    src="https://ar4n-group.com/public/assets/card-send.png"
                     alt="card icon"
                     class="w-[20px]"
                 />
@@ -37,7 +37,7 @@
                 class="bg-linear-to-b from-[#DD4049] to-[#F9E52D] p-4 rounded-lg"
             >
                 <img
-                    src="{{ asset('assets/card-send.png') }}"
+                    src="https://ar4n-group.com/public/assets/card-send.png"
                     alt="card icon"
                     class="w-[20px]"
                 />
@@ -54,7 +54,7 @@
                 class="bg-linear-to-b from-[#DD4049] to-[#F9E52D] p-4 rounded-lg"
             >
                 <img
-                    src="{{ asset('assets/card-send.png') }}"
+                    src="https://ar4n-group.com/public/assets/card-send.png"
                     alt="card icon"
                     class="w-[20px]"
                 />
@@ -71,7 +71,7 @@
                 class="bg-linear-to-b from-[#DD4049] to-[#F9E52D] p-4 rounded-lg"
             >
                 <img
-                    src="{{ asset('assets/card-send.png') }}"
+                    src="https://ar4n-group.com/public/assets/card-send.png"
                     alt="card icon"
                     class="w-[20px]"
                 />
