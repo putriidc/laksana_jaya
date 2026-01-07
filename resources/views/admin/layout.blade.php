@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>Admin</title>
         <link rel="preload" as="style" href="https://ar4n-group.com/public/build/assets/app-B0Qmn0OF.css" />
-       <link rel="stylesheet" href="https://ar4n-group.com/public/build/assets/app-B0Qmn0OF.css" /> 
+       <link rel="stylesheet" href="https://ar4n-group.com/public/build/assets/app-B0Qmn0OF.css" />
         <link rel="preload" as="style" href="https://ar4n-group.com/public/build/assets/app-CksuuEqD.css" />
         <link rel="modulepreload" as="script" href="https://ar4n-group.com/public/build/assets/app-Dp50F7vr.js" />
         <link rel="stylesheet" href="https://ar4n-group.com/public/build/assets/app-CksuuEqD.css" />
@@ -114,7 +114,7 @@
                             </button>
                         </a>
                     @endif
-                    @if (Auth::user()->name != "Siska")     
+                    @if (Auth::user()->name != "Siska")
                     <a
                         href="{{ route('pinjamanTukangs.index') }}"
                         class="cursor-pointer"
@@ -274,57 +274,57 @@
                     // ganti icon navbar sesuai indexnya
                     if (user == "Novi") {
                         if (index == 0) {
-                            item.children[0].src = "{{ asset('assets/navbar/home-click.png') }}";
+                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/home-click.png";
                         } else if (index == 1) {
-                            item.children[0].src = "{{ asset('assets/navbar/devices-click.png') }}";
+                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/devices-click.png";
                         } else if (index == 2) {
-                            item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
+                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-item-click.png";
                         } else if (index == 3) {
-                            item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
+                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-item-click.png";
                         } else if (index == 4) {
-                            item.children[0].src = "{{ asset('assets/navbar/receipt-click.png') }}";
+                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-click.png";
                         } else if (index == 5) {
-                            item.children[0].src = "{{ asset('assets/navbar/status-up-click.png') }}";
+                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/status-up-click.png";
                         } else if (index == 6) {
-                            item.children[0].src = "{{ asset('assets/navbar/book-click.png') }}";
+                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/book-click.png";
                         }
                     } else if (user == "Siska") {
                         if (index == 0) {
-                            item.children[0].src = "{{ asset('assets/navbar/home-click.png') }}";
+                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/home-click.png";
                         } else if (index == 1) {
-                            item.children[0].src = "{{ asset('assets/navbar/devices-click.png') }}";
+                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/devices-click.png";
                         } else if (index == 2) {
-                            item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
+                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-item-click.png";
                         } else if (index == 3) {
-                            item.children[0].src = "{{ asset('assets/navbar/home-hashtag-click.png') }}";
+                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/home-hashtag-click.png";
                         } else if (index == 4) {
-                            item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
+                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-item-click.png";
                         } else if (index == 5) {
-                            item.children[0].src = "{{ asset('assets/navbar/receipt-click.png') }}";
+                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-click.png";
                         } else if (index == 6) {
-                            item.children[0].src = "{{ asset('assets/navbar/status-up-click.png') }}";
+                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/status-up-click.png";
                         } else if (index == 7) {
-                            item.children[0].src = "{{ asset('assets/navbar/book-click.png') }}";
+                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/book-click.png";
                         }
                     } else {
                         if (index == 0) {
-                            item.children[0].src = "{{ asset('assets/navbar/home-click.png') }}";
+                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/home-click.png";
                         } else if (index == 1) {
-                            item.children[0].src = "{{ asset('assets/navbar/devices-click.png') }}";
+                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/devices-click.png";
                         } else if (index == 2) {
-                            item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
+                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-item-click.png";
                         } else if (index == 3) {
-                            item.children[0].src = "{{ asset('assets/navbar/home-hashtag-click.png') }}";
+                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/home-hashtag-click.png";
                         } else if (index == 4) {
-                            item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
+                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-item-click.png";
                         } else if (index == 5) {
-                            item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
+                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-item-click.png";
                         } else if (index == 6) {
-                            item.children[0].src = "{{ asset('assets/navbar/receipt-click.png') }}";
+                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-click.png";
                         } else if (index == 7) {
-                            item.children[0].src = "{{ asset('assets/navbar/status-up-click.png') }}";
+                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/status-up-click.png";
                         } else if (index == 8) {
-                            item.children[0].src = "{{ asset('assets/navbar/book-click.png') }}";
+                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/book-click.png";
                         }
                     }
                 } else {
