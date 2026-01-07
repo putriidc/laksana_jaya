@@ -39,30 +39,20 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach($assets as $item)
                 <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
-                    <td class="py-2">111</td>
-                    <td class="py-2">Kas Bank BCA</td>
-                    <td class="py-2">DEBET</td>
-                    <td class="py-2">Rp. 5.000.000</td>
-                    <td class="py-2">Rp. 5.000.000</td>
-                    <td class="py-2">Neraca</td>
-                    <td class="py-2">Rp. 5.000.000</td>
-                    <td class="py-2">Rp. 5.000.000</td>
-                    <td class="py-2">Rp. 5.000.000</td>
-                    <td class="py-2">Rp. 5.000.000</td>
-                </tr>
-                <tr class="bg-[#E9E9E9] border-b-[1px] border-[#CCCCCC]">
-                    <td class="py-2">111</td>
-                    <td class="py-2">Kas Bank BCA</td>
-                    <td class="py-2">DEBET</td>
-                    <td class="py-2">Rp. 5.000.000</td>
-                    <td class="py-2">Rp. 5.000.000</td>
-                    <td class="py-2">Neraca</td>
-                    <td class="py-2">Rp. 5.000.000</td>
-                    <td class="py-2">Rp. 5.000.000</td>
+                    <td class="py-2">{{ $item->kode_akun }}</td>
+                    <td class="py-2">{{ $item->nama_akun }}</td>
+                    <td class="py-2">{{ $item->post_saldo }}</td>
+                    <td class="py-2">Rp {{ number_format($item->post_laporan === 'NERACA' ? $item->debit_total : 0, 0, ',', '.') }}</td>
+                    <td class="py-2">Rp {{ number_format($item->post_laporan === 'NERACA' ? $item->kredit_total : 0, 0, ',', '.') }}</td>
+                    <td class="py-2">{{ $item->post_laporan }}</td>
+                    <td class="py-2">Rp {{ number_format($item->post_laporan === 'LABA RUGI' ? $item->debit_total : 0, 0, ',', '.') }}</td>
+                    <td class="py-2">Rp {{ number_format($item->post_laporan === 'LABA RUGI' ? $item->kredit_total : 0, 0, ',', '.') }}</td>
                     <td class="py-2">Rp. 5.000.000</td>
                     <td class="py-2">Rp. 5.000.000</td>
                 </tr>
+                @endforeach
             </tbody>
         </table>
         </div>
@@ -305,7 +295,7 @@
                 neracaLajur.classList.add('hidden')
                 neracaSaldo.classList.remove('hidden')
             }
-            
+
         })
     </script>
 </div>

@@ -32,7 +32,7 @@
             <button class="min-[1200px]:hidden cursor-pointer max-[550px]:hidden bg-white shadow-[0px_1px_8px_rgba(0,0,0,0.25)] rounded-full p-2 fixed top-[50%] left-12 rotate-[-90deg] z-[99] transition-all duration-200 ease-in-out" id="buttonView">
                 <img src="{{ asset('assets/arrow-down.png') }}" alt="arrow view" class="w-[15px]">
             </button>
-            {{-- button view --}} 
+            {{-- button view --}}
             {{-- Logo --}}
                 <div
                     class="flex justify-between items-center gap-x-1 mb-8 max-[1200px]:hidden max-[550px]:w-full max-[550px]:px-2"
@@ -158,7 +158,7 @@
                         </button>
                     </a>
 
-                    <a href="/neraca" class="cursor-pointer">
+                    <a href="{{ route('neracaOwner.index') }}" class="cursor-pointer">
                         <button
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
                         >
