@@ -46,18 +46,18 @@
                         data-token="{{ csrf_token() }}"
                         class="flex items-center gap-x-3 border-2 border-[#9A9A9A] px-4 py-2 rounded-lg cursor-pointer">
                         <span class="text-gray-700">Pendapatan</span>
-                        <img src="{{ asset('assets/card-receive.png') }}" alt="card receive icon" class="w-[20px]">
+                        <img src="https://ar4n-group.com/public/assets/card-receive.png" alt="card receive icon" class="w-[20px]">
                     </button>
                     <button onclick="transaksiKeluar()" data-url="{{ route('jurnalUmums.storeKredit') }}"
                         data-token="{{ csrf_token() }}"
                         class="flex items-center gap-x-3 border-2 border-[#9A9A9A] px-4 py-2 rounded-lg cursor-pointer">
                         <span class="text-gray-700">Pengeluaran</span>
-                        <img src="{{ asset('assets/card-receive.png') }}" alt="card receive icon" class="w-[20px]">
+                        <img src="https://ar4n-group.com/public/assets/card-receive.png" alt="card receive icon" class="w-[20px]">
                     </button>
                     <button onclick="transferBank()"
                         class="flex items-center gap-x-3 border-2 border-[#9A9A9A] px-4 py-2 rounded-lg cursor-pointer">
                         <span class="text-gray-700">Transfer Bank</span>
-                        <img src="{{ asset('assets/money-send.png') }}" alt="card receive icon" class="w-[20px]">
+                        <img src="https://ar4n-group.com/public/assets/money-send.png" alt="card receive icon" class="w-[20px]">
                     </button>
                 </div>
                 <form action="{{ route('jurnalUmums.index') }}" method="GET" class="flex items-center gap-x-2">
@@ -69,11 +69,11 @@
                         class="border-[#9A9A9A] border-2 rounded-lg py-2 px-4 w-[170px] outline-none">
                     <button type="submit"
                         class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
-                        <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" class="w-[20px]">
+                        <img src="https://ar4n-group.com/public/assets/search-normal.png" alt="search icon" class="w-[20px]">
                     </button>
                     <a href="{{ route('jurnalUmums.print', ['start' => request('start'), 'end' => request('end')]) }}"
                         class="flex items-center gap-x-3 border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer "
-                        target="_blank"><img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
+                        target="_blank"><img src="https://ar4n-group.com/public/assets/printer.png" alt="printer icon" class="w-[20px]">
                     </a>
                 </form>
             </div>
@@ -93,7 +93,7 @@
                                 <span>Nama Perkiraan</span>
                                 <div x-data="{ open: false, search: '' }" class="relative inline-block">
                                     <button @click="open = !open" class="text-xs px-2 py-1 rounded bg-white">
-                                        <img src="{{ asset('assets/filter-search.png') }}" alt="filter icon"
+                                        <img src="https://ar4n-group.com/public/assets/filter-search.png" alt="filter icon"
                                             class="w-[20px] cursor-pointer">
                                     </button>
 
@@ -131,7 +131,7 @@
                                 <span>Nama Proyek</span>
                                 <div x-data="{ open: false, search: '' }" class="inline-block relative">
                                     <button @click="open = !open" class="text-xs px-2 py-1 rounded bg-white">
-                                        <img src="{{ asset('assets/filter-search.png') }}" alt="card receive icon"
+                                        <img src="https://ar4n-group.com/public/assets/filter-search.png" alt="card receive icon"
                                             class="w-[20px] cursor-pointer">
                                     </button>
 
@@ -199,7 +199,7 @@
                                         '{{ route('jurnalUmums.update', $jurnal->id) }}'
                                         )"
                                             class="">
-                                            <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
+                                            <img src="https://ar4n-group.com/public/assets/more-circle.png" alt="edit icon"
                                                 class="w-[22px] cursor-pointer">
                                         </button>
                                         <span class="border-black border-l-[1px] h-[22px]"></span>
@@ -208,7 +208,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                <img src="https://ar4n-group.com/public/assets/close-circle.png" alt="delete icon"
                                                     class="w-[22px] cursor-pointer">
                                             </button>
                                         </form>
@@ -220,7 +220,7 @@
                                     @if ($jurnal->tanggal == $today)
                                         <a href="{{ route('jurnalUmums.edit', $jurnal->id) }}"
                                             class="btn btn-sm btn-primary">
-                                            <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
+                                            <img src="https://ar4n-group.com/public/assets/more-circle.png" alt="edit icon"
                                                 class="w-[22px] cursor-pointer">
                                         </a>
                                         <span class="border-black border-l-[1px] h-[22px]"></span>
@@ -229,7 +229,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                <img src="https://ar4n-group.com/public/assets/close-circle.png" alt="delete icon"
                                                     class="w-[22px] cursor-pointer">
                                             </button>
                                         </form>
@@ -295,11 +295,11 @@
                             <div class="w-[110px]"></div>
                             <button type="submit" class="border-[#3E98D0] border text-[#3E98D0] py-1 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
                                 <span class="">Simpan Data</span>
-                                <img src="{{ asset('assets/plus-circle-blue.png') }}" alt="arrow right blue icon" class="w-[30px]">
+                                <img src="https://ar4n-group.com/public/assets/plus-circle-blue.png" alt="arrow right blue icon" class="w-[30px]">
                             </button>
                             <button type="button" onclick="Swal.close()" class="border-[#DD4049] border text-[#DD4049] py-1 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
                                 <span class="">Batal</span>
-                                <img src="{{ asset('assets/close-circle-red.png') }}" alt="arrow right blue icon" class="w-[22px]">
+                                <img src="https://ar4n-group.com/public/assets/close-circle-red.png" alt="arrow right blue icon" class="w-[22px]">
                             </button>
                         </div>
                     </form>
@@ -332,12 +332,12 @@
                             @foreach ($bank as $item)
                             <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
                             @endforeach
-                        </select>    
+                        </select>
                     </div>
 
                     <div class="flex flex-col w-full items-start gap-y-2 pb-5 border-b border-gray">
                         <label>Keterangan</label>
-                        <input type="text" id="ketKasBank" class="bg-gray-200 rounded-lg px-4 py-2 w-full">    
+                        <input type="text" id="ketKasBank" class="bg-gray-200 rounded-lg px-4 py-2 w-full">
                     </div>
 
                     <h2 class="font-bold text-xl">Tambah Rincian Debet</h2>
@@ -349,7 +349,7 @@
                                 @foreach ($akun as $item)
                                     <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
                                 @endforeach
-                            </select>    
+                            </select>
                         </div>
                         <div class="flex flex-col items-start w-full gap-y-1">
                              <label>Keterangan</label>
@@ -431,7 +431,7 @@
                 let ket = document.getElementById('ketPerkiraan').value;
                 // let nominal = parseInt(document.getElementById('nominal').value);
                 let nominal = document.getElementById('nominal').value.replace(/[^0-9]/g, '');
-                
+
                 // ubah nominal yang tadi format rupiah menjadi number
                 let cleanNominal = nominal.replace(/[^0-9]/g, '');
 
@@ -533,7 +533,7 @@
                     html: `
                     <form id="formKasBank" class="flex flex-col items-start gap-y-4">
                     <h1 class="font-bold text-2xl mb-4">Transaksi Jurnal Pengeluaran</h1>
-                    
+
                     <div class="flex flex-col w-full items-start gap-y-2">
                         <label>Kas/Bank</label>
                         <select id="kasBank" class="bg-gray-200 rounded-lg px-4 py-2 w-full appearance-none cursor-pointer">
@@ -541,12 +541,12 @@
                             @foreach ($bank as $item)
                             <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
                             @endforeach
-                        </select>    
+                        </select>
                     </div>
 
                     <div class="flex flex-col w-full items-start gap-y-2 pb-5 border-b border-gray">
                         <label>Keterangan</label>
-                        <input type="text" id="ketKasBank" class="bg-gray-200 rounded-lg px-4 py-2 w-full">    
+                        <input type="text" id="ketKasBank" class="bg-gray-200 rounded-lg px-4 py-2 w-full">
                     </div>
 
 
@@ -559,7 +559,7 @@
                                 @foreach ($akun as $item)
                                     <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
                                 @endforeach
-                            </select>    
+                            </select>
                         </div>
                         <div class="flex flex-col items-start w-full gap-y-1">
                              <label>Keterangan</label>
@@ -643,7 +643,7 @@
                 let ket = document.getElementById('ketPerkiraan').value;
                // let nominal = parseInt(document.getElementById('nominal').value);
                 let nominal = document.getElementById('nominal').value.replace(/[^0-9]/g, '');
-                
+
                 // ubah nominal yang tadi format rupiah menjadi number
                 let cleanNominal = nominal.replace(/[^0-9]/g, '');
 
@@ -780,11 +780,11 @@
                             <div class="w-[110px]"></div>
                             <button type="submit" class="border-[#3E98D0] border text-[#3E98D0] py-1 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
                                 <span class="">Simpan Data</span>
-                                <img src="{{ asset('assets/plus-circle-blue.png') }}" alt="arrow right blue icon" class="w-[30px]">
+                                <img src="https://ar4n-group.com/public/assets/plus-circle-blue.png" alt="arrow right blue icon" class="w-[30px]">
                             </button>
                             <button type="button" onclick="Swal.close()" class="border-[#DD4049] border text-[#DD4049] py-2 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
                                 <span class="">Batal</span>
-                                <img src="{{ asset('assets/close-circle-red.png') }}" alt="arrow right blue icon" class="w-[22px]">
+                                <img src="https://ar4n-group.com/public/assets/close-circle-red.png" alt="arrow right blue icon" class="w-[22px]">
                             </button>
                         </div>
                     </form>
@@ -852,7 +852,7 @@
                 const selectedCount = document.querySelectorAll('.data-checkbox:checked').length;
                 const btn = document.getElementById('btn-bulk-delete');
                 const span = document.getElementById('count-selected');
-                
+
                 if (selectedCount > 0) {
                     btn.classList.remove('hidden');
                     span.innerText = selectedCount;
