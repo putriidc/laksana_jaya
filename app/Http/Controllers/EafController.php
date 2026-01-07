@@ -58,10 +58,15 @@ class EafController extends Controller
             ->whereNull('deleted_at')
             ->latest()
             ->first();
-        $hasPending = EafDetail::where('kode_eaf', $existingEaf->kode_eaf)
-            ->where('is_generate', 0)
-            ->whereNull('deleted_at')
-            ->exists();
+
+        $hasPending = false;
+
+        if ($existingEaf) {
+            $hasPending = EafDetail::where('kode_eaf', $existingEaf->kode_eaf)
+                ->where('is_generate', 0)
+                ->whereNull('deleted_at')
+                ->exists();
+        }
 
         if ($existingEaf && $hasPending) {
             return redirect()->back()->with('error', 'Tidak bisa ajukan EAF baru, masih ada detail yang belum digenerate.');
