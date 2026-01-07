@@ -5,7 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>Admin</title>
-        @vite('resources/css/app.css') @vite('resources/js/app.js')
+        <link rel="preload" as="style" href="https://ar4n-group.com/public/build/assets/app-B0Qmn0OF.css" />
+       <link rel="stylesheet" href="https://ar4n-group.com/public/build/assets/app-B0Qmn0OF.css" /> 
+        <link rel="preload" as="style" href="https://ar4n-group.com/public/build/assets/app-CksuuEqD.css" />
+        <link rel="modulepreload" as="script" href="https://ar4n-group.com/public/build/assets/app-Dp50F7vr.js" />
+        <link rel="stylesheet" href="https://ar4n-group.com/public/build/assets/app-CksuuEqD.css" />
+        <script type="module" src="https://ar4n-group.com/public/build/assets/app-Dp50F7vr.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
 
@@ -19,7 +24,7 @@
                 {{-- Logo --}}
                 <div class="flex justify-between items-center gap-x-1 mb-8">
                     <img
-                        src="{{ asset('assets/ar4anSmallLogo.png') }}"
+                        src="https://ar4n-group.com/public/assets/ar4anSmallLogo.png"
                         alt="LOGO AR4N GROUP"
                         class="w-[100px]"
                     />
@@ -35,7 +40,7 @@
                             class="bg-linear-to-r from-[#DD4049] to-[#F9E52D] text-white flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >
                             <img
-                                src="{{ asset('assets/navbar/home-2.png') }}"
+                                src="https://ar4n-group.com/public/assets/navbar/home-2.png"
                                 alt="home icon"
                             />
                             <span>Dashboard</span>
@@ -46,7 +51,7 @@
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >
                             <img
-                                src="{{ asset('assets/navbar/devices.png') }}"
+                                src="https://ar4n-group.com/public/assets/navbar/devices.png"
                                 alt="devices icon"
                             />
                             <span>Master Data</span>
@@ -60,9 +65,7 @@
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >
                             <img
-                                src="{{
-                                    asset('assets/navbar/receipt-item.png')
-                                }}"
+                                src="https://ar4n-group.com/public/assets/navbar/receipt-item.png"
                                 alt="receipt icon"
                             />
                             <span>Jurnal Umum</span>
@@ -74,9 +77,7 @@
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >
                             <img
-                                src="{{
-                                    asset('assets/navbar/folder-open.png')
-                                }}"
+                                src="https://ar4n-group.com/public/assets/navbar/folder-open.png"
                                 alt="folder icon"
                             />
                             <span>Buku Besar</span>
@@ -92,9 +93,7 @@
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >
                             <img
-                                src="{{
-                                    asset('assets/navbar/home-hashtag.png')
-                                }}"
+                                src="https://ar4n-group.com/public/assets/navbar/home-hashtag.png"
                                 alt="home hashtag icon"
                             />
                             <span>Freelance</span>
@@ -108,9 +107,7 @@
                     class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                     >
                     <img
-                    src="{{
-                                    asset('assets/navbar/receipt-item.png')
-                                    }}"
+                    src="https://ar4n-group.com/public/assets/navbar/receipt-item.png"
                                 alt="receipt2 icon"
                                 />
                                 <span>Pinjaman Karyawan</span>
@@ -126,9 +123,7 @@
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >
                             <img
-                                src="{{
-                                    asset('assets/navbar/receipt-item.png')
-                                }}"
+                                src="https://ar4n-group.com/public/assets/navbar/receipt-item.png"
                                 alt="receipt2 icon"
                             />
                             <span>Pinjaman Tukang</span>
@@ -143,9 +138,7 @@
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >
                             <img
-                                src="{{
-                                    asset('assets/navbar/receipt.png')
-                                }}"
+                                src="https://ar4n-group.com/public/assets/navbar/receipt.png"
                                 alt="receipt2 icon"
                             />
                             <span>Form EAF</span>
@@ -159,9 +152,7 @@
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >
                             <img
-                                src="{{
-                                    asset('assets/navbar/status-up.png')
-                                }}"
+                                src="https://ar4n-group.com/public/assets/navbar/status-up.png"
                                 alt="receipt2 icon"
                             />
                             <span>Laporan Harian</span>
@@ -175,9 +166,7 @@
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >
                             <img
-                                src="{{
-                                    asset('assets/navbar/book.png')
-                                }}"
+                                src="https://ar4n-group.com/public/assets/navbar/book.png"
                                 alt="receipt2 icon"
                             />
                             <span>Buku Besar</span>
@@ -190,7 +179,7 @@
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >
                             <img
-                                src="{{ asset('assets/navbar/chart.png') }}"
+                                src="https://ar4n-group.com/public/assets/navbar/chart.png"
                                 alt="chart icon"
                             />
                             <span>Laporan Laba Rugi</span>
@@ -201,7 +190,7 @@
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >
                             <img
-                                src="{{ asset('assets/navbar/chart.png') }}"
+                                src="https://ar4n-group.com/public/assets/navbar/chart.png"
                                 alt="chart icon"
                             />
                             <span>Neraca</span>
@@ -215,9 +204,7 @@
                                 class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                             >
                                 <img
-                                    src="{{
-                                        asset('assets/navbar/logout.png')
-                                    }}"
+                                    src="https://ar4n-group.com/public/assets/navbar/logout.png"
                                     alt="logout icon"
                                 />
                                 <span>Logout</span>
@@ -234,13 +221,13 @@
                     <span class="text-base">pages / dashboard</span>
                     <div class="flex items-center gap-x-4">
                         <img
-                            src="{{ asset('assets/notification.png') }}"
+                            src="https://ar4n-group.com/public/assets/notification.png"
                             alt="notification icon"
                             class="w-[30px] cursor-pointer"
                         />
                         <div class="flex items-center gap-x-2">
                             <img
-                                src="{{ asset('assets/Ellipse 1.png') }}"
+                                src="https://ar4n-group.com/public/assets/Ellipse 1.png"
                                 alt="profile picture"
                                 class="w-[40px] h-[40px]"
                             />
@@ -350,6 +337,6 @@
                 }
             });
         </script>
-        <script src="{{ asset('js/notification.js') }}"></script>
+        <script src="https://ar4n-group.com/public/js/notification.js"></script>
     </body>
 </html>

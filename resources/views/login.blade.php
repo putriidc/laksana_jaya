@@ -5,7 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>LOGIN AR4N GROUP</title>
-        @vite('resources/css/app.css') @vite('resources/js/app.js')
+       <link rel="preload" as="style" href="https://ar4n-group.com/public/build/assets/app-B0Qmn0OF.css" />
+       <link rel="stylesheet" href="https://ar4n-group.com/public/build/assets/app-B0Qmn0OF.css" /> 
+        <link rel="preload" as="style" href="https://ar4n-group.com/public/build/assets/app-CksuuEqD.css" />
+        <link rel="modulepreload" as="script" href="https://ar4n-group.com/public/build/assets/app-Dp50F7vr.js" />
+        <link rel="stylesheet" href="https://ar4n-group.com/public/build/assets/app-CksuuEqD.css" />
+        <script type="module" src="https://ar4n-group.com/public/build/assets/app-Dp50F7vr.js"></script>    
     </head>
     <body class="flex justify-center items-center h-screen font-poppins">
         @if(session('error'))
@@ -18,7 +23,7 @@
         <section class="flex items-center w-[90vw] max-[1040px]:justify-center">
             <div class="w-[55%] max-[1200px]:w-[45%] overflow-hidden max-[1040px]:hidden">
                 <img
-                    src="{{ asset('assets/ar4anBigLogo.png') }}"
+                    src="https://ar4n-group.com/public/assets/ar4anBigLogo.png"
                     alt="LOGO AR4N GROUP"
                     class="scale-[130%] translate-x-[30px]"
                 />
@@ -50,7 +55,7 @@
                             required
                         />
                         <img
-                            src="{{ asset('assets/username.png') }}"
+                            src="https://ar4n-group.com/public/assets/username.png"
                             alt="username icon"
                             class="w-[25px] absolute right-3"
                         />
@@ -71,7 +76,7 @@
                             required
                         />
                         <img
-                            src="{{ asset('assets/eye.png') }}"
+                            src="https://ar4n-group.com/public/assets/eye.png"
                             alt="password icon"
                             class="w-[25px] absolute right-3 cursor-pointer"
                             id="toggle"
@@ -90,7 +95,7 @@
                 </div>
             </div>
         </section>
-        <script src="{{ asset('js/login.js') }}"></script>
-        <script src="{{ asset('js/notification.js') }}"></script>
+        <script src="https://ar4n-group.com/public/js/login.js"></script>
+        <script src="https://ar4n-group.com/public/js/notification.js"></script>
     </body>
 </html>
