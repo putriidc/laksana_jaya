@@ -23,7 +23,7 @@
                         class="border-2 border-[#9A9A9A] rounded-xl select-none cursor-pointer w-[200px] z-[999]">
                         <div class="flex justify-between py-2 px-4 items-center">
                             <span>Tambah Data</span>
-                            <img src="{{ asset('assets/arrow-down.png') }}" alt="arrow down icon" id="icon-dropdown"
+                            <img src="https://ar4n-group.com/public/assets/arrow-down.pngscr" alt="arrow down icon" id="icon-dropdown"
                                 class="w-[20px]">
                             <input type="checkbox" id="dropdown-toggle" class="hidden" />
                         </div>
@@ -56,7 +56,7 @@
                         class="border-[#9A9A9A] border-2 rounded-lg py-2 px-4 outline-none">
                     <button type="submit"
                         class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
-                        <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" class="w-[20px]">
+                        <img src="https://ar4n-group.com/public/assets/search-normal.pngscr" alt="search icon" class="w-[20px]">
                     </button>
                 </form>
             </div>
@@ -89,7 +89,7 @@
                                     <td class="flex justify-center items-center gap-x-2 py-2">
                                         {{-- Tombol Edit --}}
                                         <a href="{{ route('akun.edit', $lancar->id) }}" class="btn btn-sm btn-primary">
-                                            <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
+                                            <img src="https://ar4n-group.com/public/assets/more-circle.pngscr" alt="edit icon"
                                                 class="w-[22px] cursor-pointer">
                                         </a>
                                         <span class="border-black border-l-[1px] h-[22px]"></span>
@@ -100,7 +100,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                <img src="https://ar4n-group.com/public/assets/close-circle.pngscr" alt="delete icon"
                                                     class="w-[22px] cursor-pointer">
                                             </button>
                                         </form>
@@ -135,7 +135,7 @@
                                     <td class="flex justify-center items-center gap-x-2 py-2">
                                         {{-- Tombol Edit --}}
                                         <a href="{{ route('akun.edit', $lancar->id) }}" class="btn btn-sm btn-primary">
-                                            <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
+                                            <img src="https://ar4n-group.com/public/assets/more-circle.pngscr" alt="edit icon"
                                                 class="w-[22px] cursor-pointer">
                                         </a>
                                         <span class="border-black border-l-[1px] h-[22px]"></span>
@@ -146,7 +146,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                <img src="https://ar4n-group.com/public/assets/close-circle.pngscr" alt="delete icon"
                                                     class="w-[22px] cursor-pointer">
                                             </button>
                                         </form>
@@ -181,7 +181,7 @@
                                     <td class="flex justify-center items-center gap-x-2 py-2">
                                         {{-- Tombol Edit --}}
                                         <a href="{{ route('akun.edit', $tetap->id) }}" class="btn btn-sm btn-primary">
-                                            <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
+                                            <img src="https://ar4n-group.com/public/assets/more-circle.pngscr" alt="edit icon"
                                                 class="w-[22px] cursor-pointer">
                                         </a>
                                         <span class="border-black border-l-[1px] h-[22px]"></span>
@@ -192,7 +192,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                <img src="https://ar4n-group.com/public/assets/close-circle.pngscr" alt="delete icon"
                                                     class="w-[22px] cursor-pointer">
                                             </button>
                                         </form>
@@ -227,7 +227,7 @@
                                     <td class="flex justify-center items-center gap-x-2 py-2">
                                         {{-- Tombol Edit --}}
                                         <a href="{{ route('akun.edit', $kewajiban->id) }}" class="btn btn-sm btn-primary">
-                                            <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
+                                            <img src="https://ar4n-group.com/public/assets/more-circle.pngscr" alt="edit icon"
                                                 class="w-[22px] cursor-pointer">
                                         </a>
                                         <span class="border-black border-l-[1px] h-[22px]"></span>
@@ -238,7 +238,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                <img src="https://ar4n-group.com/public/assets/close-circle.pngscr" alt="delete icon"
                                                     class="w-[22px] cursor-pointer">
                                             </button>
                                         </form>
@@ -273,7 +273,7 @@
                                     <td class="flex justify-center items-center gap-x-2 py-2">
                                         {{-- Tombol Edit --}}
                                         <a href="{{ route('akun.edit', $ekuitas->id) }}" class="btn btn-sm btn-primary">
-                                            <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
+                                            <img src="https://ar4n-group.com/public/assets/more-circle.pngscr" alt="edit icon"
                                                 class="w-[22px] cursor-pointer">
                                         </a>
                                         <span class="border-black border-l-[1px] h-[22px]"></span>
@@ -284,7 +284,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                <img src="https://ar4n-group.com/public/assets/close-circle.pngscr" alt="delete icon"
                                                     class="w-[22px] cursor-pointer">
                                             </button>
                                         </form>
@@ -319,7 +319,7 @@
                                     <td class="flex justify-center items-center gap-x-2 py-2">
                                         {{-- Tombol Edit --}}
                                         <a href="{{ route('akun.edit', $pendapatan->id) }}" class="btn btn-sm btn-primary">
-                                            <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
+                                            <img src="https://ar4n-group.com/public/assets/more-circle.pngscr" alt="edit icon"
                                                 class="w-[22px] cursor-pointer">
                                         </a>
                                         <span class="border-black border-l-[1px] h-[22px]"></span>
@@ -330,7 +330,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                <img src="https://ar4n-group.com/public/assets/close-circle.pngscr" alt="delete icon"
                                                     class="w-[22px] cursor-pointer">
                                             </button>
                                         </form>
@@ -365,7 +365,7 @@
                                     <td class="flex justify-center items-center gap-x-2 py-2">
                                         {{-- Tombol Edit --}}
                                         <a href="{{ route('akun.edit', $hpp->id) }}" class="btn btn-sm btn-primary">
-                                            <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
+                                            <img src="https://ar4n-group.com/public/assets/more-circle.pngscr" alt="edit icon"
                                                 class="w-[22px] cursor-pointer">
                                         </a>
                                         <span class="border-black border-l-[1px] h-[22px]"></span>
@@ -376,7 +376,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                <img src="https://ar4n-group.com/public/assets/close-circle.pngscr" alt="delete icon"
                                                     class="w-[22px] cursor-pointer">
                                             </button>
                                         </form>
@@ -413,7 +413,7 @@
                                         {{-- Tombol Edit --}}
                                         <a href="{{ route('piutangHutang.edit', $piutangHutang->id) }}"
                                             class="btn btn-sm btn-primary">
-                                            <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
+                                            <img src="https://ar4n-group.com/public/assets/more-circle.pngscr" alt="edit icon"
                                                 class="w-[22px] cursor-pointer">
                                         </a>
                                         <span class="border-black border-l-[1px] h-[22px]"></span>
@@ -423,7 +423,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                <img src="https://ar4n-group.com/public/assets/close-circle.pngscr" alt="delete icon"
                                                     class="w-[22px] cursor-pointer">
                                             </button>
                                         </form>
@@ -464,7 +464,7 @@
                                             {{-- Tombol Edit --}}
                                             <a href="{{ route('karyawan.edit', $karyawan->id) }}"
                                                 class="btn btn-sm btn-primary">
-                                                <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
+                                                <img src="https://ar4n-group.com/public/assets/more-circle.pngscr" alt="edit icon"
                                                     class="w-[22px] cursor-pointer">
                                             </a>
                                             <span class="border-black border-l-[1px] h-[22px]"></span>
@@ -474,7 +474,7 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                    <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                    <img src="https://ar4n-group.com/public/assets/close-circle.pngscr" alt="delete icon"
                                                         class="w-[22px] cursor-pointer">
                                                 </button>
                                             </form>
@@ -515,7 +515,7 @@
                                         {{-- Tombol Edit --}}
                                         <a href="{{ route('proyek.edit', $proyek->id) }}"
                                             class="btn btn-sm btn-primary">
-                                            <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
+                                            <img src="https://ar4n-group.com/public/assets/more-circle.pngscr" alt="edit icon"
                                                 class="w-[22px] cursor-pointer">
                                         </a>
                                         <span class="border-black border-l-[1px] h-[22px]"></span>
@@ -525,7 +525,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                <img src="https://ar4n-group.com/public/assets/close-circle.pngscr" alt="delete icon"
                                                     class="w-[22px] cursor-pointer">
                                             </button>
                                         </form>
@@ -553,6 +553,6 @@
                 });
             });
         </script>
-        <script src="{{ asset('js/dropdown.js') }}"></script>
+        <script src="https://ar4n-group.com/public/js/dropdown.js"></script>
     </div>
 @endsection
