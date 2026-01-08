@@ -17,7 +17,8 @@
                         class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none appearance-none cursor-pointer">
                         <option selected disabled>-Pilih Paket-</option>
                         @foreach ($proyek as $p)
-                            <option value="{{ $p->nama_proyek }}">{{ $p->nama_proyek }}</option>
+                            <option value="{{ $p->nama_proyek }}" data-pic="{{ $p->picRelation->nama ?? '' }}"
+                                data-nohp="{{ $p->picRelation->no_hp ?? '' }}">{{ $p->nama_proyek }}</option>
                         @endforeach
                     </select>
 
@@ -211,23 +212,13 @@
             });
         </script>
         <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                const selectPaket = document.getElementById("selectPaket");
-                const picSelect = document.querySelector('select[name="pic"]');
-                const nohpInput = document.querySelector('input[name="no_hp"]');
+            document.getElementById('selectPaket').addEventListener('change', function() {
+                const selected = this.options[this.selectedIndex];
+                const pic = selected.dataset.pic;
+                const nohp = selected.dataset.nohp;
 
-                selectPaket.addEventListener("change", function() {
-                    const selected = this.options[this.selectedIndex];
-                    const pic = selected.dataset.pic;
-                    const nohp = selected.dataset.nohp;
-
-                    if (pic) {
-                        picSelect.value = pic;
-                    }
-                    if (nohp) {
-                        nohpInput.value = nohp;
-                    }
-                });
+                document.querySelector('select[name="pic"]').value = pic;
+                document.querySelector('input[name="no_hp"]').value = nohp;
             });
         </script>
     </div>

@@ -35,7 +35,7 @@ class Proyek extends Model
     {
         return $this->hasOne(KontrakProyek::class, 'kode_proyek', 'kode_akun');
     }
-    public function pic()
+    public function picRelation()
     {
         return $this->belongsTo(Karyawan::class, 'pic', 'nama');
     }
