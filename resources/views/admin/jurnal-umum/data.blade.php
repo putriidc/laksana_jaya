@@ -2,17 +2,9 @@
 @section('content')
     <div>
         @if (session('success'))
-            <div
-                id="flash-message"
-                data-type="success"
-                data-message="{{ session('success') }}"
-            ></div>
+            <div id="flash-message" data-type="success" data-message="{{ session('success') }}"></div>
         @elseif (session('error'))
-            <div
-                id="flash-message"
-                data-type="error"
-                data-message="{{ session('error') }}"
-            ></div>
+            <div id="flash-message" data-type="error" data-message="{{ session('error') }}"></div>
         @endif
         <h1 class="font-bold text-2xl mb-6">Jurnal Umum</h1>
         <section>
@@ -46,18 +38,21 @@
                         data-token="{{ csrf_token() }}"
                         class="flex items-center gap-x-3 border-2 border-[#9A9A9A] px-4 py-2 rounded-lg cursor-pointer">
                         <span class="text-gray-700">Pendapatan</span>
-                        <img src="https://ar4n-group.com/public/assets/card-receive.png" alt="card receive icon" class="w-[20px]">
+                        <img src="https://ar4n-group.com/public/assets/card-receive.png" alt="card receive icon"
+                            class="w-[20px]">
                     </button>
                     <button onclick="transaksiKeluar()" data-url="{{ route('jurnalUmums.storeKredit') }}"
                         data-token="{{ csrf_token() }}"
                         class="flex items-center gap-x-3 border-2 border-[#9A9A9A] px-4 py-2 rounded-lg cursor-pointer">
                         <span class="text-gray-700">Pengeluaran</span>
-                        <img src="https://ar4n-group.com/public/assets/card-receive.png" alt="card receive icon" class="w-[20px]">
+                        <img src="https://ar4n-group.com/public/assets/card-receive.png" alt="card receive icon"
+                            class="w-[20px]">
                     </button>
                     <button onclick="transferBank()"
                         class="flex items-center gap-x-3 border-2 border-[#9A9A9A] px-4 py-2 rounded-lg cursor-pointer">
                         <span class="text-gray-700">Transfer Bank</span>
-                        <img src="https://ar4n-group.com/public/assets/money-send.png" alt="card receive icon" class="w-[20px]">
+                        <img src="https://ar4n-group.com/public/assets/money-send.png" alt="card receive icon"
+                            class="w-[20px]">
                     </button>
                 </div>
                 <form action="{{ route('jurnalUmums.index') }}" method="GET" class="flex items-center gap-x-2">
@@ -69,11 +64,13 @@
                         class="border-[#9A9A9A] border-2 rounded-lg py-2 px-4 w-[170px] outline-none">
                     <button type="submit"
                         class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
-                        <img src="https://ar4n-group.com/public/assets/search-normal.png" alt="search icon" class="w-[20px]">
+                        <img src="https://ar4n-group.com/public/assets/search-normal.png" alt="search icon"
+                            class="w-[20px]">
                     </button>
                     <a href="{{ route('jurnalUmums.print', ['start' => request('start'), 'end' => request('end')]) }}"
                         class="flex items-center gap-x-3 border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer "
-                        target="_blank"><img src="https://ar4n-group.com/public/assets/printer.png" alt="printer icon" class="w-[20px]">
+                        target="_blank"><img src="https://ar4n-group.com/public/assets/printer.png" alt="printer icon"
+                            class="w-[20px]">
                     </a>
                 </form>
             </div>
@@ -131,8 +128,8 @@
                                 <span>Nama Proyek</span>
                                 <div x-data="{ open: false, search: '' }" class="inline-block relative">
                                     <button @click="open = !open" class="text-xs px-2 py-1 rounded bg-white">
-                                        <img src="https://ar4n-group.com/public/assets/filter-search.png" alt="card receive icon"
-                                            class="w-[20px] cursor-pointer">
+                                        <img src="https://ar4n-group.com/public/assets/filter-search.png"
+                                            alt="card receive icon" class="w-[20px] cursor-pointer">
                                     </button>
 
                                     <div x-show="open" x-transition style="display: none;" @click.away="open = false"
@@ -172,7 +169,8 @@
                         @foreach ($jurnals as $jurnal)
                             <tr class="bg-[#E9E9E9] border-b-[1px] border-[#CCCCCC]">
                                 <td class="py-2">
-                                    <input type="checkbox" class="data-checkbox" value="{{ $jurnal->id }}" onchange="updateBulkButton()">
+                                    <input type="checkbox" class="data-checkbox" value="{{ $jurnal->id }}"
+                                        onchange="updateBulkButton()">
                                 </td>
                                 <td class="py-2">{{ $jurnal->tanggal }}</td>
                                 <td class="py-2">{{ $jurnal->creator?->name ?? '-' }}</td>
@@ -184,7 +182,7 @@
                                 <td class="py-2">{{ 'RP. ' . number_format($jurnal->debit, 0, ',', '.') }}</td>
                                 <td class="py-2">{{ 'RP. ' . number_format($jurnal->kredit, 0, ',', '.') }}</td>
                                 <td class="flex justify-center items-center gap-x-2 py-2">
-                                     @php
+                                    @php
                                         $detail = $jurnal->detailEaf;
                                     @endphp
                                     @if ($jurnal->tanggal == $today && $jurnal->detail_order > 2)
@@ -199,8 +197,8 @@
                                         '{{ route('jurnalUmums.update', $jurnal->id) }}'
                                         )"
                                             class="">
-                                            <img src="https://ar4n-group.com/public/assets/more-circle.png" alt="edit icon"
-                                                class="w-[22px] cursor-pointer">
+                                            <img src="https://ar4n-group.com/public/assets/more-circle.png"
+                                                alt="edit icon" class="w-[22px] cursor-pointer">
                                         </button>
                                         <span class="border-black border-l-[1px] h-[22px]"></span>
                                         <form action="{{ route('jurnalUmums.destroy', $jurnal->id) }}" method="POST"
@@ -208,8 +206,8 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                <img src="https://ar4n-group.com/public/assets/close-circle.png" alt="delete icon"
-                                                    class="w-[22px] cursor-pointer">
+                                                <img src="https://ar4n-group.com/public/assets/close-circle.png"
+                                                    alt="delete icon" class="w-[22px] cursor-pointer">
                                             </button>
                                         </form>
                                     @else
@@ -237,14 +235,16 @@
                                         <span class="text-gray-600 font-bold" >Lewat <br> Tanggal</span>
                                     @endif
                                 </td> --}}
-                                 {{-- <td class="flex justify-center items-center gap-x-2 py-2">{{ $jurnal->tanggal }} | {{ $today }}</td> --}}
+                                {{-- <td class="flex justify-center items-center gap-x-2 py-2">{{ $jurnal->tanggal }} | {{ $today }}</td> --}}
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
             <div class="mt-2">
-                <button ype="button" onclick="bulkDelete()" id="btn-bulk-delete" class="border border-[#FF4B45] rounded-lg p-2 text-[#FF4B45] cursor-pointer">Hapus <span id="count-selected">0</span> Data</button>
+                <button ype="button" onclick="bulkDelete()" id="btn-bulk-delete"
+                    class="border border-[#FF4B45] rounded-lg p-2 text-[#FF4B45] cursor-pointer">Hapus <span
+                        id="count-selected">0</span> Data</button>
             </div>
         </section>
         <script>
@@ -392,7 +392,7 @@
                             }
                         });
 
-                         // membuat format rupiah
+                        // membuat format rupiah
                         const rupiahFormat = document.querySelectorAll('.rupiah-format');
                         rupiahFormat.forEach(item => {
                             item.addEventListener('input', function(e) {
@@ -641,7 +641,7 @@
                 let kode = akun.value;
                 let nama = akun.options[akun.selectedIndex].text;
                 let ket = document.getElementById('ketPerkiraan').value;
-               // let nominal = parseInt(document.getElementById('nominal').value);
+                // let nominal = parseInt(document.getElementById('nominal').value);
                 let nominal = document.getElementById('nominal').value.replace(/[^0-9]/g, '');
 
                 // ubah nominal yang tadi format rupiah menjadi number
@@ -686,16 +686,8 @@
                 let totalNominal = transaksiKredit.reduce((sum, d) => sum + d.nominal, 0);
 
                 let data = [];
-                // baris pertama: Kas/Bank (debit)
-                data.push({
-                    kode_akun: kodeKas,
-                    nama_akun: namaKas,
-                    keterangan: ketKas,
-                    debit: 0,
-                    kredit: totalNominal
-                });
 
-                // baris kredit
+                // baris kredit dulu
                 transaksiKredit.forEach(d => {
                     data.push({
                         kode_akun: d.kode_akun,
@@ -704,6 +696,15 @@
                         debit: d.nominal,
                         kredit: 0
                     });
+                });
+
+                // baris terakhir: Kas/Bank (kredit)
+                data.push({
+                    kode_akun: kodeKas,
+                    nama_akun: namaKas,
+                    keterangan: ketKas,
+                    debit: 0,
+                    kredit: totalNominal
                 });
 
                 let btn = document.querySelector('[onclick="transaksiKeluar()"]');
@@ -726,7 +727,7 @@
                             Swal.fire("Error", "Gagal generate: " + res.error, "error");
                         } else {
                             Swal.fire("Sukses", "Data berhasil digenerate ke jurnal umum", "success");
-                            transaksiKredit = []; // reset array setelah sukses
+                            transaksiKredit = [];
                             location.reload();
                         }
                     })
@@ -864,7 +865,7 @@
             // Fungsi Eksekusi Hapus Masal
             function bulkDelete() {
                 const selectedIds = Array.from(document.querySelectorAll('.data-checkbox:checked'))
-                                        .map(cb => cb.value);
+                    .map(cb => cb.value);
 
                 Swal.fire({
                     title: 'Hapus data terpilih?',
@@ -877,20 +878,22 @@
                     if (result.isConfirmed) {
                         // Gunakan Fetch API untuk mengirim data ke Backend
                         fetch("{{ route('jurnalUmums.bulk-delete') }}", {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                            },
-                            body: JSON.stringify({ ids: selectedIds })
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                Swal.fire('Berhasil!', data.message, 'success')
-                                    .then(() => location.reload()); // Refresh halaman
-                            }
-                        });
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                },
+                                body: JSON.stringify({
+                                    ids: selectedIds
+                                })
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    Swal.fire('Berhasil!', data.message, 'success')
+                                        .then(() => location.reload()); // Refresh halaman
+                                }
+                            });
                     }
                 });
             }
