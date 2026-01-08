@@ -108,7 +108,7 @@ class EafController extends Controller
         $akun = Asset::Active()
             ->whereIn('nama_akun', [
                 'Piutang Proyek',
-                'Biaya Material Alat dan Barang',
+                'Biaya Material, Alat dan Barang',
                 'Biaya Gaji Tukang & pengawas lapangan',
                 'Biaya Sewa Alat Berat',
                 'Biaya Listrik,air, telphon dan Internet',
