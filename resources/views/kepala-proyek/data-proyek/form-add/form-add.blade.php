@@ -37,8 +37,8 @@
                     <select name="kode_perusahaan"
                         class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none appearance-none cursor-pointer">
                         <option disabled>-Pilih Perusahaan-</option>
-                        <option selected value="{{ $perusahaan->kode_perusahaan }}" data-pic="{{ $p->pic->nama ?? '' }}"
-                            data-nohp="{{ $p->pic->no_hp ?? '' }}">
+                        <option selected value="{{ $perusahaan->kode_perusahaan }}" data-pic="{{ $p->pic }}"
+                            data-nohp="{{ $p->no_hp }}">
                             {{ $perusahaan->nama_perusahaan }}
                         </option>
                     </select>
@@ -211,22 +211,23 @@
             });
         </script>
         <script>
-            document.getElementById('selectPaket').addEventListener('change', function() {
-                let selected = this.options[this.selectedIndex];
-                let pic = selected.getAttribute('data-pic');
-                let nohp = selected.getAttribute('data-nohp');
+            document.addEventListener("DOMContentLoaded", function() {
+                const selectPaket = document.getElementById("selectPaket");
+                const picSelect = document.querySelector('select[name="pic"]');
+                const nohpInput = document.querySelector('input[name="no_hp"]');
 
-                // isi select PIC
-                let picSelect = document.querySelector('select[name="pic"]');
-                if (pic) {
-                    picSelect.value = pic;
-                }
+                selectPaket.addEventListener("change", function() {
+                    const selected = this.options[this.selectedIndex];
+                    const pic = selected.dataset.pic;
+                    const nohp = selected.dataset.nohp;
 
-                // isi input No Hp
-                let nohpInput = document.querySelector('input[name="no_hp"]');
-                if (nohp) {
-                    nohpInput.value = nohp;
-                }
+                    if (pic) {
+                        picSelect.value = pic;
+                    }
+                    if (nohp) {
+                        nohpInput.value = nohp;
+                    }
+                });
             });
         </script>
     </div>
