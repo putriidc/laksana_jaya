@@ -37,6 +37,6 @@ class Proyek extends Model
     }
     public function pic()
     {
-        return $this->belongsTo(Karyawan::class, 'pic_id', 'id');
+        return $this->belongsTo(Karyawan::class, 'pic', 'nama');
     }
 }
