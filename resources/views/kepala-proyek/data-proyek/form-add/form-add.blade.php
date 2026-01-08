@@ -1,6 +1,9 @@
 @extends('kepala-proyek.layout')
 @section('content')
     <div>
+        @if (session('error'))
+            <div id="flash-message" data-type="error" data-message="{{ session('error') }}"></div>
+        @endif
         <h1 class="font-bold text-2xl mb-4 max-[600px]:text-xl">Form Input Data Proyek {{ $perusahaan->nama_perusahaan }}
         </h1>
         <div class="w-full p-8 shadow-[1px_1px_10px_rgba(0,0,0,0.1)] rounded-lg">

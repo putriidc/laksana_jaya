@@ -29,68 +29,74 @@ class DataPerusahaanController extends Controller
         $pics = Karyawan::whereNull('deleted_at')->get();
 
         $proyek = Proyek::whereNull('deleted_at')
-        ->where('nama_perusahaan', $perusahaan->nama_perusahaan)
-        ->get();
+            ->where('nama_perusahaan', $perusahaan->nama_perusahaan)
+            ->get();
 
         return view('kepala-proyek.data-proyek.form-add.form-add', compact('perusahaan', 'pics', 'proyek'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'kode_perusahaan' => 'required|exists:perusahaans,kode_perusahaan',
-            'nama_paket'      => 'required|string|max:255',
-            'pic'             => 'nullable|string',
-            'no_hp'           => 'nullable|string',
-            'mc0'             => 'nullable|date',
-            'korlap'          => 'nullable|string',
-            'kontraktor'      => 'nullable|string',
-            'tgl_pho'         => 'nullable|date',
-            'tgl_ambil'       => 'nullable|date',
-            'kendala'         => 'nullable|string',
-            'minggu'          => 'required|integer|min:1',
-            'persen'          => 'required|integer|min:0|max:100',
-        ]);
+        try {
+            $request->validate([
+                'kode_perusahaan' => 'required|exists:perusahaans,kode_perusahaan',
+                'nama_paket'      => 'required|string|max:255',
+                'pic'             => 'nullable|string',
+                'no_hp'           => 'nullable|string',
+                'mc0'             => 'nullable|date',
+                'korlap'          => 'nullable|string',
+                'kontraktor'      => 'nullable|string',
+                'tgl_pho'         => 'nullable',
+                'tgl_ambil'       => 'nullable',
+                'kendala'         => 'nullable',
+                'minggu'          => 'required|integer|min:1',
+                'persen'          => 'required|integer|min:0|max:100',
+            ]);
 
-        // Generate kode_paket otomatis
-        $last = DataPerusahaan::orderBy('id', 'desc')->first();
-        $nextId = $last ? $last->id + 1 : 1;
-        $kodePaket = 'PK-' . str_pad($nextId, 4, '0', STR_PAD_LEFT);
+            // Generate kode_paket otomatis
+            $last = DataPerusahaan::orderBy('id', 'desc')->first();
+            $nextId = $last ? $last->id + 1 : 1;
+            $kodePaket = 'PK-' . str_pad($nextId, 4, '0', STR_PAD_LEFT);
 
-        // Simpan DataPerusahaan
-        $dataPerusahaan = DataPerusahaan::create([
-            'kode_perusahaan'        => $request->kode_perusahaan,
-            'kode_paket'             => $kodePaket,
-            'nama_paket'             => $request->nama_paket,
-            'pic'                    => $request->pic,
-            'no_hp'                  => $request->no_hp,
-            'mc0'                    => $request->mc0,
-            'korlap'                 => $request->korlap,
-            'kontraktor'             => $request->kontraktor,
-            'tgl_pho'                => $request->tgl_pho,
-            'tgl_ambil'              => $request->tgl_ambil,
-            'kendala'                => $request->kendala,
-            'is_pho'                 => $request->has('is_pho'),
-            'is_kontraktor_admin'    => $request->has('is_kontraktor_admin'),
-            'is_pengawas_admin'      => $request->has('is_pengawas_admin'),
-            'is_kontraktor_kontraktor' => $request->has('is_kontraktor_kontraktor'),
-            'is_konsultan_kontraktor'  => $request->has('is_konsultan_kontraktor'),
-            'created_by'             => Auth::check() ? Auth::user()->id : null,
-        ]);
+            // Simpan DataPerusahaan
+            $dataPerusahaan = DataPerusahaan::create([
+                'kode_perusahaan'        => $request->kode_perusahaan,
+                'kode_paket'             => $kodePaket,
+                'nama_paket'             => $request->nama_paket,
+                'pic'                    => $request->pic,
+                'no_hp'                  => $request->no_hp,
+                'mc0'                    => $request->mc0,
+                'korlap'                 => $request->korlap,
+                'kontraktor'             => $request->kontraktor,
+                'tgl_pho'                => $request->tgl_pho,
+                'tgl_ambil'              => $request->tgl_ambil,
+                'kendala'                => $request->kendala,
+                'is_pho'                 => $request->has('is_pho'),
+                'is_kontraktor_admin'    => $request->has('is_kontraktor_admin'),
+                'is_pengawas_admin'      => $request->has('is_pengawas_admin'),
+                'is_kontraktor_kontraktor' => $request->has('is_kontraktor_kontraktor'),
+                'is_konsultan_kontraktor'  => $request->has('is_konsultan_kontraktor'),
+                'created_by'             => Auth::check() ? Auth::user()->id : null,
+            ]);
 
-        // Simpan progres pertama
-        Progres::create([
-            'kode_paket' => $kodePaket,
-            'minggu'     => $request->minggu,
-            'persen'     => $request->persen,
-            'created_by' => Auth::check() ? Auth::user()->id : null,
-        ]);
-        $data = Perusahaan::where('kode_perusahaan', $request->kode_perusahaan)
-            ->whereNull('deleted_at')
-            ->firstOrFail();
+            // Simpan progres pertama
+            Progres::create([
+                'kode_paket' => $kodePaket,
+                'minggu'     => $request->minggu,
+                'persen'     => $request->persen,
+                'created_by' => Auth::check() ? Auth::user()->id : null,
+            ]);
+            $data = Perusahaan::where('kode_perusahaan', $request->kode_perusahaan)
+                ->whereNull('deleted_at')
+                ->firstOrFail();
 
-        return redirect()->route('perusahaan.show', $data->id)
-            ->with('success', 'Data perusahaan berhasil ditambahkan');
+            return redirect()->route('perusahaan.show', $data->id)
+                ->with('success', 'Data perusahaan berhasil ditambahkan');
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()
+                // bawa input lama
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     public function show($id)
@@ -119,9 +125,9 @@ class DataPerusahaanController extends Controller
         $dataPerusahaan = DataPerusahaan::with('perusahaan')->findOrFail($id);
         $perusahaan = Perusahaan::where('kode_perusahaan', $dataPerusahaan->kode_perusahaan)->firstOrFail();
         $pics = Karyawan::whereNull('deleted_at')->get();
-         $proyek = Proyek::whereNull('deleted_at')
-        ->where('nama_perusahaan', $perusahaan->nama_perusahaan)
-        ->get();
+        $proyek = Proyek::whereNull('deleted_at')
+            ->where('nama_perusahaan', $perusahaan->nama_perusahaan)
+            ->get();
         $progres = Progres::where('kode_paket', $dataPerusahaan->kode_paket)
             ->whereNull('deleted_at')
             ->orderBy('minggu', 'asc')
@@ -192,39 +198,39 @@ class DataPerusahaanController extends Controller
     }
 
     public function updateProgres(Request $request, $progresId)
-{
-    $progres = Progres::findOrFail($progresId);
+    {
+        $progres = Progres::findOrFail($progresId);
 
-    $request->validate([
-        'minggu' => 'required|integer|min:1',
-        'persen' => 'required|integer|min:0|max:100',
-    ]);
+        $request->validate([
+            'minggu' => 'required|integer|min:1',
+            'persen' => 'required|integer|min:0|max:100',
+        ]);
 
-    $progres->update([
-        'minggu' => $request->minggu,
-        'persen' => $request->persen,
-    ]);
+        $progres->update([
+            'minggu' => $request->minggu,
+            'persen' => $request->persen,
+        ]);
 
-    return redirect()->route('data-perusahaan.edit', $progres->dataPerusahaan->id)
-        ->with('success', 'Progres berhasil diupdate');
-}
+        return redirect()->route('data-perusahaan.edit', $progres->dataPerusahaan->id)
+            ->with('success', 'Progres berhasil diupdate');
+    }
 
 
     public function destroy($id)
     {
-    $dataPerusahaan = DataPerusahaan::findOrFail($id);
+        $dataPerusahaan = DataPerusahaan::findOrFail($id);
 
-    // Soft delete DataPerusahaan
-    $dataPerusahaan->update(['deleted_at' => Carbon::now('Asia/Jakarta')]);
+        // Soft delete DataPerusahaan
+        $dataPerusahaan->update(['deleted_at' => Carbon::now('Asia/Jakarta')]);
 
-    // Soft delete semua progres yang terkait dengan kode_paket
-    Progres::where('kode_paket', $dataPerusahaan->kode_paket)
-        ->update(['deleted_at' => Carbon::now('Asia/Jakarta')]);
+        // Soft delete semua progres yang terkait dengan kode_paket
+        Progres::where('kode_paket', $dataPerusahaan->kode_paket)
+            ->update(['deleted_at' => Carbon::now('Asia/Jakarta')]);
 
         $data = Perusahaan::where('kode_perusahaan', $dataPerusahaan->kode_perusahaan)
             ->whereNull('deleted_at')
             ->firstOrFail();
-    return redirect()->route('perusahaan.show', $data->id)
-        ->with('success', 'Data perusahaan dan progres terkait berhasil dihapus');
+        return redirect()->route('perusahaan.show', $data->id)
+            ->with('success', 'Data perusahaan dan progres terkait berhasil dihapus');
     }
 }
