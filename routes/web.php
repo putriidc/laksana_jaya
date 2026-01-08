@@ -31,6 +31,7 @@ use App\Http\Controllers\pinjamanTukangController;
 use App\Http\Controllers\PinjamanContentController;
 use App\Http\Controllers\PinjamanKaryawanController;
 use App\Http\Controllers\BukuBesarController;
+use App\Http\Controllers\NeracaOwnerController;
 use App\Http\Controllers\ProgresOwnerController;
 use App\Models\JurnalUmum;
 
@@ -353,6 +354,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('progresOwner', ProgresOwnerController::class);
 
+    Route::resource('neracaOwner', NeracaOwnerController::class);
 
 
     Route::get('/owner-dashboard', function () {

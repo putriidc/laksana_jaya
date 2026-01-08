@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,5 +23,9 @@ class Asset extends Model
     public function scopeActive($query)
     {
         return $query->whereNull('deleted_at');
+    }
+    public function jurnalUmum()
+    {
+        return $this->hasMany(JurnalUmum::class, 'kode_perkiraan', 'kode_akun');
     }
 }
