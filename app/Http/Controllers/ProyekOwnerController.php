@@ -51,13 +51,18 @@ class ProyekOwnerController extends Controller
             $kontrak = KontrakProyek::where('kode_proyek', $proyek->kode_akun)->first();
             $net = $kontrak->net ?? 0;
 
-            $dataPerusahaan = DataPerusahaan::whereNull('deleted_at')->where('nama_paket', $proyek->nama_proyek)->first();
+            $dataPerusahaan = DataPerusahaan::whereNull('deleted_at')
+                ->where('nama_paket', $proyek->nama_proyek)
+                ->first();
 
-            // Ambil semua progres yang terkait dengan kode_paket
-            $progres = Progres::where('kode_paket', $dataPerusahaan->kode_paket)
-                ->whereNull('deleted_at')
-                ->orderBy('minggu', 'asc')
-                ->get();
+            $progres = collect(); // default kosong
+
+            if ($dataPerusahaan) {
+                $progres = Progres::where('kode_paket', $dataPerusahaan->kode_paket)
+                    ->whereNull('deleted_at')
+                    ->orderBy('minggu', 'asc')
+                    ->get();
+            }
 
             // Hitung total progres (maksimal 100%)
             $totalProgress = $progres->sum('persen');
@@ -183,7 +188,7 @@ class ProyekOwnerController extends Controller
                 'tanggal'       => $today,
                 'kode_perkiraan' => '122',
                 'nama_perkiraan' => 'Piutang Kontrak',
-                'keterangan'    => 'Pendapatan Proyek'. $manag->nama_proyek,
+                'keterangan'    => 'Pendapatan Proyek' . $manag->nama_proyek,
                 'nama_proyek'   => $manag->nama_proyek,
                 'kode_proyek'   => $manag->kode_proyek,
                 'debit'         => 0,
@@ -198,7 +203,7 @@ class ProyekOwnerController extends Controller
                 'tanggal'       => $today,
                 'kode_perkiraan' => '410',
                 'nama_perkiraan' => 'Pendapatan Proyek Fisik',
-                'keterangan'    => 'Pendapatan Proyek'. $manag->nama_proyek,
+                'keterangan'    => 'Pendapatan Proyek' . $manag->nama_proyek,
                 'nama_proyek'   => $manag->nama_proyek,
                 'kode_proyek'   => $manag->kode_proyek,
                 'debit'         => $manag->real_untung,
