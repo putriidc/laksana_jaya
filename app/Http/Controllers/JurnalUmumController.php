@@ -39,10 +39,16 @@ class JurnalUmumController extends Controller
             ->get();
 
 
-        $bank = Asset::Active()
-            ->where('akun_header', 'asset_lancar_bank')
-            ->where('nama_akun', '!=', 'Kas BJB')
-            ->get();
+        $allowedAccounts = [];
+        if (Auth::user()->name === 'Siska') {
+            $allowedAccounts = ['Kas Kecil', 'Kas Flip', 'OVO'];
+        } elseif (Auth::user()->name === 'Novi') {
+            $allowedAccounts = ['Kas Besar', 'Kas Bank BCA', 'Kas Flip', 'OVO'];
+        }
+        $bank = Asset::Active()->where('akun_header', 'asset_lancar_bank')
+        ->whereIn('nama_akun', $allowedAccounts)
+        ->where('nama_akun', '!=', 'Kas BJB')
+        ->get();
         $kredit = Asset::Active()
             ->whereIn('nama_akun', [
                 'Pendapatan Proyek Fisik',
@@ -72,9 +78,9 @@ class JurnalUmumController extends Controller
         }
         // ambil semua nama_akun dari asset yang mau dikecualikan
         $excludedAccounts = Asset::active()
-        ->whereIn('akun_header', ['asset_tetap', 'kewajiban', 'ekuitas', 'pendapatan'])
-        ->whereNotIn('kode_akun', ['450', '451'])
-        ->pluck('nama_akun');
+            ->whereIn('akun_header', ['asset_tetap', 'kewajiban', 'ekuitas', 'pendapatan'])
+            ->whereNotIn('kode_akun', ['450', '451'])
+            ->pluck('nama_akun');
         $query->whereNotIn('nama_perkiraan', $excludedAccounts);
 
         $jurnals = $query->orderBy('id', 'desc')
@@ -324,9 +330,9 @@ class JurnalUmumController extends Controller
         $jurnalUmum = JurnalUmum::findOrFail($id);
         $jurnalUmum->update(['deleted_at' => Carbon::now('Asia/Jakarta')]); // manual soft delete
         // kalau ada detail_eaf terkait, soft delete juga
-        if ($jurnalUmum->detailEaf){
-                $jurnalUmum->detailEaf->update(['deleted_at' => Carbon::now('Asia/Jakarta')]);
-            }
+        if ($jurnalUmum->detailEaf) {
+            $jurnalUmum->detailEaf->update(['deleted_at' => Carbon::now('Asia/Jakarta')]);
+        }
         return redirect()->route('jurnalUmums.index')->with('success', 'Jurnal berhasil dihapus (soft delete)');
     }
 
