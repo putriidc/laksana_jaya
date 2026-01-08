@@ -6,9 +6,9 @@ togglePassword.addEventListener("click", function () {
     const type =
         passwordInput.getAttribute("type") === "password" ? "text" : "password";
     if (type === "password") {
-        togglePassword.src = "/assets/eye.png";
+        togglePassword.src = "https://ar4n-group.com/public/assets/eye.png";
     } else {
-        togglePassword.src = "/assets/eye-slash.png";
+        togglePassword.src = "https://ar4n-group.com/public/assets/eye-slash.png";
     }
     passwordInput.setAttribute("type", type);
 });
