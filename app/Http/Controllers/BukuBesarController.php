@@ -37,13 +37,13 @@ class BukuBesarController extends Controller
         $allowedPendapatan = ['450', '451'];
         $disallowedHeaders = ['asset_tetap', 'kewajiban', 'ekuitas'];
 
-        if (in_array($account->akun_header, $disallowedHeaders) || 
+        if (in_array($account->akun_header, $disallowedHeaders) ||
         ($account->akun_header == 'pendapatan' && !in_array($account->kode_akun, $allowedPendapatan))) {
             return redirect()->back()->with('error', 'Role Ini dilarang untuk membuka Buku Besar ini.');
         }
 
         // 2. Ambil transaksi (Jurnal) - Siapkan Query dulu, JANGAN di ->get() dulu
-        $query = JurnalUmum::where('kode_perkiraan', $code)->orderBy('tanggal', 'asc');
+        $query = JurnalUmum::active()->where('kode_perkiraan', $code)->orderBy('tanggal', 'asc');
 
         // CEK FILTER TANGGAL
         if ($request->filled('tgl_mulai') && $request->filled('tgl_selesai')) {
@@ -55,7 +55,7 @@ class BukuBesarController extends Controller
         $transactions = $query->get();
 
         // 3. Logika Running Balance
-        $saldoBerjalan = 0; 
+        $saldoBerjalan = 0;
         foreach ($transactions as $trx) {
             if ($account->post_saldo == 'DEBET') {
                 $saldoBerjalan += ($trx->debit - $trx->kredit);
@@ -87,13 +87,13 @@ class BukuBesarController extends Controller
         $allowedPendapatan = ['450', '451'];
         $disallowedHeaders = ['asset_lancar_bank', 'hpp_proyek'];
 
-        if (in_array($account->akun_header, $disallowedHeaders) || 
+        if (in_array($account->akun_header, $disallowedHeaders) ||
         ($account->akun_header == 'pendapatan' && !in_array($account->kode_akun, $allowedPendapatan))) {
             return redirect()->back()->with('error', 'Role Ini dilarang untuk membuka Buku Besar ini.');
         }
 
         // 2. Ambil transaksi (Jurnal) - Siapkan Query dulu, JANGAN di ->get() dulu
-        $query = JurnalUmum::where('kode_perkiraan', $code)->orderBy('tanggal', 'asc');
+        $query = JurnalUmum::active()->where('kode_perkiraan', $code)->orderBy('tanggal', 'asc');
 
         // CEK FILTER TANGGAL
         if ($request->filled('tgl_mulai') && $request->filled('tgl_selesai')) {
@@ -105,7 +105,7 @@ class BukuBesarController extends Controller
         $transactions = $query->get();
 
         // 3. Logika Running Balance
-        $saldoBerjalan = 0; 
+        $saldoBerjalan = 0;
         foreach ($transactions as $trx) {
             if ($account->post_saldo == 'DEBET') {
                 $saldoBerjalan += ($trx->debit - $trx->kredit);
@@ -119,7 +119,7 @@ class BukuBesarController extends Controller
     }
 
     public function print($code, Request $request)
-    {   
+    {
         // 1. Ambil info akun (Master)
         $account = Asset::where('kode_akun', $code)->firstOrFail();
 
@@ -133,7 +133,7 @@ class BukuBesarController extends Controller
         $transactions = $query->get();
 
         // 3. Logika Running Balance (Wajib dihitung ulang untuk PDF)
-        $saldoBerjalan = 0; 
+        $saldoBerjalan = 0;
         foreach ($transactions as $trx) {
             if ($account->post_saldo == 'DEBET') {
                 $saldoBerjalan += ($trx->debit - $trx->kredit);
@@ -162,7 +162,7 @@ class BukuBesarController extends Controller
     }
 
     public function print_owner($code, Request $request)
-    {   
+    {
         // 1. Ambil info akun (Master)
         $account = Asset::where('kode_akun', $code)->firstOrFail();
 
@@ -176,7 +176,7 @@ class BukuBesarController extends Controller
         $transactions = $query->get();
 
         // 3. Logika Running Balance (Wajib dihitung ulang untuk PDF)
-        $saldoBerjalan = 0; 
+        $saldoBerjalan = 0;
         foreach ($transactions as $trx) {
             if ($account->post_saldo == 'DEBET') {
                 $saldoBerjalan += ($trx->debit - $trx->kredit);
