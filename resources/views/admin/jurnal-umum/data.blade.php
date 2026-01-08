@@ -691,8 +691,8 @@
                     kode_akun: kodeKas,
                     nama_akun: namaKas,
                     keterangan: ketKas,
-                    debit: totalNominal,
-                    kredit: 0
+                    debit: 0,
+                    kredit: totalNominal
                 });
 
                 // baris kredit
@@ -701,8 +701,8 @@
                         kode_akun: d.kode_akun,
                         nama_akun: d.nama_akun,
                         keterangan: d.keterangan,
-                        debit: 0,
-                        kredit: d.nominal
+                        debit: d.nominal,
+                        kredit: 0
                     });
                 });
 
