@@ -232,6 +232,21 @@ class JurnalUmumController extends Controller
             $akunFrom = Asset::where('kode_akun', $from)->first();
             $akunTo   = Asset::where('kode_akun', $to)->first();
 
+            // baris 2: debit ke kas/bank tujuan
+            JurnalUmum::create([
+                'kode_jurnal'   => $kodeJurnal,
+                'detail_order' => 3,
+                'tanggal'       => $tanggal,
+                'kode_perkiraan' => $akunTo->kode_akun ?? '-',
+                'nama_perkiraan' => $akunTo->nama_akun ?? '-',
+                'keterangan'    => $keterangan,
+                'nama_proyek'   => '-',
+                'kode_proyek'   => '-',
+                'debit'         => $nominal,
+                'kredit'        => 0,
+                'created_by'    => Auth::id(),
+            ]);
+
             // baris 1: kredit dari kas/bank asal
             JurnalUmum::create([
                 'kode_jurnal'   => $kodeJurnal,
@@ -247,20 +262,7 @@ class JurnalUmumController extends Controller
                 'created_by'    => Auth::id(),
             ]);
 
-            // baris 2: debit ke kas/bank tujuan
-            JurnalUmum::create([
-                'kode_jurnal'   => $kodeJurnal,
-                'detail_order' => 3,
-                'tanggal'       => $tanggal,
-                'kode_perkiraan' => $akunTo->kode_akun ?? '-',
-                'nama_perkiraan' => $akunTo->nama_akun ?? '-',
-                'keterangan'    => $keterangan,
-                'nama_proyek'   => '-',
-                'kode_proyek'   => '-',
-                'debit'         => $nominal,
-                'kredit'        => 0,
-                'created_by'    => Auth::id(),
-            ]);
+
 
             return redirect()->back()->with('success', 'Transfer kas/bank berhasil dicatat.');
         } catch (\Exception $e) {
