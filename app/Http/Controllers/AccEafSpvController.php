@@ -21,6 +21,7 @@ class AccEafSpvController extends Controller
             ->where('acc_spv', 'pending')
             ->get();
         $eaf = Eaf::with('bank') // tambahkan eager load relasi
+            ->whereHas('bank') // hanya ambil yang punya relasi
             ->whereNull('deleted_at')
             ->where(function ($query) {
                 $query->where('acc_spv', '!=', 'accept')
