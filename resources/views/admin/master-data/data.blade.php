@@ -18,16 +18,17 @@
                         <option value="data-piutang">Data Piutang</option>
                         <option value="data-karyawan">Data Karyawan</option>
                         <option value="data-proyek">Data Proyek</option>
+                        <option value="data-supplier">Data Supplier</option>
                     </select>
                     <label for="dropdown-toggle"
-                        class="border-2 border-[#9A9A9A] rounded-xl select-none cursor-pointer w-[200px] z-[999]">
+                        class="border-2 border-[#9A9A9A] rounded-xl select-none cursor-pointer w-[200px] z-[999] relative">
                         <div class="flex justify-between py-2 px-4 items-center">
                             <span>Tambah Data</span>
                             <img src="{{ asset('assets/arrow-down.png') }}" alt="arrow down icon" id="icon-dropdown"
                                 class="w-[20px]">
                             <input type="checkbox" id="dropdown-toggle" class="hidden" />
                         </div>
-                        <div class="absolute w-[200px] bg-white border-2 border-[#9A9A9A] shadow-2xl rounded-lg top-[195px] hidden" id="dropdown-menu">
+                        <div class="absolute w-[200px] bg-white border-2 border-[#9A9A9A] shadow-lg top-12 rounded-lg hidden" id="dropdown-menu">
                             <a href="{{ route('akun.create') }}" class="py-2 px-4 block hover:bg-[#E9E9E9]">
                                 <p class="truncate">
                                     Asset Lancar, Asset Tetap, Kewajiban, Ekuitas, Pendatan & HPP Proyek
@@ -48,6 +49,11 @@
                                     Proyek
                                 </p>
                             </a>
+                            <a href="/supplier/create" class="py-2 px-4 block hover:bg-[#E9E9E9]">
+                                <p class="truncate">
+                                    Supplier
+                                </p>
+                            </a>
                         </div>
                     </label>
                 </div>
@@ -60,7 +66,8 @@
                     </button>
                 </form>
             </div>
-            <div class="flex-col pb-4 tabelMasterData hidden" id="data-asset">
+            <div class="h-[300px]" id="data-kosong"></div>
+            <div class="flex-col pb-10 tabelMasterData hidden" id="data-asset">
                 <h1 class="text-[#C0C0C0] font-bold text-xl">Data Asset Lancar, Asset Tetap, Kewajiban, Ekuitas, Pendatan &
                     HPP Proyek</h1>
                 <div class="w-full flex flex-col justify-center py-8 gap-y-8 shadow-[1px_1px_5px_rgba(0,0,0,0.25)] rounded-lg mt-2 items-center">
@@ -388,7 +395,7 @@
                     </div>
                 </div>
             </div>
-            <div class="flex-col pb-4 tabelMasterData hidden" id="data-piutang">
+            <div class="flex-col pb-10 tabelMasterData hidden" id="data-piutang">
                 <h1 class="text-[#C0C0C0] font-bold text-xl">Piutang & Hutang Usaha</h1>
                 <div class="w-full flex justify-center pt-2 pb-4 shadow-[1px_1px_5px_rgba(0,0,0,0.25)] rounded-lg mt-2">
                     <table class="table-fixed w-[80%] text-center">
@@ -434,7 +441,7 @@
                     </table>
                 </div>
             </div>
-            <div class="flex-col pb-4 tabelMasterData hidden" id="data-karyawan">
+            <div class="flex-col pb-10 tabelMasterData hidden" id="data-karyawan">
                 <h1 class="text-[#C0C0C0] font-bold text-xl">Data Karyawan</h1>
                 <div class="w-full flex justify-center pt-2 pb-4 shadow-[1px_1px_5px_rgba(0,0,0,0.25)] rounded-lg mt-2">
                     <table class="table-fixed w-full text-center">
@@ -486,7 +493,7 @@
                     </table>
                 </div>
             </div>
-            <div class="flex-col pb-4 tabelMasterData hidden" id="data-proyek">
+            <div class="flex-col pb-10 tabelMasterData hidden" id="data-proyek">
                 <h1 class="text-[#C0C0C0] font-bold text-xl">Proyek</h1>
                 <div class="w-full flex justify-center pt-2 pb-4 shadow-[1px_1px_5px_rgba(0,0,0,0.25)] rounded-lg mt-2">
                     <table class="table-fixed w-[80%] text-center">
@@ -536,12 +543,59 @@
                     </table>
                 </div>
             </div>
+            <div class="flex-col pb-10 tabelMasterData hidden" id="data-supplier">
+                <h1 class="text-[#C0C0C0] font-bold text-xl">Supplier</h1>
+                <div class="w-full flex justify-center pt-2 pb-4 shadow-[1px_1px_5px_rgba(0,0,0,0.25)] rounded-lg mt-2">
+                    <table class="table-fixed w-[80%] text-center">
+                        <thead class="border-b-2 border-[#CCCCCC]">
+                            <th class="py-2 w-[10%]">No</th>
+                            <th class="py-2 w-[15%]">Kode Akun</th>
+                            <th class="py-2 w-[20%]">Nama Akun</th>
+                            <th class="py-2 w-[25%]">Alamat</th>
+                            <th class="py-2 w-[25%]">Marketing</th>
+                            <th class="py-2 w-[25%]">No Hp</th>
+                            <th class="py-2 w-[20%]">Action</th>
+                        </thead>
+                        <tbody>
+                                <tr class="bg-white">
+                                    <td class="py-2">1</td>
+                                    <td class="py-2">112</td>
+                                    <td class="py-2">Kas Besar</td>
+                                    <td class="py-2">Jl. Apa saja</td>
+                                    <td class="py-2">Apa Saja</td>
+                                    <td class="py-2">08325252353</td>
+                                    <td class="flex justify-center items-center gap-x-2 py-2">
+                                        {{-- Tombol Edit --}}
+                                        <a href="/supplier/edit"
+                                            class="btn btn-sm btn-primary">
+                                            <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
+                                                class="w-[22px] cursor-pointer">
+                                        </a>
+                                        <span class="border-black border-l-[1px] h-[22px]"></span>
+                                        {{-- Tombol Delete --}}
+                                        <form action="" method="POST"
+                                            class="h-[22px]">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                                <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                    class="w-[22px] cursor-pointer">
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </section>
         <script>
             const tabelMasterData = document.querySelectorAll('.tabelMasterData');
             const selectMasterData = document.getElementById('selectMasterData');
+            const dataKosong = document.getElementById('data-kosong');
 
             selectMasterData.addEventListener('change', () => {
+                dataKosong.classList.remove('h-[300px]');
                 tabelMasterData.forEach((tabel, index) => {
                     if (selectMasterData.value === `${tabel.id}`) {
                         tabel.classList.remove('hidden');

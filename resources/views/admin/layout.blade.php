@@ -12,6 +12,19 @@
 
     </head>
     <body class="font-poppins">
+        @if (session('success'))
+            <div
+                id="flash-message"
+                data-type="success"
+                data-message="{{ session('success') }}"
+            ></div>
+        @elseif (session('error'))
+            <div
+                id="flash-message"
+                data-type="error"
+                data-message="{{ session('error') }}"
+            ></div>
+        @endif
         <section class="flex h-screen">
             <nav
                 class="flex flex-col bg-white h-screen w-[350px] py-5 px-5 shadow-[1px_0px_5px_rgba(0,0,0,0.25)] items-center relative z-[99] overflow-y-auto overflow-x-hidden"
@@ -183,6 +196,22 @@
                             <span>Buku Besar</span>
                         </button>
                     </a>
+                    <a
+                        href="/vendor"
+                        class="cursor-pointer"
+                    >
+                        <button
+                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
+                        >
+                            <img
+                                src="{{
+                                    asset('assets/navbar/receipt-discount.png')
+                                }}"
+                                alt="receipt2 icon"
+                            />
+                            <span>Hutang Vendor</span>
+                        </button>
+                    </a>
 
                     {{--
                     <a href="" class="cursor-pointer">
@@ -300,6 +329,8 @@
                             item.children[0].src = "{{ asset('assets/navbar/status-up-click.png') }}";
                         } else if (index == 6) {
                             item.children[0].src = "{{ asset('assets/navbar/book-click.png') }}";
+                        } else if (index == 7) {
+                            item.children[0].src = "{{ asset('assets/navbar/receipt-discount-click.png') }}";
                         }
                     } else if (user == "Siska") {
                         if (index == 0) {
@@ -318,6 +349,8 @@
                             item.children[0].src = "{{ asset('assets/navbar/status-up-click.png') }}";
                         } else if (index == 7) {
                             item.children[0].src = "{{ asset('assets/navbar/book-click.png') }}";
+                        } else if (index == 8) {
+                            item.children[0].src = "{{ asset('assets/navbar/receipt-discount-click.png') }}";
                         }
                     } else {
                         if (index == 0) {
@@ -338,6 +371,8 @@
                             item.children[0].src = "{{ asset('assets/navbar/status-up-click.png') }}";
                         } else if (index == 8) {
                             item.children[0].src = "{{ asset('assets/navbar/book-click.png') }}";
+                        } else if (index == 9) {
+                            item.children[0].src = "{{ asset('assets/navbar/receipt-discount-click.png') }}";
                         }
                     }
                 } else {

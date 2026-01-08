@@ -239,6 +239,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/buku-besar', function () {
         return view('admin.buku-besar.data');
     });
+    Route::get('/supplier/create', function () {
+        return view('admin.master-data.form-add.supplier');
+    });
+    Route::get('/supplier/edit', function () {
+        return view('admin.master-data.form-edit.supplier');
+    });
+    Route::get('/vendor', function () {
+        return view('admin.hutang-vendor.data');
+    });
     // admin
 
 
@@ -407,6 +416,9 @@ Route::middleware('auth')->group(function () {
     });
     Route::get('/jurnal', function () {
         return view('owner.jurnal.data');
+    });
+    Route::get('/saldo', function () {
+        return view('owner.saldo_awal.index');
     });
     // owner
 });
