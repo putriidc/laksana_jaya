@@ -168,10 +168,14 @@
                     <tbody>
                         @foreach ($jurnals as $jurnal)
                             <tr class="bg-[#E9E9E9] border-b-[1px] border-[#CCCCCC]">
+                                @if ($jurnal->tanggal == $today && $jurnal->detail_order > 2)
                                 <td class="py-2">
                                     <input type="checkbox" class="data-checkbox" value="{{ $jurnal->id }}"
                                         onchange="updateBulkButton()">
                                 </td>
+                                @else
+                                    <td></td>
+                                @endif
                                 <td class="py-2">{{ $jurnal->tanggal }}</td>
                                 <td class="py-2">{{ $jurnal->creator?->name ?? '-' }}</td>
                                 <td class="py-2">{{ $jurnal->keterangan }}</td>
