@@ -30,6 +30,7 @@ class DataPerusahaanController extends Controller
 
         $proyek = Proyek::whereNull('deleted_at')
             ->where('nama_perusahaan', $perusahaan->nama_perusahaan)
+            ->with('pic') // eager load relasi PIC
             ->get();
 
         return view('kepala-proyek.data-proyek.form-add.form-add', compact('perusahaan', 'pics', 'proyek'));

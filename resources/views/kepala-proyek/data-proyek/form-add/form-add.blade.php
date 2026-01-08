@@ -37,7 +37,9 @@
                     <select name="kode_perusahaan"
                         class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none appearance-none cursor-pointer">
                         <option disabled>-Pilih Perusahaan-</option>
-                        <option selected value="{{ $perusahaan->kode_perusahaan }}">{{ $perusahaan->nama_perusahaan }}
+                        <option selected value="{{ $perusahaan->kode_perusahaan }}" data-pic="{{ $p->pic->nama ?? '' }}"
+                            data-nohp="{{ $p->pic->no_hp ?? '' }}">
+                            {{ $perusahaan->nama_perusahaan }}
                         </option>
                     </select>
                 </div>
@@ -208,6 +210,24 @@
                 }
             });
         </script>
+        <script>
+            document.getElementById('selectPaket').addEventListener('change', function() {
+                let selected = this.options[this.selectedIndex];
+                let pic = selected.getAttribute('data-pic');
+                let nohp = selected.getAttribute('data-nohp');
 
+                // isi select PIC
+                let picSelect = document.querySelector('select[name="pic"]');
+                if (pic) {
+                    picSelect.value = pic;
+                }
+
+                // isi input No Hp
+                let nohpInput = document.querySelector('input[name="no_hp"]');
+                if (nohp) {
+                    nohpInput.value = nohp;
+                }
+            });
+        </script>
     </div>
 @endsection
