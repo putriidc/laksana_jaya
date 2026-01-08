@@ -370,7 +370,7 @@
                                 alt="devices icon"
                                 class="max-[1200px]:scale-200"
                             />
-                            <span class="max-[1200px]:hidden">Data Proyek</span>
+                            <span class="max-[1200px]:hidden">DATA PROGRESS</span>
                             <img
                                 src="{{ asset('assets/arrow-down.png') }}"
                                 alt=""
