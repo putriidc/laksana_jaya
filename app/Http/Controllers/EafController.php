@@ -120,8 +120,14 @@ class EafController extends Controller
                 'Pajak'
             ])
             ->get();
-        $bank = Asset::Active()
-            ->where('akun_header', 'asset_lancar_bank')
+        $allowedAccounts = [];
+        if (Auth::user()->name === 'Siska') {
+            $allowedAccounts = ['Kas Kecil', 'Kas Flip', 'OVO'];
+        } elseif (Auth::user()->name === 'Novi') {
+            $allowedAccounts = ['Kas Besar', 'Kas Bank BCA', 'Kas Flip', 'OVO'];
+        }
+        $bank = Asset::Active()->where('akun_header', 'asset_lancar_bank')
+            ->whereIn('nama_akun', $allowedAccounts)
             ->where('nama_akun', '!=', 'Kas BJB')
             ->get();
         // Kirim ke view detail
