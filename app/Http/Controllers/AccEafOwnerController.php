@@ -21,8 +21,9 @@ class AccEafOwnerController extends Controller
             ->where('acc_owner', 'pending')
             ->get();
 
-        $eaf = Eaf::with('bank') // tambahkan eager load relasi
+        $eaf = Eaf::with('bank')
             ->whereNull('deleted_at')
+            ->whereHas('bank') // hanya ambil yang punya relasi
             ->where(function ($query) {
                 $query->where('acc_owner', '!=', 'accept')
                     ->orWhere('acc_owner', '!=', 'decline');
@@ -58,7 +59,7 @@ class AccEafOwnerController extends Controller
             'ket_owner' => 'accept',
         ]);
         if ($eaf->acc_spv === 'accept') {
-             // Cek apakah sudah pernah generate
+            // Cek apakah sudah pernah generate
             $sudahAda = EafDetail::active()
                 ->where('kode_eaf', $eaf->kode_eaf)
                 ->exists();
@@ -79,7 +80,7 @@ class AccEafOwnerController extends Controller
                 EafDetail::create([
                     'kode_eaf'   => $eaf->kode_eaf,
                     'tanggal'    => $eaf->tanggal,
-                    'keterangan'    => 'keluar untuk '. $eaf->nama_proyek,
+                    'keterangan'    => 'keluar untuk ' . $eaf->nama_proyek,
                     'kode_akun'  => $kas->kode_akun,
                     'nama_akun'  => $kas->nama_akun,
                     'debit'      => 0,
@@ -91,7 +92,7 @@ class AccEafOwnerController extends Controller
                 EafDetail::create([
                     'kode_eaf'   => $eaf->kode_eaf,
                     'tanggal'    => $eaf->tanggal,
-                    'keterangan'    => 'kas '. $eaf->nama_proyek,
+                    'keterangan'    => 'kas ' . $eaf->nama_proyek,
                     'kode_akun'  => $piutang->kode_akun,
                     'nama_akun'  => $piutang->nama_akun,
                     'debit'      => $eaf->nominal ?? 0,
