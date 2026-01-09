@@ -139,7 +139,7 @@
                                 class="bg-white text-[#353132] flex items-center justify-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)] hover:bg-linear-to-r hover:from-[#DD4049] hover:to-[#F9E52D] hover:text-white">
                                 <img src="{{ asset('assets/navbar-owner/document.png') }}" alt="devices icon" class="max-[1200px]:scale-200" />
                                 <span class="text-center max-[1200px]:hidden">{{ $perusahaan->nama_perusahaan }}</span>
-                                
+
                             </button>
                         </a>
                     @empty
@@ -154,7 +154,7 @@
                             <span class="max-[1200px]:hidden">TAMBAH PERUSAHAAN +</span>
                             <span class="min-[1200px]:hidden"><span class="mr-1 hidden">TAMBAH PERUSAHAAN</span><span class="text-xl font-bold">+</span></span>
                         </button>
-    
+
                 <a href="/kepala-proyek/data-proyek/create"
                     class="cursor-pointer outside-content transition-all duration-300 ease-in-out hidden">
                     <button
@@ -165,13 +165,20 @@
                     </button>
                 </a>
                 <div class="grow flex items-end pb-3">
-                    <a href="/logout" class="cursor-pointer">
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_15px_rgba(0,0,0,0.25)]">
-                            <img src="{{ asset('assets/navbar/logout.png') }}" alt="logout icon" class="max-[1200px]:scale-200"/>
-                            <span class="max-[1200px]:hidden">Logout</span>
-                        </button>
-                    </a>
+                    <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button
+                                class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
+                            >
+                                <img
+                                    src="{{
+                                        asset('assets/navbar/logout.png')
+                                    }}"
+                                    alt="logout icon"
+                                />
+                                <span>Logout</span>
+                            </button>
+                        </form>
                 </div>
             </div>
         </nav>
@@ -367,7 +374,7 @@
         const arrowNavbar = document.getElementById("arrow-navbar");
         const modalAdd = document.getElementById('modal-add');
         const arrow2 = document.getElementById("arrowDataProyek2");
-        
+
 
         function triggerCheckbox2(event) {
             event.preventDefault(); // Mencegah scroll ke atas karena href="#"
