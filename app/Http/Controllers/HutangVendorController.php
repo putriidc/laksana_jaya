@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\HutangVendor;
-use App\Models\Supplier;
+use Carbon\Carbon;
+use App\Models\Asset;
 use App\Models\Proyek;
+use App\Models\Supplier;
+use App\Models\JurnalUmum;
+use App\Models\HutangVendor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HutangVendorController extends Controller
 {
@@ -14,7 +18,13 @@ class HutangVendorController extends Controller
         $hutangVendors = HutangVendor::active()->with(['supplier', 'proyek'])->get();
         $suppliers = Supplier::active()->get();
         $proyeks   = Proyek::active()->get();
-        return view('admin.hutang-vendor.data', compact('hutangVendors', 'suppliers', 'proyeks'));
+        $bank = Asset::Active()
+            ->where('akun_header', 'asset_lancar_bank')
+            ->where('nama_akun', '!=', 'Kas BJB')
+            ->get();
+        $today = Carbon::now('Asia/Jakarta')->toDateString();
+
+        return view('admin.hutang-vendor.data', compact('hutangVendors', 'suppliers', 'proyeks', 'bank', 'today'));
     }
     /**
      * Tampilkan form create hutang vendor.
@@ -58,6 +68,40 @@ class HutangVendorController extends Controller
             'kode_proyek'     => $request->kode_proyek,
             'keterangan'      => $request->keterangan,
             'created_by'      => $request->created_by,
+        ]);
+        $proyek = Proyek::active()->where('kode_akun', $request->kode_proyek)->first();
+        $supplier = Supplier::active()->where('kode_akun', $request->kode_supplier)->first();
+        $lastId = JurnalUmum::max('id') ?? 0; // kalau soft delete
+        $nextId = $lastId + 1;
+        $kodeJurnal = 'J-' . str_pad($nextId, 3, '0', STR_PAD_LEFT);
+
+        JurnalUmum::create([
+            'detail_order' => 3,
+            'kode_jurnal'   => $kodeJurnal,
+            'tanggal'       => $request->tgl_hutang,
+            'kode_perkiraan' => '211',
+            'kode_proyek'   => $request->kode_proyek,
+            'nama_perkiraan' => 'Hutang Vendor',
+            'nama_proyek'   => $proyek->nama_proyek,
+            'keterangan'    => 'Hutang ke -' . $supplier->nama,
+            'kategori'      => 'TF toko' ?? null,
+            'debit'         => $request->nominal,
+            'kredit'        => 0,
+            'created_by'    => Auth::id() ?? 'system',
+        ]);
+        JurnalUmum::create([
+            'detail_order' => 3,
+            'kode_jurnal'   => $kodeJurnal,
+            'tanggal'       => $request->tgl_hutang,
+            'kode_perkiraan' => '511',
+            'kode_proyek'   => $request->kode_proyek,
+            'nama_perkiraan' => 'Biaya Material, Alat dan Barang',
+            'nama_proyek'   => $proyek->nama_proyek,
+            'keterangan'    => 'Hutang ke -' . $supplier->nama,
+            'kategori'      => 'TF toko' ?? null,
+            'debit'         => 0,
+            'kredit'        => $request->nominal,
+            'created_by'    => Auth::id() ?? 'system',
         ]);
 
         return redirect()->route('hutang_vendor.index')->with('success', 'Hutang vendor berhasil ditambahkan.');
@@ -109,5 +153,62 @@ class HutangVendorController extends Controller
         $hutangVendor = HutangVendor::findOrFail($id);
         $hutangVendor->delete();
         return redirect()->route('hutang_vendor.index')->with('success', 'Data hutang vendor berhasil dihapus.');
+    }
+    public function bayar(Request $request, $id)
+    {
+        $request->validate([
+            'tgl_bayar' => 'required|date',
+            'kode_akun' => 'required|string',
+        ]);
+
+        $hutang = HutangVendor::findOrFail($id);
+        $hutang->tgl_bayar = $request->tgl_bayar;
+        $hutang->kode_akun = $request->kode_akun;
+        $hutang->save();
+
+        return redirect()->back()->with('success', 'Hutang vendor berhasil dibayar.');
+    }
+    public function generate($id)
+    {
+        $hutang = HutangVendor::findOrFail($id);
+
+        // update status generate
+        $hutang->is_generate = true;
+        $hutang->save();
+
+        $proyek = Proyek::active()->where('kode_akun', $hutang->kode_proyek)->first();
+        $kas = Asset::active()->where('kode_akun', $hutang->kode_akun)->first();
+        $lastId = JurnalUmum::max('id') ?? 0; // kalau soft delete
+        $nextId = $lastId + 1;
+        $kodeJurnal = 'J-' . str_pad($nextId, 3, '0', STR_PAD_LEFT);
+
+        JurnalUmum::create([
+            'detail_order' => 3,
+            'kode_jurnal'   => $kodeJurnal,
+            'tanggal'       => Carbon::now('Asia/Jakarta'),
+            'kode_perkiraan' => '211',
+            'kode_proyek'   => $hutang->kode_proyek,
+            'nama_perkiraan' => 'Hutang Vendor',
+            'nama_proyek'   => $proyek->nama_proyek,
+            'keterangan'    => 'Bayar -' . $hutang->keterangan,
+            'debit'         => $hutang->nominal,
+            'kredit'        => 0,
+            'created_by'    => Auth::id() ?? 'system',
+        ]);
+        JurnalUmum::create([
+            'detail_order' => 3,
+            'kode_jurnal'   => $kodeJurnal,
+            'tanggal'       => Carbon::now('Asia/Jakarta'),
+            'kode_perkiraan' => $kas->kode_akun,
+            'kode_proyek'   => $hutang->kode_proyek,
+            'nama_perkiraan' => $kas->nama_akun,
+            'nama_proyek'   => $proyek->nama_proyek,
+            'keterangan'    => 'Bayar -' . $hutang->keterangan,
+            'debit'         => 0,
+            'kredit'        => $hutang->nominal,
+            'created_by'    => Auth::id() ?? 'system',
+        ]);
+
+        return response()->json(['success' => true]);
     }
 }

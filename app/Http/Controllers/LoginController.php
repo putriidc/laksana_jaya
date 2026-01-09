@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -22,13 +23,28 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            // kirimkan pesan berhasil login
-            return redirect()->intended('/admin/dashboard')->with('success', 'Anda Berhasil Login berhasil'); // halaman setelah login
+
+            $user = Auth::user();
+
+            switch ($user->role) {
+                case 'Admin':
+                case 'Super Admin': // super admin sama dengan admin
+                    return redirect('/admin/dashboard')->with('success', 'Login berhasil sebagai Admin');
+                case 'Owner':
+                    return redirect('/owner-dashboard')->with('success', 'Login berhasil sebagai Owner');
+                case 'Supervisor':
+                    return redirect('/gudang')->with('success', 'Login berhasil sebagai Supervisor');
+                case 'Kepala Proyek':
+                    return redirect('/kepala-proyek')->with('success', 'Login berhasil sebagai Kepala Proyek');
+                default:
+                    return redirect('/')->with('success', 'Login berhasil');
+            }
         }
 
-        // ... di dalam Auth::attempt gagal
-        return back()->with('error', 'Username atau password salah.'); // Menggunakan 'error'
+        return back()->with('error', 'Username atau password salah.');
     }
+
+
 
     public function logout(Request $request)
     {

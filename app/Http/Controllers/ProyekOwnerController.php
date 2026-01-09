@@ -69,8 +69,16 @@ class ProyekOwnerController extends Controller
             if ($totalProgress > 100) {
                 $totalProgress = 100;
             }
-            $Hutang_vendor = HutangVendor::active()->where('kode_proyek', $proyek->kode_akun)->first();
-            $piutangVendor = $Hutang_vendor->nominal ?? 0;
+            $Hutang_vendor = HutangVendor::active()
+                ->where('kode_proyek', $proyek->kode_akun)
+                ->first();
+
+            $piutangVendor = 0; // default
+
+            if ($Hutang_vendor) {
+                $piutangVendor = $Hutang_vendor->is_generate ? 0 : $Hutang_vendor->nominal;
+            }
+
             return [
                 'nama_proyek' => $proyek->nama_proyek,
                 'nilai_kontrak' => $proyek->nilai_kontrak,
@@ -235,6 +243,7 @@ class ProyekOwnerController extends Controller
         $jurnal = JurnalUmum::where('nama_proyek', $proyek->nama_proyek)
             ->where('nama_perkiraan', '!=', 'Piutang Proyek')
             ->whereNotIn('nama_perkiraan', $assetBankAccounts)
+            ->where('debit', '>', 0)
             ->orderBy('tanggal', 'desc')
             ->get();
         $totalDebit = $jurnal->sum('debit');
