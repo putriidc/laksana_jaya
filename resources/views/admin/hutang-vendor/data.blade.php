@@ -23,8 +23,10 @@
                         <th class="w-[15%] py-2">Nominal</th>
                         <th class="w-[15%] py-2">Nama Proyek</th>
                         <th class="w-[15%] py-2">Jatuh Tempo</th>
+                        <th class="w-[10%] py-2">Status</th>
                         <th class="w-[10%] py-2">Action</th>
                     </thead>
+
                     <tbody>
                         @foreach ($hutangVendors as $index => $item)
                             <tr class="bg-[#E9E9E9] border-b-[1px] border-[#CCCCCC]">
@@ -34,7 +36,38 @@
                                 <td class="py-2">Rp {{ number_format($item->nominal, 0, ',', '.') }}</td>
                                 <td class="py-2">{{ $item->proyek?->nama_proyek ?? '-' }}</td>
                                 <td class="py-2">{{ \Carbon\Carbon::parse($item->tgl_jatuh_tempo)->format('d/m/Y') }}</td>
+                                @php
+                                    $today = \Carbon\Carbon::today();
+                                    $jatuhTempo = \Carbon\Carbon::parse($item->tgl_jatuh_tempo);
+                                    $selisihHari = $today->diffInDays($jatuhTempo, false);
+                                @endphp
+
+                                <td class="py-2">
+                                    @if ($item->tgl_bayar)
+                                        <span
+                                            class="px-2 py-1 rounded-full bg-blue-200 text-blue-800 text-xs font-semibold">Sudah
+                                            dibayar</span>
+                                    @elseif ($selisihHari > 2)
+                                        <span
+                                            class="px-2 py-1 rounded-full bg-green-200 text-green-800 text-xs font-semibold">Masih
+                                            jauh</span>
+                                    @elseif ($selisihHari > 0)
+                                        <span
+                                            class="px-2 py-1 rounded-full bg-yellow-200 text-yellow-800 text-xs font-semibold">Mendekati</span>
+                                    @else
+                                        <span
+                                            class="px-2 py-1 rounded-full bg-red-200 text-red-800 text-xs font-semibold">Hari
+                                            H / Lewat</span>
+                                    @endif
+                                </td>
+
                                 <td class="flex justify-center items-center gap-x-2 py-2">
+                                    <button type="button"
+                                        onclick='bayarHutang(@json($item), @json($bank))'>
+                                        <img src="{{ asset('assets/pay.jpg') }}" alt="bayar icon"
+                                            class="w-[22px] cursor-pointer">
+                                    </button>
+                                    <span class="border-black border-l-[1px] h-[22px]"></span>
                                     {{-- Tombol Edit --}}
                                     <button type="button" onclick='editData(@json($item))'>
                                         <img src="{{ asset('assets/edit-icon.png') }}" alt="edit icon"
@@ -46,6 +79,7 @@
                                         <img src="{{ asset('assets/more-circle.png') }}" alt="detail icon"
                                             class="w-[22px] cursor-pointer">
                                     </button>
+                                    <span class="border-black border-l-[1px] h-[22px]"></span>
                                     {{-- Tombol Delete --}}
                                     <form action="{{ route('hutang_vendor.destroy', $item->id) }}" method="POST"
                                         class="h-[22px]">
@@ -74,7 +108,7 @@
 
             <div class="flex items-center w-full">
                 <label class="w-[200px] text-start">Tgl Hutang</label>
-                <input type="date" name="tgl_hutang" class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2 cursor-pointer"/>
+                <input  value="{{ \Carbon\Carbon::now('Asia/Jakarta')->format('Y-m-d') }}" readonly type="date" name="tgl_hutang" class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2 cursor-pointer"/>
             </div>
 
             <div class="flex items-center w-full">
@@ -160,137 +194,95 @@
 
 
 
-            function detailData() {
-                // buat form modal dengan sweetalert2
+            function detailData(item) {
                 Swal.fire({
                     html: `
-                    <form id="myForm" class="flex flex-col items-start gap-y-4">
-                    <h1 class="font-bold text-2xl mb-4">Detail hutang Vendor</h1>
-                    <div class="flex items-center w-full">
-                        <label class="w-[200px] text-start">
-                            Tgl hutang
-                        </label>
-                        <input type="date" class="w-full outline-none bg-[#D9D9D9] rounded-lg px-4 py-2 cursor-pointer" name="" id="" readonly/>
-                    </div>
-                    <div class="flex items-center w-full">
-                        <label class="w-[200px] text-start">
-                            Nama Supplier
-                        </label>
-                        <select type="date" class="w-full outline-none bg-[#D9D9D9] rounded-lg px-4 py-2 cursor-pointer appearance-none" name="" id="" disabled>
-                            <option value="supplier" selected>supplier</option>
-                        </select>
-                    </div>
-                    <div class="flex items-center w-full">
-                        <label class="w-[200px] text-start">
-                            Tgl Jatuh Tempo
-                        </label>
-                        <input type="date" class="w-full outline-none bg-[#D9D9D9] rounded-lg px-4 py-2 cursor-pointer" name="" id="" readonly/>
-                    </div>
-                    <div class="flex items-center w-full">
-                        <label class="w-[200px] text-start">
-                            Nominal
-                        </label>
-                        <input type="text" class="w-full outline-none bg-[#D9D9D9] rounded-lg px-4 py-2 cursor-pointer rupiah-format" value="{{ 'Rp. ' . number_format(100000, 0, ',', '.') }}" name="" id="nominal" readonly/>
-                    </div>
-                    <div class="flex items-center w-full">
-                        <label class="w-[200px] text-start">
-                            Nama Proyek
-                        </label>
-                         <select type="date" class="w-full outline-none bg-[#D9D9D9] rounded-lg px-4 py-2 cursor-pointer appearance-none" name="" id="" disabled>
-                            <option selected value="Proyek">Proyek</option>
-                        </select>
-                    </div>
-                    <div class="flex items-center w-full">
-                        <label class="w-[200px] text-start">
-                           Keterangan
-                        </label>
-                        <input type="text" class="w-full outline-none bg-[#D9D9D9] rounded-lg px-4 py-2 cursor-pointer" name="" id="" readonly/>
-                    </div>
-                    <div class="flex items-center w-full">
-                        <label class="w-[150px] text-start">
-                        </label>
-                        <button class="flex items-center gap-x-2 py-2 px-4 rounded-lg border border-[#45D03E] cursor-pointer mr-2">
-                            <span class="text-[#45D03E]">Generate</span>
-                            <img src="{{ asset('assets/card-send-greeen.png') }}" alt="arrow right blue icon" class="w-[20px] mt-1"/>
-                        </button>
-                        <button class="flex items-center gap-x-2 py-2 px-4 rounded-lg border border-[#DD4049] cursor-pointer" onclick="Swal.close()">
-                            <span class="text-[#DD4049]">Batal</span>
-                            <img src="{{ asset('assets/close-circle-red.png') }}" alt="arrow right blue icon" class="w-[20px]"/>
-                        </button>
-                    </div>
-                    </form>
-                    `,
+        <form id="myForm" class="flex flex-col items-start gap-y-4">
+            <h1 class="font-bold text-2xl mb-4">Detail Hutang Vendor</h1>
+            <div class="flex items-center w-full">
+                <label class="w-[200px] text-start">Tgl Hutang</label>
+                <input type="date" value="${item.tgl_hutang}"
+                       class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2" readonly/>
+            </div>
+
+            <div class="flex items-center w-full">
+                <label class="w-[200px] text-start">Nama Supplier</label>
+                <input type="text" value="${item.supplier?.nama ?? '-'}"
+                       class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2" readonly/>
+            </div>
+
+            <div class="flex items-center w-full">
+                <label class="w-[200px] text-start">Tgl Jatuh Tempo</label>
+                <input type="date" value="${item.tgl_jatuh_tempo}"
+                       class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2" readonly/>
+            </div>
+
+            <div class="flex items-center w-full">
+                <label class="w-[200px] text-start">Nominal</label>
+                <input type="text" value="Rp. ${Number(item.nominal).toLocaleString('id-ID')}"
+                       class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2" readonly/>
+            </div>
+
+            <div class="flex items-center w-full">
+                <label class="w-[200px] text-start">Nama Proyek</label>
+                <input type="text" value="${item.proyek?.nama_proyek ?? '-'}"
+                       class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2" readonly/>
+            </div>
+
+            <div class="flex items-center w-full">
+                <label class="w-[200px] text-start">Keterangan</label>
+                <input type="text" value="${item.keterangan ?? '-'}"
+                       class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2" readonly/>
+            </div>
+            <div class="flex items-center w-full">
+                <label class="w-[200px] text-start">Status</label>
+                ${ item.tgl_bayar ? `<span class="px-2 py-1 rounded-full bg-blue-200 text-blue-800 text-xs font-semibold">Sudah dibayar</span>` : item.is_generate ? `<span class="px-2 py-1 rounded-full bg-green-200 text-green-800 text-xs font-semibold">Sudah digenerate</span>` : `<span class="px-2 py-1 rounded-full bg-red-200 text-red-800 text-xs font-semibold">Belum digenerate</span>` }
+            </div>
+
+            <div class="flex items-center w-full justify-end gap-x-2 mt-4">
+                ${ item.is_generate ? ` <button type="button" onclick="Swal.close()" class="flex items-center gap-x-2 py-2 px-4 rounded-lg border border-[#DD4049]"> <span class="text-[#DD4049]">Batal</span> </button> ` : ` <button type="button" id="generateBtn" class="flex items-center gap-x-2 py-2 px-4 rounded-lg border border-[#45D03E]"> <span class="text-[#45D03E]">Generate</span> </button> <button type="button" onclick="Swal.close()" class="flex items-center gap-x-2 py-2 px-4 rounded-lg border border-[#DD4049]"> <span class="text-[#DD4049]">Batal</span> </button> ` }
+            </div>
+        </form>
+        `,
                     width: '700px',
                     showConfirmButton: false,
                     didOpen: () => {
-                        // membuat format rupiah
-                        const rupiahFormat = document.querySelectorAll('.rupiah-format');
-                        rupiahFormat.forEach(item => {
-                            item.addEventListener('input', function(e) {
-                                // hapus karakter yang bukan angka atau koma
-                                let value = this.value.replace(/[^,\d]/g, "").toString();
-                                // pisahkan antara angka dan koma
-                                let split = value.split(",");
-                                // format angka menjadi rupiah
-                                let sisa = split[0].length % 3;
-                                // ambil angka yang tidak termasuk dalam kelipatan 3
-                                let rupiah = split[0].substr(0, sisa);
-                                // ambil angka yang termasuk dalam kelipatan 3
-                                let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+                        document.getElementById('generateBtn').addEventListener('click', function() {
+                            Swal.fire({
+                                title: 'Lanjutkan generate?',
+                                icon: 'question',
+                                showCancelButton: true,
+                                confirmButtonText: 'Ya',
+                                cancelButtonText: 'Batal',
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    // Kirim request ke backend untuk update is_generate dan buat jurnal
+                                    fetch(`/hutang_vendor/${item.id}/generate`, {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                                'X-CSRF-TOKEN': document.querySelector(
+                                                    'meta[name="csrf-token"]').content
+                                            },
+                                            body: JSON.stringify({})
+                                        })
+                                        .then(res => res.json())
+                                        .then(data => {
+                                            if (data.success) {
+                                                Swal.fire('Berhasil!',
+                                                        'Hutang vendor berhasil digenerate.',
+                                                        'success')
+                                                    .then(() => location.reload());
+                                            }
+                                        })
+                                        .catch(err => {
+                                            Swal.fire('Error',
+                                                'Terjadi kesalahan saat generate.', 'error');
+                                        });
 
-                                // tambahkan titik sebagai pemisah ribuan
-                                if (ribuan) {
-                                    let separator = sisa ? "." : "";
-                                    rupiah += separator + ribuan.join(".");
                                 }
-
-                                // tambahkan kembali koma dan angka di belakangnya jika ada
-                                rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
-                                // tampilkan hasil format rupiah pada input
-                                this.value = rupiah ? "Rp. " + rupiah : "";
                             });
                         });
-
-                        const form = document.getElementById('myForm')
-                        if (form) {
-                            form.addEventListener('submit', function(e) {
-                                const rupiahInputs = document.querySelectorAll('.rupiah-format');
-                                rupiahInputs.forEach(input => {
-                                    let value = input.value;
-                                    let cleanValue = parseInt(value.replace(/[^,\d]/g, ""));
-                                    input.value = cleanValue;
-                                    console.log(
-                                        `Input name: ${input.name}, Clean value: ${input.value}`
-                                    );
-                                })
-                            })
-                        }
-
-                        function parseRupiahToNumber(rupiahString) {
-                            if (!rupiahString) return 0;
-                            return parseInt(rupiahString.replace(/[^0-9]/g, "")) || 0;
-                        }
-                        // End string to number
-
-                        // number to rupiah format
-                        function formatNumberToRupiah(number) {
-                            if (!number) return "";
-                            return "Rp. " + number.toLocaleString("id-ID");
-                        }
-
-                        rupiahFormatElements.forEach((element) => {
-                            // Ubah string value ke number dulu untuk dicek
-                            const numericValue = parseRupiahToNumber(element.value);
-
-                            // Hanya jalankan format jika ada isinya DAN nilainya bukan 0
-                            if (element.value && numericValue !== 0) {
-                                element.value = formatNumberToRupiah(numericValue);
-                            } else if (numericValue === 0) {
-                                // Jika nilainya 0, pastikan tampilannya bersih (hanya angka 0 saja)
-                                element.value = "Rp. " + 0;
-                            }
-                        });
-
                     }
                 });
             }
@@ -383,6 +375,51 @@
                             });
                         });
                     }
+                });
+            }
+        </script>
+        <script>
+            function bayarHutang(item, bankList) {
+                Swal.fire({
+                    html: `
+        <form id="bayarForm" action="/hutang_vendor/${item.id}/bayar" method="POST" class="flex flex-col items-start gap-y-4">
+            @csrf
+            @method('PUT')
+            <h1 class="font-bold text-2xl mb-4">Bayar Hutang Vendor</h1>
+
+            <div class="flex items-center w-full">
+                <label class="w-[200px] text-start">Tgl Bayar Hutang</label>
+                <input  value="{{ \Carbon\Carbon::now('Asia/Jakarta')->format('Y-m-d') }}" readonly type="date" name="tgl_bayar" class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2" required/>
+            </div>
+
+            <div class="flex items-center w-full">
+                <label class="w-[200px] text-start">Nama Supplier</label>
+                <input type="text" value="${item.supplier?.nama ?? '-'}" readonly class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2"/>
+            </div>
+
+            <div class="flex items-center w-full">
+                <label class="w-[200px] text-start">Nominal</label>
+                <input type="text" value="Rp. ${Number(item.nominal).toLocaleString('id-ID')}" readonly class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2"/>
+            </div>
+
+            <div class="flex items-center w-full">
+                <label class="w-[200px] text-start">Kas / Bank</label>
+                <select name="kode_akun" class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2" required>
+                    <option disabled selected>Pilih Kas / Bank</option>
+                    ${bankList.map(b => `
+                                                                                <option value="${b.kode_akun}">${b.nama_akun}</option>
+                                                                            `).join('')}
+                </select>
+            </div>
+
+            <div class="flex items-center w-full justify-end gap-x-2 mt-4">
+                <button type="submit" class="bg-[#3E98D0] text-white px-4 py-2 rounded-lg">Simpan</button>
+                <button type="button" onclick="Swal.close()" class="bg-[#DD4049] text-white px-4 py-2 rounded-lg">Batal</button>
+            </div>
+        </form>
+        `,
+                    width: '700px',
+                    showConfirmButton: false
                 });
             }
         </script>

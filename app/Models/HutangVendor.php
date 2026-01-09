@@ -15,6 +15,8 @@ class HutangVendor extends Model
     protected $fillable = [
         'kode_vendor',
         'tgl_hutang',
+        'tgl_bayar',
+        'kode_akun',
         'tgl_jatuh_tempo',
         'kode_supplier',
         'nominal',

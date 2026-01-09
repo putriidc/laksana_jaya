@@ -160,6 +160,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('supplier', SupplierController::class);
 
         Route::resource('hutang_vendor', HutangVendorController::class);
+        Route::put('/hutang_vendor/{id}/bayar', [HutangVendorController::class, 'bayar'])->name('hutang-vendor.bayar');
         // ADMIN KEUANGAN
 
         // kepala gudang
@@ -393,6 +394,9 @@ Route::middleware('auth')->group(function () {
         Route::resource('supplier', SupplierController::class);
 
         Route::resource('hutang_vendor', HutangVendorController::class);
+        Route::put('/hutang_vendor/{id}/bayar', [HutangVendorController::class, 'bayar'])->name('hutang-vendor.bayar');
+        Route::post('/hutang_vendor/{id}/generate', [HutangVendorController::class, 'generate'])
+            ->name('hutang-vendor.generate');
         // ADMIN KEUANGAN
     });
 
