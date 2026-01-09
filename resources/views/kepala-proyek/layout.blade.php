@@ -126,7 +126,7 @@
                     <button
                         class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"> {{-- Bagian yang di responsive --}}
                         <img src="{{ asset('assets/navbar-kepala-gudang/home-2.png') }}" alt="devices icon" class="max-[1200px]:scale-200" />
-                        <span class="max-[1200px]:hidden">DATA PROGRESS</span>
+                        <span class="max-[1200px]:hidden">Data Progres</span>
                         <img src="{{ asset('assets/arrow-down.png') }}" alt=""
                             class="ml-8 transition-all duration-300 ease-in-out max-[1200px]:hidden" id="arrowDataProyek2">
                     </button>
@@ -149,11 +149,7 @@
                     @endforelse
                 </div>
 
-                <button id="modal-add"
-                            class="bg-white text-[#353132] shadow-[0px_0px_15px_rgba(0,0,0,0.25)] flex items-center justify-center w-[250px] max-[1200px]:w-[50px] max-[1200px]:py-1 py-3 px-5 cursor-pointer rounded-lg transition-all duration-300 ease-in-out">
-                            <span class="max-[1200px]:hidden">TAMBAH PERUSAHAAN +</span>
-                            <span class="min-[1200px]:hidden"><span class="mr-1 hidden">TAMBAH PERUSAHAAN</span><span class="text-xl font-bold">+</span></span>
-                        </button>
+
 
                 <a href="/kepala-proyek/data-proyek/create"
                     class="cursor-pointer outside-content transition-all duration-300 ease-in-out hidden">
