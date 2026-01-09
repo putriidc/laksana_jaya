@@ -49,7 +49,7 @@
                                     Proyek
                                 </p>
                             </a>
-                            <a href="/supplier/create" class="py-2 px-4 block hover:bg-[#E9E9E9]">
+                            <a href="{{ route('supplier.create') }}" class="py-2 px-4 block hover:bg-[#E9E9E9]">
                                 <p class="truncate">
                                     Supplier
                                 </p>
@@ -550,30 +550,34 @@
                         <thead class="border-b-2 border-[#CCCCCC]">
                             <th class="py-2 w-[10%]">No</th>
                             <th class="py-2 w-[15%]">Kode Akun</th>
-                            <th class="py-2 w-[20%]">Nama Akun</th>
+                            <th class="py-2 w-[20%]">Nama</th>
                             <th class="py-2 w-[25%]">Alamat</th>
                             <th class="py-2 w-[25%]">Marketing</th>
                             <th class="py-2 w-[25%]">No Hp</th>
                             <th class="py-2 w-[20%]">Action</th>
                         </thead>
                         <tbody>
+                            @php
+                                $nosup = 1;
+                            @endphp
+                            @foreach ($suppliers as $item)
                                 <tr class="bg-white">
-                                    <td class="py-2">1</td>
-                                    <td class="py-2">112</td>
-                                    <td class="py-2">Kas Besar</td>
-                                    <td class="py-2">Jl. Apa saja</td>
-                                    <td class="py-2">Apa Saja</td>
-                                    <td class="py-2">08325252353</td>
+                                    <td class="py-2">{{ $nosup++ }}</td>
+                                    <td class="py-2">{{ $item->kode_akun }}</td>
+                                    <td class="py-2">{{ $item->nama }}</td>
+                                    <td class="py-2">{{ $item->alamat }}</td>
+                                    <td class="py-2">{{ $item->marketing }}</td>
+                                    <td class="py-2">{{ $item->no_hp }}</td>
                                     <td class="flex justify-center items-center gap-x-2 py-2">
                                         {{-- Tombol Edit --}}
-                                        <a href="/supplier/edit"
+                                        <a href="{{ route('supplier.edit', $item->id) }}"
                                             class="btn btn-sm btn-primary">
                                             <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
                                                 class="w-[22px] cursor-pointer">
                                         </a>
                                         <span class="border-black border-l-[1px] h-[22px]"></span>
                                         {{-- Tombol Delete --}}
-                                        <form action="" method="POST"
+                                        <form action="{{ route('supplier.destroy', $item->id) }}" method="POST"
                                             class="h-[22px]">
                                             @csrf
                                             @method('DELETE')
@@ -584,6 +588,7 @@
                                         </form>
                                     </td>
                                 </tr>
+                                @endforeach
                         </tbody>
                     </table>
                 </div>

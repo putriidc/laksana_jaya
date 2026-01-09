@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Asset;
 use App\Models\Proyek;
 use App\Models\Karyawan;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 use App\Models\PiutangHutang;
 use App\Http\Controllers\Controller;
@@ -33,6 +34,7 @@ class MasterDataController extends Controller
         $piutangHutangs = PiutangHutang::whereNull('deleted_at')->get();
         $karyawans = Karyawan::whereNull('deleted_at')->get();
         $proyeks = Proyek::whereNull('deleted_at')->get();
+        $suppliers = Supplier::whereNull('deleted_at')->get();
 
         return view('admin.master-data.data', compact(
             'lancars',
@@ -44,7 +46,8 @@ class MasterDataController extends Controller
             'hpps',
             'piutangHutangs',
             'karyawans',
-            'proyeks'
+            'proyeks',
+            'suppliers'
         ));
     }
 

@@ -130,7 +130,7 @@
                             </button>
                         </a>
                     @endif
-                    @if (Auth::user()->name != "Siska")     
+                    @if (Auth::user()->name != "Siska")
                     <a
                         href="{{ route('pinjamanTukangs.index') }}"
                         class="cursor-pointer"
@@ -197,7 +197,7 @@
                         </button>
                     </a>
                     <a
-                        href="/vendor"
+                        href="{{ route('hutang_vendor.index') }}"
                         class="cursor-pointer"
                     >
                         <button

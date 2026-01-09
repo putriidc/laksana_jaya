@@ -31,8 +31,10 @@ use App\Http\Controllers\pinjamanTukangController;
 use App\Http\Controllers\PinjamanContentController;
 use App\Http\Controllers\PinjamanKaryawanController;
 use App\Http\Controllers\BukuBesarController;
+use App\Http\Controllers\HutangVendorController;
 use App\Http\Controllers\NeracaOwnerController;
 use App\Http\Controllers\ProgresOwnerController;
+use App\Http\Controllers\SupplierController;
 use App\Models\JurnalUmum;
 
 Route::get('/', function () {
@@ -239,15 +241,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/buku-besar', function () {
         return view('admin.buku-besar.data');
     });
-    Route::get('/supplier/create', function () {
-        return view('admin.master-data.form-add.supplier');
-    });
-    Route::get('/supplier/edit', function () {
-        return view('admin.master-data.form-edit.supplier');
-    });
-    Route::get('/vendor', function () {
-        return view('admin.hutang-vendor.data');
-    });
+    Route::resource('supplier', SupplierController::class);
+    Route::resource('hutang_vendor', HutangVendorController::class);
+
+
     // admin
 
 

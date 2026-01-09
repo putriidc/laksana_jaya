@@ -10,6 +10,7 @@ use App\Models\JurnalUmum;
 use Illuminate\Http\Request;
 use App\Models\KontrakProyek;
 use App\Models\DataPerusahaan;
+use App\Models\HutangVendor;
 use Illuminate\Support\Facades\Auth;
 
 class ProyekOwnerController extends Controller
@@ -42,28 +43,34 @@ class ProyekOwnerController extends Controller
     }
     public function indexResume(Request $request)
     {
-        $proyeks = Proyek::all();
+        $proyeks = Proyek::active()->get();
         $assetBankAccounts = Asset::where('akun_header', 'asset_lancar_bank')->pluck('nama_akun');
         $resume = $proyeks->map(function ($proyek) use ($assetBankAccounts) {
             $jurnal = JurnalUmum::where('nama_proyek', $proyek->nama_proyek)->where('nama_perkiraan', '!=', 'Piutang Proyek')->whereNotIn('nama_perkiraan', $assetBankAccounts)->get();
             $totalPengeluaran = $jurnal->sum('debit');
-            $piutangVendor = 0;
             $kontrak = KontrakProyek::where('kode_proyek', $proyek->kode_akun)->first();
             $net = $kontrak->net ?? 0;
 
-            $dataPerusahaan = DataPerusahaan::whereNull('deleted_at')->where('nama_paket', $proyek->nama_proyek)->first();
+            $dataPerusahaan = DataPerusahaan::whereNull('deleted_at')
+                ->where('nama_paket', $proyek->nama_proyek)
+                ->first();
 
-            // Ambil semua progres yang terkait dengan kode_paket
-            $progres = Progres::where('kode_paket', $dataPerusahaan->kode_paket)
-                ->whereNull('deleted_at')
-                ->orderBy('minggu', 'asc')
-                ->get();
+            $progres = collect(); // default kosong
+
+            if ($dataPerusahaan) {
+                $progres = Progres::where('kode_paket', $dataPerusahaan->kode_paket)
+                    ->whereNull('deleted_at')
+                    ->orderBy('minggu', 'asc')
+                    ->get();
+            }
 
             // Hitung total progres (maksimal 100%)
             $totalProgress = $progres->sum('persen');
             if ($totalProgress > 100) {
                 $totalProgress = 100;
             }
+            $Hutang_vendor = HutangVendor::active()->where('kode_proyek', $proyek->kode_akun)->first();
+            $piutangVendor = $Hutang_vendor->nominal ?? 0;
             return [
                 'nama_proyek' => $proyek->nama_proyek,
                 'nilai_kontrak' => $proyek->nilai_kontrak,
