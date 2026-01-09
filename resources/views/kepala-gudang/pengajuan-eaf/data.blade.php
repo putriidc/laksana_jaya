@@ -54,11 +54,11 @@
             </section>
             <section class="mb-5">
                 <h1 class="font-bold text-2xl mb-4 text-[#C0C0C0]">Form ACC EAF</h1>
-                <a href=""
+                {{-- <a href=""
                     class="px-4 py-2 border-2 border-[#9A9A9A] rounded-lg w-fit flex items-center gap-x-2 mb-4">
                     <span class="text-[#72686B]">Cetak Laporan</span>
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon">
-                </a>
+                </a> --}}
                 <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1100px]:overflow-x-scroll">
                     <table class="table-auto text-center text-sm w-full max-[1100px]:w-[1100px]">
                         <thead class="border-b-2 border-[#CCCCCC]">
