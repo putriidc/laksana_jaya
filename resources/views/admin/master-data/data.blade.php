@@ -80,6 +80,7 @@
                             <th class="py-2 w-[25%]">Nama Akun</th>
                             <th class="py-2 w-[20%]">Post Saldo</th>
                             <th class="py-2 w-[20%]">Post Laporan</th>
+                            <th class="py-2 w-[20%]">Saldo</th>
                             <th class="py-2 w-[20%]">Action</th>
                         </thead>
                         <tbody>
@@ -93,6 +94,7 @@
                                     <td class="py-2">{{ $lancar->nama_akun }}</td>
                                     <td class="py-2">{{ $lancar->post_saldo }}</td>
                                     <td class="py-2">{{ $lancar->post_laporan }}</td>
+                                    <td class="py-2">{{ 'RP. ' . number_format($lancar->saldo, 0, ',', '.') }}</td>
                                     <td class="flex justify-center items-center gap-x-2 py-2">
                                         {{-- Tombol Edit --}}
                                         <a href="{{ route('akun.edit', $lancar->id) }}" class="btn btn-sm btn-primary">
