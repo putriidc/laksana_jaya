@@ -282,7 +282,7 @@ Route::middleware('auth')->group(function () {
         // owner
     });
 
-    Route::middleware('role:Admin')->group(function () {
+    Route::middleware(['role:Admin 1|Admin 2'])->group(function () {
         Route::get('/admin/dashboard', function () {
             return view('admin.dashboard');
         });

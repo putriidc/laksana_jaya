@@ -97,7 +97,7 @@
                         </button>
                     </a>
                     --}}
-                    @if ( Auth::user()->name != "Novi" )
+                    @if ( Auth::user()->role != "Admin 1" )
                     <a
                         href="{{ route('sampingans.index') }}"
                         class="cursor-pointer"
@@ -127,7 +127,7 @@
                             </button>
                         </a>
                     @endif
-                    @if (Auth::user()->name != "Siska")
+                    @if (Auth::user()->role != "Admin 2")
                     <a
                         href="{{ route('pinjamanTukangs.index') }}"
                         class="cursor-pointer"
@@ -301,7 +301,7 @@
                         "text-white"
                     );
                     // ganti icon navbar sesuai indexnya
-                    if (user == "Novi") {
+                    if (user == "Admin 1") {
                         if (index == 0) {
                             item.children[0].src = "https://ar4n-group.com/public/assets/navbar/home-click.png";
                         } else if (index == 1) {
@@ -319,7 +319,7 @@
                         } else if (index == 7) {
                             item.children[0].src = "{{ asset('assets/navbar/receipt-discount-click.png') }}";
                         }
-                    } else if (user == "Siska") {
+                    } else if (user == "Admin 2") {
                         if (index == 0) {
                             item.children[0].src = "https://ar4n-group.com/public/assets/navbar/home-click.png";
                         } else if (index == 1) {
