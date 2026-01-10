@@ -28,6 +28,8 @@ class LoginController extends Controller
 
             switch ($user->role) {
                 case 'Admin':
+                case 'Admin 1':
+                case 'Admin 2':
                 case 'Super Admin': // super admin sama dengan admin
                     return redirect('/admin/dashboard')->with('success', 'Login berhasil sebagai Admin');
                 case 'Owner':
