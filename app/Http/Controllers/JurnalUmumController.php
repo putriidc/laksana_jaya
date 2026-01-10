@@ -287,20 +287,6 @@ class JurnalUmumController extends Controller
                 'created_by'    => Auth::id(),
             ]);
 
-            // baris 1: kredit dari kas/bank asal
-            JurnalUmum::create([
-                'kode_jurnal'   => $kodeJurnal,
-                'detail_order' => 3,
-                'tanggal'       => $tanggal,
-                'kode_perkiraan' => $akunFrom->kode_akun ?? '-',
-                'nama_perkiraan' => $akunFrom->nama_akun ?? '-',
-                'keterangan'    => $keterangan,
-                'nama_proyek'   => '-',
-                'kode_proyek'   => '-',
-                'debit'         => 0,
-                'kredit'        => $nominal,
-                'created_by'    => Auth::id(),
-            ]);
 
 
             return redirect()->back()->with('success', 'Transfer kas/bank berhasil dicatat.');
