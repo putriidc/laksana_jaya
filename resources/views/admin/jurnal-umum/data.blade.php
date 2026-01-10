@@ -827,20 +827,47 @@
                             });
                         });
 
-                        const form = document.getElementById('myForm')
+                        const form = document.getElementById('myForm');
                         if (form) {
                             form.addEventListener('submit', function(e) {
+                                e.preventDefault(); // cegah submit default
+
+                                // bersihkan input rupiah
                                 const rupiahInputs = document.querySelectorAll('.rupiah-format');
                                 rupiahInputs.forEach(input => {
                                     let value = input.value;
                                     let cleanValue = parseInt(value.replace(/[^,\d]/g, ""));
                                     input.value = cleanValue;
-                                    console.log(
-                                        `Input name: ${input.name}, Clean value: ${input.value}`
-                                    );
-                                })
-                            })
+                                });
+
+                                // kirim pakai fetch
+                                const formData = new FormData(form);
+
+                                fetch(form.action, {
+                                        method: "POST",
+                                        headers: {
+                                            "X-CSRF-TOKEN": form.querySelector('[name=_token]').value
+                                        },
+                                        body: formData
+                                    })
+                                    .then(res => res.json())
+                                    .then(res => {
+                                        if (res.error) {
+                                            Swal.fire("Error", res.error, "error");
+                                        } else {
+                                            Swal.fire("Sukses", "Transfer kas/bank berhasil dicatat",
+                                                "success");
+                                            Swal.close();
+                                            location.reload();
+                                        }
+                                    })
+                                    .catch(err => {
+                                        Swal.fire("Error", "Terjadi kesalahan: " + err.message,
+                                        "error");
+                                    });
+                            });
                         }
+
                     }
                 });
             }

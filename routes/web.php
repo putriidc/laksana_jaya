@@ -34,6 +34,7 @@ use App\Http\Controllers\BukuBesarController;
 use App\Http\Controllers\HutangVendorController;
 use App\Http\Controllers\NeracaOwnerController;
 use App\Http\Controllers\ProgresOwnerController;
+use App\Http\Controllers\SaldoAwalOwnerController;
 use App\Http\Controllers\SupplierController;
 use App\Models\JurnalUmum;
 
@@ -276,9 +277,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/owner-dashboard', function () {
             return view('owner.dashboard');
         });
-        Route::get('/saldo', function () {
-            return view('owner.saldo_awal.index');
-        });
+
+        Route::resource('saldo', SaldoAwalOwnerController::class);
         // owner
     });
 
@@ -501,9 +501,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/owner-dashboard', function () {
             return view('owner.dashboard');
         });
-        Route::get('/saldo', function () {
-            return view('owner.saldo_awal.index');
-        });
+
+        Route::resource('saldo', SaldoAwalOwnerController::class);
+
         // owner
     });
 

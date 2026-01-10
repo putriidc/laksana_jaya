@@ -16,6 +16,7 @@ class Asset extends Model
         'akun_header',
         'post_saldo',
         'post_laporan',
+        'saldo',
         'created_by',
         'deleted_at',
     ];
