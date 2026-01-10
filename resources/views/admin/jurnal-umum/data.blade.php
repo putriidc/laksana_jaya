@@ -2,17 +2,9 @@
 @section('content')
     <div>
         @if (session('success'))
-            <div
-                id="flash-message"
-                data-type="success"
-                data-message="{{ session('success') }}"
-            ></div>
+            <div id="flash-message" data-type="success" data-message="{{ session('success') }}"></div>
         @elseif (session('error'))
-            <div
-                id="flash-message"
-                data-type="error"
-                data-message="{{ session('error') }}"
-            ></div>
+            <div id="flash-message" data-type="error" data-message="{{ session('error') }}"></div>
         @endif
         <h1 class="font-bold text-2xl mb-6">Jurnal Umum</h1>
         <section>
@@ -172,7 +164,8 @@
                         @foreach ($jurnals as $jurnal)
                             <tr class="bg-[#E9E9E9] border-b-[1px] border-[#CCCCCC]">
                                 <td class="py-2">
-                                    <input type="checkbox" class="data-checkbox" value="{{ $jurnal->id }}" onchange="updateBulkButton()">
+                                    <input type="checkbox" class="data-checkbox" value="{{ $jurnal->id }}"
+                                        onchange="updateBulkButton()">
                                 </td>
                                 <td class="py-2">{{ $jurnal->tanggal }}</td>
                                 <td class="py-2">{{ $jurnal->creator?->name ?? '-' }}</td>
@@ -184,7 +177,7 @@
                                 <td class="py-2">{{ 'RP. ' . number_format($jurnal->debit, 0, ',', '.') }}</td>
                                 <td class="py-2">{{ 'RP. ' . number_format($jurnal->kredit, 0, ',', '.') }}</td>
                                 <td class="flex justify-center items-center gap-x-2 py-2">
-                                     @php
+                                    @php
                                         $detail = $jurnal->detailEaf;
                                     @endphp
                                     @if ($jurnal->tanggal == $today && $jurnal->detail_order > 2)
@@ -237,14 +230,16 @@
                                         <span class="text-gray-600 font-bold" >Lewat <br> Tanggal</span>
                                     @endif
                                 </td> --}}
-                                 {{-- <td class="flex justify-center items-center gap-x-2 py-2">{{ $jurnal->tanggal }} | {{ $today }}</td> --}}
+                                {{-- <td class="flex justify-center items-center gap-x-2 py-2">{{ $jurnal->tanggal }} | {{ $today }}</td> --}}
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
             <div class="mt-2">
-                <button ype="button" onclick="bulkDelete()" id="btn-bulk-delete" class="border border-[#FF4B45] rounded-lg p-2 text-[#FF4B45] cursor-pointer">Hapus <span id="count-selected">0</span> Data</button>
+                <button ype="button" onclick="bulkDelete()" id="btn-bulk-delete"
+                    class="border border-[#FF4B45] rounded-lg p-2 text-[#FF4B45] cursor-pointer">Hapus <span
+                        id="count-selected">0</span> Data</button>
             </div>
         </section>
         <script>
@@ -332,12 +327,12 @@
                             @foreach ($bank as $item)
                             <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
                             @endforeach
-                        </select>    
+                        </select>
                     </div>
 
                     <div class="flex flex-col w-full items-start gap-y-2 pb-5 border-b border-gray">
                         <label>Keterangan</label>
-                        <input type="text" id="ketKasBank" class="bg-gray-200 rounded-lg px-4 py-2 w-full">    
+                        <input type="text" id="ketKasBank" class="bg-gray-200 rounded-lg px-4 py-2 w-full">
                     </div>
 
                     <h2 class="font-bold text-xl">Tambah Rincian Debet</h2>
@@ -349,7 +344,7 @@
                                 @foreach ($akun as $item)
                                     <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
                                 @endforeach
-                            </select>    
+                            </select>
                         </div>
                         <div class="flex flex-col items-start w-full gap-y-1">
                              <label>Keterangan</label>
@@ -392,7 +387,7 @@
                             }
                         });
 
-                         // membuat format rupiah
+                        // membuat format rupiah
                         const rupiahFormat = document.querySelectorAll('.rupiah-format');
                         rupiahFormat.forEach(item => {
                             item.addEventListener('input', function(e) {
@@ -431,7 +426,7 @@
                 let ket = document.getElementById('ketPerkiraan').value;
                 // let nominal = parseInt(document.getElementById('nominal').value);
                 let nominal = document.getElementById('nominal').value.replace(/[^0-9]/g, '');
-                
+
                 // ubah nominal yang tadi format rupiah menjadi number
                 let cleanNominal = nominal.replace(/[^0-9]/g, '');
 
@@ -480,8 +475,8 @@
                     kode_akun: kodeKas,
                     nama_akun: namaKas,
                     keterangan: ketKas,
-                    debit: 0,
-                    kredit: totalNominal
+                    debit: totalNominal,
+                    kredit: 0
                 });
 
                 // baris debet
@@ -490,8 +485,8 @@
                         kode_akun: d.kode_akun,
                         nama_akun: d.nama_akun,
                         keterangan: d.keterangan,
-                        debit: d.nominal,
-                        kredit: 0
+                        debit: 0,
+                        kredit: d.nominal
                     });
                 });
 
@@ -533,7 +528,7 @@
                     html: `
                     <form id="formKasBank" class="flex flex-col items-start gap-y-4">
                     <h1 class="font-bold text-2xl mb-4">Transaksi Jurnal Pengeluaran</h1>
-                    
+
                     <div class="flex flex-col w-full items-start gap-y-2">
                         <label>Kas/Bank</label>
                         <select id="kasBank" class="bg-gray-200 rounded-lg px-4 py-2 w-full appearance-none cursor-pointer">
@@ -541,12 +536,12 @@
                             @foreach ($bank as $item)
                             <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
                             @endforeach
-                        </select>    
+                        </select>
                     </div>
 
                     <div class="flex flex-col w-full items-start gap-y-2 pb-5 border-b border-gray">
                         <label>Keterangan</label>
-                        <input type="text" id="ketKasBank" class="bg-gray-200 rounded-lg px-4 py-2 w-full">    
+                        <input type="text" id="ketKasBank" class="bg-gray-200 rounded-lg px-4 py-2 w-full">
                     </div>
 
 
@@ -559,7 +554,7 @@
                                 @foreach ($akun as $item)
                                     <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
                                 @endforeach
-                            </select>    
+                            </select>
                         </div>
                         <div class="flex flex-col items-start w-full gap-y-1">
                              <label>Keterangan</label>
@@ -641,9 +636,9 @@
                 let kode = akun.value;
                 let nama = akun.options[akun.selectedIndex].text;
                 let ket = document.getElementById('ketPerkiraan').value;
-               // let nominal = parseInt(document.getElementById('nominal').value);
+                // let nominal = parseInt(document.getElementById('nominal').value);
                 let nominal = document.getElementById('nominal').value.replace(/[^0-9]/g, '');
-                
+
                 // ubah nominal yang tadi format rupiah menjadi number
                 let cleanNominal = nominal.replace(/[^0-9]/g, '');
 
@@ -686,24 +681,25 @@
                 let totalNominal = transaksiKredit.reduce((sum, d) => sum + d.nominal, 0);
 
                 let data = [];
-                // baris pertama: Kas/Bank (debit)
-                data.push({
-                    kode_akun: kodeKas,
-                    nama_akun: namaKas,
-                    keterangan: ketKas,
-                    debit: totalNominal,
-                    kredit: 0
-                });
 
-                // baris kredit
+                // baris kredit dulu
                 transaksiKredit.forEach(d => {
                     data.push({
                         kode_akun: d.kode_akun,
                         nama_akun: d.nama_akun,
                         keterangan: d.keterangan,
-                        debit: 0,
-                        kredit: d.nominal
+                        debit: d.nominal,
+                        kredit: 0
                     });
+                });
+
+                // baris terakhir: Kas/Bank (kredit)
+                data.push({
+                    kode_akun: kodeKas,
+                    nama_akun: namaKas,
+                    keterangan: ketKas,
+                    debit: 0,
+                    kredit: totalNominal
                 });
 
                 let btn = document.querySelector('[onclick="transaksiKeluar()"]');
@@ -822,20 +818,47 @@
                             });
                         });
 
-                        const form = document.getElementById('myForm')
+                        const form = document.getElementById('myForm');
                         if (form) {
                             form.addEventListener('submit', function(e) {
+                                e.preventDefault(); // cegah submit default
+
+                                // bersihkan input rupiah
                                 const rupiahInputs = document.querySelectorAll('.rupiah-format');
                                 rupiahInputs.forEach(input => {
                                     let value = input.value;
                                     let cleanValue = parseInt(value.replace(/[^,\d]/g, ""));
                                     input.value = cleanValue;
-                                    console.log(
-                                        `Input name: ${input.name}, Clean value: ${input.value}`
-                                    );
-                                })
-                            })
+                                });
+
+                                // kirim pakai fetch
+                                const formData = new FormData(form);
+
+                                fetch(form.action, {
+                                        method: "POST",
+                                        headers: {
+                                            "X-CSRF-TOKEN": form.querySelector('[name=_token]').value
+                                        },
+                                        body: formData
+                                    })
+                                    .then(res => res.json())
+                                    .then(res => {
+                                        if (res.error) {
+                                            Swal.fire("Error", res.error, "error");
+                                        } else {
+                                            Swal.fire("Sukses", "Transfer kas/bank berhasil dicatat",
+                                                "success");
+                                            Swal.close();
+                                            location.reload();
+                                        }
+                                    })
+                                    .catch(err => {
+                                        Swal.fire("Error", "Terjadi kesalahan: " + err.message,
+                                        "error");
+                                    });
+                            });
                         }
+
                     }
                 });
             }
@@ -852,7 +875,7 @@
                 const selectedCount = document.querySelectorAll('.data-checkbox:checked').length;
                 const btn = document.getElementById('btn-bulk-delete');
                 const span = document.getElementById('count-selected');
-                
+
                 if (selectedCount > 0) {
                     btn.classList.remove('hidden');
                     span.innerText = selectedCount;
@@ -864,7 +887,7 @@
             // Fungsi Eksekusi Hapus Masal
             function bulkDelete() {
                 const selectedIds = Array.from(document.querySelectorAll('.data-checkbox:checked'))
-                                        .map(cb => cb.value);
+                    .map(cb => cb.value);
 
                 Swal.fire({
                     title: 'Hapus data terpilih?',
@@ -877,20 +900,22 @@
                     if (result.isConfirmed) {
                         // Gunakan Fetch API untuk mengirim data ke Backend
                         fetch("{{ route('jurnalUmums.bulk-delete') }}", {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                            },
-                            body: JSON.stringify({ ids: selectedIds })
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                Swal.fire('Berhasil!', data.message, 'success')
-                                    .then(() => location.reload()); // Refresh halaman
-                            }
-                        });
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                },
+                                body: JSON.stringify({
+                                    ids: selectedIds
+                                })
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    Swal.fire('Berhasil!', data.message, 'success')
+                                        .then(() => location.reload()); // Refresh halaman
+                                }
+                            });
                     }
                 });
             }

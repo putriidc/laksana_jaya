@@ -273,7 +273,7 @@
                         </button>
                     </a>
                     <a
-                        href="/saldo"
+                        href="{{ route('saldo.index') }}"
                         class="cursor-pointer"
                     >
                         <button

@@ -72,9 +72,9 @@ class JurnalUmumController extends Controller
         }
         // ambil semua nama_akun dari asset yang mau dikecualikan
         $excludedAccounts = Asset::active()
-        ->whereIn('akun_header', ['asset_tetap', 'kewajiban', 'ekuitas', 'pendapatan'])
-        ->whereNotIn('kode_akun', ['450', '451'])
-        ->pluck('nama_akun');
+            ->whereIn('akun_header', ['asset_tetap', 'kewajiban', 'ekuitas', 'pendapatan'])
+            ->whereNotIn('kode_akun', ['450', '451'])
+            ->pluck('nama_akun');
         $query->whereNotIn('nama_perkiraan', $excludedAccounts);
 
         $jurnals = $query->orderBy('id', 'desc')
@@ -231,6 +231,40 @@ class JurnalUmumController extends Controller
             // ambil data akun langsung dari tabel Asset
             $akunFrom = Asset::where('kode_akun', $from)->first();
             $akunTo   = Asset::where('kode_akun', $to)->first();
+            // update saldo di assets (Kas/Bank asal)
+            $asset = Asset::where('kode_akun', $akunFrom->kode_akun)->first();
+            if ($asset) {
+                if ($nominal > 0) {
+                    // kredit → saldo berkurang, tapi jangan sampai minus
+                    if ($asset->saldo < $nominal) {
+                        return response()->json(['error' => "Saldo {$asset->nama_akun} tidak mencukupi"], 400);
+                    }
+                    $asset->saldo -= $nominal;
+                }
+                $asset->save();
+            }
+            $asset = Asset::where('kode_akun', $akunTo->kode_akun)->first();
+                if ($asset) {
+                    if ($nominal > 0) {
+                        $asset->saldo += $nominal;
+                    }
+                    $asset->save();
+                }
+
+            // baris 2: debit ke kas/bank tujuan
+            JurnalUmum::create([
+                'kode_jurnal'   => $kodeJurnal,
+                'detail_order' => 3,
+                'tanggal'       => $tanggal,
+                'kode_perkiraan' => $akunTo->kode_akun ?? '-',
+                'nama_perkiraan' => $akunTo->nama_akun ?? '-',
+                'keterangan'    => $keterangan,
+                'nama_proyek'   => '-',
+                'kode_proyek'   => '-',
+                'debit'         => $nominal,
+                'kredit'        => 0,
+                'created_by'    => Auth::id(),
+            ]);
 
             // baris 1: kredit dari kas/bank asal
             JurnalUmum::create([
@@ -247,20 +281,6 @@ class JurnalUmumController extends Controller
                 'created_by'    => Auth::id(),
             ]);
 
-            // baris 2: debit ke kas/bank tujuan
-            JurnalUmum::create([
-                'kode_jurnal'   => $kodeJurnal,
-                'detail_order' => 3,
-                'tanggal'       => $tanggal,
-                'kode_perkiraan' => $akunTo->kode_akun ?? '-',
-                'nama_perkiraan' => $akunTo->nama_akun ?? '-',
-                'keterangan'    => $keterangan,
-                'nama_proyek'   => '-',
-                'kode_proyek'   => '-',
-                'debit'         => $nominal,
-                'kredit'        => 0,
-                'created_by'    => Auth::id(),
-            ]);
 
             return redirect()->back()->with('success', 'Transfer kas/bank berhasil dicatat.');
         } catch (\Exception $e) {
@@ -322,9 +342,9 @@ class JurnalUmumController extends Controller
         $jurnalUmum = JurnalUmum::findOrFail($id);
         $jurnalUmum->update(['deleted_at' => Carbon::now('Asia/Jakarta')]); // manual soft delete
         // kalau ada detail_eaf terkait, soft delete juga
-        if ($jurnalUmum->detailEaf){
-                $jurnalUmum->detailEaf->update(['deleted_at' => Carbon::now('Asia/Jakarta')]);
-            }
+        if ($jurnalUmum->detailEaf) {
+            $jurnalUmum->detailEaf->update(['deleted_at' => Carbon::now('Asia/Jakarta')]);
+        }
         return redirect()->route('jurnalUmums.index')->with('success', 'Jurnal berhasil dihapus (soft delete)');
     }
 
@@ -350,6 +370,23 @@ class JurnalUmumController extends Controller
                     'kredit'        => $row['kredit'] ?? 0,
                     'created_by'    => Auth::id() ?? 0,
                 ]);
+
+                // update saldo di assets
+                $asset = Asset::where('kode_akun', $row['kode_akun'])->first();
+                if ($asset) {
+                    if (($row['debit'] ?? 0) > 0) {
+                        $asset->saldo += $row['debit'];
+                    }
+                    $asset->save();
+                }
+                // update saldo akun Modal
+                $modal = Asset::where('nama_akun', 'Modal')->first();
+                if ($modal) {
+                    if (($row['debit'] ?? 0) > 0) {
+                        $modal->saldo += $row['debit'];
+                    }
+                    $modal->save();
+                }
             }
 
             return response()->json(['success' => true]);
@@ -379,6 +416,30 @@ class JurnalUmumController extends Controller
                     'kredit'        => $row['kredit'] ?? 0,
                     'created_by'    => Auth::id() ?? 0,
                 ]);
+                // update saldo di assets
+                $asset = Asset::where('kode_akun', $row['kode_akun'])->first();
+                if ($asset) {
+                    if (($row['kredit'] ?? 0) > 0) {
+                        // kredit → saldo berkurang, tapi jangan sampai minus
+                        if ($asset->saldo < $row['kredit']) {
+                            return response()->json(['error' => "Saldo {$asset->nama_akun} tidak mencukupi"], 400);
+                        }
+                        $asset->saldo -= $row['kredit'];
+                    }
+                    $asset->save();
+                }
+                // update saldo akun Modal
+                $modal = Asset::where('nama_akun', 'Modal')->first();
+                if ($modal) {
+                    if (($row['kredit'] ?? 0) > 0) {
+                        // kurangi saldo modal juga
+                        if ($modal->saldo < $row['kredit']) {
+                            return response()->json(['error' => "Saldo Modal tidak mencukupi"], 400);
+                        }
+                        $modal->saldo -= $row['kredit'];
+                    }
+                    $modal->save();
+                }
             }
 
             return response()->json(['success' => true]);
