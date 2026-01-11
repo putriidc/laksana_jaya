@@ -169,10 +169,10 @@
                         @foreach ($jurnals as $jurnal)
                             <tr class="bg-[#E9E9E9] border-b-[1px] border-[#CCCCCC]">
                                 @if ($jurnal->tanggal == $today && $jurnal->detail_order > 2)
-                                <td class="py-2">
-                                    <input type="checkbox" class="data-checkbox" value="{{ $jurnal->id }}"
-                                        onchange="updateBulkButton()">
-                                </td>
+                                    <td class="py-2">
+                                        <input type="checkbox" class="data-checkbox" value="{{ $jurnal->id }}"
+                                            onchange="updateBulkButton()">
+                                    </td>
                                 @else
                                     <td></td>
                                 @endif
@@ -846,7 +846,8 @@
                                 fetch(form.action, {
                                         method: "POST",
                                         headers: {
-                                            "X-CSRF-TOKEN": form.querySelector('[name=_token]').value
+                                            "Content-Type": "application/json",
+                                            "X-CSRF-TOKEN": token
                                         },
                                         body: formData
                                     })
@@ -863,7 +864,7 @@
                                     })
                                     .catch(err => {
                                         Swal.fire("Error", "Terjadi kesalahan: " + err.message,
-                                        "error");
+                                            "error");
                                     });
                             });
                         }
