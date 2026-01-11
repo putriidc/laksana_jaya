@@ -12,6 +12,7 @@ class JurnalUmum extends Model
         'id_content',
         'id_pinjam',
         'id_kasbon',
+        'kode_vendor',
         'detail_eaf_id',
         'detail_order',
         'kode_jurnal',
