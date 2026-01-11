@@ -92,6 +92,7 @@ class HutangVendorController extends Controller
         ]);
         JurnalUmum::create([
             'detail_order' => 3,
+            'kode_vendor'   => $newCode,
             'kode_jurnal'   => $kodeJurnal,
             'tanggal'       => $request->tgl_hutang,
             'kode_perkiraan' => '511',
