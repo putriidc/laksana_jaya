@@ -166,9 +166,9 @@ class JurnalOwnerController extends Controller
 
 
 
-            return redirect()->back()->with('success', 'Transfer kas/bank berhasil dicatat.');
+            return response()->json(['success' => true]);
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Gagal simpan transfer: ' . $e->getMessage());
+            return response()->json(['error' => 'Gagal simpan transfer: '.$e->getMessage()], 400);
         }
     }
 
