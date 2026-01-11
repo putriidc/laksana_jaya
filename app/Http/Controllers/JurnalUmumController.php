@@ -33,19 +33,16 @@ class JurnalUmumController extends Controller
                 $query->whereNotIn('akun_header', [
                     'asset_lancar_bank',
                     'asset_tetap',
-                    'kewajiban',
                     'ekuitas',
                     'pendapatan'
                 ])
                     ->orWhere(function ($q) {
-                        $q->where(function ($sub) {
-                            $sub->where('akun_header', 'pendapatan')
-                                ->whereIn('kode_akun', ['450', '451']);
-                        })
-                            ->orWhere(function ($sub) {
-                                $sub->where('akun_header', 'kewajiban')
-                                    ->whereIn('kode_akun', ['211',]);
-                            });
+                        $q->where('akun_header', 'pendapatan')
+                            ->whereIn('kode_akun', ['450', '451']);
+                    })
+                    ->orWhere(function ($q) {
+                        $q->where('akun_header', 'kewajiban')
+                            ->where('kode_akun', '211'); // hanya hutang vendor
                     });
             })
             ->get();
