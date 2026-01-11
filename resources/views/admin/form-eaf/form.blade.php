@@ -2,20 +2,13 @@
 @section('content')
     <div>
         @if (session('success'))
-            <div
-                id="flash-message"
-                data-type="success"
-                data-message="{{ session('success') }}"
-            ></div>
+            <div id="flash-message" data-type="success" data-message="{{ session('success') }}"></div>
         @elseif (session('error'))
-            <div
-                id="flash-message"
-                data-type="error"
-                data-message="{{ session('error') }}"
-            ></div>
+            <div id="flash-message" data-type="error" data-message="{{ session('error') }}"></div>
         @endif
         <h1 class="text-2xl font-bold mb-5">Form Pengajuan EAF</h1>
-        <form method="POST" action="{{ route('eaf.store') }}" class="flex flex-col gap-y-5 pb-10 border-b border-gray-300" id="myForm">
+        <form method="POST" action="{{ route('eaf.store') }}" class="flex flex-col gap-y-5 pb-10 border-b border-gray-300"
+            id="myForm">
             @csrf
             <div class="flex items-center">
                 <label for="" class="w-[200px]">Tanggal Pengajuan</label>
@@ -93,49 +86,124 @@
                             $no = 1;
                         @endphp
                         @foreach ($eaf as $item)
-                            <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
-                                <td class="py-2">{{ $no++ }}</td>
-                                <td class="py-2">{{ $item->tanggal }}</td>
-                                <td class="py-2">{{ $item->nama_proyek }}</td>
-                                <td class="py-2">{{ $item->pic }}</td>
-                                <td class="py-2">{{ 'RP. ' . number_format($item->nominal, 0, ',', '.') }}</td>
-                                <td class="py-2">
-                                    <span data-detail="{{ $item->detail_biaya }}" onclick="detailBiaya(this)"
-                                        class="hover:underline text-blue-400 cursor-pointer">
-                                        Lihat Detail
-                                    </span>
-                                </td>
-                                <td class="py-2">
-                                    <div class="flex gap-x-1 items-center">
-                                        {{-- Status Owner --}}
-                                        <button type="button"
-                                            class="px-4 py-1 text-xs rounded-sm text-white
+                            @if (
+                                ($item->acc_owner === 'pending' || $item->acc_owner === 'accept') &&
+                                    ($item->acc_spv === 'pending' || $item->acc_spv === 'accept'))
+                                <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
+                                    <td class="py-2">{{ $no++ }}</td>
+                                    <td class="py-2">{{ $item->tanggal }}</td>
+                                    <td class="py-2">{{ $item->nama_proyek }}</td>
+                                    <td class="py-2">{{ $item->pic }}</td>
+                                    <td class="py-2">{{ 'RP. ' . number_format($item->nominal, 0, ',', '.') }}</td>
+                                    <td class="py-2">
+                                        <span data-detail="{{ $item->detail_biaya }}" onclick="detailBiaya(this)"
+                                            class="hover:underline text-blue-400 cursor-pointer">
+                                            Lihat Detail
+                                        </span>
+                                    </td>
+                                    <td class="py-2">
+                                        <div class="flex gap-x-1 items-center">
+                                            {{-- Status Owner --}}
+                                            <button type="button"
+                                                class="px-4 py-1 text-xs rounded-sm text-white
                {{ $item->acc_owner === 'accept' ? 'bg-[#45D03E]' : ($item->acc_owner === 'decline' ? 'bg-red-500' : 'bg-gray-400') }}"
-                                            data-ket="{{ $item->ket_owner }}" onclick="showKet(this, 'Owner')">
-                                            Owner: {{ ucfirst($item->acc_owner ?? 'Pending') }}
-                                        </button>
+                                                data-ket="{{ $item->ket_owner }}" onclick="showKet(this, 'Owner')">
+                                                Owner: {{ ucfirst($item->acc_owner ?? 'Pending') }}
+                                            </button>
 
-                                        {{-- Status SPV --}}
-                                        <button type="button"
-                                            class="px-4 py-1 text-xs rounded-sm text-white
+                                            {{-- Status SPV --}}
+                                            <button type="button"
+                                                class="px-4 py-1 text-xs rounded-sm text-white
                {{ $item->acc_spv === 'accept' ? 'bg-[#45D03E]' : ($item->acc_spv === 'decline' ? 'bg-red-500' : 'bg-gray-400') }}"
-                                            data-ket="{{ $item->ket_spv }}" onclick="showKet(this, 'SPV')">
-                                            SPV: {{ ucfirst($item->acc_spv ?? 'Pending') }}
-                                        </button>
-                                    </div>
-                                </td>
-                                <td class="py-2">
-                                    <div class="flex items-center gap-x-2 justify-center">
-                                        {{-- Tombol detail hanya muncul kalau owner & spv accept --}}
-                                        @if ($item->acc_owner === 'accept' && $item->acc_spv === 'accept')
-                                            <a href="{{ route('eaf.show', $item->id) }}" class="btn btn-sm btn-primary">
-                                                <img src="{{ asset('assets/more-circle.png') }}" alt="detail icon"
-                                                    class="w-[22px] cursor-pointer">
-                                            </a>
-                                        @endif
-                                    </div>
-                                </td>
-                            </tr>
+                                                data-ket="{{ $item->ket_spv }}" onclick="showKet(this, 'SPV')">
+                                                SPV: {{ ucfirst($item->acc_spv ?? 'Pending') }}
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td class="py-2">
+                                        <div class="flex items-center gap-x-2 justify-center">
+                                            {{-- Tombol detail hanya muncul kalau owner & spv accept --}}
+                                            @if ($item->acc_owner === 'accept' && $item->acc_spv === 'accept')
+                                                <a href="{{ route('eaf.show', $item->id) }}"
+                                                    class="btn btn-sm btn-primary">
+                                                    <img src="{{ asset('assets/more-circle.png') }}" alt="detail icon"
+                                                        class="w-[22px] cursor-pointer">
+                                                </a>
+                                            @endif
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endif
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="mt-5">
+            <h1 class="text-2xl font-bold mb-5">Status Pengajuan</h1>
+            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
+                <table class="table-auto text-center text-sm w-full">
+                    <thead class="border-b-2 border-[#CCCCCC]">
+                        <th class="py-2 w-[5%]">No</th>
+                        <th class="py-2 w-[10%]">Tgl Pengajuan</th>
+                        <th class="py-2 w-[15%]">Nama Proyek</th>
+                        <th class="py-2 w-[10%]">PIC</th>
+                        <th class="py-2 w-[10%]">Nominal</th>
+                        <th class="py-2 w-[15%]">Detail Biaya</th>
+                        <th class="py-2 w-[10%]">Status</th>
+                        <th class="py-2 w-[10%]">Action</th>
+                    </thead>
+                    <tbody>
+                        @php
+                            $nod = 1;
+                        @endphp
+                        @foreach ($eaf as $item)
+                            @if ($item->acc_owner === 'decline' || $item->acc_spv === 'decline')
+                                <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
+                                    <td class="py-2">{{ $nod++ }}</td>
+                                    <td class="py-2">{{ $item->tanggal }}</td>
+                                    <td class="py-2">{{ $item->nama_proyek }}</td>
+                                    <td class="py-2">{{ $item->pic }}</td>
+                                    <td class="py-2">{{ 'RP. ' . number_format($item->nominal, 0, ',', '.') }}</td>
+                                    <td class="py-2">
+                                        <span data-detail="{{ $item->detail_biaya }}" onclick="detailBiaya(this)"
+                                            class="hover:underline text-blue-400 cursor-pointer">
+                                            Lihat Detail
+                                        </span>
+                                    </td>
+                                    <td class="py-2">
+                                        <div class="flex gap-x-1 items-center">
+                                            {{-- Status Owner --}}
+                                            <button type="button"
+                                                class="px-4 py-1 text-xs rounded-sm text-white
+               {{ $item->acc_owner === 'accept' ? 'bg-[#45D03E]' : ($item->acc_owner === 'decline' ? 'bg-red-500' : 'bg-gray-400') }}"
+                                                data-ket="{{ $item->ket_owner }}" onclick="showKet(this, 'Owner')">
+                                                Owner: {{ ucfirst($item->acc_owner ?? 'Pending') }}
+                                            </button>
+
+                                            {{-- Status SPV --}}
+                                            <button type="button"
+                                                class="px-4 py-1 text-xs rounded-sm text-white
+               {{ $item->acc_spv === 'accept' ? 'bg-[#45D03E]' : ($item->acc_spv === 'decline' ? 'bg-red-500' : 'bg-gray-400') }}"
+                                                data-ket="{{ $item->ket_spv }}" onclick="showKet(this, 'SPV')">
+                                                SPV: {{ ucfirst($item->acc_spv ?? 'Pending') }}
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td class="py-2">
+                                        <div class="flex items-center gap-x-2 justify-center">
+                                            {{-- Tombol detail hanya muncul kalau owner & spv accept --}}
+                                            @if ($item->acc_owner === 'accept' && $item->acc_spv === 'accept')
+                                                <a href="{{ route('eaf.show', $item->id) }}"
+                                                    class="btn btn-sm btn-primary">
+                                                    <img src="{{ asset('assets/more-circle.png') }}" alt="detail icon"
+                                                        class="w-[22px] cursor-pointer">
+                                                </a>
+                                            @endif
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endif
                         @endforeach
                     </tbody>
                 </table>
