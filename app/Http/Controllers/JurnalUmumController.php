@@ -34,6 +34,10 @@ class JurnalUmumController extends Controller
                     ->orWhere(function ($q) {
                         $q->where('akun_header', 'pendapatan')
                             ->whereIn('kode_akun', ['450', '451']);
+                    })
+                    ->orWhere(function ($q) {
+                        $q->where('akun_header', 'kewajiban')
+                            ->whereIn('kode_akun', '211');
                     });
             })
 
