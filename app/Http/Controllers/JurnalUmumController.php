@@ -34,15 +34,13 @@ class JurnalUmumController extends Controller
                     'asset_lancar_bank',
                     'asset_tetap',
                     'ekuitas',
-                    'pendapatan'
+                    'pendapatan',
+                    'kewajiban'
+
                 ])
                     ->orWhere(function ($q) {
                         $q->where('akun_header', 'pendapatan')
                             ->whereIn('kode_akun', ['450', '451']);
-                    })
-                    ->orWhere(function ($q) {
-                        $q->where('akun_header', 'kewajiban')
-                            ->where('kode_akun', '211'); // hanya hutang vendor
                     });
             })
             ->get();
@@ -95,9 +93,14 @@ class JurnalUmumController extends Controller
         }
         // ambil semua nama_akun dari asset yang mau dikecualikan
         $excludedAccounts = Asset::active()
-            ->whereIn('akun_header', ['asset_tetap', 'kewajiban', 'ekuitas', 'pendapatan'])
+            ->whereIn('akun_header', ['asset_tetap', 'ekuitas', 'pendapatan'])
+            ->orWhere(function ($q) {
+                $q->where('akun_header', 'kewajiban')
+                    ->where('kode_akun', '!=', '211');
+            })
             ->whereNotIn('kode_akun', ['450', '451'])
             ->pluck('nama_akun');
+
         $query->whereNotIn('nama_perkiraan', $excludedAccounts);
 
         $jurnals = $query->orderBy('id', 'desc')
