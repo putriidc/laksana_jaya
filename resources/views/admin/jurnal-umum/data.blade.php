@@ -846,8 +846,8 @@
                                 fetch(form.action, {
                                         method: "POST",
                                         headers: {
-                                            "Content-Type": "application/json",
-                                            "X-CSRF-TOKEN": token
+                                            "X-CSRF-TOKEN": token,
+                                            "X-Requested-With": "XMLHttpRequest"
                                         },
                                         body: formData
                                     })
