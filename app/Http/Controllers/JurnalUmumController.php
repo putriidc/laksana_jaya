@@ -297,13 +297,13 @@ class JurnalUmumController extends Controller
                 'kode_jurnal'   => $kodeJurnal,
                 'detail_order' => 3,
                 'tanggal'       => $tanggal,
-                'kode_perkiraan' => $akunTo->kode_akun ?? '-',
-                'nama_perkiraan' => $akunTo->nama_akun ?? '-',
+                'kode_perkiraan' => $akunFrom->kode_akun ?? '-',
+                'nama_perkiraan' => $akunFrom->nama_akun ?? '-',
                 'keterangan'    => $keterangan,
                 'nama_proyek'   => '-',
                 'kode_proyek'   => '-',
-                'debit'         => $nominal,
-                'kredit'        => 0,
+                'debit'         => 0,
+                'kredit'        => $nominal,
                 'created_by'    => Auth::id(),
             ]);
 
@@ -453,9 +453,6 @@ class JurnalUmumController extends Controller
                 if ($asset) {
                     if (($row['kredit'] ?? 0) > 0) {
                         $asset->saldo -= $row['kredit'];
-                    }
-                    if (($row['debit'] ?? 0) > 0) {
-                        $asset->saldo += $row['debit'];
                     }
                     $asset->save();
                 }
