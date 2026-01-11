@@ -79,6 +79,7 @@
                                         <img src="{{ asset('assets/more-circle.png') }}" alt="detail icon"
                                             class="w-[22px] cursor-pointer">
                                     </button>
+                                    @if ($item->is_generate == true)
                                     <span class="border-black border-l-[1px] h-[22px]"></span>
                                     {{-- Tombol Delete --}}
                                     <form action="{{ route('hutang_vendor.destroy', $item->id) }}" method="POST"
@@ -90,6 +91,7 @@
                                                 class="w-[22px] cursor-pointer">
                                         </button>
                                     </form>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
