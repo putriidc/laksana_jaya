@@ -30,15 +30,22 @@ class JurnalUmumController extends Controller
         //debit
         $akun = Asset::active()
             ->where(function ($query) {
-                $query->whereNotIn('akun_header', ['asset_lancar_bank', 'asset_tetap', 'kewajiban', 'ekuitas', 'pendapatan'])
+                $query->whereNotIn('akun_header', [
+                    'asset_lancar_bank',
+                    'asset_tetap',
+                    'kewajiban',
+                    'ekuitas',
+                    'pendapatan'
+                ])
                     ->orWhere(function ($q) {
                         $q->where('akun_header', 'pendapatan')
-                            ->whereIn('kode_akun', ['450', '451'])
-                            ->where('akun_header', 'kewajiban')
+                            ->whereIn('kode_akun', ['450', '451']);
+                    })
+                    ->orWhere(function ($q) {
+                        $q->where('akun_header', 'kewajiban')
                             ->whereIn('kode_akun', ['211']);
                     });
             })
-
             ->get();
 
 
