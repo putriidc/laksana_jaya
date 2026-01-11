@@ -270,14 +270,19 @@
                                         .then(data => {
                                             if (data.success) {
                                                 Swal.fire('Berhasil!',
-                                                        'Hutang vendor berhasil digenerate.',
-                                                        'success')
-                                                    .then(() => location.reload());
+                                                    'Hutang vendor berhasil digenerate.',
+                                                    'success'
+                                                ).then(() => location.reload());
+                                            } else if (data.error) {
+                                                Swal.fire('Error', data.error, 'error');
                                             }
                                         })
                                         .catch(err => {
                                             Swal.fire('Error',
-                                                'Terjadi kesalahan saat generate.', 'error');
+                                                'Terjadi kesalahan saat generate: ' + err
+                                                .message,
+                                                'error'
+                                            );
                                         });
 
                                 }
@@ -407,8 +412,8 @@
                 <select name="kode_akun" class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2" required>
                     <option disabled selected>Pilih Kas / Bank</option>
                     ${bankList.map(b => `
-                                                                                <option value="${b.kode_akun}">${b.nama_akun}</option>
-                                                                            `).join('')}
+                                                                                        <option value="${b.kode_akun}">${b.nama_akun}</option>
+                                                                                    `).join('')}
                 </select>
             </div>
 

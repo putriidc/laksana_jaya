@@ -175,7 +175,7 @@ class HutangVendorController extends Controller
         // ✅ cek dulu apakah sudah ada tgl_bayar dan kode_akun
         if (empty($hutang->tgl_bayar) || empty($hutang->kode_akun)) {
             return response()->json([
-                'error' => 'Anda belum membayar hutang (tgl_bayar / kode_akun kosong)'
+                'error' => 'Anda belum membayar hutang'
             ], 400);
         }
 
