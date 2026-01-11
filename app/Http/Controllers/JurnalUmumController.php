@@ -8,6 +8,7 @@ use App\Models\Proyek;
 use App\Models\JurnalUmum;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -409,45 +410,57 @@ class JurnalUmumController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
     public function storeKredit(Request $request)
     {
+        DB::beginTransaction();
         try {
             $lastId = JurnalUmum::max('id') ?? 0;
             $nextId = $lastId + 1;
             $kodeJurnal = 'J-' . str_pad($nextId, 3, '0', STR_PAD_LEFT);
             $transaksi = $request->input('transaksi');
 
+            // validasi dulu semua kredit
             foreach ($transaksi as $row) {
-                // update saldo di assets
+                if (($row['kredit'] ?? 0) > 0) {
+                    $asset = Asset::where('kode_akun', $row['kode_akun'])->first();
+                    if ($asset && $asset->saldo < $row['kredit']) {
+                        DB::rollBack();
+                        return response()->json(['error' => "Saldo {$asset->nama_akun} tidak mencukupi"], 400);
+                    }
+                    $modal = Asset::where('nama_akun', 'Modal')->first();
+                    if ($modal && $modal->saldo < $row['kredit']) {
+                        DB::rollBack();
+                        return response()->json(['error' => "Saldo Modal tidak mencukupi"], 400);
+                    }
+                }
+            }
+
+            // kalau lolos validasi, baru eksekusi update + create
+            foreach ($transaksi as $row) {
                 $asset = Asset::where('kode_akun', $row['kode_akun'])->first();
                 if ($asset) {
                     if (($row['kredit'] ?? 0) > 0) {
-                        // kredit → saldo berkurang, tapi jangan sampai minus
-                        if ($asset->saldo < $row['kredit']) {
-                            return response()->json(['error' => "Saldo {$asset->nama_akun} tidak mencukupi"], 400);
-                        }
                         $asset->saldo -= $row['kredit'];
+                    }
+                    if (($row['debit'] ?? 0) > 0) {
+                        $asset->saldo += $row['debit'];
                     }
                     $asset->save();
                 }
-                // update saldo akun Modal
+
                 $modal = Asset::where('nama_akun', 'Modal')->first();
-                if ($modal) {
-                    if (($row['kredit'] ?? 0) > 0) {
-                        // kurangi saldo modal juga
-                        if ($modal->saldo < $row['kredit']) {
-                            return response()->json(['error' => "Saldo Modal tidak mencukupi"], 400);
-                        }
-                        $modal->saldo -= $row['kredit'];
-                    }
+                if ($modal && ($row['kredit'] ?? 0) > 0) {
+                    $modal->saldo -= $row['kredit'];
                     $modal->save();
                 }
+
                 JurnalUmum::create([
                     'kode_jurnal'   => $kodeJurnal,
-                    'detail_order' => 3,
+                    'detail_order'  => 3,
                     'tanggal'       => now('Asia/Jakarta'),
-                    'kode_perkiraan'     => $row['kode_akun'] ?? '-',
-                    'nama_perkiraan'     => $row['nama_akun'] ?? '-',
+                    'kode_perkiraan' => $row['kode_akun'] ?? '-',
+                    'nama_perkiraan' => $row['nama_akun'] ?? '-',
                     'keterangan'    => $row['keterangan'] ?? '-',
                     'nama_proyek'   => '-',
                     'kode_proyek'   => '-',
@@ -457,11 +470,14 @@ class JurnalUmumController extends Controller
                 ]);
             }
 
+            DB::commit();
             return response()->json(['success' => true]);
         } catch (\Exception $e) {
+            DB::rollBack();
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
 
     public function bulkDelete(Request $request)
     {
