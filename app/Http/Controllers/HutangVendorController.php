@@ -152,9 +152,18 @@ class HutangVendorController extends Controller
     public function destroy($id)
     {
         $hutangVendor = HutangVendor::findOrFail($id);
+
+        // hapus semua jurnal terkait vendor ini
+        JurnalUmum::where('kode_vendor', $hutangVendor->kode_vendor)->delete();
+
+        // hapus hutang vendor
         $hutangVendor->delete();
-        return redirect()->route('hutang_vendor.index')->with('success', 'Data hutang vendor berhasil dihapus.');
+
+        return redirect()
+            ->route('hutang_vendor.index')
+            ->with('success', 'Data hutang vendor dan jurnal terkait berhasil dihapus.');
     }
+
     public function bayar(Request $request, $id)
     {
         $request->validate([
