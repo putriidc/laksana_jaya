@@ -44,7 +44,7 @@ class JurnalUmumController extends Controller
                         })
                             ->orWhere(function ($sub) {
                                 $sub->where('akun_header', 'kewajiban')
-                                    ->whereIn('kode_akun', ['211']);
+                                    ->whereIn('kode_akun', ['211',]);
                             });
                     });
             })
