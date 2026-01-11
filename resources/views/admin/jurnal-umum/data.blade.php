@@ -826,7 +826,7 @@
                                 this.value = rupiah ? "Rp. " + rupiah : "";
                             });
                         });
-
+                        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
                         const form = document.getElementById('myForm');
                         if (form) {
                             form.addEventListener('submit', function(e) {
@@ -846,7 +846,7 @@
                                 fetch(form.action, {
                                         method: "POST",
                                         headers: {
-                                            "Content-Type": "application/json",
+                                            "X-Requested-With": "XMLHttpRequest",
                                             "X-CSRF-TOKEN": token
                                         },
                                         body: formData
