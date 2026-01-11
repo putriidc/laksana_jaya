@@ -171,8 +171,7 @@
                             <option value="" disabled selected>-Pilih Ketegori-</option>
                             <option value="Uang makan" >Uang makan</option>
                             <option value="Nota">Nota</option>
-                            <option value="
-                            ">TF toko</option>
+                            <option value="TF toko">TF toko</option>
                             <option value="Fee">Fee</option>
                             <option value="Upah">Upah</option>
                         </select>

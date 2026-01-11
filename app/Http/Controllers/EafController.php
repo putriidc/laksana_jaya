@@ -20,7 +20,7 @@ class EafController extends Controller
      */
     public function index()
     {
-        $eaf = Eaf::whereNull('deleted_at')->get();
+        $eaf = Eaf::whereNull('deleted_at')->orderBy('id', 'desc')->get();
         $today = Carbon::now('Asia/Jakarta')->toDateString();
         $proyek = Proyek::whereNull('deleted_at')
             ->get();
