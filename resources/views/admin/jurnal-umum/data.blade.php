@@ -755,7 +755,7 @@
                                     <label for="kode_akun" class="font-medium w-[35%]">Ke Kas/Bank</label>
                                     <select name="to" id="" class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none appearance-none" required>
                                 <option selected disabled>-Pilih kas/bank-</option>
-                                @foreach ($bank as $item)
+                                @foreach ($bankTo as $item)
                                     <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
                                 @endforeach
                             </select>

@@ -49,6 +49,14 @@ class JurnalUmumController extends Controller
         ->whereIn('nama_akun', $allowedAccounts)
         ->where('nama_akun', '!=', 'Kas BJB')
         ->get();
+        $bank = Asset::Active()->where('akun_header', 'asset_lancar_bank')
+        ->whereIn('nama_akun', $allowedAccounts)
+        ->where('nama_akun', '!=', 'Kas BJB')
+        ->get();
+
+        $bankTo = Asset::Active()->where('akun_header', 'asset_lancar_bank')
+        ->where('nama_akun', '!=', 'Kas BJB')
+        ->get();
         $kredit = Asset::Active()
             ->whereIn('nama_akun', [
                 'Pendapatan Proyek Fisik',
@@ -92,7 +100,7 @@ class JurnalUmumController extends Controller
         $status = $totalDebit === $totalKredit ? 'Balance' : 'Tidak Balance';
         $today = Carbon::now('Asia/Jakarta')->toDateString();
 
-        return view('admin.jurnal-umum.data', compact('jurnals', 'today', 'totalDebit', 'totalKredit', 'status', 'akun', 'daftarProyek', 'daftarAkun', 'kredit', 'bank'));
+        return view('admin.jurnal-umum.data', compact('jurnals', 'today', 'totalDebit', 'totalKredit', 'status', 'akun', 'daftarProyek', 'daftarAkun', 'kredit', 'bank', 'bankTo'));
     }
 
     public function print(Request $request)
