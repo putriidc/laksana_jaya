@@ -40,6 +40,7 @@ class SaldoAwalOwnerController extends Controller
         // update saldo kas/bank sesuai kode akun
         $asset = Asset::where('kode_akun', $request->kode_akun)->firstOrFail();
         $asset->saldo += $request->nominal;
+        $asset->saldo_awal += $request->nominal;
         $asset->save();
 
         // update saldo Modal

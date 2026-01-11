@@ -17,6 +17,7 @@ class Asset extends Model
         'post_saldo',
         'post_laporan',
         'saldo',
+        'saldo_awal',
         'created_by',
         'deleted_at',
     ];
