@@ -46,17 +46,17 @@ class JurnalUmumController extends Controller
             $allowedAccounts = ['Kas Besar', 'Kas Bank BCA', 'Kas Flip', 'OVO'];
         }
         $bank = Asset::Active()->where('akun_header', 'asset_lancar_bank')
-        ->whereIn('nama_akun', $allowedAccounts)
-        ->where('nama_akun', '!=', 'Kas BJB')
-        ->get();
+            ->whereIn('nama_akun', $allowedAccounts)
+            ->where('nama_akun', '!=', 'Kas BJB')
+            ->get();
         $bank = Asset::Active()->where('akun_header', 'asset_lancar_bank')
-        ->whereIn('nama_akun', $allowedAccounts)
-        ->where('nama_akun', '!=', 'Kas BJB')
-        ->get();
+            ->whereIn('nama_akun', $allowedAccounts)
+            ->where('nama_akun', '!=', 'Kas BJB')
+            ->get();
 
         $bankTo = Asset::Active()->where('akun_header', 'asset_lancar_bank')
-        ->where('nama_akun', '!=', 'Kas BJB')
-        ->get();
+            ->where('nama_akun', '!=', 'Kas BJB')
+            ->get();
         $kredit = Asset::Active()
             ->whereIn('nama_akun', [
                 'Pendapatan Proyek Fisik',
@@ -258,12 +258,12 @@ class JurnalUmumController extends Controller
                 $asset->save();
             }
             $asset = Asset::where('kode_akun', $akunTo->kode_akun)->first();
-                if ($asset) {
-                    if ($nominal > 0) {
-                        $asset->saldo += $nominal;
-                    }
-                    $asset->save();
+            if ($asset) {
+                if ($nominal > 0) {
+                    $asset->saldo += $nominal;
                 }
+                $asset->save();
+            }
 
             // baris 2: debit ke kas/bank tujuan
             JurnalUmum::create([
@@ -418,19 +418,6 @@ class JurnalUmumController extends Controller
             $transaksi = $request->input('transaksi');
 
             foreach ($transaksi as $row) {
-                JurnalUmum::create([
-                    'kode_jurnal'   => $kodeJurnal,
-                    'detail_order' => 3,
-                    'tanggal'       => now('Asia/Jakarta'),
-                    'kode_perkiraan'     => $row['kode_akun'] ?? '-',
-                    'nama_perkiraan'     => $row['nama_akun'] ?? '-',
-                    'keterangan'    => $row['keterangan'] ?? '-',
-                    'nama_proyek'   => '-',
-                    'kode_proyek'   => '-',
-                    'debit'         => $row['debit'] ?? 0,
-                    'kredit'        => $row['kredit'] ?? 0,
-                    'created_by'    => Auth::id() ?? 0,
-                ]);
                 // update saldo di assets
                 $asset = Asset::where('kode_akun', $row['kode_akun'])->first();
                 if ($asset) {
@@ -455,6 +442,19 @@ class JurnalUmumController extends Controller
                     }
                     $modal->save();
                 }
+                JurnalUmum::create([
+                    'kode_jurnal'   => $kodeJurnal,
+                    'detail_order' => 3,
+                    'tanggal'       => now('Asia/Jakarta'),
+                    'kode_perkiraan'     => $row['kode_akun'] ?? '-',
+                    'nama_perkiraan'     => $row['nama_akun'] ?? '-',
+                    'keterangan'    => $row['keterangan'] ?? '-',
+                    'nama_proyek'   => '-',
+                    'kode_proyek'   => '-',
+                    'debit'         => $row['debit'] ?? 0,
+                    'kredit'        => $row['kredit'] ?? 0,
+                    'created_by'    => Auth::id() ?? 0,
+                ]);
             }
 
             return response()->json(['success' => true]);
