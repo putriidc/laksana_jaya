@@ -855,7 +855,7 @@
                                 this.value = rupiah ? "Rp. " + rupiah : "";
                             });
                         });
-
+                        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
                         const form = document.getElementById('myForm');
                         if (form) {
                             form.addEventListener('submit', function(e) {
@@ -875,7 +875,8 @@
                                 fetch(form.action, {
                                         method: "POST",
                                         headers: {
-                                            "X-CSRF-TOKEN": form.querySelector('[name=_token]').value
+                                            "Content-Type": "application/json",
+                                            "X-CSRF-TOKEN": token
                                         },
                                         body: formData
                                     })
@@ -885,9 +886,9 @@
                                             Swal.fire("Error", res.error, "error");
                                         } else {
                                             Swal.fire("Sukses", "Transfer kas/bank berhasil dicatat",
-                                                "success");
-                                            Swal.close();
-                                            location.reload();
+                                                "success").then(() => {
+                                                location.reload();
+                                            });
                                         }
                                     })
                                     .catch(err => {

@@ -846,7 +846,7 @@
                                 fetch(form.action, {
                                         method: "POST",
                                         headers: {
-                                            "X-Requested-With": "XMLHttpRequest",
+                                            "Content-Type": "application/json",
                                             "X-CSRF-TOKEN": token
                                         },
                                         body: formData
@@ -858,7 +858,6 @@
                                         } else {
                                             Swal.fire("Sukses", "Transfer kas/bank berhasil dicatat",
                                                 "success");
-                                            Swal.close();
                                             location.reload();
                                         }
                                     })
