@@ -172,41 +172,51 @@ class HutangVendorController extends Controller
     {
         $hutang = HutangVendor::findOrFail($id);
 
+        // ✅ cek dulu apakah sudah ada tgl_bayar dan kode_akun
+        if (empty($hutang->tgl_bayar) || empty($hutang->kode_akun)) {
+            return response()->json([
+                'error' => 'Anda belum membayar hutang (tgl_bayar / kode_akun kosong)'
+            ], 400);
+        }
+
         // update status generate
         $hutang->is_generate = true;
         $hutang->save();
 
         $proyek = Proyek::active()->where('kode_akun', $hutang->kode_proyek)->first();
         $kas = Asset::active()->where('kode_akun', $hutang->kode_akun)->first();
-        $lastId = JurnalUmum::max('id') ?? 0; // kalau soft delete
+        $lastId = JurnalUmum::max('id') ?? 0;
         $nextId = $lastId + 1;
         $kodeJurnal = 'J-' . str_pad($nextId, 3, '0', STR_PAD_LEFT);
 
+        // buat jurnal debit hutang vendor
         JurnalUmum::create([
-            'detail_order' => 3,
-            'kode_jurnal'   => $kodeJurnal,
-            'tanggal'       => Carbon::now('Asia/Jakarta'),
+            'detail_order'   => 3,
+            'kode_jurnal'    => $kodeJurnal,
+            'tanggal'        => Carbon::now('Asia/Jakarta'),
             'kode_perkiraan' => '211',
-            'kode_proyek'   => $hutang->kode_proyek,
+            'kode_proyek'    => $hutang->kode_proyek,
             'nama_perkiraan' => 'Hutang Vendor',
-            'nama_proyek'   => $proyek->nama_proyek,
-            'keterangan'    => 'Bayar -' . $hutang->keterangan,
-            'debit'         => $hutang->nominal,
-            'kredit'        => 0,
-            'created_by'    => Auth::id() ?? 'system',
+            'nama_proyek'    => $proyek->nama_proyek ?? '-',
+            'keterangan'     => 'Bayar - ' . $hutang->keterangan,
+            'debit'          => $hutang->nominal,
+            'kredit'         => 0,
+            'created_by'     => Auth::id() ?? 'system',
         ]);
+
+        // buat jurnal kredit kas/bank
         JurnalUmum::create([
-            'detail_order' => 3,
-            'kode_jurnal'   => $kodeJurnal,
-            'tanggal'       => Carbon::now('Asia/Jakarta'),
+            'detail_order'   => 3,
+            'kode_jurnal'    => $kodeJurnal,
+            'tanggal'        => Carbon::now('Asia/Jakarta'),
             'kode_perkiraan' => $kas->kode_akun,
-            'kode_proyek'   => $hutang->kode_proyek,
+            'kode_proyek'    => $hutang->kode_proyek,
             'nama_perkiraan' => $kas->nama_akun,
-            'nama_proyek'   => $proyek->nama_proyek,
-            'keterangan'    => 'Bayar -' . $hutang->keterangan,
-            'debit'         => 0,
-            'kredit'        => $hutang->nominal,
-            'created_by'    => Auth::id() ?? 'system',
+            'nama_proyek'    => $proyek->nama_proyek ?? '-',
+            'keterangan'     => 'Bayar - ' . $hutang->keterangan,
+            'debit'          => 0,
+            'kredit'         => $hutang->nominal,
+            'created_by'     => Auth::id() ?? 'system',
         ]);
 
         return response()->json(['success' => true]);
