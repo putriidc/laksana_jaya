@@ -35,7 +35,7 @@ class JurnalUmumController extends Controller
                         $q->where('akun_header', 'pendapatan')
                             ->whereIn('kode_akun', ['450', '451'])
                             ->where('akun_header', 'kewajiban')
-                            ->whereIn('kode_akun', '211');
+                            ->whereIn('kode_akun', ['211']);
                     });
             })
 
