@@ -79,18 +79,18 @@
                                         <img src="{{ asset('assets/more-circle.png') }}" alt="detail icon"
                                             class="w-[22px] cursor-pointer">
                                     </button>
-                                    @if ($item->is_generate == true)
-                                    <span class="border-black border-l-[1px] h-[22px]"></span>
-                                    {{-- Tombol Delete --}}
-                                    <form action="{{ route('hutang_vendor.destroy', $item->id) }}" method="POST"
-                                        class="h-[22px]">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                            <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
-                                                class="w-[22px] cursor-pointer">
-                                        </button>
-                                    </form>
+                                    @if (!$item->is_generate && $item->tgl_bayar === null)
+                                        <span class="border-black border-l-[1px] h-[22px]"></span>
+                                        {{-- Tombol Delete --}}
+                                        <form action="{{ route('hutang_vendor.destroy', $item->id) }}" method="POST"
+                                            class="h-[22px]">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                                <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                    class="w-[22px] cursor-pointer">
+                                            </button>
+                                        </form>
                                     @endif
                                 </td>
                             </tr>
@@ -414,8 +414,8 @@
                 <select name="kode_akun" class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2" required>
                     <option disabled selected>Pilih Kas / Bank</option>
                     ${bankList.map(b => `
-                                                                                        <option value="${b.kode_akun}">${b.nama_akun}</option>
-                                                                                    `).join('')}
+                                                                                                <option value="${b.kode_akun}">${b.nama_akun}</option>
+                                                                                            `).join('')}
                 </select>
             </div>
 
