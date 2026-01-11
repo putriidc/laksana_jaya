@@ -857,8 +857,9 @@
                                             Swal.fire("Error", res.error, "error");
                                         } else {
                                             Swal.fire("Sukses", "Transfer kas/bank berhasil dicatat",
-                                                "success");
-                                            location.reload();
+                                                "success").then(() => {
+                                                location.reload();
+                                            });
                                         }
                                     })
                                     .catch(err => {
