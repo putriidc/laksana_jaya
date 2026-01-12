@@ -11,6 +11,7 @@ class AssetSeeder extends Seeder
     public function run(): void
     {
 
+        Asset::truncate();
         $dataKas = [
             ['kode_akun' => '111', 'nama_akun' => 'Kas Besar'],
             ['kode_akun' => '112', 'nama_akun' => 'Kas Kecil'],
@@ -81,7 +82,7 @@ class AssetSeeder extends Seeder
 
         $dataKewajiban = [
             ['kode_akun' => '210', 'nama_akun' => 'Hutang Usaha'],
-            ['kode_akun' => '211', 'nama_akun' => 'Hutang Pihak ke-3'],
+            ['kode_akun' => '211', 'nama_akun' => 'Hutang Vendor'],
             ['kode_akun' => '212', 'nama_akun' => 'Hutang PPN'],
             ['kode_akun' => '213', 'nama_akun' => 'Uang Muka Proyek'],
             ['kode_akun' => '221', 'nama_akun' => 'Hutang Bank'],
@@ -166,6 +167,9 @@ class AssetSeeder extends Seeder
             ['kode_akun' => '535', 'nama_akun' => 'Fee Bendera', 'for_admin' => true],
             ['kode_akun' => '536', 'nama_akun' => 'SKK', 'for_admin' => true],
             ['kode_akun' => '537', 'nama_akun' => 'Pajak'],
+            ['kode_akun' => '538', 'nama_akun' => 'Biaya Asuransi'],
+            ['kode_akun' => '539', 'nama_akun' => 'Biaya Adm dan Umum Lainnya'],
+            ['kode_akun' => '540', 'nama_akun' => 'Beban PPh'],
         ];
 
         foreach ($dataHppProyek as $item) {
