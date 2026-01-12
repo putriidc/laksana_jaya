@@ -16,6 +16,7 @@ class KasbonTukang extends Model
         'nama_tukang',
         'nama_akun',
         'nama_proyek',
+        'kode_kas',
         'total',
         'created_by',
         'deleted_at',

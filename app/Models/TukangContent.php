@@ -13,6 +13,7 @@ class TukangContent extends Model
     protected $fillable = [
         'tanggal',
         'kode_kasbon',
+        'kode_kas',
         'ket_spv',
         'ket_owner',
         'status_spv',
@@ -29,6 +30,11 @@ class TukangContent extends Model
     public function kasbon()
     {
         return $this->belongsTo(KasbonTukang::class, 'kode_kasbon', 'kode_kasbon')
+                    ->whereNull('deleted_at');
+    }
+    public function kas()
+    {
+        return $this->belongsTo(Asset::class, 'kode_kas', 'kode_akun')
                     ->whereNull('deleted_at');
     }
     public function scopeActive($query)

@@ -59,13 +59,32 @@ class TukangContentController extends Controller
     {
         $today = Carbon::now('Asia/Jakarta')->toDateString();
         $pinjaman = KasbonTukang::active()->findOrFail($id);
-        return view('admin.pinjaman-tukang.detail.pinjam', compact('pinjaman', 'today'));
+        $allowedAccounts = [];
+        if (Auth::user()->role === 'Admin 2') {
+            $allowedAccounts = ['Kas Kecil', 'Kas Flip', 'OVO'];
+        } elseif (Auth::user()->role === 'Admin 1') {
+            $allowedAccounts = ['Kas Besar', 'Kas Bank BCA', 'Kas Flip', 'OVO'];
+        }
+        $bank = Asset::Active()->where('akun_header', 'asset_lancar_bank')
+            ->whereIn('nama_akun', $allowedAccounts)
+            ->where('nama_akun', '!=', 'Kas BJB')
+            ->get();
+        return view('admin.pinjaman-tukang.detail.pinjam', compact('pinjaman', 'today', 'bank'));
     }
     public function bayar($id)
     {
         $today = Carbon::now('Asia/Jakarta')->toDateString();
         $pinjaman = KasbonTukang::active()->findOrFail($id);
-        return view('admin.pinjaman-tukang.detail.bayar', compact('pinjaman', 'today'));
+        if (Auth::user()->role === 'Admin 2') {
+            $allowedAccounts = ['Kas Kecil', 'Kas Flip', 'OVO'];
+        } elseif (Auth::user()->role === 'Admin 1') {
+            $allowedAccounts = ['Kas Besar', 'Kas Bank BCA', 'Kas Flip', 'OVO'];
+        }
+        $bank = Asset::Active()->where('akun_header', 'asset_lancar_bank')
+            ->whereIn('nama_akun', $allowedAccounts)
+            ->where('nama_akun', '!=', 'Kas BJB')
+            ->get();
+        return view('admin.pinjaman-tukang.detail.bayar', compact('pinjaman', 'today', 'bank'));
     }
 
     public function store(Request $request)
@@ -73,6 +92,7 @@ class TukangContentController extends Controller
         $request->validate([
             'kode_karyawan' => 'required',
             'tanggal'       => 'required|date',
+            'kode_kas'       => 'required',
             'kontrak'       => 'nullable|string',
             'bayar'         => 'required|numeric|min:0',
         ]);
@@ -80,18 +100,21 @@ class TukangContentController extends Controller
         // Ambil pinjaman utama
         $pinjamanKaryawan = KasbonTukang::where('id', $request->kode_karyawan)->active()->firstOrFail();
 
-        // // Hitung sisa
-        // $sisa = $request->bayar + $pinjamanKaryawan->total_pinjam;
+        $asset = Asset::where('kode_akun', $request->kode_kas)->first();
+        if (!$asset) {
+            return redirect()->back()->with('error', 'Akun kas tidak ditemukan');
+        }
+        // Cek saldo cukup atau tidak
+        if ($asset->saldo < $request->bayar) {
+            return redirect()->back()->with('error', "Saldo {$asset->nama_akun} tidak mencukupi");
+        }
 
-        // // Update total pinjam di PinjamanKaryawan
-        // $pinjamanKaryawan->update([
-        //     'total_pinjam' => $sisa,
-        // ]);
 
         // Simpan PinjamanContent
         TukangContent::create([
             'kode_kasbon' => $pinjamanKaryawan->kode_kasbon,
             'kontrak'       => $request->kontrak,
+            'kode_kas'       => $request->kode_kas,
             'tanggal'       => $request->tanggal,
             'jenis'         => 'pinjam',
             'bayar'         => $request->bayar,
@@ -112,6 +135,7 @@ class TukangContentController extends Controller
         $request->validate([
             'kode_karyawan' => 'required',
             'tanggal'       => 'required|date',
+            'kode_kas'       => 'required',
             'kontrak'       => 'nullable|string',
             'bayar'         => 'required|numeric|min:0',
         ]);
@@ -131,6 +155,7 @@ class TukangContentController extends Controller
         $content = TukangContent::create([
             'kode_kasbon' => $pinjamanKaryawan->kode_kasbon,
             'kontrak'       => $request->kontrak,
+            'kode_kas'       => $request->kode_kas,
             'tanggal'       => $request->tanggal,
             'jenis'         => 'cicil',
             'bayar'         => $request->bayar,
@@ -147,7 +172,36 @@ class TukangContentController extends Controller
         $lastId = JurnalUmum::max('id') ?? 0;
         $nextId = $lastId + 1;
         $kodeJurnal = 'J-' . str_pad($nextId, 3, '0', STR_PAD_LEFT);
+        // update saldo di assets
+        $bank = Asset::where('kode_akun', $request->kode_kas)->first();
+        if ($bank) {
+            if (($request->bayar ?? 0) > 0) {
+                $bank->saldo += $request->bayar;
+            }
+            $bank->save();
+        }
+        // update saldo akun Modal
+        $modal = Asset::where('nama_akun', 'Modal')->first();
+        if ($modal) {
+            if (($request->bayar ?? 0) > 0) {
+                $modal->saldo += $request->bayar;
+            }
+            $modal->save();
+        }
 
+        JurnalUmum::create([
+            'id_content'   => $content->id, // generate kode unik
+            'kode_jurnal'   => $kodeJurnal, // generate kode unik
+            'tanggal'       => $request->tanggal,         // sama dengan tanggal content
+            'keterangan'    => $request->kontrak,         // isi kontrak
+            'nama_perkiraan' => $bank ? $bank->nama_akun : null,
+            'kode_perkiraan' => $request->kode_kas,
+            'nama_proyek'   => $pinjamanKaryawan->nama_proyek,
+            'kode_proyek'   => $proyek ? $proyek->kode_akun : null,
+            'debit'         => $request->bayar,
+            'kredit'        => 0,
+            'created_by'    => Auth::check() ? Auth::user()->id : null,
+        ]);
         JurnalUmum::create([
             'id_content'   => $content->id, // generate kode unik
             'kode_jurnal'   => $kodeJurnal, // generate kode unik
@@ -252,6 +306,37 @@ class TukangContentController extends Controller
             'sisa'     => $totalBaru,
         ]);
 
+        // 🔥 Update saldo Asset (bank)
+        $assetKas = Asset::where('kode_akun', $content->kode_kas)
+            ->where('akun_header', 'asset_lancar_bank')
+            ->first();
+
+        if ($assetKas) {
+            // rollback saldo lama
+            $assetKas->saldo -= $content->bayar;
+
+            // apply saldo baru
+            $assetKas->saldo += $request->bayar;
+
+            $assetKas->save();
+
+            // 🔥 Update saldo Modal
+            $assetModal = Asset::where('nama_akun', 'Modal')->first();
+
+            if ($assetModal) {
+                // rollback saldo lama
+                $assetModal->saldo -= $content->bayar;
+
+                // apply saldo baru
+                $assetModal->saldo += $request->bayar;
+
+                $assetModal->save();
+            }
+        }
+
+
+
+
         return redirect()->route('pinjamanTukangs.show', $pinjamanKaryawan->id)
             ->with('success', 'Data pinjaman berhasil diupdate');
     }
@@ -294,6 +379,27 @@ class TukangContentController extends Controller
         $pinjamanKaryawan->update([
             'total' => $totalBaru,
         ]);
+
+        // 🔥 Update saldo Asset (bank)
+        $assetKas = Asset::where('kode_akun', $content->kode_kas)
+            ->where('akun_header', 'asset_lancar_bank')
+            ->first();
+
+        if ($assetKas) {
+            $assetKas->saldo -= $content->bayar;
+
+            $assetKas->save();
+
+            // 🔥 Update saldo Modal
+            $assetModal = Asset::where('nama_akun', 'Modal')->first();
+
+            if ($assetModal) {
+                // rollback saldo lama
+                $assetModal->saldo -= $content->bayar;
+
+                $assetModal->save();
+            }
+        }
         $content->update(['deleted_at' => Carbon::now('Asia/Jakarta')]);
         return redirect()->route('pinjamanTukangs.show', $pinjamanKaryawan->id)
             ->with('success', 'Data pinjaman berhasil dihapus');

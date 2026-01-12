@@ -10,6 +10,7 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
+        User::truncate(); // kosongkan tabel
         User::create([
             'role'      => 'Super Admin',
             'username'  => 'admin',
@@ -23,13 +24,13 @@ class UserSeeder extends Seeder
             'password'  => Hash::make('password'),
         ]);
         User::create([
-            'role'      => 'Admin',
+            'role'      => 'Admin 1',
             'username'  => 'Novi',
             'name'      => 'Novi',
             'password'  => Hash::make('password'),
         ]);
         User::create([
-            'role'      => 'Admin',
+            'role'      => 'Admin 2',
             'username'  => 'Siska',
             'name'      => 'Siska',
             'password'  => Hash::make('password'),
@@ -40,5 +41,12 @@ class UserSeeder extends Seeder
             'name'      => 'Rudi',
             'password'  => Hash::make('password'),
         ]);
+        User::create([
+            'role'      => 'Kepala Proyek',
+            'username'  => 'kproyek',
+            'name'      => 'Pa Ujang',
+            'password'  => Hash::make('password'),
+        ]);
     }
 }
+
