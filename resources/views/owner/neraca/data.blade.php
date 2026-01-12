@@ -49,8 +49,8 @@
                     <td class="py-2">{{ $item->post_laporan }}</td>
                     <td class="py-2">Rp {{ number_format($item->post_laporan === 'LABA RUGI' ? $item->debit_total : 0, 0, ',', '.') }}</td>
                     <td class="py-2">Rp {{ number_format($item->post_laporan === 'LABA RUGI' ? $item->kredit_total : 0, 0, ',', '.') }}</td>
-                    <td class="py-2">Rp. 5.000.000</td>
-                    <td class="py-2">Rp. 5.000.000</td>
+                    <td class="py-2">Rp {{ number_format($item->post_laporan === 'NERACA' ? $item->debit_total : 0, 0, ',', '.') }}</td>
+                    <td class="py-2">Rp {{ number_format($item->post_laporan === 'NERACA' ? $item->kredit_total : 0, 0, ',', '.') }}</td>
                 </tr>
                 @endforeach
             </tbody>
