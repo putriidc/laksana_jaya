@@ -20,6 +20,11 @@ use App\Http\Controllers\barangReturController;
 use App\Http\Controllers\JurnalOwnerController;
 use App\Http\Controllers\ProyekOwnerController;
 use App\Http\Controllers\AccTukangSpvController;
+use App\Http\Controllers\AlatController;
+use App\Http\Controllers\AlatDibeliController;
+use App\Http\Controllers\AlatDihapusController;
+use App\Http\Controllers\AlatDikembalikanController;
+use App\Http\Controllers\AlatDipinjamController;
 use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\KasbonContentController;
 use App\Http\Controllers\LaporanHarianController;
@@ -36,6 +41,8 @@ use App\Http\Controllers\NeracaOwnerController;
 use App\Http\Controllers\ProgresOwnerController;
 use App\Http\Controllers\SaldoAwalOwnerController;
 use App\Http\Controllers\SupplierController;
+use App\Models\AlatDibeli;
+use App\Models\AlatDipinjam;
 use App\Models\JurnalUmum;
 
 Route::get('/', function () {
@@ -416,20 +423,56 @@ Route::middleware('auth')->group(function () {
         Route::post('/pinjaman/{id}/decline', [AccTukangSpvController::class, 'decline'])
             ->name('pinjaman.decline');
 
-        Route::resource('barang-masuk', BarangMasukController::class);
-        Route::get('barang-masuk/create/{kode_barang}', [BarangMasukController::class, 'createForBarang'])
-            ->name('barang-masuk.create.for-barang');
-        Route::resource('barang-keluar', BarangKeluarController::class);
-        Route::get('barang-keluar/create/{kode_barang}', [BarangKeluarController::class, 'createForBarang'])
-            ->name('barang-keluar.create.for-barang');
-        Route::resource('barang-retur', barangReturController::class);
-        Route::get('barang-retur/create/{kode_barang}', [barangReturController::class, 'createForBarang'])
-            ->name('barang-retur.create.for-barang');
+    Route::get('alats/{id}/printDibeli', [AlatController::class, 'printDibeli'])
+        ->name('alats.printDibeli');
+    Route::get('alats/{id}/printDihapus', [AlatController::class, 'printDihapus'])
+        ->name('alats.printDihapus');
+    Route::get('alats/{id}/printDipinjam', [AlatController::class, 'printDipinjam'])
+        ->name('alats.printDipinjam');
+    Route::get('alats/{id}/printDikembalikan', [AlatController::class, 'printDikembalikan'])
+        ->name('alats.printDikembalikan');
 
-        Route::resource('AccEafSpv', AccEafSpvController::class);
-        Route::post('/Acceaf/{id}/decline', [AccEafSpvController::class, 'decline'])
-            ->name('Acceaf.decline');
-        // kepala gudang
+    Route::resource('barangs', BarangController::class);
+    Route::resource('alats', AlatController::class);
+    // data barang
+    Route::resource('accspv', AccTukangSpvController::class);
+    Route::post('/pinjaman/{id}/decline', [AccTukangSpvController::class, 'decline'])
+        ->name('pinjaman.decline');
+
+    // Transaksi Alat
+    Route::resource('alat-beli', AlatDibeliController::class);
+    Route::get('alat-beli/create/{kode_alat}', [AlatDibeliController::class, 'createForAlat'])
+        ->name('alat-beli.create.for-alat');
+    Route::resource('alat-hapus', AlatDihapusController::class);
+    Route::get('alat-hapus/create/{kode_alat}', [AlatDihapusController::class, 'createForAlat'])
+        ->name('alat-hapus.create.for-alat');
+    Route::resource('alat-pinjam', AlatDipinjamController::class);
+    Route::get('alat-pinjam/create/{kode_alat}', [AlatDipinjamController::class, 'createForAlat'])
+        ->name('alat-pinjam.create.for-alat');
+    Route::resource('alat-kembalikan', AlatDikembalikanController::class);
+    Route::get('alat-kembalikan/create/{kode_alat}', [AlatDikembalikanController::class, 'createForAlat'])
+        ->name('alat-kembalikan.create.for-alat');
+    // Transaksi Alat
+
+    // transaksi barang
+    Route::resource('barang-masuk', BarangMasukController::class);
+    Route::get('barang-masuk/create/{kode_barang}', [BarangMasukController::class, 'createForBarang'])
+        ->name('barang-masuk.create.for-barang');
+
+    Route::resource('barang-keluar', BarangKeluarController::class);
+    Route::get('barang-keluar/create/{kode_barang}', [BarangKeluarController::class, 'createForBarang'])
+        ->name('barang-keluar.create.for-barang');
+
+    Route::resource('barang-retur', barangReturController::class);
+    Route::get('barang-retur/create/{kode_barang}', [barangReturController::class, 'createForBarang'])
+        ->name('barang-retur.create.for-barang');
+    // transaksi barang
+
+    // detail barang
+    Route::resource('AccEafSpv', AccEafSpvController::class);
+    Route::post('/Acceaf/{id}/decline', [AccEafSpvController::class, 'decline'])
+        ->name('Acceaf.decline');
+
     });
 
     Route::middleware('role:Owner')->group(function () {

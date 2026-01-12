@@ -5,6 +5,64 @@
 // 2. dan tulis id pada tag form yaitu id="myForm" gunanya untuk mengambil semua elemen dengan class rupiah-format dan ubah menjadi number.
 // 3. fungsi format rupiah ini hanya bisa untuk halaman form, untuk modal form tidak bisa, harus isi manual dengan js.
 
+// jika ingin di modal gunakan ini:
+// const rupiahFormatElements = document.querySelectorAll(".rupiah-format");
+//                         rupiahFormatElements.forEach((element) => {
+//                             element.addEventListener("input", function (e) {
+//                                 let value = this.value.replace(/[^,\d]/g, "").toString();
+//                                 let split = value.split(",");
+//                                 let sisa = split[0].length % 3;
+//                                 let rupiah = split[0].substr(0, sisa);
+//                                 let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+//                                 if (ribuan) {
+//                                     let separator = sisa ? "." : "";
+//                                     rupiah += separator + ribuan.join(".");
+//                                 }
+//                                 rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+//                                 this.value = rupiah ? "Rp. " + rupiah : "";
+//                             });
+//                         });
+
+//                         const form = document.getElementById('myForm')
+//                         if (form) {
+//                             form.addEventListener('submit', function(e) {
+//                                 const rupiahInputs = document.querySelectorAll('.rupiah-format');
+//                                 rupiahInputs.forEach(input => {
+//                                     let value = input.value;
+//                                     let cleanValue = parseInt(value.replace(/[^,\d]/g, ""));
+//                                     input.value = cleanValue;
+//                                     console.log(
+//                                         `Input name: ${input.name}, Clean value: ${input.value}`
+//                                     );
+//                                 })
+//                             })
+//                         }
+
+//                         function parseRupiahToNumber(rupiahString) {
+//                             if (!rupiahString) return 0;
+//                             return parseInt(rupiahString.replace(/[^0-9]/g, "")) || 0;
+//                         }
+//                         // End string to number
+
+//                         // number to rupiah format
+//                         function formatNumberToRupiah(number) {
+//                             if (!number) return "";
+//                             return "Rp. " + number.toLocaleString("id-ID");
+//                         }
+
+//                         rupiahFormatElements.forEach((element) => {
+//                             // Ubah string value ke number dulu untuk dicek
+//                             const numericValue = parseRupiahToNumber(element.value);
+
+//                             // Hanya jalankan format jika ada isinya DAN nilainya bukan 0
+//                             if (element.value && numericValue !== 0) {
+//                                 element.value = formatNumberToRupiah(numericValue);
+//                             } else if (numericValue === 0) {
+//                                 // Jika nilainya 0, pastikan tampilannya bersih (hanya angka 0 saja)
+//                                 element.value = "Rp. " + 0;
+//                             }
+//                         });
+
 // buat variabel untuk semua elemen dengan class rupiah-format
 const rupiahFormatElements = document.querySelectorAll(".rupiah-format");
 // lakukan iterasi pada setiap elemen dan tambahkan event listener

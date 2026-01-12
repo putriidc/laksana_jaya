@@ -10,13 +10,19 @@
 </head>
 
 <body class="font-poppins">
-    @if(session('success'))
-    <div
-        id="flash-message"
-        data-type="success"
-        data-message="{{ session('success') }}"
-    ></div>
-    @endif
+   @if (session('success'))
+            <div
+                id="flash-message"
+                data-type="success"
+                data-message="{{ session('success') }}"
+            ></div>
+        @elseif (session('error'))
+            <div
+                id="flash-message"
+                data-type="error"
+                data-message="{{ session('error') }}"
+            ></div>
+        @endif
     <section class="flex h-screen max-[550px]:overflow-x-hidden">
         <nav
             class="max-[1200px]:absolute flex flex-col max-[1200px]:items-center bg-white h-screen w-[350px] max-[1200px]:w-[60px] max-[550px]:w-full max-[550px]:translate-x-[-100vw] py-5 px-5 shadow-[1px_0px_8px_rgba(0,0,0,0.25)] items-center relative z-[99] overflow-y-auto overflow-x-hidden max-[1200px]:overflow-x-hidden max-[1200px]:transition-all max-[1200px]:ease-in-out max-[1200px]:duration-200" id="sideNavbar"> {{-- Bagian yang di responsive --}}
@@ -69,6 +75,21 @@
                                 class="max-[1200px]:scale-200"
                             />
                             <span class="max-[1200px]:hidden">Data Barang</span>
+                    </button>
+                </a>
+                <a href="{{ route('alats.index') }}" class="cursor-pointer">
+                    <button
+                        class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"> {{-- Bagian yang di responsive --}}
+                            <img
+                                src="{{
+                                    asset(
+                                        'assets/navbar-kepala-gudang/3d-cube-scan.png'
+                                    )
+                                }}"
+                                alt="cube scan icon"
+                                class="max-[1200px]:scale-200"
+                            />
+                            <span class="max-[1200px]:hidden">Data Alat</span>
                     </button>
                 </a>
                 <a href="{{ route('accspv.index') }}" class="cursor-pointer">
@@ -266,8 +287,10 @@
                     } else if (index == 1) {
                         item.children[0].src = "{{ asset('assets/navbar-kepala-gudang/3d-cube-scan-click.png') }}";
                     } else if (index == 2) {
-                        item.children[0].src = "{{ asset('assets/navbar-kepala-gudang/wallet-minus-click.png') }}";
+                        item.children[0].src = "{{ asset('assets/navbar-kepala-gudang/3d-cube-scan-click.png') }}";
                     } else if (index == 3) {
+                        item.children[0].src = "{{ asset('assets/navbar-kepala-gudang/wallet-minus-click.png') }}";
+                    } else if (index == 4) {
                         item.children[0].src = "{{ asset('assets/navbar-kepala-gudang/wallet-minus-click.png') }}";
                     }
             } else {
