@@ -398,7 +398,7 @@
                     <table id="tableDebet" class="mt-4 w-full text-sm">
                         <thead>
                         <tr class="bg-gray-300">
-                        <th>No</th><th>Akun</th><th>Keterangan</th><th>Nominal</th>
+                        <th>No</th><th>Akun</th><th>Keterangan</th><th>Nominal</th><th>action</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -460,15 +460,18 @@
             function addDebet() {
                 let akun = document.getElementById('namaPerkiraan');
                 let kode = akun.value;
-                let nama = akun.options[akun.selectedIndex].text;
+                let nama = akun.options[akun.selectedIndex]?.text || "";
                 let ket = document.getElementById('ketPerkiraan').value;
-                // let nominal = parseInt(document.getElementById('nominal').value);
-                let nominal = document.getElementById('nominal').value.replace(/[^0-9]/g, '');
+                let nominalRaw = document.getElementById('nominal').value;
 
-                // ubah nominal yang tadi format rupiah menjadi number
-                let cleanNominal = nominal.replace(/[^0-9]/g, '');
+                // ambil angka dari input rupiah
+                let cleanNominal = nominalRaw.replace(/[^0-9]/g, '');
+                let nominalInt = parseInt(cleanNominal) || 0;
 
-                let nominalInt = parseInt(cleanNominal);
+                if (!kode || nominalInt <= 0) {
+                    Swal.fire("Oops", "Nama akun dan nominal wajib diisi", "warning");
+                    return;
+                }
 
                 transaksiDebet.push({
                     kode_akun: kode,
@@ -477,15 +480,40 @@
                     nominal: nominalInt,
                 });
 
+                // reset input setelah tambah
+                document.getElementById('namaPerkiraan').value = "";
+                document.getElementById('ketPerkiraan').value = "";
+                document.getElementById('nominal').value = "";
+
+                renderDebetTable();
+            }
+
+            function renderDebetTable() {
                 let tbody = document.querySelector('#tableDebet tbody');
+                if (transaksiDebet.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="text-center text-gray-500">Belum ada data debet</td></tr>`;
+                    return;
+                }
+
                 tbody.innerHTML = transaksiDebet.map((d, i) => `
-                <tr>
-                    <td>${i+1}</td>
-                    <td>${d.nama_akun}</td>
-                    <td>${d.keterangan}</td>
-                    <td>Rp ${d.nominal.toLocaleString()}</td>
-                </tr>
-                `).join('');
+        <tr>
+            <td>${i + 1}</td>
+            <td>${d.nama_akun}</td>
+            <td>${d.keterangan}</td>
+            <td>Rp ${d.nominal.toLocaleString()}</td>
+            <td>
+                <button type="button" onclick="removeDebet(${i})"
+                    class="bg-red-500 text-white px-2 py-1 rounded">
+                    Hapus
+                </button>
+            </td>
+        </tr>
+    `).join('');
+            }
+
+            function removeDebet(index) {
+                transaksiDebet.splice(index, 1); // hapus item dari array
+                renderDebetTable(); // render ulang tabel
             }
 
             function generateJurnal() {
@@ -608,7 +636,7 @@
                     <table id="tableKredit" class="mt-4 w-full text-sm">
                         <thead>
                         <tr class="bg-gray-300">
-                        <th>No</th><th>Akun</th><th>Keterangan</th><th>Nominal</th>
+                        <th>No</th><th>Akun</th><th>Keterangan</th><th>Nominal</th><th>action</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -672,15 +700,18 @@
             function addKredit() {
                 let akun = document.getElementById('namaPerkiraan');
                 let kode = akun.value;
-                let nama = akun.options[akun.selectedIndex].text;
+                let nama = akun.options[akun.selectedIndex]?.text || "";
                 let ket = document.getElementById('ketPerkiraan').value;
-                // let nominal = parseInt(document.getElementById('nominal').value);
-                let nominal = document.getElementById('nominal').value.replace(/[^0-9]/g, '');
+                let nominalRaw = document.getElementById('nominal').value;
 
-                // ubah nominal yang tadi format rupiah menjadi number
-                let cleanNominal = nominal.replace(/[^0-9]/g, '');
+                // ambil angka dari input rupiah
+                let cleanNominal = nominalRaw.replace(/[^0-9]/g, '');
+                let nominalInt = parseInt(cleanNominal) || 0;
 
-                let nominalInt = parseInt(cleanNominal);
+                if (!kode || nominalInt <= 0) {
+                    Swal.fire("Oops", "Nama akun dan nominal wajib diisi", "warning");
+                    return;
+                }
 
                 transaksiKredit.push({
                     kode_akun: kode,
@@ -689,15 +720,40 @@
                     nominal: nominalInt
                 });
 
+                // reset input setelah tambah
+                document.getElementById('namaPerkiraan').value = "";
+                document.getElementById('ketPerkiraan').value = "";
+                document.getElementById('nominal').value = "";
+
+                renderKreditTable();
+            }
+
+            function renderKreditTable() {
                 let tbody = document.querySelector('#tableKredit tbody');
+                if (transaksiKredit.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="text-center text-gray-500">Belum ada data kredit</td></tr>`;
+                    return;
+                }
+
                 tbody.innerHTML = transaksiKredit.map((d, i) => `
         <tr>
-            <td>${i+1}</td>
+            <td>${i + 1}</td>
             <td>${d.nama_akun}</td>
             <td>${d.keterangan}</td>
             <td>Rp ${d.nominal.toLocaleString()}</td>
+            <td>
+                <button type="button" onclick="removeKredit(${i})"
+                    class="bg-red-500 text-white px-2 py-1 rounded">
+                    Hapus
+                </button>
+            </td>
         </tr>
     `).join('');
+            }
+
+            function removeKredit(index) {
+                transaksiKredit.splice(index, 1); // hapus item dari array
+                renderKreditTable(); // render ulang tabel
             }
 
             function generateJurnalKredit() {
