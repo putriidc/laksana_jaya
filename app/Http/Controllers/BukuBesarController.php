@@ -71,10 +71,7 @@ class BukuBesarController extends Controller
     public function index_owner($code, Request $request)
     {
         // Sidebar: Ambil daftar asset sesuai kriteria Anda
-        $asset = Asset::active()
-            ->where(function ($query) {
-                $query->whereNotIn('akun_header', ['asset_lancar_bank', 'hpp_proyek']);
-            })->get();
+        $asset = Asset::active()->get();
 
         // 1. Ambil info akun (Master)
         $account = Asset::where('kode_akun', $code)->first();
@@ -83,14 +80,6 @@ class BukuBesarController extends Controller
             return redirect()->back()->with('error', 'Akun tidak ditemukan.');
         }
 
-        // Proteksi Role/Header
-        $allowedPendapatan = ['450', '451'];
-        $disallowedHeaders = ['asset_lancar_bank', 'hpp_proyek'];
-
-        if (in_array($account->akun_header, $disallowedHeaders) ||
-        ($account->akun_header == 'pendapatan' && !in_array($account->kode_akun, $allowedPendapatan))) {
-            return redirect()->back()->with('error', 'Role Ini dilarang untuk membuka Buku Besar ini.');
-        }
 
         // 2. Ambil transaksi (Jurnal) - Siapkan Query dulu, JANGAN di ->get() dulu
         $query = JurnalUmum::active()->where('kode_perkiraan', $code)->orderBy('tanggal', 'asc');
