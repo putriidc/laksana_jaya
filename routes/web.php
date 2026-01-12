@@ -384,8 +384,6 @@ Route::middleware('auth')->group(function () {
         Route::get('bukubesar_owner/{code}/print', [BukuBesarController::class, 'print'])
             ->name('bukubesar_owner.print');
 
-        Route::get('labarugi/print', [LabaRugiController::class, 'print'])->name('labarugi.print');
-        Route::resource('labarugi', LabaRugiController::class);
 
         Route::resource('eaf', EafController::class);
         Route::post('/eaf/{id}/detail', [EafController::class, 'storeDetail'])->name('eaf.storeDetail');
@@ -496,6 +494,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('progresOwner', ProgresOwnerController::class);
 
         Route::resource('neracaOwner', NeracaOwnerController::class);
+        Route::get('labarugi/print', [LabaRugiController::class, 'print'])->name('labarugi.print');
+        Route::resource('labarugi', LabaRugiController::class);
 
 
         Route::get('/owner-dashboard', function () {
