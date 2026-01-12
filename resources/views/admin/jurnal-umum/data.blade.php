@@ -668,8 +668,6 @@
             }
 
 
-            let transaksiKredit = [];
-
             function addKredit() {
                 let akun = document.getElementById('namaPerkiraan');
                 let kode = akun.value;
