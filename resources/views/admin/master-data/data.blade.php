@@ -2,17 +2,14 @@
 @section('content')
     <div>
         @if (session('success'))
-            <div
-                id="flash-message"
-                data-type="success"
-                data-message="{{ session('success') }}"
-            ></div>
+            <div id="flash-message" data-type="success" data-message="{{ session('success') }}"></div>
         @endif
         <h1 class="font-bold text-2xl mb-6">Master Data</h1>
         <section class="flex flex-col">
             <div class="flex justify-between items-center pb-4">
                 <div class="flex items-center gap-x-2">
-                    <select name="" id="selectMasterData" class="py-2 w-[200px] px-4 appearance-none border-2 border-[#9A9A9A] rounded-xl cursor-pointer outline-none">
+                    <select name="" id="selectMasterData"
+                        class="py-2 w-[200px] px-4 appearance-none border-2 border-[#9A9A9A] rounded-xl cursor-pointer outline-none">
                         <option disabled selected>-Pilih Data-</option>
                         <option value="data-asset">Data Asset</option>
                         <option value="data-piutang">Data Piutang</option>
@@ -24,11 +21,12 @@
                         class="border-2 border-[#9A9A9A] rounded-xl select-none cursor-pointer w-[200px] z-[999] relative">
                         <div class="flex justify-between py-2 px-4 items-center">
                             <span>Tambah Data</span>
-                            <img src="https://ar4n-group.com/public/assets/arrow-down.png" alt="arrow down icon" id="icon-dropdown"
-                                class="w-[20px]">
+                            <img src="https://ar4n-group.com/public/assets/arrow-down.png" alt="arrow down icon"
+                                id="icon-dropdown" class="w-[20px]">
                             <input type="checkbox" id="dropdown-toggle" class="hidden" />
                         </div>
-                        <div class="absolute w-[200px] bg-white border-2 border-[#9A9A9A] shadow-lg top-12 rounded-lg hidden" id="dropdown-menu">
+                        <div class="absolute w-[200px] bg-white border-2 border-[#9A9A9A] shadow-lg top-12 rounded-lg hidden"
+                            id="dropdown-menu">
                             <a href="{{ route('akun.create') }}" class="py-2 px-4 block hover:bg-[#E9E9E9]">
                                 <p class="truncate">
                                     Asset Lancar, Asset Tetap, Kewajiban, Ekuitas, Pendatan & HPP Proyek
@@ -57,12 +55,12 @@
                         </div>
                     </label>
                 </div>
-                <form action="" class="flex items-center gap-x-2">
-                    <input type="text" name="" id="" placeholder="Cari Data..."
+                <form id="searchForm" class="flex items-center gap-x-2">
+                    <input type="text" id="searchInput" placeholder="Cari Data..."
                         class="border-[#9A9A9A] border-2 rounded-lg py-2 px-4 outline-none">
                     <button type="submit"
-                        class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
-                        <img src="https://ar4n-group.com/public/assets/search-normal.png" alt="search icon" class="w-[20px]">
+                        class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer"> <img
+                            src="https://ar4n-group.com/public/assets/search-normal.png" alt="search icon" class="w-[20px]">
                     </button>
                 </form>
             </div>
@@ -70,330 +68,336 @@
             <div class="flex-col pb-10 tabelMasterData hidden" id="data-asset">
                 <h1 class="text-[#C0C0C0] font-bold text-xl">Data Asset Lancar, Asset Tetap, Kewajiban, Ekuitas, Pendatan &
                     HPP Proyek</h1>
-                <div class="w-full flex flex-col justify-center py-8 gap-y-8 shadow-[1px_1px_5px_rgba(0,0,0,0.25)] rounded-lg mt-2 items-center">
+                <div
+                    class="w-full flex flex-col justify-center py-8 gap-y-8 shadow-[1px_1px_5px_rgba(0,0,0,0.25)] rounded-lg mt-2 items-center">
                     <div class="flex flex-col w-[80%] gap-y-3">
-                    <h1 class="text-[#C0C0C0] font-bold text-xl">Data Kas / Bank</h1>
-                    <table class="table-fixed w-[80%] text-center w-full">
-                        <thead class="border-b-2 border-[#CCCCCC]">
-                            <th class="py-2 w-[10%]">No</th>
-                            <th class="py-2 w-[15%]">Kode Akun</th>
-                            <th class="py-2 w-[25%]">Nama Akun</th>
-                            <th class="py-2 w-[20%]">Post Saldo</th>
-                            <th class="py-2 w-[20%]">Post Laporan</th>
-                            <th class="py-2 w-[20%]">Saldo</th>
-                            <th class="py-2 w-[20%]">Action</th>
-                        </thead>
-                        <tbody>
-                            @php
-                                $nobank = 1;
-                            @endphp
-                            @foreach ($banks as $lancar)
-                                <tr class="bg-white">
-                                    <td class="py-2">{{ $nobank++ }}</td>
-                                    <td class="py-2">{{ $lancar->kode_akun }}</td>
-                                    <td class="py-2">{{ $lancar->nama_akun }}</td>
-                                    <td class="py-2">{{ $lancar->post_saldo }}</td>
-                                    <td class="py-2">{{ $lancar->post_laporan }}</td>
-                                    <td class="py-2">{{ 'RP. ' . number_format($lancar->saldo, 0, ',', '.') }}</td>
-                                    <td class="flex justify-center items-center gap-x-2 py-2">
-                                        {{-- Tombol Edit --}}
-                                        <a href="{{ route('akun.edit', $lancar->id) }}" class="btn btn-sm btn-primary">
-                                            <img src="https://ar4n-group.com/public/assets/more-circle.png" alt="edit icon"
-                                                class="w-[22px] cursor-pointer">
-                                        </a>
-                                        <span class="border-black border-l-[1px] h-[22px]"></span>
+                        <h1 class="text-[#C0C0C0] font-bold text-xl">Data Kas / Bank</h1>
+                        <table class="table-fixed w-[80%] text-center w-full">
+                            <thead class="border-b-2 border-[#CCCCCC]">
+                                <th class="py-2 w-[10%]">No</th>
+                                <th class="py-2 w-[15%]">Kode Akun</th>
+                                <th class="py-2 w-[25%]">Nama Akun</th>
+                                <th class="py-2 w-[20%]">Post Saldo</th>
+                                <th class="py-2 w-[20%]">Post Laporan</th>
+                                <th class="py-2 w-[20%]">Saldo</th>
+                                <th class="py-2 w-[20%]">Action</th>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $nobank = 1;
+                                @endphp
+                                @foreach ($banks as $lancar)
+                                    <tr class="bg-white">
+                                        <td class="py-2">{{ $nobank++ }}</td>
+                                        <td class="py-2">{{ $lancar->kode_akun }}</td>
+                                        <td class="py-2">{{ $lancar->nama_akun }}</td>
+                                        <td class="py-2">{{ $lancar->post_saldo }}</td>
+                                        <td class="py-2">{{ $lancar->post_laporan }}</td>
+                                        <td class="py-2">{{ 'RP. ' . number_format($lancar->saldo, 0, ',', '.') }}</td>
+                                        <td class="flex justify-center items-center gap-x-2 py-2">
+                                            {{-- Tombol Edit --}}
+                                            <a href="{{ route('akun.edit', $lancar->id) }}" class="btn btn-sm btn-primary">
+                                                <img src="https://ar4n-group.com/public/assets/more-circle.png"
+                                                    alt="edit icon" class="w-[22px] cursor-pointer">
+                                            </a>
+                                            <span class="border-black border-l-[1px] h-[22px]"></span>
 
-                                        {{-- Tombol Delete --}}
-                                        <form action="{{ route('akun.destroy', $lancar->id) }}" method="POST"
-                                            class="h-[22px]">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                <img src="https://ar4n-group.com/public/assets/close-circle.png" alt="delete icon"
-                                                    class="w-[22px] cursor-pointer">
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                            {{-- Tombol Delete --}}
+                                            <form action="{{ route('akun.destroy', $lancar->id) }}" method="POST"
+                                                class="h-[22px]">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                                    <img src="https://ar4n-group.com/public/assets/close-circle.png"
+                                                        alt="delete icon" class="w-[22px] cursor-pointer">
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                     <div class="flex flex-col w-[80%] gap-y-3">
-                    <h1 class="text-[#C0C0C0] font-bold text-xl">Data Asset Lancar</h1>
-                    <table class="table-fixed w-[80%] text-center w-full">
-                        <thead class="border-b-2 border-[#CCCCCC]">
-                            <th class="py-2 w-[10%]">No</th>
-                            <th class="py-2 w-[15%]">Kode Akun</th>
-                            <th class="py-2 w-[25%]">Nama Akun</th>
-                            <th class="py-2 w-[20%]">Post Saldo</th>
-                            <th class="py-2 w-[20%]">Post Laporan</th>
-                            <th class="py-2 w-[20%]">Action</th>
-                        </thead>
-                        <tbody>
-                            @php
-                                $nolancar = 1;
-                            @endphp
-                            @foreach ($lancars as $lancar)
-                                <tr class="bg-white">
-                                    <td class="py-2">{{ $nolancar++ }}</td>
-                                    <td class="py-2">{{ $lancar->kode_akun }}</td>
-                                    <td class="py-2">{{ $lancar->nama_akun }}</td>
-                                    <td class="py-2">{{ $lancar->post_saldo }}</td>
-                                    <td class="py-2">{{ $lancar->post_laporan }}</td>
-                                    <td class="flex justify-center items-center gap-x-2 py-2">
-                                        {{-- Tombol Edit --}}
-                                        <a href="{{ route('akun.edit', $lancar->id) }}" class="btn btn-sm btn-primary">
-                                            <img src="https://ar4n-group.com/public/assets/more-circle.png" alt="edit icon"
-                                                class="w-[22px] cursor-pointer">
-                                        </a>
-                                        <span class="border-black border-l-[1px] h-[22px]"></span>
+                        <h1 class="text-[#C0C0C0] font-bold text-xl">Data Asset Lancar</h1>
+                        <table class="table-fixed w-[80%] text-center w-full">
+                            <thead class="border-b-2 border-[#CCCCCC]">
+                                <th class="py-2 w-[10%]">No</th>
+                                <th class="py-2 w-[15%]">Kode Akun</th>
+                                <th class="py-2 w-[25%]">Nama Akun</th>
+                                <th class="py-2 w-[20%]">Post Saldo</th>
+                                <th class="py-2 w-[20%]">Post Laporan</th>
+                                <th class="py-2 w-[20%]">Action</th>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $nolancar = 1;
+                                @endphp
+                                @foreach ($lancars as $lancar)
+                                    <tr class="bg-white">
+                                        <td class="py-2">{{ $nolancar++ }}</td>
+                                        <td class="py-2">{{ $lancar->kode_akun }}</td>
+                                        <td class="py-2">{{ $lancar->nama_akun }}</td>
+                                        <td class="py-2">{{ $lancar->post_saldo }}</td>
+                                        <td class="py-2">{{ $lancar->post_laporan }}</td>
+                                        <td class="flex justify-center items-center gap-x-2 py-2">
+                                            {{-- Tombol Edit --}}
+                                            <a href="{{ route('akun.edit', $lancar->id) }}"
+                                                class="btn btn-sm btn-primary">
+                                                <img src="https://ar4n-group.com/public/assets/more-circle.png"
+                                                    alt="edit icon" class="w-[22px] cursor-pointer">
+                                            </a>
+                                            <span class="border-black border-l-[1px] h-[22px]"></span>
 
-                                        {{-- Tombol Delete --}}
-                                        <form action="{{ route('akun.destroy', $lancar->id) }}" method="POST"
-                                            class="h-[22px]">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                <img src="https://ar4n-group.com/public/assets/close-circle.png" alt="delete icon"
-                                                    class="w-[22px] cursor-pointer">
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                            {{-- Tombol Delete --}}
+                                            <form action="{{ route('akun.destroy', $lancar->id) }}" method="POST"
+                                                class="h-[22px]">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                                    <img src="https://ar4n-group.com/public/assets/close-circle.png"
+                                                        alt="delete icon" class="w-[22px] cursor-pointer">
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                     <div class="flex flex-col w-[80%] gap-y-3">
-                    <h1 class="text-[#C0C0C0] font-bold text-xl">Data Asset Tetap</h1>
-                    <table class="table-fixed w-[80%] text-center w-full">
-                        <thead class="border-b-2 border-[#CCCCCC]">
-                            <th class="py-2 w-[10%]">No</th>
-                            <th class="py-2 w-[15%]">Kode Akun</th>
-                            <th class="py-2 w-[25%]">Nama Akun</th>
-                            <th class="py-2 w-[20%]">Post Saldo</th>
-                            <th class="py-2 w-[20%]">Post Laporan</th>
-                            <th class="py-2 w-[20%]">Action</th>
-                        </thead>
-                        <tbody>
-                            @php
-                                $notetap = 1;
-                            @endphp
-                            @foreach ($tetaps as $tetap)
-                                <tr class="bg-white">
-                                    <td class="py-2">{{ $notetap++ }}</td>
-                                    <td class="py-2">{{ $tetap->kode_akun }}</td>
-                                    <td class="py-2">{{ $tetap->nama_akun }}</td>
-                                    <td class="py-2">{{ $tetap->post_saldo }}</td>
-                                    <td class="py-2">{{ $tetap->post_laporan }}</td>
-                                    <td class="flex justify-center items-center gap-x-2 py-2">
-                                        {{-- Tombol Edit --}}
-                                        <a href="{{ route('akun.edit', $tetap->id) }}" class="btn btn-sm btn-primary">
-                                            <img src="https://ar4n-group.com/public/assets/more-circle.png" alt="edit icon"
-                                                class="w-[22px] cursor-pointer">
-                                        </a>
-                                        <span class="border-black border-l-[1px] h-[22px]"></span>
+                        <h1 class="text-[#C0C0C0] font-bold text-xl">Data Asset Tetap</h1>
+                        <table class="table-fixed w-[80%] text-center w-full">
+                            <thead class="border-b-2 border-[#CCCCCC]">
+                                <th class="py-2 w-[10%]">No</th>
+                                <th class="py-2 w-[15%]">Kode Akun</th>
+                                <th class="py-2 w-[25%]">Nama Akun</th>
+                                <th class="py-2 w-[20%]">Post Saldo</th>
+                                <th class="py-2 w-[20%]">Post Laporan</th>
+                                <th class="py-2 w-[20%]">Action</th>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $notetap = 1;
+                                @endphp
+                                @foreach ($tetaps as $tetap)
+                                    <tr class="bg-white">
+                                        <td class="py-2">{{ $notetap++ }}</td>
+                                        <td class="py-2">{{ $tetap->kode_akun }}</td>
+                                        <td class="py-2">{{ $tetap->nama_akun }}</td>
+                                        <td class="py-2">{{ $tetap->post_saldo }}</td>
+                                        <td class="py-2">{{ $tetap->post_laporan }}</td>
+                                        <td class="flex justify-center items-center gap-x-2 py-2">
+                                            {{-- Tombol Edit --}}
+                                            <a href="{{ route('akun.edit', $tetap->id) }}"
+                                                class="btn btn-sm btn-primary">
+                                                <img src="https://ar4n-group.com/public/assets/more-circle.png"
+                                                    alt="edit icon" class="w-[22px] cursor-pointer">
+                                            </a>
+                                            <span class="border-black border-l-[1px] h-[22px]"></span>
 
-                                        {{-- Tombol Delete --}}
-                                        <form action="{{ route('akun.destroy', $tetap->id) }}" method="POST"
-                                            class="h-[22px]">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                <img src="https://ar4n-group.com/public/assets/close-circle.png" alt="delete icon"
-                                                    class="w-[22px] cursor-pointer">
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                            {{-- Tombol Delete --}}
+                                            <form action="{{ route('akun.destroy', $tetap->id) }}" method="POST"
+                                                class="h-[22px]">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                                    <img src="https://ar4n-group.com/public/assets/close-circle.png"
+                                                        alt="delete icon" class="w-[22px] cursor-pointer">
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                     <div class="flex flex-col w-[80%] gap-y-3">
-                    <h1 class="text-[#C0C0C0] font-bold text-xl">Data Kewajiban</h1>
-                    <table class="table-fixed w-[80%] text-center w-full">
-                        <thead class="border-b-2 border-[#CCCCCC]">
-                            <th class="py-2 w-[10%]">No</th>
-                            <th class="py-2 w-[15%]">Kode Akun</th>
-                            <th class="py-2 w-[25%]">Nama Akun</th>
-                            <th class="py-2 w-[20%]">Post Saldo</th>
-                            <th class="py-2 w-[20%]">Post Laporan</th>
-                            <th class="py-2 w-[20%]">Action</th>
-                        </thead>
-                        <tbody>
-                            @php
-                                $nokewajiban = 1;
-                            @endphp
-                            @foreach ($kewajibans as $kewajiban)
-                                <tr class="bg-white">
-                                    <td class="py-2">{{ $nokewajiban++ }}</td>
-                                    <td class="py-2">{{ $kewajiban->kode_akun }}</td>
-                                    <td class="py-2">{{ $kewajiban->nama_akun }}</td>
-                                    <td class="py-2">{{ $kewajiban->post_saldo }}</td>
-                                    <td class="py-2">{{ $kewajiban->post_laporan }}</td>
-                                    <td class="flex justify-center items-center gap-x-2 py-2">
-                                        {{-- Tombol Edit --}}
-                                        <a href="{{ route('akun.edit', $kewajiban->id) }}" class="btn btn-sm btn-primary">
-                                            <img src="https://ar4n-group.com/public/assets/more-circle.png" alt="edit icon"
-                                                class="w-[22px] cursor-pointer">
-                                        </a>
-                                        <span class="border-black border-l-[1px] h-[22px]"></span>
+                        <h1 class="text-[#C0C0C0] font-bold text-xl">Data Kewajiban</h1>
+                        <table class="table-fixed w-[80%] text-center w-full">
+                            <thead class="border-b-2 border-[#CCCCCC]">
+                                <th class="py-2 w-[10%]">No</th>
+                                <th class="py-2 w-[15%]">Kode Akun</th>
+                                <th class="py-2 w-[25%]">Nama Akun</th>
+                                <th class="py-2 w-[20%]">Post Saldo</th>
+                                <th class="py-2 w-[20%]">Post Laporan</th>
+                                <th class="py-2 w-[20%]">Action</th>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $nokewajiban = 1;
+                                @endphp
+                                @foreach ($kewajibans as $kewajiban)
+                                    <tr class="bg-white">
+                                        <td class="py-2">{{ $nokewajiban++ }}</td>
+                                        <td class="py-2">{{ $kewajiban->kode_akun }}</td>
+                                        <td class="py-2">{{ $kewajiban->nama_akun }}</td>
+                                        <td class="py-2">{{ $kewajiban->post_saldo }}</td>
+                                        <td class="py-2">{{ $kewajiban->post_laporan }}</td>
+                                        <td class="flex justify-center items-center gap-x-2 py-2">
+                                            {{-- Tombol Edit --}}
+                                            <a href="{{ route('akun.edit', $kewajiban->id) }}"
+                                                class="btn btn-sm btn-primary">
+                                                <img src="https://ar4n-group.com/public/assets/more-circle.png"
+                                                    alt="edit icon" class="w-[22px] cursor-pointer">
+                                            </a>
+                                            <span class="border-black border-l-[1px] h-[22px]"></span>
 
-                                        {{-- Tombol Delete --}}
-                                        <form action="{{ route('akun.destroy', $kewajiban->id) }}" method="POST"
-                                            class="h-[22px]">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                <img src="https://ar4n-group.com/public/assets/close-circle.png" alt="delete icon"
-                                                    class="w-[22px] cursor-pointer">
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                            {{-- Tombol Delete --}}
+                                            <form action="{{ route('akun.destroy', $kewajiban->id) }}" method="POST"
+                                                class="h-[22px]">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                                    <img src="https://ar4n-group.com/public/assets/close-circle.png"
+                                                        alt="delete icon" class="w-[22px] cursor-pointer">
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                     <div class="flex flex-col w-[80%] gap-y-3">
-                    <h1 class="text-[#C0C0C0] font-bold text-xl">Data Ekuitas</h1>
-                    <table class="table-fixed w-[80%] text-center w-full">
-                        <thead class="border-b-2 border-[#CCCCCC]">
-                            <th class="py-2 w-[10%]">No</th>
-                            <th class="py-2 w-[15%]">Kode Akun</th>
-                            <th class="py-2 w-[25%]">Nama Akun</th>
-                            <th class="py-2 w-[20%]">Post Saldo</th>
-                            <th class="py-2 w-[20%]">Post Laporan</th>
-                            <th class="py-2 w-[20%]">Action</th>
-                        </thead>
-                        <tbody>
-                            @php
-                                $noekuitas = 1;
-                            @endphp
-                            @foreach ($ekuitass as $ekuitas)
-                                <tr class="bg-white">
-                                    <td class="py-2">{{ $noekuitas++ }}</td>
-                                    <td class="py-2">{{ $ekuitas->kode_akun }}</td>
-                                    <td class="py-2">{{ $ekuitas->nama_akun }}</td>
-                                    <td class="py-2">{{ $ekuitas->post_saldo }}</td>
-                                    <td class="py-2">{{ $ekuitas->post_laporan }}</td>
-                                    <td class="flex justify-center items-center gap-x-2 py-2">
-                                        {{-- Tombol Edit --}}
-                                        <a href="{{ route('akun.edit', $ekuitas->id) }}" class="btn btn-sm btn-primary">
-                                            <img src="https://ar4n-group.com/public/assets/more-circle.png" alt="edit icon"
-                                                class="w-[22px] cursor-pointer">
-                                        </a>
-                                        <span class="border-black border-l-[1px] h-[22px]"></span>
+                        <h1 class="text-[#C0C0C0] font-bold text-xl">Data Ekuitas</h1>
+                        <table class="table-fixed w-[80%] text-center w-full">
+                            <thead class="border-b-2 border-[#CCCCCC]">
+                                <th class="py-2 w-[10%]">No</th>
+                                <th class="py-2 w-[15%]">Kode Akun</th>
+                                <th class="py-2 w-[25%]">Nama Akun</th>
+                                <th class="py-2 w-[20%]">Post Saldo</th>
+                                <th class="py-2 w-[20%]">Post Laporan</th>
+                                <th class="py-2 w-[20%]">Action</th>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $noekuitas = 1;
+                                @endphp
+                                @foreach ($ekuitass as $ekuitas)
+                                    <tr class="bg-white">
+                                        <td class="py-2">{{ $noekuitas++ }}</td>
+                                        <td class="py-2">{{ $ekuitas->kode_akun }}</td>
+                                        <td class="py-2">{{ $ekuitas->nama_akun }}</td>
+                                        <td class="py-2">{{ $ekuitas->post_saldo }}</td>
+                                        <td class="py-2">{{ $ekuitas->post_laporan }}</td>
+                                        <td class="flex justify-center items-center gap-x-2 py-2">
+                                            {{-- Tombol Edit --}}
+                                            <a href="{{ route('akun.edit', $ekuitas->id) }}"
+                                                class="btn btn-sm btn-primary">
+                                                <img src="https://ar4n-group.com/public/assets/more-circle.png"
+                                                    alt="edit icon" class="w-[22px] cursor-pointer">
+                                            </a>
+                                            <span class="border-black border-l-[1px] h-[22px]"></span>
 
-                                        {{-- Tombol Delete --}}
-                                        <form action="{{ route('akun.destroy', $ekuitas->id) }}" method="POST"
-                                            class="h-[22px]">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                <img src="https://ar4n-group.com/public/assets/close-circle.png" alt="delete icon"
-                                                    class="w-[22px] cursor-pointer">
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                            {{-- Tombol Delete --}}
+                                            <form action="{{ route('akun.destroy', $ekuitas->id) }}" method="POST"
+                                                class="h-[22px]">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                                    <img src="https://ar4n-group.com/public/assets/close-circle.png"
+                                                        alt="delete icon" class="w-[22px] cursor-pointer">
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                     <div class="flex flex-col w-[80%] gap-y-3">
-                    <h1 class="text-[#C0C0C0] font-bold text-xl">Data Pendapatan</h1>
-                    <table class="table-fixed w-[80%] text-center w-full">
-                        <thead class="border-b-2 border-[#CCCCCC]">
-                            <th class="py-2 w-[10%]">No</th>
-                            <th class="py-2 w-[15%]">Kode Akun</th>
-                            <th class="py-2 w-[25%]">Nama Akun</th>
-                            <th class="py-2 w-[20%]">Post Saldo</th>
-                            <th class="py-2 w-[20%]">Post Laporan</th>
-                            <th class="py-2 w-[20%]">Action</th>
-                        </thead>
-                        <tbody>
-                            @php
-                                $nopendapatan = 1;
-                            @endphp
-                            @foreach ($pendapatans as $pendapatan)
-                                <tr class="bg-white">
-                                    <td class="py-2">{{ $nopendapatan++ }}</td>
-                                    <td class="py-2">{{ $pendapatan->kode_akun }}</td>
-                                    <td class="py-2">{{ $pendapatan->nama_akun }}</td>
-                                    <td class="py-2">{{ $pendapatan->post_saldo }}</td>
-                                    <td class="py-2">{{ $pendapatan->post_laporan }}</td>
-                                    <td class="flex justify-center items-center gap-x-2 py-2">
-                                        {{-- Tombol Edit --}}
-                                        <a href="{{ route('akun.edit', $pendapatan->id) }}" class="btn btn-sm btn-primary">
-                                            <img src="https://ar4n-group.com/public/assets/more-circle.png" alt="edit icon"
-                                                class="w-[22px] cursor-pointer">
-                                        </a>
-                                        <span class="border-black border-l-[1px] h-[22px]"></span>
+                        <h1 class="text-[#C0C0C0] font-bold text-xl">Data Pendapatan</h1>
+                        <table class="table-fixed w-[80%] text-center w-full">
+                            <thead class="border-b-2 border-[#CCCCCC]">
+                                <th class="py-2 w-[10%]">No</th>
+                                <th class="py-2 w-[15%]">Kode Akun</th>
+                                <th class="py-2 w-[25%]">Nama Akun</th>
+                                <th class="py-2 w-[20%]">Post Saldo</th>
+                                <th class="py-2 w-[20%]">Post Laporan</th>
+                                <th class="py-2 w-[20%]">Action</th>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $nopendapatan = 1;
+                                @endphp
+                                @foreach ($pendapatans as $pendapatan)
+                                    <tr class="bg-white">
+                                        <td class="py-2">{{ $nopendapatan++ }}</td>
+                                        <td class="py-2">{{ $pendapatan->kode_akun }}</td>
+                                        <td class="py-2">{{ $pendapatan->nama_akun }}</td>
+                                        <td class="py-2">{{ $pendapatan->post_saldo }}</td>
+                                        <td class="py-2">{{ $pendapatan->post_laporan }}</td>
+                                        <td class="flex justify-center items-center gap-x-2 py-2">
+                                            {{-- Tombol Edit --}}
+                                            <a href="{{ route('akun.edit', $pendapatan->id) }}"
+                                                class="btn btn-sm btn-primary">
+                                                <img src="https://ar4n-group.com/public/assets/more-circle.png"
+                                                    alt="edit icon" class="w-[22px] cursor-pointer">
+                                            </a>
+                                            <span class="border-black border-l-[1px] h-[22px]"></span>
 
-                                        {{-- Tombol Delete --}}
-                                        <form action="{{ route('akun.destroy', $pendapatan->id) }}" method="POST"
-                                            class="h-[22px]">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                <img src="https://ar4n-group.com/public/assets/close-circle.png" alt="delete icon"
-                                                    class="w-[22px] cursor-pointer">
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                            {{-- Tombol Delete --}}
+                                            <form action="{{ route('akun.destroy', $pendapatan->id) }}" method="POST"
+                                                class="h-[22px]">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                                    <img src="https://ar4n-group.com/public/assets/close-circle.png"
+                                                        alt="delete icon" class="w-[22px] cursor-pointer">
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                     <div class="flex flex-col w-[80%] gap-y-3">
-                    <h1 class="text-[#C0C0C0] font-bold text-xl">Data HPP Proyek</h1>
-                    <table class="table-fixed w-[80%] text-center w-full">
-                        <thead class="border-b-2 border-[#CCCCCC]">
-                            <th class="py-2 w-[10%]">No</th>
-                            <th class="py-2 w-[15%]">Kode Akun</th>
-                            <th class="py-2 w-[25%]">Nama Akun</th>
-                            <th class="py-2 w-[20%]">Post Saldo</th>
-                            <th class="py-2 w-[20%]">Post Laporan</th>
-                            <th class="py-2 w-[20%]">Action</th>
-                        </thead>
-                        <tbody>
-                            @php
-                                $nohpp = 1;
-                            @endphp
-                            @foreach ($hpps as $hpp)
-                                <tr class="bg-white">
-                                    <td class="py-2">{{ $nohpp++ }}</td>
-                                    <td class="py-2">{{ $hpp->kode_akun }}</td>
-                                    <td class="py-2">{{ $hpp->nama_akun }}</td>
-                                    <td class="py-2">{{ $hpp->post_saldo }}</td>
-                                    <td class="py-2">{{ $hpp->post_laporan }}</td>
-                                    <td class="flex justify-center items-center gap-x-2 py-2">
-                                        {{-- Tombol Edit --}}
-                                        <a href="{{ route('akun.edit', $hpp->id) }}" class="btn btn-sm btn-primary">
-                                            <img src="https://ar4n-group.com/public/assets/more-circle.png" alt="edit icon"
-                                                class="w-[22px] cursor-pointer">
-                                        </a>
-                                        <span class="border-black border-l-[1px] h-[22px]"></span>
+                        <h1 class="text-[#C0C0C0] font-bold text-xl">Data HPP Proyek</h1>
+                        <table class="table-fixed w-[80%] text-center w-full">
+                            <thead class="border-b-2 border-[#CCCCCC]">
+                                <th class="py-2 w-[10%]">No</th>
+                                <th class="py-2 w-[15%]">Kode Akun</th>
+                                <th class="py-2 w-[25%]">Nama Akun</th>
+                                <th class="py-2 w-[20%]">Post Saldo</th>
+                                <th class="py-2 w-[20%]">Post Laporan</th>
+                                <th class="py-2 w-[20%]">Action</th>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $nohpp = 1;
+                                @endphp
+                                @foreach ($hpps as $hpp)
+                                    <tr class="bg-white">
+                                        <td class="py-2">{{ $nohpp++ }}</td>
+                                        <td class="py-2">{{ $hpp->kode_akun }}</td>
+                                        <td class="py-2">{{ $hpp->nama_akun }}</td>
+                                        <td class="py-2">{{ $hpp->post_saldo }}</td>
+                                        <td class="py-2">{{ $hpp->post_laporan }}</td>
+                                        <td class="flex justify-center items-center gap-x-2 py-2">
+                                            {{-- Tombol Edit --}}
+                                            <a href="{{ route('akun.edit', $hpp->id) }}" class="btn btn-sm btn-primary">
+                                                <img src="https://ar4n-group.com/public/assets/more-circle.png"
+                                                    alt="edit icon" class="w-[22px] cursor-pointer">
+                                            </a>
+                                            <span class="border-black border-l-[1px] h-[22px]"></span>
 
-                                        {{-- Tombol Delete --}}
-                                        <form action="{{ route('akun.destroy', $hpp->id) }}" method="POST"
-                                            class="h-[22px]">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                <img src="https://ar4n-group.com/public/assets/close-circle.png" alt="delete icon"
-                                                    class="w-[22px] cursor-pointer">
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                            {{-- Tombol Delete --}}
+                                            <form action="{{ route('akun.destroy', $hpp->id) }}" method="POST"
+                                                class="h-[22px]">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                                    <img src="https://ar4n-group.com/public/assets/close-circle.png"
+                                                        alt="delete icon" class="w-[22px] cursor-pointer">
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -422,8 +426,8 @@
                                         {{-- Tombol Edit --}}
                                         <a href="{{ route('piutangHutang.edit', $piutangHutang->id) }}"
                                             class="btn btn-sm btn-primary">
-                                            <img src="https://ar4n-group.com/public/assets/more-circle.png" alt="edit icon"
-                                                class="w-[22px] cursor-pointer">
+                                            <img src="https://ar4n-group.com/public/assets/more-circle.png"
+                                                alt="edit icon" class="w-[22px] cursor-pointer">
                                         </a>
                                         <span class="border-black border-l-[1px] h-[22px]"></span>
                                         {{-- Tombol Delete --}}
@@ -432,8 +436,8 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                <img src="https://ar4n-group.com/public/assets/close-circle.png" alt="delete icon"
-                                                    class="w-[22px] cursor-pointer">
+                                                <img src="https://ar4n-group.com/public/assets/close-circle.png"
+                                                    alt="delete icon" class="w-[22px] cursor-pointer">
                                             </button>
                                         </form>
                                     </td>
@@ -473,8 +477,8 @@
                                             {{-- Tombol Edit --}}
                                             <a href="{{ route('karyawan.edit', $karyawan->id) }}"
                                                 class="btn btn-sm btn-primary">
-                                                <img src="https://ar4n-group.com/public/assets/more-circle.png" alt="edit icon"
-                                                    class="w-[22px] cursor-pointer">
+                                                <img src="https://ar4n-group.com/public/assets/more-circle.png"
+                                                    alt="edit icon" class="w-[22px] cursor-pointer">
                                             </a>
                                             <span class="border-black border-l-[1px] h-[22px]"></span>
                                             {{-- Tombol Delete --}}
@@ -483,8 +487,8 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                    <img src="https://ar4n-group.com/public/assets/close-circle.png" alt="delete icon"
-                                                        class="w-[22px] cursor-pointer">
+                                                    <img src="https://ar4n-group.com/public/assets/close-circle.png"
+                                                        alt="delete icon" class="w-[22px] cursor-pointer">
                                                 </button>
                                             </form>
                                         </div>
@@ -519,13 +523,13 @@
                                     <td class="py-2">{{ $proyek->nama_proyek }}</td>
                                     <td class="py-2">{{ $proyek->nama_perusahaan }}</td>
                                     <td class="py-2">{{ $proyek->jenis }}</td>
-                                    <td class="py-2">{{ 'RP. ' . number_format($proyek->nilai_kontrak, 0, ',', '.') }}</td>
+                                    <td class="py-2">{{ 'RP. ' . number_format($proyek->nilai_kontrak, 0, ',', '.') }}
+                                    </td>
                                     <td class="flex justify-center items-center gap-x-2 py-2">
                                         {{-- Tombol Edit --}}
-                                        <a href="{{ route('proyek.edit', $proyek->id) }}"
-                                            class="btn btn-sm btn-primary">
-                                            <img src="https://ar4n-group.com/public/assets/more-circle.png" alt="edit icon"
-                                                class="w-[22px] cursor-pointer">
+                                        <a href="{{ route('proyek.edit', $proyek->id) }}" class="btn btn-sm btn-primary">
+                                            <img src="https://ar4n-group.com/public/assets/more-circle.png"
+                                                alt="edit icon" class="w-[22px] cursor-pointer">
                                         </a>
                                         <span class="border-black border-l-[1px] h-[22px]"></span>
                                         {{-- Tombol Delete --}}
@@ -534,8 +538,8 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                <img src="https://ar4n-group.com/public/assets/close-circle.png" alt="delete icon"
-                                                    class="w-[22px] cursor-pointer">
+                                                <img src="https://ar4n-group.com/public/assets/close-circle.png"
+                                                    alt="delete icon" class="w-[22px] cursor-pointer">
                                             </button>
                                         </form>
                                     </td>
@@ -572,8 +576,7 @@
                                     <td class="py-2">{{ $item->no_hp }}</td>
                                     <td class="flex justify-center items-center gap-x-2 py-2">
                                         {{-- Tombol Edit --}}
-                                        <a href="{{ route('supplier.edit', $item->id) }}"
-                                            class="btn btn-sm btn-primary">
+                                        <a href="{{ route('supplier.edit', $item->id) }}" class="btn btn-sm btn-primary">
                                             <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
                                                 class="w-[22px] cursor-pointer">
                                         </a>
@@ -590,7 +593,7 @@
                                         </form>
                                     </td>
                                 </tr>
-                                @endforeach
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -600,20 +603,64 @@
             const tabelMasterData = document.querySelectorAll('.tabelMasterData');
             const selectMasterData = document.getElementById('selectMasterData');
             const dataKosong = document.getElementById('data-kosong');
+            const searchForm = document.getElementById('searchForm');
+            const searchInput = document.getElementById('searchInput');
 
+            // 🔹 Dropdown handler
             selectMasterData.addEventListener('change', () => {
-                dataKosong.classList.remove('h-[300px]');
-                tabelMasterData.forEach((tabel, index) => {
-                    if (selectMasterData.value === `${tabel.id}`) {
+                dataKosong.classList.add('hidden');
+                tabelMasterData.forEach(tabel => {
+                    if (selectMasterData.value === tabel.id) {
                         tabel.classList.remove('hidden');
                         tabel.classList.add('flex');
+                        // reset semua baris kalau sebelumnya di-filter
+                        tabel.querySelectorAll('tbody tr').forEach(row => row.classList.remove('hidden'));
                     } else {
                         tabel.classList.add('hidden');
                         tabel.classList.remove('flex');
                     }
                 });
             });
+
+            // 🔹 Search handler
+            searchForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const keyword = searchInput.value.toLowerCase().trim();
+                let found = false;
+
+                tabelMasterData.forEach(tabel => {
+                    const rows = tabel.querySelectorAll('tbody tr');
+                    let matchCount = 0;
+
+                    rows.forEach(row => {
+                        const text = row.innerText.toLowerCase();
+                        if (text.includes(keyword) && keyword !== "") {
+                            row.classList.remove('hidden');
+                            matchCount++;
+                        } else {
+                            row.classList.add('hidden');
+                        }
+                    });
+
+                    if (matchCount > 0) {
+                        tabel.classList.remove('hidden');
+                        tabel.classList.add('flex');
+                        selectMasterData.value = tabel.id;
+                        found = true;
+                    } else {
+                        tabel.classList.add('hidden');
+                        tabel.classList.remove('flex');
+                    }
+                });
+
+                if (!found) {
+                    dataKosong.classList.remove('hidden');
+                } else {
+                    dataKosong.classList.add('hidden');
+                }
+            });
         </script>
+
         <script src="https://ar4n-group.com/public/js/dropdown.js"></script>
     </div>
 @endsection
