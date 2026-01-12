@@ -105,7 +105,7 @@ class BukuBesarController extends Controller
         $transactions = $query->get();
 
         // 3. Logika Running Balance
-        $saldoBerjalan = 0;
+        $saldoBerjalan = $account->saldo_awal ?? $account->saldo ?? 0;
         foreach ($transactions as $trx) {
             if ($account->post_saldo == 'DEBET') {
                 $saldoBerjalan += ($trx->debit - $trx->kredit);
