@@ -13,6 +13,16 @@
                         class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
                 </div>
                 <div class="flex items-center">
+                    <label for="" class="w-[200px] font-medium">Kas / Bank</label>
+                    <select name="kode_kas" id=""
+                        class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2 appearance-none cursor-pointer">
+                        <option selected disabled>Pilih Kas / Bank</option>
+                        @foreach ($bank as $item)
+                            <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="flex items-center">
                     <label for="" class="w-[200px] font-medium">Keterangan</label>
                     <input type="text" name="kontrak" id=""
                         class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">

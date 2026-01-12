@@ -27,7 +27,6 @@ class LoginController extends Controller
             $user = Auth::user();
 
             switch ($user->role) {
-                case 'Admin':
                 case 'Admin 1':
                 case 'Admin 2':
                 case 'Super Admin': // super admin sama dengan admin
