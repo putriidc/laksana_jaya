@@ -65,6 +65,7 @@
 
     <!-- Tabel Pinjaman -->
     <h3>Data Pinjaman</h3>
+    <p id="display-jam">00:00:00</p>
     <table>
         <thead>
             <tr>
@@ -121,5 +122,22 @@
         <p>Dicetak oleh,<br>{{ $role }} - {{ $admin }}</p>
         <p style="margin-top: 70px">{{ $tanggalCetak }}</p>
     </div>
+    <script>
+    function buatJam() {
+      // Ambil waktu saat ini berdasarkan zona Jakarta (WIB)
+      const waktu = new Date().toLocaleTimeString('id-ID', { 
+        timeZone: 'Asia/Jakarta' 
+      });
+      
+      // Tampilkan ke layar
+      document.getElementById('display-jam').innerHTML = waktu + " WIB";
+    }
+
+    // Update setiap 1 detik
+    // setInterval(buatJam, 1000);
+    
+    // Jalankan langsung saat halaman dibuka
+    buatJam();
+  </script>
 </body>
 </html>

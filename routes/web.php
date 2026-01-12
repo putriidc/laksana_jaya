@@ -20,6 +20,11 @@ use App\Http\Controllers\barangReturController;
 use App\Http\Controllers\JurnalOwnerController;
 use App\Http\Controllers\ProyekOwnerController;
 use App\Http\Controllers\AccTukangSpvController;
+use App\Http\Controllers\AlatController;
+use App\Http\Controllers\AlatDibeliController;
+use App\Http\Controllers\AlatDihapusController;
+use App\Http\Controllers\AlatDikembalikanController;
+use App\Http\Controllers\AlatDipinjamController;
 use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\KasbonContentController;
 use App\Http\Controllers\LaporanHarianController;
@@ -33,6 +38,8 @@ use App\Http\Controllers\PinjamanKaryawanController;
 use App\Http\Controllers\BukuBesarController;
 use App\Http\Controllers\NeracaOwnerController;
 use App\Http\Controllers\ProgresOwnerController;
+use App\Models\AlatDibeli;
+use App\Models\AlatDipinjam;
 use App\Models\JurnalUmum;
 
 Route::get('/', function () {
@@ -187,11 +194,36 @@ Route::middleware('auth')->group(function () {
     Route::get('barangs/{id}/printRetur', [BarangController::class, 'printRetur'])
         ->name('barangs.printRetur');
 
+    Route::get('alats/{id}/printDibeli', [AlatController::class, 'printDibeli'])
+        ->name('alats.printDibeli');
+    Route::get('alats/{id}/printDihapus', [AlatController::class, 'printDihapus'])
+        ->name('alats.printDihapus');
+    Route::get('alats/{id}/printDipinjam', [AlatController::class, 'printDipinjam'])
+        ->name('alats.printDipinjam');
+    Route::get('alats/{id}/printDikembalikan', [AlatController::class, 'printDikembalikan'])
+        ->name('alats.printDikembalikan');
+
     Route::resource('barangs', BarangController::class);
+    Route::resource('alats', AlatController::class);
     // data barang
     Route::resource('accspv', AccTukangSpvController::class);
     Route::post('/pinjaman/{id}/decline', [AccTukangSpvController::class, 'decline'])
         ->name('pinjaman.decline');
+
+    // Transaksi Alat
+    Route::resource('alat-beli', AlatDibeliController::class);
+    Route::get('alat-beli/create/{kode_alat}', [AlatDibeliController::class, 'createForAlat'])
+        ->name('alat-beli.create.for-alat');
+    Route::resource('alat-hapus', AlatDihapusController::class);
+    Route::get('alat-hapus/create/{kode_alat}', [AlatDihapusController::class, 'createForAlat'])
+        ->name('alat-hapus.create.for-alat');
+    Route::resource('alat-pinjam', AlatDipinjamController::class);
+    Route::get('alat-pinjam/create/{kode_alat}', [AlatDipinjamController::class, 'createForAlat'])
+        ->name('alat-pinjam.create.for-alat');
+    Route::resource('alat-kembalikan', AlatDikembalikanController::class);
+    Route::get('alat-kembalikan/create/{kode_alat}', [AlatDikembalikanController::class, 'createForAlat'])
+        ->name('alat-kembalikan.create.for-alat');
+    // Transaksi Alat
 
     // transaksi barang
     Route::resource('barang-masuk', BarangMasukController::class);

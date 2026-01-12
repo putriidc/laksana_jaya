@@ -1,19 +1,6 @@
 @extends('kepala-gudang.layout')
 @section('content')
     <div>
-        @if (session('success'))
-            <div
-                id="flash-message"
-                data-type="success"
-                data-message="{{ session('success') }}"
-            ></div>
-        @elseif (session('error'))
-            <div
-                id="flash-message"
-                data-type="error"
-                data-message="{{ session('error') }}"
-            ></div>
-        @endif
         <h1 class="font-bold text-2xl mb-10">Detail Data Barang</h1>
         <div class="flex flex-col gap-y-7 pb-14 mb-8 border-b-2 border-[#B6B6B6]">
             <div class="flex mb-5 max-[900px]:mb-0 max-[900px]:flex-col max-[900px]:items-center">
