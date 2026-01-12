@@ -199,7 +199,25 @@ class HutangVendorController extends Controller
         $lastId = JurnalUmum::max('id') ?? 0;
         $nextId = $lastId + 1;
         $kodeJurnal = 'J-' . str_pad($nextId, 3, '0', STR_PAD_LEFT);
-
+        if (!$kas) {
+                return redirect()->back()->with('error', 'Akun kas tidak ditemukan');
+            }
+            // Cek saldo cukup atau tidak
+            if ($kas->saldo < $hutang->nominal) {
+                return redirect()->back()->with('error', "Saldo {$kas->nama_akun} tidak mencukupi");
+            }
+            if ($kas) {
+                // Kurangi saldo
+                $kas->saldo -= $hutang->nominal;
+                $kas->save();
+                $modal = Asset::where('nama_akun', 'Modal')->first();
+                if ($modal) {
+                    if (($hutang->nominal ?? 0) > 0) {
+                        $modal->saldo -= $hutang->nominal;
+                    }
+                    $modal->save();
+                }
+            }
         // buat jurnal debit hutang vendor
         JurnalUmum::create([
             'detail_order'   => 3,
