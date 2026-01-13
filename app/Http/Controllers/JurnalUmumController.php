@@ -44,6 +44,12 @@ class JurnalUmumController extends Controller
                     });
             })
             ->get();
+        $akunDebit = Asset::active()
+        ->where('kode_akun', ['450', '451'])
+            ->get();
+        $akunKredit = Asset::active()
+        ->where('akun_header', 'hpp_proyek')
+            ->get();
 
 
         $allowedAccounts = [];
@@ -112,7 +118,7 @@ class JurnalUmumController extends Controller
         $status = $totalDebit === $totalKredit ? 'Balance' : 'Tidak Balance';
         $today = Carbon::now('Asia/Jakarta')->toDateString();
 
-        return view('admin.jurnal-umum.data', compact('jurnals', 'today', 'totalDebit', 'totalKredit', 'status', 'akun', 'daftarProyek', 'daftarAkun', 'kredit', 'bank', 'bankTo'));
+        return view('admin.jurnal-umum.data', compact('jurnals', 'today', 'totalDebit', 'totalKredit', 'status', 'akun', 'daftarProyek', 'daftarAkun', 'kredit', 'bank', 'bankTo', 'akunDebit', 'akunKredit'));
     }
 
     public function print(Request $request)
@@ -311,7 +317,7 @@ class JurnalUmumController extends Controller
 
             return response()->json(['success' => true]);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Gagal simpan transfer: '.$e->getMessage()], 400);
+            return response()->json(['error' => 'Gagal simpan transfer: ' . $e->getMessage()], 400);
         }
     }
 

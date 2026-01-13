@@ -350,7 +350,7 @@
                             <label>Nama Akun</label>
                             <select id="namaPerkiraan" class="bg-gray-200 rounded-lg px-4 py-2 w-full text-start">
                                 <option></option>
-                                @foreach ($akun as $item)
+                                @foreach ($akunDebit as $item)
                                     <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
                                 @endforeach
                             </select>
@@ -588,7 +588,7 @@
                             <label>Nama Akun</label>
                             <select id="namaPerkiraan" class="bg-gray-200 rounded-lg px-4 py-2 w-full text-start">
                                 <option></option>
-                                @foreach ($akun as $item)
+                                @foreach ($akunKredit as $item)
                                     <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
                                 @endforeach
                             </select>
