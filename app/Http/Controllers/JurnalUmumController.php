@@ -45,7 +45,7 @@ class JurnalUmumController extends Controller
             })
             ->get();
         $akunDebit = Asset::active()
-        ->where('kode_akun', ['450', '451'])
+        ->whereIn('kode_akun', ['450', '451'])
             ->get();
         $akunKredit = Asset::active()
         ->where('akun_header', 'hpp_proyek')
