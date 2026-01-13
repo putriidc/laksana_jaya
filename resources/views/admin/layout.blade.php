@@ -319,8 +319,7 @@
         </section>
        <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
         <script src="https://ar4n-group.com/public/js/notification.js"></script>
-    </body>
-    <script>
+        <script>
     console.log({
     buttonView: document.getElementById("buttonView"),
     nav: document.getElementById("sideNavbar"),
@@ -430,5 +429,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 </script>
+    </body>
+
 
 </html>
