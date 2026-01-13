@@ -36,6 +36,7 @@ class PinjamanContentController extends Controller
         $admin        = Auth::user()->name ?? 'Administrator';
         $role         = Auth::user()->role ?? 'admin';
         $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak     = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
 
         $pdf = Pdf::loadView('admin.pinjaman-karyawan.detail.print', compact(
             'pinjaman',
@@ -43,7 +44,8 @@ class PinjamanContentController extends Controller
             'kasbonContents',
             'admin',
             'role',
-            'tanggalCetak'
+            'tanggalCetak',
+            'jamCetak'
         ))->setPaper('A4', 'portrait');
 
         return $pdf->stream('detail-pinjaman-karyawan.pdf');

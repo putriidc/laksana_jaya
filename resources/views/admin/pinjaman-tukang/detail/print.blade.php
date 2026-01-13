@@ -47,7 +47,15 @@
             background-color: rgba(240, 240, 240, 0.95);
         }
 
-        .footer {
+        .footer-owner {
+            margin-top: 40px;
+            font-size: 11px;
+            width: 100px;
+            /* atau sesuai lebar yang kamu mau */
+            text-align: center;
+            float: left;
+        }
+        .footer-admin {
             margin-top: 40px;
             font-size: 11px;
             width: 100px;
@@ -59,11 +67,10 @@
 </head>
 <body>
     <div class="logo-container">
-        <img src="{{ public_path('assets/ar4anSmallLogo.png') }}" class="logo">
+        <img src="{{ public_path('assets/logo-font.png') }}" class="logo" style="width: 150px; height: 40px;">
     </div>
-    <h2>LAPORAN DETAIL PINJAMAN TUKANG  ({{ $pinjaman->nama_tukang }})<br>AR4N GROUP</h2>
-
-
+    <h2 style="font-size: 20px; font-weight: bolder; margin-top: 20px; text-transform: uppercase;">LAPORAN DETAIL PINJAMAN TUKANG <br> ({{ $pinjaman->nama_tukang }})</h2>
+    <div>Dicetak pada: {{ $tanggalCetak }} - {{ $jamCetak }}</div>
     <table>
         <thead>
             <tr>
@@ -88,12 +95,13 @@
             @endforeach
         </tbody>
     </table>
-
-
-
-    <div class="footer">
-        <p>Dicetak oleh,<br>{{ $role }} - {{ $admin }}</p>
-        <p style="margin-top: 70px">{{ $tanggalCetak }}</p>
-    </div>
+        <div class="footer-owner">
+            <p>Owner</p>
+            <p style="margin-top: 70px">Rian Purnama</p>
+        </div>
+        <div class="footer-admin">
+            <p>Admin Kuangan</p>
+            <p style="margin-top: 70px">{{ $admin }}</p>
+        </div>
 </body>
 </html>

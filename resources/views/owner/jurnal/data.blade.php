@@ -68,6 +68,9 @@
                     </div>
                 </form>
             </div>
+            <div class="mb-2">
+                <button ype="button" onclick="bulkDelete()" id="btn-bulk-delete" class="border border-[#FF4B45] rounded-lg p-2 text-[#FF4B45] cursor-pointer">Hapus <span id="count-selected">0</span> Data</button>
+            </div>
             <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1200px]:overflow-x-auto">
                 <table class="table-fixed text-center text-sm w-full max-[1200px]:w-[1200px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
@@ -205,9 +208,6 @@
                         @endforeach
                     </tbody>
                 </table>
-            </div>
-            <div class="mt-2">
-                <button ype="button" onclick="bulkDelete()" id="btn-bulk-delete" class="border border-[#FF4B45] rounded-lg p-2 text-[#FF4B45] cursor-pointer">Hapus <span id="count-selected">0</span> Data</button>
             </div>
         </section>
         <script>

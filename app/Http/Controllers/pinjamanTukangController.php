@@ -33,10 +33,11 @@ class pinjamanTukangController extends Controller
     {
         $pinjamans = KasbonTukang::active()->get();
         $tanggalCetak = Carbon::now('Asia/Jakarta')->format('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->format('H:i');
         $role = Auth::user()->role ?? 'Admin';
         $admin = Auth::user()->name ?? 'Admin';
 
-        $pdf = Pdf::loadView('admin.pinjaman-tukang.print', compact('pinjamans', 'tanggalCetak', 'admin', 'role'))
+        $pdf = Pdf::loadView('admin.pinjaman-tukang.print', compact('pinjamans', 'tanggalCetak', 'admin', 'role', 'jamCetak'))
             ->setPaper('A4', 'portrait');
 
         return $pdf->stream('laporan-Pinjaman-Tukang.pdf');

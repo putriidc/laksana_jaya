@@ -69,6 +69,11 @@
                     </a>
                 </form>
             </div>
+            <div class="mb-2">
+                <button type="button" onclick="bulkDelete()" id="btn-bulk-delete"
+                    class="hidden border border-[#FF4B45] rounded-lg p-2 text-[#FF4B45] cursor-pointer">Hapus <span
+                        id="count-selected">0</span> Data</button>
+            </div>
             <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
                 <table class="table-fixed text-center text-sm w-full">
                     <thead class="border-b-2 border-[#CCCCCC]">
@@ -176,39 +181,41 @@
                                 <td class="py-2">{{ $jurnal->kode_proyek }}</td>
                                 <td class="py-2">{{ 'RP. ' . number_format($jurnal->debit, 0, ',', '.') }}</td>
                                 <td class="py-2">{{ 'RP. ' . number_format($jurnal->kredit, 0, ',', '.') }}</td>
-                                <td class="flex justify-center items-center gap-x-2 py-2">
-                                    @php
-                                        $detail = $jurnal->detailEaf;
-                                    @endphp
-                                    @if ($jurnal->tanggal == $today && $jurnal->detail_order > 2)
-                                        <button
-                                            onclick="editLaporanKeuangan({{ $jurnal->id }},
-                                        '{{ $jurnal->tanggal }}',
-                                        '{{ $jurnal->keterangan }}',
-                                        '{{ $jurnal->kode_perkiraan }}',
-                                        '{{ $jurnal->nama_perkiraan }}',
-                                        '{{ $jurnal->debit }}',
-                                        '{{ $jurnal->kredit }}',
-                                        '{{ route('jurnalUmums.update', $jurnal->id) }}'
-                                        )"
-                                            class="">
-                                            <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
-                                                class="w-[22px] cursor-pointer">
-                                        </button>
-                                        <span class="border-black border-l-[1px] h-[22px]"></span>
-                                        <form action="{{ route('jurnalUmums.destroy', $jurnal->id) }}" method="POST"
-                                            class="h-[22px]">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
-                                                    class="w-[22px] cursor-pointer">
-                                            </button>
-                                        </form>
-                                    @else
-                                        <span class="text-gray-600 font-bold">Lewat <br> Tanggal</span>
-                                    @endif
-                                </td>
+                                <td class="py-2">
+                                        <div class="flex items-center justify-center gap-x-2">
+                                            @php
+                                                $detail = $jurnal->detailEaf;
+                                            @endphp
+                                            @if ($jurnal->tanggal == $today && $jurnal->detail_order > 2)
+                                                <button
+                                                    onclick="editLaporanKeuangan({{ $jurnal->id }},
+                                                '{{ $jurnal->tanggal }}',
+                                                '{{ $jurnal->keterangan }}',
+                                                '{{ $jurnal->kode_perkiraan }}',
+                                                '{{ $jurnal->nama_perkiraan }}',
+                                                '{{ $jurnal->debit }}',
+                                                '{{ $jurnal->kredit }}',
+                                                '{{ route('jurnalUmums.update', $jurnal->id) }}'
+                                                )"
+                                                    class="">
+                                                    <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
+                                                        class="w-[22px] cursor-pointer">
+                                                </button>
+                                                <span class="border-black border-l-[1px] h-[22px]"></span>
+                                                <form action="{{ route('jurnalUmums.destroy', $jurnal->id) }}" method="POST"
+                                                    class="h-[22px]">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                                        <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                            class="w-[22px] cursor-pointer">
+                                                    </button>
+                                                </form>
+                                            @else
+                                                <span class="text-gray-600 font-bold">Lewat <br> Tanggal</span>
+                                            @endif
+                                        </div>
+                                    </td>
                                 {{-- <td class="flex justify-center items-center gap-x-2 py-2">
                                     @if ($jurnal->tanggal == $today)
                                         <a href="{{ route('jurnalUmums.edit', $jurnal->id) }}"
@@ -236,18 +243,13 @@
                     </tbody>
                 </table>
             </div>
-            <div class="mt-2">
-                <button ype="button" onclick="bulkDelete()" id="btn-bulk-delete"
-                    class="border border-[#FF4B45] rounded-lg p-2 text-[#FF4B45] cursor-pointer">Hapus <span
-                        id="count-selected">0</span> Data</button>
-            </div>
         </section>
         <script>
             function editLaporanKeuangan(id, tanggal, keterangan, kode_perkiraan, nama_perkiraan, debit, kredit, updateUrl) {
                 // buat form modal dengan sweetalert2
                 Swal.fire({
                     html: `
-                    <form action="${updateUrl}" method="POST" class="flex flex-col text-left">
+                    <form action="${updateUrl}" method="POST" class="flex flex-col text-left" id="myForm">
                         @csrf
                         @method('PUT')
                         <h1 class="font-bold text-2xl mb-4">Edit Laporan Keuangan</h1>
@@ -267,7 +269,7 @@
                                 <input value="${kode_perkiraan}" type="text" name="kode_perkiraan" id="kode_perkiraan" readonly required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none">
                                 <div class="flex items-center w-[350px]">
                                     <label for="keterangan" class="font-medium w-[35%]">Debet</label>
-                                    <input value="${debit}" type="number" name="debit" id="debet" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2">
+                                    <input value="${debit}" type="text" name="debit" id="debet" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2 rupiah-format">
                                 </div>
                             </div>
                         </div>
@@ -282,7 +284,7 @@
                                 </select>
                                 <div class="flex items-center w-[350px]">
                                     <label for="keterangan" class="font-medium w-[35%]">Kredit</label>
-                                    <input value="${kredit}" type="number" name="kredit" id="kredit" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2">
+                                    <input value="${kredit}" type="text" name="kredit" id="kredit" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2 rupiah-format">
                                 </div>
                             </div>
                         </div>
@@ -303,6 +305,58 @@
                     showCancelButton: false,
                     showCloseButton: false,
                     showConfirmButton: false,
+                    didOpen: () => {
+                        // 1. Buat fungsi pemformat yang bisa dipakai berulang kali
+                        function formatRupiah(angka, prefix) {
+                            let number_string = angka.replace(/[^,\d]/g, "").toString(),
+                                split = number_string.split(","),
+                                sisa = split[0].length % 3,
+                                rupiah = split[0].substr(0, sisa),
+                                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+                            if (ribuan) {
+                                let separator = sisa ? "." : "";
+                                rupiah += separator + ribuan.join(".");
+                            }
+
+                            rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+                            return prefix == undefined ? rupiah : rupiah ? "Rp. " + rupiah : "";
+                        }
+
+                        // 2. Jalankan fungsi saat input diketik (Event Input)
+                        const rupiahInputs = document.querySelectorAll('.rupiah-format');
+                        rupiahInputs.forEach(input => {
+                            input.addEventListener('input', function(e) {
+                                this.value = formatRupiah(this.value, "Rp. ");
+                            });
+                        });
+
+                        // 3. FUNGSI KUNCI: Jalankan format saat data pertama kali muncul (untuk EDIT)
+                        // Panggil ini tepat setelah modal edit terbuka atau data di-set
+                        function inisialisasiRupiah() {
+                            const rupiahInputs = document.querySelectorAll('.rupiah-format');
+                            rupiahInputs.forEach(input => {
+                                if (input.value) {
+                                    input.value = formatRupiah(input.value, "Rp. ");
+                                }
+                            });
+                        }
+
+                        // Panggil fungsi ini!
+                        inisialisasiRupiah();
+
+                        // 4. Logika Submit (Tetap sama, membersihkan format)
+                        const form = document.getElementById('myForm');
+                        if (form) {
+                            form.addEventListener('submit', function(e) {
+                                document.querySelectorAll('.rupiah-format').forEach(input => {
+                                    let cleanValue = input.value.replace(/[^0-9]/g, ""); // Lebih aman hapus semua selain angka
+                                    input.value = cleanValue;
+                                });
+                            });
+                        }
+                    }
+
                 });
             }
             // fungsi sinkronisasi kode akun
@@ -821,7 +875,6 @@
                         const form = document.getElementById('myForm');
                         if (form) {
                             form.addEventListener('submit', function(e) {
-                                e.preventDefault(); // cegah submit default
 
                                 // bersihkan input rupiah
                                 const rupiahInputs = document.querySelectorAll('.rupiah-format');
@@ -831,31 +884,31 @@
                                     input.value = cleanValue;
                                 });
 
-                                // kirim pakai fetch
-                                const formData = new FormData(form);
+                                // // kirim pakai fetch
+                                // const formData = new FormData(form);
 
-                                fetch(form.action, {
-                                        method: "POST",
-                                        headers: {
-                                            "X-CSRF-TOKEN": form.querySelector('[name=_token]').value
-                                        },
-                                        body: formData
-                                    })
-                                    .then(res => res.json())
-                                    .then(res => {
-                                        if (res.error) {
-                                            Swal.fire("Error", res.error, "error");
-                                        } else {
-                                            Swal.fire("Sukses", "Transfer kas/bank berhasil dicatat",
-                                                "success");
-                                            Swal.close();
-                                            location.reload();
-                                        }
-                                    })
-                                    .catch(err => {
-                                        Swal.fire("Error", "Terjadi kesalahan: " + err.message,
-                                        "error");
-                                    });
+                                // fetch(form.action, {
+                                //         method: "POST",
+                                //         headers: {
+                                //             "X-CSRF-TOKEN": form.querySelector('[name=_token]').value
+                                //         },
+                                //         body: formData
+                                //     })
+                                //     .then(res => res.json())
+                                //     .then(res => {
+                                //         if (res.error) {
+                                //             Swal.fire("Error", res.error, "error");
+                                //         } else {
+                                //             Swal.fire("Sukses", "Transfer kas/bank berhasil dicatat",
+                                //                 "success");
+                                //             Swal.close();
+                                //             location.reload();
+                                //         }
+                                //     })
+                                //     .catch(err => {
+                                //         Swal.fire("Error", "Terjadi kesalahan: " + err.message,
+                                //         "error");
+                                //     });
                             });
                         }
 

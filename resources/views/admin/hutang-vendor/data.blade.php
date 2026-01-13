@@ -5,7 +5,7 @@
             <div class="flex items-center pb-4 justify-between">
                 <h1 class="font-bold text-2xl">Data Hutang Vendor</h1>
                 <div class="flex items-center gap-x-2">
-                    <a target="_blank" href=""
+                    <a target="_blank" href="{{ route('hutang_vendor.print') }}"
                         class="flex items-center gap-x-2 border-[#9A9A9A] border-2 rounded-lg px-4 py-2"><span
                             class="text-gray-600">Cetak Semua Data</span> <img src="{{ asset('assets/printer.png') }}"
                             alt="" class="w-[25px]"></a>
@@ -62,33 +62,16 @@
                                 </td>
 
                                 <td class="flex justify-center items-center gap-x-2 py-2">
-                                    <button type="button"
-                                        onclick='bayarHutang(@json($item), @json($bank))'>
-                                        <img src="{{ asset('assets/pay.jpg') }}" alt="bayar icon"
-                                            class="w-[22px] cursor-pointer">
+                                    <button class="flex flex-col items-center mt-[2px] w-[20px] gap-y-1 cursor-pointer" 
+                                            onclick='detailAction(@json($item), @json($bank))'>
+                                        <span class="w-full border border-gray-500 rounded-lg"></span>
+                                        <span class="w-full border border-gray-500 rounded-lg"></span>
+                                        <span class="w-full border border-gray-500 rounded-lg"></span>
                                     </button>
-                                    <span class="border-black border-l-[1px] h-[22px]"></span>
-                                    {{-- Tombol Edit --}}
-                                    <button type="button" onclick='editData(@json($item))'>
-                                        <img src="{{ asset('assets/edit-icon.png') }}" alt="edit icon"
-                                            class="w-[22px] cursor-pointer">
-                                    </button>
-                                    <span class="border-black border-l-[1px] h-[22px]"></span>
-                                    {{-- Tombol Detail --}}
-                                    <button type="button" onclick='detailData(@json($item))'>
-                                        <img src="{{ asset('assets/more-circle.png') }}" alt="detail icon"
-                                            class="w-[22px] cursor-pointer">
-                                    </button>
-                                    <span class="border-black border-l-[1px] h-[22px]"></span>
-                                    {{-- Tombol Delete --}}
-                                    <form action="{{ route('hutang_vendor.destroy', $item->id) }}" method="POST"
-                                        class="h-[22px]">
+                                    {{-- Form Delete Tersembunyi Tetap Dibutuhkan --}}
+                                    <form id="delete-form-{{ $item->id }}" action="{{ route('hutang_vendor.destroy', $item->id) }}" method="POST" class="hidden">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                            <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
-                                                class="w-[22px] cursor-pointer">
-                                        </button>
                                     </form>
                                 </td>
                             </tr>
@@ -191,8 +174,57 @@
                 });
             }
 
+            function detailAction(item, bank) {
+                Swal.fire({
+                    title: 'Menu Aksi',
+                    text: 'Silahkan pilih tindakan untuk data ini',
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                    html: `
+                        <div class="grid grid-cols-2 gap-4 mt-4">
+                            <div onclick="Swal.close(); bayarHutang(${JSON.stringify(item).replace(/"/g, '&quot;')}, ${JSON.stringify(bank).replace(/"/g, '&quot;')})" 
+                                class="flex flex-col items-center p-4 border rounded-xl hover:bg-green-50 cursor-pointer transition">
+                                <img src="/assets/pay.jpg" class="w-8 h-8 mb-2 object-contain">
+                                <span class="text-xs font-bold text-gray-700">BAYAR</span>
+                            </div>
 
+                            <div onclick="Swal.close(); editData(${JSON.stringify(item).replace(/"/g, '&quot;')})" 
+                                class="flex flex-col items-center p-4 border rounded-xl hover:bg-blue-50 cursor-pointer transition">
+                                <img src="/assets/edit-icon.png" class="w-8 h-8 mb-2 object-contain">
+                                <span class="text-xs font-bold text-gray-700">EDIT</span>
+                            </div>
 
+                            <div onclick="Swal.close(); detailData(${JSON.stringify(item).replace(/"/g, '&quot;')})" 
+                                class="flex flex-col items-center p-4 border rounded-xl hover:bg-purple-50 cursor-pointer transition">
+                                <img src="/assets/more-circle.png" class="w-8 h-8 mb-2 object-contain">
+                                <span class="text-xs font-bold text-gray-700">DETAIL</span>
+                            </div>
+
+                            <div onclick="confirmDelete('${item.id}')" 
+                                class="flex flex-col items-center p-4 border rounded-xl hover:bg-red-50 cursor-pointer transition">
+                                <img src="/assets/close-circle.png" class="w-8 h-8 mb-2 object-contain">
+                                <span class="text-xs font-bold text-red-600">HAPUS</span>
+                            </div>
+                        </div>
+                    `
+                });
+            }
+
+            // Fungsi Konfirmasi Hapus
+            function confirmDelete(id) {
+                Swal.fire({
+                    title: 'Yakin hapus data?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById('delete-form-' + id).submit();
+                    }
+                });
+            }
 
             function detailData(item) {
                 Swal.fire({
