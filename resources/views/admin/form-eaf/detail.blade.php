@@ -156,14 +156,14 @@
                         <input type="text" name="keterangan" required
                             class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
                     </div>
-                    <div class="flex items-center">
+                    <div class="flex items-center" id="debit-wrapper">
                         <label class="w-[240px] text-start">Debet</label>
-                        <input type="number" name="debit" value="0" id="debit-wrapper"
+                        <input type="number" name="debit" value="0" id="debit"
                             class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
                     </div>
-                    <div class="flex items-center">
+                    <div class="flex items-center" id="kredit-wrapper">
                         <label class="w-[240px] text-start">Kredit</label>
-                        <input type="number" name="kredit" value="0" id="kredit-wrapper"
+                        <input type="number" name="kredit" value="0" id="kredit"
                             class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
                     </div>
                     <div class="flex items-center">
