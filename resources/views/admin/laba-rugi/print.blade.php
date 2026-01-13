@@ -70,8 +70,8 @@
 
     <table style="width:100%; border-collapse:collapse; margin-top: 20px;">
             <tr style="font-weight: bold; background-color: #E7E7E7;">
-                <td style="padding:6px 0; padding-left: 10px;">Pendapatan</td>
-                <td style="text-align:right; padding-right: 10px;">Rp. 5.000.000</td>
+                <td style="padding:6px 0; padding-left: 10px;">PENDAPATAN</td>
+                <td style="text-align:right; padding-right: 10px;">Rp. {{ number_format($totalPendapatan, 0, ',', '.') }}</td>
             </tr>
         @foreach ($pendapatanFinal as $item)
             <tr style="border-bottom-width: 1px; border-bottom-color: #CBCBCB; border-bottom-style: dashed;">
@@ -80,8 +80,8 @@
             </tr>
         @endforeach
         <tr style="font-weight: bold; background-color: #E7E7E7;">
-            <td style="padding:6px 0; padding-left: 10px;">Total Pendapatan</td>
-            <td style="text-align:right; padding-right: 10px;">Rp. {{ number_format($totalPendapatan, 0, ',', '.') }}</td>
+            <td style="padding:6px 0; padding-left: 10px;">HARGA POKOK PROYEK</td>
+            <td style="text-align:right; padding-right: 10px;">Rp. {{ number_format($totalBiaya, 0, ',', '.') }}</td>
         </tr>
     </table>
     <table style="width:100%; border-collapse:collapse;">
@@ -92,12 +92,10 @@
             </tr>
         @endforeach
         <tr style="font-weight: bold; background-color: #E7E7E7;">
-            <td style="padding:6px 0; padding-left: 10px;">Total Biaya</td>
-            <td style="text-align:right; padding-right: 10px;">Rp. {{ number_format($totalBiaya, 0, ',', '.') }}</td>
+            <td style="padding:6px 0; padding-left: 10px;">Total LABA RUGI</td>
+            <td style="text-align:right; padding-right: 10px;">Rp. {{ number_format($totalLabaRugi, 0, ',', '.') }}</td>
         </tr>
     </table>
-    <p style="text-align:right; font-weight:bold; font-size:18px;">Rp. {{ number_format($totalLabaRugi, 0, ',', '.') }}
-    </p>
     <div class="footer">
         <p>Dicetak oleh,<br>{{ $role }} - {{ $admin }}</p>
         <p style="margin-top: 70px">{{ \Carbon\Carbon::parse($tanggalCetak)->translatedFormat('d F Y') }}</p>
