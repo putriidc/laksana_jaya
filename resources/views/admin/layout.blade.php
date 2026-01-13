@@ -69,11 +69,12 @@
                         ></span>
                     </button>
                 </div>
-                <div class="w-[60px] min-[1300px]:hidden mb-8 scale-200"
-                    id="justLogo">
+                <div>
                     <img
                     src="{{ asset('assets/ar4anSmallLogo.png') }}"
                     alt="LOGO AR4N GROUP"
+                    class="w-[60px] min-[1300px]:hidden mb-8 scale-200"
+                    id="justLogo"
                 />
                 </div>
 
@@ -350,30 +351,26 @@ document.addEventListener("DOMContentLoaded", () => {
     // 🔹 Toggle sidebar
     if (buttonView) {
         buttonView.addEventListener("click", () => {
-            buttonView.classList.toggle("left-10");
-            buttonView.classList.toggle("left-[267px]");
-            if (arrowButton) {
-                arrowButton.classList.toggle("rotate-[-90deg]");
-                arrowButton.classList.toggle("rotate-[180deg]");
-            }
-            if (nav) {
-                nav.classList.toggle("max-[1300px]:w-[60px]");
-                nav.classList.toggle("max-[1300px]:w-[280px]");
-            }
-            if (logoFull) logoFull.classList.toggle("max-[1300px]:hidden");
-            if (justLogo) justLogo.classList.toggle("max-[1300px]:hidden");
-            if (sideNavbarContent) sideNavbarContent.classList.toggle("max-[1300px]:items-center");
+    buttonView.classList.toggle("left-10");
+    buttonView.classList.toggle("left-[267px]");
 
-            children.forEach(item => {
-                item.classList.toggle("max-[1300px]:w-[50px]");
-            });
-            imgChild.forEach(item => {
-                item.classList.toggle("max-[1300px]:scale-200");
-            });
-            spanChild.forEach(item => {
-                item.classList.toggle("max-[1300px]:hidden");
-            });
-        });
+    if (arrowButton) {
+        arrowButton.classList.toggle("-rotate-90");
+        arrowButton.classList.toggle("rotate-180");
+    }
+    if (nav) {
+        nav.classList.toggle("w-[60px]");
+        nav.classList.toggle("w-[280px]");
+    }
+    if (logoFull) logoFull.classList.toggle("hidden");
+    if (justLogo) justLogo.classList.toggle("hidden");
+    if (sideNavbarContent) sideNavbarContent.classList.toggle("items-center");
+
+    children.forEach(item => item.classList.toggle("w-[50px]"));
+    imgChild.forEach(item => item.classList.toggle("scale-[2]"));
+    spanChild.forEach(item => item.classList.toggle("hidden"));
+});
+
     }
 
     // 🔹 Simpan focus sidebar
