@@ -38,8 +38,8 @@
                     <select name="kode_perusahaan"
                         class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none appearance-none cursor-pointer">
                         <option disabled>-Pilih Perusahaan-</option>
-                        <option selected value="{{ $perusahaan->kode_perusahaan }}" data-pic="{{ $p->pic }}"
-                            data-nohp="{{ $p->no_hp }}">
+                        <option selected value="{{ $perusahaan->kode_perusahaan }}" data-pic="{{ $p->pic ?? '-' }}"
+                            data-nohp="{{ $p->no_hp ?? '' }}">
                             {{ $perusahaan->nama_perusahaan }}
                         </option>
                     </select>
