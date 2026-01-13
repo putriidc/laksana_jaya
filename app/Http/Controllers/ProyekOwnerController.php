@@ -46,8 +46,8 @@ class ProyekOwnerController extends Controller
         $proyeks = Proyek::active()->get();
         $assetBankAccounts = Asset::where('akun_header', 'asset_lancar_bank')->pluck('nama_akun');
         $resume = $proyeks->map(function ($proyek) use ($assetBankAccounts) {
-            $jurnal = JurnalUmum::where('nama_proyek', $proyek->nama_proyek)->where('nama_perkiraan', '!=', 'Piutang Proyek')->whereNotIn('nama_perkiraan', $assetBankAccounts)->get();
-            $totalPengeluaran = $jurnal->sum('debit');
+            $jurnal = JurnalUmum::active()->where('nama_proyek', $proyek->nama_proyek)->where('nama_perkiraan', '!=', 'Piutang Proyek')->whereNotIn('nama_perkiraan', $assetBankAccounts)->get();
+            $totalPengeluaran = $jurnal->sum('kredit');
             $kontrak = KontrakProyek::where('kode_proyek', $proyek->kode_akun)->first();
             $net = $kontrak->net ?? 0;
 
@@ -240,13 +240,13 @@ class ProyekOwnerController extends Controller
         $assetBankAccounts = Asset::where('akun_header', 'asset_lancar_bank')
             ->pluck('nama_akun'); // ambil nama_akun, bisa juga kode_akun kalau mau
 
-        $jurnal = JurnalUmum::where('nama_proyek', $proyek->nama_proyek)
+        $jurnal = JurnalUmum::active()->where('nama_proyek', $proyek->nama_proyek)
             ->where('nama_perkiraan', '!=', 'Piutang Proyek')
             ->whereNotIn('nama_perkiraan', $assetBankAccounts)
-            ->where('kredit', '>', 0)
+            ->where('debit', '>', 0)
             ->orderBy('tanggal', 'desc')
             ->get();
-        $totalDebit = $jurnal->sum('kredit');
+        $totalDebit = $jurnal->sum('debit');
 
         return view('owner.data-proyek.proyek.detail', compact('proyek', 'jurnal', 'totalDebit'));
     }

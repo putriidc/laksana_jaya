@@ -178,23 +178,23 @@
                                 {{-- mapping kategori --}}
                                 <td class="py-2">
                                     @if ($item->kategori === 'Nota')
-                                        Rp {{ number_format($item->kredit, 0, ',', '.') }}
+                                        Rp {{ number_format($item->debit, 0, ',', '.') }}
                                     @endif
                                 </td>
                                 <td class="py-2">
                                     @if ($item->kategori === 'TF toko')
-                                        Rp {{ number_format($item->kredit, 0, ',', '.') }}
+                                        Rp {{ number_format($item->debit, 0, ',', '.') }}
                                     @endif
                                 </td>
                                 <td class="py-2">
                                     @if (in_array($item->kategori, ['Kasbon', 'Uang makan', 'Fee', 'Upah']))
-                                        Rp {{ number_format($item->kredit, 0, ',', '.') }}
+                                        Rp {{ number_format($item->debit, 0, ',', '.') }}
                                     @endif
                                 </td>
 
-                                {{-- jumlah total (misalnya kredit) --}}
+                                {{-- jumlah total (misalnya debit) --}}
                                 <td class="py-2">
-                                    Rp {{ number_format($item->kredit, 0, ',', '.') }}
+                                    Rp {{ number_format($item->debit, 0, ',', '.') }}
                                 </td>
                             </tr>
                         @endforeach
