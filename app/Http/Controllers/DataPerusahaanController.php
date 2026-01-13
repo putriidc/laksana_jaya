@@ -188,12 +188,14 @@ class DataPerusahaanController extends Controller
         $request->validate([
             'minggu' => 'required|integer|min:1',
             'persen' => 'required|integer|min:0|max:100',
+            'keterangan' => 'nullable',
         ]);
 
         Progres::create([
             'kode_paket' => $dataPerusahaan->kode_paket,
             'minggu'     => $request->minggu,
             'persen'     => $request->persen,
+            'keterangan' => $request->keterangan ?? '-',
             'created_by' => Auth::check() ? Auth::user()->id : null,
         ]);
 
