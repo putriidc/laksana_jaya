@@ -3,7 +3,7 @@
     <div>
         <section>
             <div class="flex items-center pb-4 justify-between">
-                <h1 class="font-bold text-2xl">Data Hutang Vendor</h1>
+                <h1 class="font-bold text-2xl">Data Saldo Kas / Bank</h1>
                 <div class="flex items-center gap-x-2">
                     <a target="_blank" href=""
                         class="flex items-center gap-x-2 border-[#9A9A9A] border-2 rounded-lg px-4 py-2"><span
