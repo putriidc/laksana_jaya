@@ -134,15 +134,16 @@
                             class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
                             <option value="" disabled selected>-Pilih Nama Akun-</option>
                             @foreach ($akun as $item)
-                            <option value="{{ $item->nama_akun }}" data-kode="{{ $item->kode_akun }}" data-type="akun">
-                                {{ $item->nama_akun }}
-                            </option>
-                            @endforeach
-                            @foreach ($bank as $item)
-                            <option value="{{ $item->nama_akun }}" data-kode="{{ $item->kode_akun }}" data-type="bank">
-                                {{ $item->nama_akun }}
-                            </option>
-                            @endforeach
+<option value="{{ $item->nama_akun }}" data-kode="{{ $item->kode_akun }}" data-type="akun">
+    {{ $item->nama_akun }}
+</option>
+@endforeach
+@foreach ($bank as $item)
+<option value="{{ $item->nama_akun }}" data-kode="{{ $item->kode_akun }}" data-type="bank">
+    {{ $item->nama_akun }}
+</option>
+@endforeach
+
                         </select>
                     </div>
                     <div class="flex items-center">
@@ -157,12 +158,12 @@
                     </div>
                     <div class="flex items-center">
                         <label class="w-[240px] text-start">Debet</label>
-                        <input type="number" name="debit" value="0" id="debit"
+                        <input type="number" name="debit" value="0" id="debit-wrapper"
                             class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
                     </div>
                     <div class="flex items-center">
                         <label class="w-[240px] text-start">Kredit</label>
-                        <input type="number" name="kredit" value="0" id="kredit"
+                        <input type="number" name="kredit" value="0" id="kredit-wrapper"
                             class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
                     </div>
                     <div class="flex items-center">
@@ -193,28 +194,47 @@
                         const debitInput = document.getElementById('debit');
                         const kreditInput = document.getElementById('kredit');
 
+                        // helper untuk set tampilan
+                        const showDebitHideKredit = () => {
+                            debitWrapper.style.display = 'flex';
+                            kreditWrapper.style.display = 'none';
+                            // pastikan nilai yang disembunyikan tetap 0 agar aman saat submit
+                            kreditInput.value = 0;
+                        };
+                        const showKreditHideDebit = () => {
+                            kreditWrapper.style.display = 'flex';
+                            debitWrapper.style.display = 'none';
+                            debitInput.value = 0;
+                        };
+
+                        // set state awal (sembunyikan keduanya dulu)
+                        debitWrapper.style.display = 'none';
+                        kreditWrapper.style.display = 'none';
+
                         select.addEventListener('change', function() {
-                            let kode = this.options[this.selectedIndex].getAttribute('data-kode');
-                            let type = this.options[this.selectedIndex].getAttribute('data-type');
+                            const opt = this.options[this.selectedIndex];
+                            const kode = opt.getAttribute('data-kode');
+                            const type = opt.getAttribute('data-type');
                             kodeInput.value = kode;
 
                             if (type === 'bank') {
-                                // tampilkan debit, sembunyikan kredit
-                                debitWrapper.style.display = 'flex';
-                                kreditWrapper.style.display = 'none';
-                                // reset nilai
-                                debitInput.value = 0;
-                                kreditInput.value = 0;
+                                showDebitHideKredit();
+                            } else if (type === 'akun') {
+                                showKreditHideDebit();
                             } else {
-                                // tampilkan kredit, sembunyikan debit
+                                // fallback kalau tidak ada type
+                                debitWrapper.style.display = 'flex';
                                 kreditWrapper.style.display = 'flex';
-                                debitWrapper.style.display = 'none';
-                                // reset nilai
-                                debitInput.value = 0;
-                                kreditInput.value = 0;
                             }
                         });
+
+                        // kalau ada default selected (misal dari server), trigger sekali biar state sesuai
+                        if (select.value) {
+                            const event = new Event('change');
+                            select.dispatchEvent(event);
+                        }
                     }
+
 
                 })
             }
