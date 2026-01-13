@@ -38,6 +38,10 @@
                         <button type="submit" class="bg-[#FFF494] px-6 py-2 rounded-lg cursor-pointer">
                             Simpan Data
                         </button>
+                        <button type="button" onclick="history.back()"
+                            class="bg-[#FFB7B7] px-6 py-2 rounded-lg cursor-pointer">
+                            Batal
+                        </button>
                     </div>
                 </div>
             </form>
