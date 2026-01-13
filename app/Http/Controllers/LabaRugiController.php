@@ -25,17 +25,17 @@ class LabaRugiController extends Controller
 
         // Master akun biaya
         $akunBiaya = [
-            'Biaya Material',
-            'Biaya Gaji Tukang & Pengawas Lap',
+            'Biaya Material, Alat dan Barang',
+            'Biaya Gaji Tukang & Pengawas Lapangan',
             'Biaya Sewa Alat Berat',
             'Biaya Asuransi',
             'Biaya Transportasi dan Perjalanan Dinas',
-            'Biaya Listrik, Air, Telp & Internet',
+            'Biaya Listrik, Air, Telp dan Internet',
             'Biaya Infaq dan Sumbangan',
             'Biaya Operasional Lainnya',
             'Biaya Alat Tulis Kantor',
             'Biaya Sewa Gedung Kantor',
-            'Biaya Gaji Staff Kantor',
+            'Biaya Gaji Staf Kantor',
             'Biaya Konsumsi',
             'Biaya Adm dan Umum Lainnya',
             'Fee Perusahaan',
