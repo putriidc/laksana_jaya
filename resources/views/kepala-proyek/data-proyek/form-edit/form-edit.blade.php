@@ -256,12 +256,11 @@
                         <label for="persen" class="w-[300px]">Persentase %:</label>
                         <input type="number" id="persen" name="persen" class="w-full outline-none bg-[#E9E9E9] rounded-lg px-4 py-2" required>
                     </div>
-                    <div class="flex flex-col gap-y-2 mb-4">
-                    <label>Keterangan:</label>
-                    <textarea name="keterangan" rows="3"
-                           class="w-full outline-none bg-[#E9E9E9] rounded-lg px-4 py-2"
-                           placeholder="Isi keterangan di sini"></textarea>
-                </div>
+                    <div class="flex items-center mb-4">
+                        <textarea name="keterangan" rows="3"
+                            class="block w-full outline-none bg-[#E9E9E9] rounded-lg px-4 py-2"
+                            placeholder="Isi keterangan di sini"></textarea>
+                    </div>
                 </form>
             `,
                 showCancelButton: true,
