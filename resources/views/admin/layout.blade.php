@@ -318,131 +318,109 @@
             </div>
         </section>
        <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-
-        <script>
-            // membuat fungsi jika button navbar di klik maka dia akan menampilkan sidenavbar secara penuh
-            const buttonView = document.getElementById("buttonView");
-            const arrowButton = buttonView.querySelector("img");
-            const nav = document.getElementById("sideNavbar");
-            const logoFull = document.getElementById("logoFull");
-            const justLogo = document.getElementById("justLogo");
-            const sideNavbarContent =
-                document.getElementById("sideNavbarContent");
-            const children = sideNavbarContent.querySelectorAll("a, button");
-            const imgChild = sideNavbarContent.querySelectorAll("img");
-            const spanChild = sideNavbarContent.querySelectorAll("span");
-            buttonView.addEventListener("click", () => {
-                buttonView.classList.toggle("left-10");
-                buttonView.classList.toggle("left-[267px]");
-                arrowButton.classList.toggle("rotate-[-90deg]");
-                arrowButton.classList.toggle("rotate-[180deg]");
-                nav.classList.toggle("max-[1300px]:w-[60px]");
-                nav.classList.toggle("max-[1300px]:w-[280px]");
-                logoFull.classList.toggle("max-[1300px]:hidden");
-                justLogo.classList.toggle("max-[1300px]:hidden");
-                sideNavbarContent.classList.toggle("max-[1300px]:items-center");
-                // di sideNavbarContent terdapat beberapa tombol link yang akan kita manipulasi secara bersamaan
-                children.forEach((item, index) => {
-                    item.classList.toggle("max-[1300px]:w-[50px]");
-                });
-                imgChild.forEach((item, index) => {
-                    item.classList.toggle("max-[1300px]:scale-200");
-                });
-                spanChild.forEach((item, index) => {
-                    item.classList.toggle("max-[1300px]:hidden");
-                });
-            });
-
-            // menyimpan focus pada sidebar ketika di klik
-            const link = document.querySelectorAll("nav a button");
-            const icon = document.querySelectorAll("nav a button img");
-            const sidebar = localStorage.getItem("sidebar");
-            const user = @json(Auth::user()->name);
-            console.log(user);
-            link.forEach((item, index) => {
-                item.addEventListener("click", () => {
-                    console.log("Button clicked");
-                    localStorage.setItem("sidebar", index);
-                });
-                if (sidebar == index) {
-                    item.classList.add(
-                        "bg-linear-to-r",
-                        "from-[#DD4049]",
-                        "to-[#F9E52D]",
-                        "text-white"
-                    );
-                    // ganti icon navbar sesuai indexnya
-                    if (user == "Admin 1") {
-                        if (index == 0) {
-                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/home-click.png";
-                        } else if (index == 1) {
-                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/devices-click.png";
-                        } else if (index == 2) {
-                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-item-click.png";
-                        } else if (index == 3) {
-                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-item-click.png";
-                        } else if (index == 4) {
-                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-click.png";
-                        } else if (index == 5) {
-                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/status-up-click.png";
-                        } else if (index == 6) {
-                            item.children[0].src = "{{ asset('assets/navbar/book-click.png') }}";
-                        } else if (index == 7) {
-                            item.children[0].src = "{{ asset('assets/navbar/receipt-discount-click.png') }}";
-                        }
-                    } else if (user == "Admin 2") {
-                        if (index == 0) {
-                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/home-click.png";
-                        } else if (index == 1) {
-                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/devices-click.png";
-                        } else if (index == 2) {
-                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-item-click.png";
-                        } else if (index == 3) {
-                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/home-hashtag-click.png";
-                        } else if (index == 4) {
-                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-item-click.png";
-                        } else if (index == 5) {
-                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-click.png";
-                        } else if (index == 6) {
-                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/status-up-click.png";
-                        } else if (index == 7) {
-                            item.children[0].src = "{{ asset('assets/navbar/book-click.png') }}";
-                        } else if (index == 8) {
-                            item.children[0].src = "{{ asset('assets/navbar/receipt-discount-click.png') }}";
-                        }
-                    } else {
-                        if (index == 0) {
-                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/home-click.png";
-                        } else if (index == 1) {
-                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/devices-click.png";
-                        } else if (index == 2) {
-                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-item-click.png";
-                        } else if (index == 3) {
-                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/home-hashtag-click.png";
-                        } else if (index == 4) {
-                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-item-click.png";
-                        } else if (index == 5) {
-                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-item-click.png";
-                        } else if (index == 6) {
-                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-click.png";
-                        } else if (index == 7) {
-                            item.children[0].src = "https://ar4n-group.com/public/assets/navbar/status-up-click.png";
-                        } else if (index == 8) {
-                            item.children[0].src = "{{ asset('assets/navbar/book-click.png') }}";
-                        } else if (index == 9) {
-                            item.children[0].src = "{{ asset('assets/navbar/receipt-discount-click.png') }}";
-                        }
-                    }
-                } else {
-                    item.classList.remove(
-                        "bg-linear-to-r",
-                        "from-[#DD4049]",
-                        "to-[#F9E52D]",
-                        "text-white"
-                    );
-                }
-            });
-        </script>
         <script src="https://ar4n-group.com/public/js/notification.js"></script>
     </body>
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+    const buttonView = document.getElementById("buttonView");
+    const arrowButton = buttonView ? buttonView.querySelector("img") : null;
+    const nav = document.getElementById("sideNavbar");
+    const logoFull = document.getElementById("logoFull");
+    const justLogo = document.getElementById("justLogo");
+    const sideNavbarContent = document.getElementById("sideNavbarContent");
+    const children = sideNavbarContent ? sideNavbarContent.querySelectorAll("a, button") : [];
+    const imgChild = sideNavbarContent ? sideNavbarContent.querySelectorAll("img") : [];
+    const spanChild = sideNavbarContent ? sideNavbarContent.querySelectorAll("span") : [];
+
+    // 🔹 Toggle sidebar
+    if (buttonView) {
+        buttonView.addEventListener("click", () => {
+            buttonView.classList.toggle("left-10");
+            buttonView.classList.toggle("left-[267px]");
+            if (arrowButton) {
+                arrowButton.classList.toggle("rotate-[-90deg]");
+                arrowButton.classList.toggle("rotate-[180deg]");
+            }
+            if (nav) {
+                nav.classList.toggle("max-[1300px]:w-[60px]");
+                nav.classList.toggle("max-[1300px]:w-[280px]");
+            }
+            if (logoFull) logoFull.classList.toggle("max-[1300px]:hidden");
+            if (justLogo) justLogo.classList.toggle("max-[1300px]:hidden");
+            if (sideNavbarContent) sideNavbarContent.classList.toggle("max-[1300px]:items-center");
+
+            children.forEach(item => {
+                item.classList.toggle("max-[1300px]:w-[50px]");
+            });
+            imgChild.forEach(item => {
+                item.classList.toggle("max-[1300px]:scale-200");
+            });
+            spanChild.forEach(item => {
+                item.classList.toggle("max-[1300px]:hidden");
+            });
+        });
+    }
+
+    // 🔹 Simpan focus sidebar
+    const link = document.querySelectorAll("nav a button");
+    const sidebar = localStorage.getItem("sidebar");
+    const user = @json(Auth::user()->name);
+
+    link.forEach((item, index) => {
+        item.addEventListener("click", () => {
+            localStorage.setItem("sidebar", index);
+        });
+
+        if (sidebar == index) {
+            item.classList.add(
+                "bg-linear-to-r",
+                "from-[#DD4049]",
+                "to-[#F9E52D]",
+                "text-white"
+            );
+
+            // ganti icon sesuai user & index
+            if (user === "Admin 1") {
+                if (index === 0) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/home-click.png";
+                else if (index === 1) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/devices-click.png";
+                else if (index === 2) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-item-click.png";
+                else if (index === 3) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-item-click.png";
+                else if (index === 4) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-click.png";
+                else if (index === 5) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/status-up-click.png";
+                else if (index === 6) item.children[0].src = "{{ asset('assets/navbar/book-click.png') }}";
+                else if (index === 7) item.children[0].src = "{{ asset('assets/navbar/receipt-discount-click.png') }}";
+            } else if (user === "Admin 2") {
+                if (index === 0) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/home-click.png";
+                else if (index === 1) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/devices-click.png";
+                else if (index === 2) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-item-click.png";
+                else if (index === 3) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/home-hashtag-click.png";
+                else if (index === 4) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-item-click.png";
+                else if (index === 5) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-click.png";
+                else if (index === 6) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/status-up-click.png";
+                else if (index === 7) item.children[0].src = "{{ asset('assets/navbar/book-click.png') }}";
+                else if (index === 8) item.children[0].src = "{{ asset('assets/navbar/receipt-discount-click.png') }}";
+            } else {
+                if (index === 0) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/home-click.png";
+                else if (index === 1) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/devices-click.png";
+                else if (index === 2) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-item-click.png";
+                else if (index === 3) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/home-hashtag-click.png";
+                else if (index === 4) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-item-click.png";
+                else if (index === 5) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-item-click.png";
+                else if (index === 6) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-click.png";
+                else if (index === 7) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/status-up-click.png";
+                else if (index === 8) item.children[0].src = "{{ asset('assets/navbar/book-click.png') }}";
+                else if (index === 9) item.children[0].src = "{{ asset('assets/navbar/receipt-discount-click.png') }}";
+            }
+        } else {
+            item.classList.remove(
+                "bg-linear-to-r",
+                "from-[#DD4049]",
+                "to-[#F9E52D]",
+                "text-white"
+            );
+        }
+    });
+});
+</script>
+
 </html>
