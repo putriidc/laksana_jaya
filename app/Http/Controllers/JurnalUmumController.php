@@ -99,7 +99,7 @@ class JurnalUmumController extends Controller
                     ->where('kode_akun', '!=', '211');
             })
             ->whereNotIn('kode_akun', ['450', '451'])
-            ->pluck('nama_akun');
+            ->pluck('kode_akun');
 
         $query->whereNotIn('nama_perkiraan', $excludedAccounts);
 
