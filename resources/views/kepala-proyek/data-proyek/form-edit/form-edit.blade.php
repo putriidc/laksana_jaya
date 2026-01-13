@@ -111,8 +111,14 @@
                                 <input type="number" value="{{ $p->persen }}"
                                     class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" readonly />
                                 <div class="px-2">%</div>
+                            </div>
+                            <div class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start">
+                                <label for="keterangan_{{ $p->id }}" class="w-[200px]">Keterangan</label>
+                                <textarea name="keterangan[{{ $p->id }}]" id="keterangan_{{ $p->id }}"
+                                    class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" rows="3"
+                                    placeholder="Isi keterangan di sini">{{ $p->keterangan }}</textarea>
                                 <button type="button" class="ml-4 bg-[#3E98D0] text-amber-300 px-3 py-1 rounded-lg"
-                                    onclick="editProgres({{ $p->id }}, {{ $p->minggu }}, {{ $p->persen }})">
+                                    onclick="editProgres({{ $p->id }}, {{ $p->minggu }}, {{ $p->persen }}, {{ $p->persen }})">
                                     Edit
                                 </button>
                             </div>
@@ -131,8 +137,14 @@
                             <input type="text" name="kendala" id="" value="{{ $p->persen }}%"
                                 class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" />
                         </div>
-                        <button type="button" class="border-[#3E98D0] border text-[#3E98D0] px-8 py-2 rounded-lg"
-                            onclick="editProgres({{ $p->id }}, {{ $p->minggu }}, {{ $p->persen }})">
+                        <div class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start">
+                            <label for="keterangan_{{ $p->id }}" class="w-[200px]">Keterangan</label>
+                            <textarea name="keterangan[{{ $p->id }}]" id="keterangan_{{ $p->id }}"
+                                class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" rows="3"
+                                placeholder="Isi keterangan di sini">{{ $p->keterangan }}</textarea>
+                        </div>
+                        <button type="button" class="ml-4 bg-[#3E98D0] text-amber-300 px-3 py-1 rounded-lg"
+                            onclick="editProgres({{ $p->id }}, {{ $p->minggu }}, {{ $p->persen }}, {{ $p->persen }})">
                             Edit
                         </button>
                     </div>
@@ -261,21 +273,27 @@
             });
         });
 
-        function editProgres(id, minggu, persen) {
+        function editProgres(id, minggu, persen, keterangan) {
             Swal.fire({
                 html: `
             <form action="/progres/${id}" method="POST" id="form-edit">
                 @csrf
                 @method('PUT')
-                <div class="flex items-start flex-col gap-y-2 mb-4">
-                    <label class="">Minggu:</label>
+                <div class="flex flex-col gap-y-2 mb-4">
+                    <label>Minggu:</label>
                     <input type="number" name="minggu" value="${minggu}"
                            class="w-full outline-none bg-[#E9E9E9] rounded-lg px-4 py-2" required>
                 </div>
-                <div class="flex items-start flex-col gap-y-2 mb-4">
-                    <label class="">Persentase %:</label>
+                <div class="flex flex-col gap-y-2 mb-4">
+                    <label>Persentase %:</label>
                     <input type="number" name="persen" value="${persen}"
                            class="w-full outline-none bg-[#E9E9E9] rounded-lg px-4 py-2" required>
+                </div>
+                <div class="flex flex-col gap-y-2 mb-4">
+                    <label>Keterangan:</label>
+                    <textarea name="keterangan" rows="3"
+                           class="w-full outline-none bg-[#E9E9E9] rounded-lg px-4 py-2"
+                           placeholder="Isi keterangan di sini">${keterangan}</textarea>
                 </div>
             </form>
         `,
@@ -289,27 +307,26 @@
         }
     </script>
     <script>
-    const toggleBtn = document.getElementById('togglePaket');
-    const selectEl = document.getElementById('selectPaket');
-    const inputEl = document.getElementById('inputPaket');
+        const toggleBtn = document.getElementById('togglePaket');
+        const selectEl = document.getElementById('selectPaket');
+        const inputEl = document.getElementById('inputPaket');
 
-    toggleBtn.addEventListener('click', () => {
-        if (selectEl.classList.contains('hidden')) {
-            // balik ke select
-            selectEl.classList.remove('hidden');
-            selectEl.setAttribute('name', 'nama_paket');
-            inputEl.classList.add('hidden');
-            inputEl.removeAttribute('name');
-            toggleBtn.textContent = 'Input manual';
-        } else {
-            // ganti ke input manual
-            selectEl.classList.add('hidden');
-            selectEl.removeAttribute('name');
-            inputEl.classList.remove('hidden');
-            inputEl.setAttribute('name', 'nama_paket');
-            toggleBtn.textContent = 'Pilih dari daftar';
-        }
-    });
-</script>
-
+        toggleBtn.addEventListener('click', () => {
+            if (selectEl.classList.contains('hidden')) {
+                // balik ke select
+                selectEl.classList.remove('hidden');
+                selectEl.setAttribute('name', 'nama_paket');
+                inputEl.classList.add('hidden');
+                inputEl.removeAttribute('name');
+                toggleBtn.textContent = 'Input manual';
+            } else {
+                // ganti ke input manual
+                selectEl.classList.add('hidden');
+                selectEl.removeAttribute('name');
+                inputEl.classList.remove('hidden');
+                inputEl.setAttribute('name', 'nama_paket');
+                toggleBtn.textContent = 'Pilih dari daftar';
+            }
+        });
+    </script>
 @endsection

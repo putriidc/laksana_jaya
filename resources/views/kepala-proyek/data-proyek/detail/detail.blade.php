@@ -91,16 +91,30 @@
                                 <div class="px-2">%</div>
                             </div>
                         </div>
+                        <div class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start">
+                            <label for="keterangan_{{ $p->id }}" class="w-[200px]">Keterangan</label>
+                            <textarea name="keterangan[{{ $p->id }}]" id="keterangan_{{ $p->id }}"
+                                class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" rows="3" placeholder="Isi keterangan di sini"
+                                readonly>{{ $p->keterangan }}</textarea>
+                        </div>
                     </div>
-                    <div class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-1 min-[600px]:hidden">
+                    <div
+                        class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-1 min-[600px]:hidden">
                         <label class="w-[200px]">Minggu</label>
                         <input type="text" value="{{ $p->minggu }}"
                             class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" readonly />
                     </div>
-                    <div class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-1 min-[600px]:hidden">
+                    <div
+                        class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-1 min-[600px]:hidden">
                         <label class="w-[200px]">Persentase</label>
                         <input type="text" value="{{ $p->persen }}%"
                             class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" readonly />
+                    </div>
+                    <div class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start">
+                        <label for="keterangan_{{ $p->id }}" class="w-[200px]">Keterangan</label>
+                        <textarea name="keterangan[{{ $p->id }}]" id="keterangan_{{ $p->id }}"
+                            class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" rows="3"
+                            placeholder="Isi keterangan di sini" readonly>{{ $p->keterangan }}</textarea>
                     </div>
                 @endforeach
 

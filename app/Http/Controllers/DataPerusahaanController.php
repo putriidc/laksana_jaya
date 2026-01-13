@@ -52,6 +52,7 @@ class DataPerusahaanController extends Controller
                 'kendala'         => 'nullable',
                 'minggu'          => 'required|integer|min:1',
                 'persen'          => 'required|integer|min:0|max:100',
+                'keterangan'       => 'nullable',
             ]);
 
             // Generate kode_paket otomatis
@@ -85,6 +86,7 @@ class DataPerusahaanController extends Controller
                 'kode_paket' => $kodePaket,
                 'minggu'     => $request->minggu,
                 'persen'     => $request->persen,
+                'keterangan' => $request->keterangan ?? null,
                 'created_by' => Auth::check() ? Auth::user()->id : null,
             ]);
             $data = Perusahaan::where('kode_perusahaan', $request->kode_perusahaan)
@@ -205,11 +207,13 @@ class DataPerusahaanController extends Controller
         $request->validate([
             'minggu' => 'required|integer|min:1',
             'persen' => 'required|integer|min:0|max:100',
+            'keterangan' => 'nullable',
         ]);
 
         $progres->update([
             'minggu' => $request->minggu,
             'persen' => $request->persen,
+            'keterangan' => $request->keterangan ?? '-',
         ]);
 
         return redirect()->route('data-perusahaan.edit', $progres->dataPerusahaan->id)

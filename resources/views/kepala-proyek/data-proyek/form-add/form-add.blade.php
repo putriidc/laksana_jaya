@@ -92,6 +92,11 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-1">
+                    <label for="keterangan" class="w-[200px]">Keterangan</label>
+                    <textarea name="keterangan" id="keterangan" class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none"
+                        rows="3" placeholder="Isi keterangan di sini"></textarea>
+                </div>
+                <div class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-1">
                     <label for="" class="w-[200px]">Tgl PHO</label>
                     <input type="text" data-flatpickr placeholder="Tanggal PHO" name="tgl_pho" id=""
                         class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" />
