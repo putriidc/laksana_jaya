@@ -243,10 +243,10 @@ class ProyekOwnerController extends Controller
         $jurnal = JurnalUmum::where('nama_proyek', $proyek->nama_proyek)
             ->where('nama_perkiraan', '!=', 'Piutang Proyek')
             ->whereNotIn('nama_perkiraan', $assetBankAccounts)
-            ->where('debit', '>', 0)
+            ->where('kredit', '>', 0)
             ->orderBy('tanggal', 'desc')
             ->get();
-        $totalDebit = $jurnal->sum('debit');
+        $totalDebit = $jurnal->sum('kredit');
 
         return view('owner.data-proyek.proyek.detail', compact('proyek', 'jurnal', 'totalDebit'));
     }

@@ -86,8 +86,8 @@ class HutangVendorController extends Controller
             'nama_proyek'   => $proyek->nama_proyek,
             'keterangan'    => 'Hutang ke -' . $supplier->nama,
             'kategori'      => 'TF toko' ?? null,
-            'debit'         => $request->nominal,
-            'kredit'        => 0,
+            'debit'         => 0,
+            'kredit'        => $request->nominal,
             'created_by'    => Auth::id() ?? 'system',
         ]);
         JurnalUmum::create([
@@ -101,8 +101,8 @@ class HutangVendorController extends Controller
             'nama_proyek'   => $proyek->nama_proyek,
             'keterangan'    => 'Hutang ke -' . $supplier->nama,
             'kategori'      => 'TF toko' ?? null,
-            'debit'         => 0,
-            'kredit'        => $request->nominal,
+            'debit'         => $request->nominal,
+            'kredit'        => 0,
             'created_by'    => Auth::id() ?? 'system',
         ]);
 
