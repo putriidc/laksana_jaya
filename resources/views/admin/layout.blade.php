@@ -69,12 +69,6 @@
                         ></span>
                     </button>
                 </div>
-                <img
-                    src="{{ asset('assets/ar4anSmallLogo.png') }}"
-                    alt="LOGO AR4N GROUP"
-                    class="w-[60px] min-[1300px]:hidden mb-8 scale-200"
-                    id="justLogo"
-                />
                 {{-- logo --}}
                 <div class="flex flex-col gap-y-3 h-full max-[1300px]:items-center" id="sideNavbarContent">
                     <a href="/admin/dashboard" class="cursor-pointer">
@@ -367,6 +361,7 @@
             console.log(user);
             link.forEach((item, index) => {
                 item.addEventListener("click", () => {
+                    console.log("Button clicked");
                     localStorage.setItem("sidebar", index);
                 });
                 if (sidebar == index) {
