@@ -5,12 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>Admin</title>
-        <link rel="preload" as="style" href="https://ar4n-group.com/public/build/assets/app-B0Qmn0OF.css" />
-       <link rel="stylesheet" href="https://ar4n-group.com/public/build/assets/app-B0Qmn0OF.css" />
-        <link rel="preload" as="style" href="https://ar4n-group.com/public/build/assets/app-CksuuEqD.css" />
-        <link rel="modulepreload" as="script" href="https://ar4n-group.com/public/build/assets/app-Dp50F7vr.js" />
-        <link rel="stylesheet" href="https://ar4n-group.com/public/build/assets/app-CksuuEqD.css" />
-        <script type="module" src="https://ar4n-group.com/public/build/assets/app-Dp50F7vr.js"></script>
+        @vite('resources/css/app.css') @vite('resources/js/app.js')
         <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
 
@@ -47,7 +42,7 @@
                 >
                     {{-- bagian yang di responsive --}}
                     <img
-                        src="https://ar4n-group.com/public/assets/ar4anSmallLogo.png"
+                        src="{{ asset('assets/ar4anSmallLogo.png') }}"
                         alt="LOGO AR4N GROUP"
                         class="max-[550px]:w-[70px]"
                     />
@@ -69,13 +64,12 @@
                         ></span>
                     </button>
                 </div>
-                    <img
+                <img
                     src="{{ asset('assets/ar4anSmallLogo.png') }}"
                     alt="LOGO AR4N GROUP"
                     class="w-[60px] min-[1300px]:hidden mb-8 scale-200"
                     id="justLogo"
                 />
-
                 {{-- logo --}}
                 <div class="flex flex-col gap-y-3 h-full max-[1300px]:items-center" id="sideNavbarContent">
                     <a href="/admin/dashboard" class="cursor-pointer">
@@ -83,7 +77,7 @@
                             class="bg-linear-to-r from-[#DD4049] to-[#F9E52D] text-white flex items-center gap-x-5 w-[250px] max-[1300px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >
                             <img
-                                src="https://ar4n-group.com/public/assets/navbar/home-2.png"
+                                src="{{ asset('assets/navbar/home-2.png') }}"
                                 alt="home icon"
                                 class="max-[1300px]:scale-200"
                             />
@@ -95,7 +89,7 @@
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1300px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >
                             <img
-                                src="https://ar4n-group.com/public/assets/navbar/devices.png"
+                                src="{{ asset('assets/navbar/devices.png') }}"
                                 alt="devices icon"
                                 class="max-[1300px]:scale-200"
                             />
@@ -110,7 +104,9 @@
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1300px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >
                             <img
-                                src="https://ar4n-group.com/public/assets/navbar/receipt-item.png"
+                                src="{{
+                                    asset('assets/navbar/receipt-item.png')
+                                }}"
                                 alt="receipt icon"
                                 class="max-[1300px]:scale-200"
                             />
@@ -123,7 +119,9 @@
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1300px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >
                             <img
-                                src="https://ar4n-group.com/public/assets/navbar/folder-open.png"
+                                src="{{
+                                    asset('assets/navbar/folder-open.png')
+                                }}"
                                 alt="folder icon"
                                 class="max-[1300px]:scale-200"
                             />
@@ -131,7 +129,7 @@
                         </button>
                     </a>
                     --}}
-                    @if ( Auth::user()->role != "Admin 1" )
+                    @if (Auth::user()->role != "Admin 1")
                     <a
                         href="{{ route('sampingans.index') }}"
                         class="cursor-pointer"
@@ -140,7 +138,9 @@
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1300px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >
                             <img
-                                src="https://ar4n-group.com/public/assets/navbar/home-hashtag.png"
+                                src="{{
+                                    asset('assets/navbar/home-hashtag.png')
+                                }}"
                                 alt="home hashtag icon"
                                 class="max-[1300px]:scale-200"
                             />
@@ -155,7 +155,9 @@
                     class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1300px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                     >
                     <img
-                    src="https://ar4n-group.com/public/assets/navbar/receipt-item.png"
+                    src="{{
+                            asset('assets/navbar/receipt-item.png')
+                                    }}"
                                 alt="receipt2 icon"
                                 class="max-[1300px]:scale-200"
                                 />
@@ -172,7 +174,9 @@
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1300px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >
                             <img
-                                src="https://ar4n-group.com/public/assets/navbar/receipt-item.png"
+                                src="{{
+                                    asset('assets/navbar/receipt-item.png')
+                                }}"
                                 alt="receipt2 icon"
                                 class="max-[1300px]:scale-200"
                             />
@@ -188,7 +192,9 @@
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1300px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >
                             <img
-                                src="https://ar4n-group.com/public/assets/navbar/receipt.png"
+                                src="{{
+                                    asset('assets/navbar/receipt.png')
+                                }}"
                                 alt="receipt2 icon"
                                 class="max-[1300px]:scale-200"
                             />
@@ -203,7 +209,9 @@
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1300px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >
                             <img
-                                src="https://ar4n-group.com/public/assets/navbar/status-up.png"
+                                src="{{
+                                    asset('assets/navbar/status-up.png')
+                                }}"
                                 alt="receipt2 icon"
                                 class="max-[1300px]:scale-200"
                             />
@@ -218,7 +226,9 @@
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1300px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >
                             <img
-                                src="https://ar4n-group.com/public/assets/navbar/book.png"
+                                src="{{
+                                    asset('assets/navbar/book.png')
+                                }}"
                                 alt="receipt2 icon"
                                 class="max-[1300px]:scale-200"
                             />
@@ -249,7 +259,7 @@
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1300px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >
                             <img
-                                src="https://ar4n-group.com/public/assets/navbar/chart.png"
+                                src="{{ asset('assets/navbar/chart.png') }}"
                                 alt="chart icon"
                                 class="max-[1300px]:scale-200"
                             />
@@ -261,7 +271,7 @@
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1300px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >
                             <img
-                                src="https://ar4n-group.com/public/assets/navbar/chart.png"
+                                src="{{ asset('assets/navbar/chart.png') }}"
                                 alt="chart icon"
                                 class="max-[1300px]:scale-200"
                             />
@@ -276,7 +286,9 @@
                                 class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1300px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                             >
                                 <img
-                                    src="https://ar4n-group.com/public/assets/navbar/logout.png"
+                                    src="{{
+                                        asset('assets/navbar/logout.png')
+                                    }}"
                                     alt="logout icon"
                                     class="max-[1300px]:scale-200"
                                 />
@@ -294,13 +306,13 @@
                     <span class="text-base">pages / dashboard</span>
                     <div class="flex items-center gap-x-4">
                         <img
-                            src="https://ar4n-group.com/public/assets/notification.png"
+                            src="{{ asset('assets/notification.png') }}"
                             alt="notification icon"
                             class="w-[30px] cursor-pointer"
                         />
                         <div class="flex items-center gap-x-2">
                             <img
-                                src="https://ar4n-group.com/public/assets/Ellipse 1.png"
+                                src="{{ asset('assets/Ellipse 1.png') }}"
                                 alt="profile picture"
                                 class="w-[40px] h-[40px]"
                             />
@@ -325,118 +337,130 @@
             </div>
         </section>
        <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-        <script src="https://ar4n-group.com/public/js/notification.js"></script>
+
         <script>
-    console.log({
-    buttonView: document.getElementById("buttonView"),
-    nav: document.getElementById("sideNavbar"),
-    logoFull: document.getElementById("logoFull"),
-    justLogo: document.getElementById("justLogo"),
-    sideNavbarContent: document.getElementById("sideNavbarContent")
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-    const buttonView = document.getElementById("buttonView");
-    const arrowButton = buttonView ? buttonView.querySelector("img") : null;
-    const nav = document.getElementById("sideNavbar");
-    const logoFull = document.getElementById("logoFull");
-    const justLogo = document.getElementById("justLogo");
-    const sideNavbarContent = document.getElementById("sideNavbarContent");
-    const children = sideNavbarContent ? sideNavbarContent.querySelectorAll("a, button") : [];
-    const imgChild = sideNavbarContent ? sideNavbarContent.querySelectorAll("img") : [];
-    const spanChild = sideNavbarContent ? sideNavbarContent.querySelectorAll("span") : [];
-
-    // 🔹 Toggle sidebar
-    if (buttonView) {
-        buttonView.addEventListener("click", () => {
-            buttonView.classList.toggle("left-10");
-            buttonView.classList.toggle("left-[267px]");
-            if (arrowButton) {
+            // membuat fungsi jika button navbar di klik maka dia akan menampilkan sidenavbar secara penuh
+            const buttonView = document.getElementById("buttonView");
+            const arrowButton = buttonView.querySelector("img");
+            const nav = document.getElementById("sideNavbar");
+            const logoFull = document.getElementById("logoFull");
+            const justLogo = document.getElementById("justLogo");
+            const sideNavbarContent =
+                document.getElementById("sideNavbarContent");
+            const children = sideNavbarContent.querySelectorAll("a, button");
+            const imgChild = sideNavbarContent.querySelectorAll("img");
+            const spanChild = sideNavbarContent.querySelectorAll("span");
+            buttonView.addEventListener("click", () => {
+                buttonView.classList.toggle("left-10");
+                buttonView.classList.toggle("left-[267px]");
                 arrowButton.classList.toggle("rotate-[-90deg]");
                 arrowButton.classList.toggle("rotate-[180deg]");
-            }
-            if (nav) {
                 nav.classList.toggle("max-[1300px]:w-[60px]");
                 nav.classList.toggle("max-[1300px]:w-[280px]");
-            }
-            if (logoFull) logoFull.classList.toggle("max-[1300px]:hidden");
-            if (justLogo) justLogo.classList.toggle("max-[1300px]:hidden");
-            if (sideNavbarContent) sideNavbarContent.classList.toggle("max-[1300px]:items-center");
-
-            children.forEach(item => {
-                item.classList.toggle("max-[1300px]:w-[50px]");
+                logoFull.classList.toggle("max-[1300px]:hidden");
+                justLogo.classList.toggle("max-[1300px]:hidden");
+                sideNavbarContent.classList.toggle("max-[1300px]:items-center");
+                // di sideNavbarContent terdapat beberapa tombol link yang akan kita manipulasi secara bersamaan
+                children.forEach((item, index) => {
+                    item.classList.toggle("max-[1300px]:w-[50px]");
+                });
+                imgChild.forEach((item, index) => {
+                    item.classList.toggle("max-[1300px]:scale-200");
+                });
+                spanChild.forEach((item, index) => {
+                    item.classList.toggle("max-[1300px]:hidden");
+                });
             });
-            imgChild.forEach(item => {
-                item.classList.toggle("max-[1300px]:scale-200");
+
+            // menyimpan focus pada sidebar ketika di klik
+            const link = document.querySelectorAll("nav a button");
+            const icon = document.querySelectorAll("nav a button img");
+            const sidebar = localStorage.getItem("sidebar");
+            const user = @json(Auth::user()->name);
+            console.log(user);
+            link.forEach((item, index) => {
+                item.addEventListener("click", () => {
+                    localStorage.setItem("sidebar", index);
+                });
+                if (sidebar == index) {
+                    item.classList.add(
+                        "bg-linear-to-r",
+                        "from-[#DD4049]",
+                        "to-[#F9E52D]",
+                        "text-white"
+                    );
+                    // ganti icon navbar sesuai indexnya
+                    if (user == "Admin 1") {
+                        if (index == 0) {
+                            item.children[0].src = "{{ asset('assets/navbar/home-click.png') }}";
+                        } else if (index == 1) {
+                            item.children[0].src = "{{ asset('assets/navbar/devices-click.png') }}";
+                        } else if (index == 2) {
+                            item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
+                        } else if (index == 3) {
+                            item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
+                        } else if (index == 4) {
+                            item.children[0].src = "{{ asset('assets/navbar/receipt-click.png') }}";
+                        } else if (index == 5) {
+                            item.children[0].src = "{{ asset('assets/navbar/status-up-click.png') }}";
+                        } else if (index == 6) {
+                            item.children[0].src = "{{ asset('assets/navbar/book-click.png') }}";
+                        } else if (index == 7) {
+                            item.children[0].src = "{{ asset('assets/navbar/receipt-discount-click.png') }}";
+                        }
+                    } else if (user == "Adnin 2") {
+                        if (index == 0) {
+                            item.children[0].src = "{{ asset('assets/navbar/home-click.png') }}";
+                        } else if (index == 1) {
+                            item.children[0].src = "{{ asset('assets/navbar/devices-click.png') }}";
+                        } else if (index == 2) {
+                            item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
+                        } else if (index == 3) {
+                            item.children[0].src = "{{ asset('assets/navbar/home-hashtag-click.png') }}";
+                        } else if (index == 4) {
+                            item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
+                        } else if (index == 5) {
+                            item.children[0].src = "{{ asset('assets/navbar/receipt-click.png') }}";
+                        } else if (index == 6) {
+                            item.children[0].src = "{{ asset('assets/navbar/status-up-click.png') }}";
+                        } else if (index == 7) {
+                            item.children[0].src = "{{ asset('assets/navbar/book-click.png') }}";
+                        } else if (index == 8) {
+                            item.children[0].src = "{{ asset('assets/navbar/receipt-discount-click.png') }}";
+                        }
+                    } else {
+                        if (index == 0) {
+                            item.children[0].src = "{{ asset('assets/navbar/home-click.png') }}";
+                        } else if (index == 1) {
+                            item.children[0].src = "{{ asset('assets/navbar/devices-click.png') }}";
+                        } else if (index == 2) {
+                            item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
+                        } else if (index == 3) {
+                            item.children[0].src = "{{ asset('assets/navbar/home-hashtag-click.png') }}";
+                        } else if (index == 4) {
+                            item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
+                        } else if (index == 5) {
+                            item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
+                        } else if (index == 6) {
+                            item.children[0].src = "{{ asset('assets/navbar/receipt-click.png') }}";
+                        } else if (index == 7) {
+                            item.children[0].src = "{{ asset('assets/navbar/status-up-click.png') }}";
+                        } else if (index == 8) {
+                            item.children[0].src = "{{ asset('assets/navbar/book-click.png') }}";
+                        } else if (index == 9) {
+                            item.children[0].src = "{{ asset('assets/navbar/receipt-discount-click.png') }}";
+                        }
+                    }
+                } else {
+                    item.classList.remove(
+                        "bg-linear-to-r",
+                        "from-[#DD4049]",
+                        "to-[#F9E52D]",
+                        "text-white"
+                    );
+                }
             });
-            spanChild.forEach(item => {
-                item.classList.toggle("max-[1300px]:hidden");
-            });
-        });
-    }
-
-    // 🔹 Simpan focus sidebar
-    const link = document.querySelectorAll("nav a button");
-    const sidebar = localStorage.getItem("sidebar");
-    const user = @json(Auth::user()->name);
-
-    link.forEach((item, index) => {
-        item.addEventListener("click", () => {
-            localStorage.setItem("sidebar", index);
-        });
-
-        if (sidebar == index) {
-            item.classList.add(
-                "bg-linear-to-r",
-                "from-[#DD4049]",
-                "to-[#F9E52D]",
-                "text-white"
-            );
-
-            // ganti icon sesuai user & index
-            if (user === "Admin 1") {
-                if (index === 0) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/home-click.png";
-                else if (index === 1) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/devices-click.png";
-                else if (index === 2) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-item-click.png";
-                else if (index === 3) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-item-click.png";
-                else if (index === 4) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-click.png";
-                else if (index === 5) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/status-up-click.png";
-                else if (index === 6) item.children[0].src = "{{ asset('assets/navbar/book-click.png') }}";
-                else if (index === 7) item.children[0].src = "{{ asset('assets/navbar/receipt-discount-click.png') }}";
-            } else if (user === "Admin 2") {
-                if (index === 0) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/home-click.png";
-                else if (index === 1) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/devices-click.png";
-                else if (index === 2) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-item-click.png";
-                else if (index === 3) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/home-hashtag-click.png";
-                else if (index === 4) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-item-click.png";
-                else if (index === 5) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-click.png";
-                else if (index === 6) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/status-up-click.png";
-                else if (index === 7) item.children[0].src = "{{ asset('assets/navbar/book-click.png') }}";
-                else if (index === 8) item.children[0].src = "{{ asset('assets/navbar/receipt-discount-click.png') }}";
-            } else {
-                if (index === 0) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/home-click.png";
-                else if (index === 1) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/devices-click.png";
-                else if (index === 2) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-item-click.png";
-                else if (index === 3) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/home-hashtag-click.png";
-                else if (index === 4) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-item-click.png";
-                else if (index === 5) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-item-click.png";
-                else if (index === 6) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/receipt-click.png";
-                else if (index === 7) item.children[0].src = "https://ar4n-group.com/public/assets/navbar/status-up-click.png";
-                else if (index === 8) item.children[0].src = "{{ asset('assets/navbar/book-click.png') }}";
-                else if (index === 9) item.children[0].src = "{{ asset('assets/navbar/receipt-discount-click.png') }}";
-            }
-        } else {
-            item.classList.remove(
-                "bg-linear-to-r",
-                "from-[#DD4049]",
-                "to-[#F9E52D]",
-                "text-white"
-            );
-        }
-    });
-});
-</script>
+        </script>
+        <script src="{{ asset('js/notification.js') }}"></script>
     </body>
-
-
 </html>
