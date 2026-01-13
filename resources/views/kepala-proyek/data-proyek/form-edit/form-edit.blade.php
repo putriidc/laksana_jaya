@@ -118,7 +118,7 @@
                                     class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" rows="3"
                                     placeholder="Isi keterangan di sini">{{ $p->keterangan }}</textarea>
                                 <button type="button" class="ml-4 bg-[#3E98D0] text-amber-300 px-3 py-1 rounded-lg"
-                                    onclick="editProgres({{ $p->id }}, {{ $p->minggu }}, {{ $p->persen }}, {{ $p->persen }})">
+                                    onclick="editProgres({{ $p->id }}, {{ $p->minggu }}, {{ $p->persen }}, {{ $p->keterangan }})">
                                     Edit
                                 </button>
                             </div>
