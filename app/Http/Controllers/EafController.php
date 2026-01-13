@@ -185,7 +185,7 @@ class EafController extends Controller
             JurnalUmum::whereIn('detail_eaf_id', $eaf->details->pluck('id'))
                 ->delete(); // kalau pakai softDeletes, ini otomatis soft delete
 
-            $assetBank = Asset::where('header', 'asset_lancar_bank')->firstOrFail();
+            $assetBank = Asset::where('akun_header', 'asset_lancar_bank')->firstOrFail();
             $assetModal = Asset::where('nama_akun', 'Modal')->firstOrFail();
             // Loop semua detail
             foreach ($eaf->details as $index => $detail) {
