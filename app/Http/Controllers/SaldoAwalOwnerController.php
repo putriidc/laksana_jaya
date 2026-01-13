@@ -12,11 +12,10 @@ class SaldoAwalOwnerController extends Controller
      */
     public function index()
     {
-        $bank = Asset::active()
+        $asset = Asset::active()
             ->where('akun_header', 'asset_lancar_bank')
-            ->where('saldo', 0)
             ->get();
-        return view('owner.saldo_awal.index', compact('bank'));
+        return view('owner.saldo_awal.data', compact('asset'));
     }
 
     /**
@@ -24,7 +23,11 @@ class SaldoAwalOwnerController extends Controller
      */
     public function create()
     {
-        //
+        $bank = Asset::active()
+            ->where('akun_header', 'asset_lancar_bank')
+            ->where('saldo', 0)
+            ->get();
+        return view('owner.saldo_awal.index', compact('bank'));
     }
 
     /**
