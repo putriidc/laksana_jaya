@@ -321,6 +321,14 @@
         <script src="https://ar4n-group.com/public/js/notification.js"></script>
     </body>
     <script>
+    console.log({
+    buttonView: document.getElementById("buttonView"),
+    nav: document.getElementById("sideNavbar"),
+    logoFull: document.getElementById("logoFull"),
+    justLogo: document.getElementById("justLogo"),
+    sideNavbarContent: document.getElementById("sideNavbarContent")
+});
+
 document.addEventListener("DOMContentLoaded", () => {
     const buttonView = document.getElementById("buttonView");
     const arrowButton = buttonView ? buttonView.querySelector("img") : null;
