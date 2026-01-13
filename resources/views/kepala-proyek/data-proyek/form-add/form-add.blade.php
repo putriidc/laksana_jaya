@@ -13,7 +13,7 @@
                     <label for="nama_paket" class="w-[200px]">Nama Paket</label>
 
                     <!-- Select default -->
-                    <select id="selectPaket"
+                    <select id="selectPaket" name="nama_paket"
                         class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none appearance-none cursor-pointer">
                         <option selected disabled>-Pilih Paket-</option>
                         @foreach ($proyek as $p)
@@ -192,6 +192,9 @@
             const toggleBtn = document.getElementById('togglePaket');
             const selectEl = document.getElementById('selectPaket');
             const inputEl = document.getElementById('inputPaket');
+
+            // pastikan default select punya name
+            selectEl.setAttribute('name', 'nama_paket');
 
             toggleBtn.addEventListener('click', () => {
                 if (selectEl.classList.contains('hidden')) {
