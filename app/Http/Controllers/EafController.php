@@ -185,10 +185,29 @@ class EafController extends Controller
             JurnalUmum::whereIn('detail_eaf_id', $eaf->details->pluck('id'))
                 ->delete(); // kalau pakai softDeletes, ini otomatis soft delete
 
+            $assetBank = Asset::where('header', 'asset_lancar_bank')->firstOrFail();
+            $assetModal = Asset::where('nama_akun', 'Modal')->firstOrFail();
             // Loop semua detail
             foreach ($eaf->details as $index => $detail) {
                 $kodeProyek = $index === 0 ? '-' : $proyek->kode_akun;
                 $namaProyek = $index === 0 ? '-' : $proyek->nama_proyek;
+
+                // cek apakah akun detail sama dengan asset bank
+                if ($detail->kode_akun === $assetBank->kode_akun) {
+                    if ($assetBank->saldo < $detail->kredit) {
+                        // saldo tidak cukup → batalkan transaksi
+                        return redirect()->back()->with('error', "Saldo {$assetBank->nama_akun} tidak mencukupi");
+                    }
+                    if ($detail->debit == 0) {
+                        // keluar uang → kurangi saldo & modal
+                        $assetBank->decrement('saldo', $detail->kredit);
+                        $assetModal->decrement('saldo', $detail->kredit);
+                    } elseif ($detail->kredit == 0) {
+                        // masuk uang → tambah saldo & modal
+                        $assetBank->increment('saldo', $detail->debit);
+                        $assetModal->increment('saldo', $detail->debit);
+                    }
+                }
 
                 $lastId = JurnalUmum::max('id') ?? 0; // kalau soft delete
                 $nextId = $lastId + 1;
