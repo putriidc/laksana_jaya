@@ -21,19 +21,20 @@
                 <h1 class="text-2xl font-bold">Tabel Rincian</h1>
                 <div class="flex items-center gap-x-2">
                     @php
-                    $detailTanggal = $eaf->details->first()?->tanggal;
+                        $detailTanggal = $eaf->details->first()?->tanggal;
                     @endphp
-                    @if($detailTanggal == $today)
-                    <button data-id="{{ $eaf->id }}" data-kode="{{ $eaf->kode_eaf }}" onclick="modalAddRincian(this)"
-                        class="flex items-center gap-x-2 border border-[#3E98D0] px-4 py-2 rounded-lg cursor-pointer">
-                        <span class="text-[#3E98D0]">Tambah Rincian +</span>
-                    </button>
-                    <button id="modal-generate" data-id="{{ $eaf->id }}"
-                        class="flex items-center gap-x-2 border border-[#45D03E] px-4 py-2 rounded-lg cursor-pointer">
-                        <span class="text-[#45D03E]">Generate</span>
-                        <img src="{{ asset('assets/card-send-greeen.png') }}" alt="card send icon"
-                            class="w-[20px] h-[20px]">
-                    </button>
+                    @if ($detailTanggal == $today)
+                        <button data-id="{{ $eaf->id }}" data-kode="{{ $eaf->kode_eaf }}"
+                            onclick="modalAddRincian(this)"
+                            class="flex items-center gap-x-2 border border-[#3E98D0] px-4 py-2 rounded-lg cursor-pointer">
+                            <span class="text-[#3E98D0]">Tambah Rincian +</span>
+                        </button>
+                        <button id="modal-generate" data-id="{{ $eaf->id }}"
+                            class="flex items-center gap-x-2 border border-[#45D03E] px-4 py-2 rounded-lg cursor-pointer">
+                            <span class="text-[#45D03E]">Generate</span>
+                            <img src="{{ asset('assets/card-send-greeen.png') }}" alt="card send icon"
+                                class="w-[20px] h-[20px]">
+                        </button>
                     @endif
                 </div>
             </div>
@@ -63,7 +64,7 @@
                                 <td>{{ 'RP. ' . number_format($item->debit, 0, ',', '.') }}</td>
                                 <td>{{ 'RP. ' . number_format($item->kredit, 0, ',', '.') }}</td>
                                 <td>
-                                     @if ($loop->iteration > 2 && $detailTanggal == $today)
+                                    @if ($loop->iteration > 2 && $detailTanggal == $today)
                                         <div class="flex items-center gap-x-2 justify-center">
                                             {{-- Tombol Delete --}}
                                             <form action="{{ route('eaf.destroy', $item->id) }}" method="POST"
@@ -133,12 +134,12 @@
                             class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
                             <option value="" disabled selected>-Pilih Nama Akun-</option>
                             @foreach ($akun as $item)
-                            <option value="{{ $item->nama_akun }}" data-kode="{{ $item->kode_akun }}">
+                            <option value="{{ $item->nama_akun }}" data-kode="{{ $item->kode_akun }}" data-type="akun">
                                 {{ $item->nama_akun }}
                             </option>
                             @endforeach
                             @foreach ($bank as $item)
-                            <option value="{{ $item->nama_akun }}" data-kode="{{ $item->kode_akun }}">
+                            <option value="{{ $item->nama_akun }}" data-kode="{{ $item->kode_akun }}" data-type="bank">
                                 {{ $item->nama_akun }}
                             </option>
                             @endforeach
@@ -156,12 +157,12 @@
                     </div>
                     <div class="flex items-center">
                         <label class="w-[240px] text-start">Debet</label>
-                        <input type="number" name="debit" value="0"
+                        <input type="number" name="debit" value="0" id="debit"
                             class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
                     </div>
                     <div class="flex items-center">
                         <label class="w-[240px] text-start">Kredit</label>
-                        <input type="number" name="kredit" value="0"
+                        <input type="number" name="kredit" value="0" id="kredit"
                             class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
                     </div>
                     <div class="flex items-center">
@@ -187,11 +188,34 @@
                     didOpen: () => {
                         const select = document.getElementById('nama_akun');
                         const kodeInput = document.getElementById('kode_akun');
+                        const debitWrapper = document.getElementById('debit-wrapper');
+                        const kreditWrapper = document.getElementById('kredit-wrapper');
+                        const debitInput = document.getElementById('debit');
+                        const kreditInput = document.getElementById('kredit');
+
                         select.addEventListener('change', function() {
                             let kode = this.options[this.selectedIndex].getAttribute('data-kode');
+                            let type = this.options[this.selectedIndex].getAttribute('data-type');
                             kodeInput.value = kode;
+
+                            if (type === 'bank') {
+                                // tampilkan debit, sembunyikan kredit
+                                debitWrapper.style.display = 'flex';
+                                kreditWrapper.style.display = 'none';
+                                // reset nilai
+                                debitInput.value = 0;
+                                kreditInput.value = 0;
+                            } else {
+                                // tampilkan kredit, sembunyikan debit
+                                kreditWrapper.style.display = 'flex';
+                                debitWrapper.style.display = 'none';
+                                // reset nilai
+                                debitInput.value = 0;
+                                kreditInput.value = 0;
+                            }
                         });
                     }
+
                 })
             }
         </script>
