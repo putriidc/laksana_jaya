@@ -114,7 +114,7 @@ class PinjamanContentController extends Controller
         $pinjamanKaryawan = PinjamanKaryawan::where('id', $request->kode_karyawan)->active()->firstOrFail();
 
         // Hitung sisa
-        $sisa = $pinjamanKaryawan->total_pinjam - $request->bayar;
+        $sisa = $pinjamanKaryawan->total_pinjam + $request->bayar;
 
         // Update total pinjam di PinjamanKaryawan
         $pinjamanKaryawan->update([

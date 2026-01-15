@@ -161,10 +161,10 @@ class AccOwnerController extends Controller
             'id_tukang_content' => 'required',
         ]);
 
-        $kasbonContent = PinjamanContent::active()->findOrFail($request->id_tukang_content);
+        $pinjamContent = PinjamanContent::active()->findOrFail($request->id_tukang_content);
 
         // Update status owner dulu
-        $kasbonContent->update([
+        $pinjamContent->update([
             'setuju' => true,
             'menunggu' => null,
             'ket_owner' => 'accept',
@@ -173,16 +173,32 @@ class AccOwnerController extends Controller
         // Cek apakah spv juga sudah accept
 
         $pinjamanKaryawan = PinjamanKaryawan::active()
-            ->where('kode_karyawan', $kasbonContent->kode_karyawan)
+            ->where('kode_karyawan', $pinjamContent->kode_karyawan)
             ->firstOrFail();
 
-        $sisa = $kasbonContent->bayar + $pinjamanKaryawan->total_pinjam;
+        // Hitung jumlah pinjaman content aktif untuk karyawan ini
+        $jumlahPinjam = PinjamanContent::active()
+            ->where('kode_karyawan', $pinjamContent->kode_karyawan)
+            ->where(function ($q) {
+                $q->whereNull('tolak')   // belum ditolak
+                    ->orWhere('tolak', false); // atau explicitly false
+            })
+            ->count();
+
+        // Kalau cuma satu data, anggap ini pinjaman baru
+        if ($jumlahPinjam === 1) {
+            $sisa = $pinjamContent->bayar - 10000000;
+        } else {
+            $sisa = $pinjamContent->bayar - $pinjamanKaryawan->total_pinjam;
+        }
+
+
 
         $pinjamanKaryawan->update([
             'total_pinjam' => $sisa,
         ]);
 
-        $kasbonContent->update([
+        $pinjamContent->update([
             'sisa' => $sisa,
         ]);
 
@@ -196,15 +212,15 @@ class AccOwnerController extends Controller
         $kodeJurnal = 'J-' . str_pad($nextId, 3, '0', STR_PAD_LEFT);
 
         JurnalUmum::create([
-            'id_pinjam'   => $kasbonContent->id, // generate kode unik
+            'id_pinjam'   => $pinjamContent->id, // generate kode unik
             'kode_jurnal'   => $kodeJurnal, // generate kode unik
-            'tanggal'       => $kasbonContent->tanggal,         // sama dengan tanggal kasbonContent
-            'keterangan'    => $kasbonContent->kontrak,         // isi kontrak
+            'tanggal'       => $pinjamContent->tanggal,         // sama dengan tanggal pinjamContent
+            'keterangan'    => $pinjamContent->kontrak,         // isi kontrak
             'nama_perkiraan' => $asset ? $asset->nama_akun : null,
             'kode_perkiraan' => $asset ? $asset->kode_akun : null,
             'nama_proyek'   => '-',
             'kode_proyek'   =>  '-',
-            'debit'         => $kasbonContent->bayar,
+            'debit'         => $pinjamContent->bayar,
             'kredit'        => 0,
             'created_by'    => Auth::check() ? Auth::user()->id : null,
         ]);
@@ -234,7 +250,21 @@ class AccOwnerController extends Controller
             ->where('kode_karyawan', $kasbonContent->kode_karyawan)
             ->firstOrFail();
 
-        $sisa = $kasbonContent->bayar + $pinjamanKaryawan->total_kasbon;
+        // Hitung jumlah pinjaman content aktif untuk karyawan ini
+        $jumlahPinjam = PinjamanContent::active()
+            ->where('kode_karyawan', $kasbonContent->kode_karyawan)
+            ->where(function ($q) {
+                $q->whereNull('tolak')   // belum ditolak
+                    ->orWhere('tolak', false); // atau explicitly false
+            })
+            ->count();
+
+        // Kalau cuma satu data, anggap ini pinjaman baru
+        if ($jumlahPinjam === 1) {
+            $sisa = $kasbonContent->bayar - 500000;
+        } else {
+            $sisa = $kasbonContent->bayar - $pinjamanKaryawan->total_kasbon;
+        }
 
         $pinjamanKaryawan->update([
             'total_kasbon' => $sisa,
