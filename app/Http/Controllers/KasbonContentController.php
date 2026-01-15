@@ -155,7 +155,7 @@ class KasbonContentController extends Controller
         $pinjamanKaryawan = PinjamanKaryawan::where('kode_karyawan', $content->kode_karyawan)->active()->firstOrFail();
 
         // Kurangi total_kasbon dengan nilai lama, lalu tambah nilai baru
-        $totalBaru = ($pinjamanKaryawan->total_kasbon - $content->bayar) + $request->bayar;
+        $totalBaru = ($pinjamanKaryawan->total_kasbon + $content->bayar) - $request->bayar;
 
         // Update PinjamanKaryawan
         $pinjamanKaryawan->update([
@@ -188,7 +188,7 @@ class KasbonContentController extends Controller
         $pinjamanKaryawan = PinjamanKaryawan::where('kode_karyawan', $content->kode_karyawan)->active()->firstOrFail();
 
         // Kurangi total_kasbon dengan nilai lama, lalu tambah nilai baru
-        $totalBaru = ($pinjamanKaryawan->total_kasbon + $content->bayar) - $request->bayar;
+        $totalBaru = ($pinjamanKaryawan->total_kasbon - $content->bayar) + $request->bayar;
 
         // Update PinjamanKaryawan
         $pinjamanKaryawan->update([

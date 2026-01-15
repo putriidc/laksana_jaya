@@ -187,9 +187,9 @@ class AccOwnerController extends Controller
 
         // Kalau cuma satu data, anggap ini pinjaman baru
         if ($jumlahPinjam === 1) {
-            $sisa = $pinjamContent->bayar - 10000000;
+            $sisa = 10000000 - $pinjamContent->bayar;
         } else {
-            $sisa = $pinjamContent->bayar - $pinjamanKaryawan->total_pinjam;
+            $sisa = $pinjamanKaryawan->total_pinjam - $pinjamContent->bayar;
         }
 
 
@@ -261,9 +261,9 @@ class AccOwnerController extends Controller
 
         // Kalau cuma satu data, anggap ini pinjaman baru
         if ($jumlahPinjam === 1) {
-            $sisa = $kasbonContent->bayar - 500000;
+            $sisa = 500000 - $kasbonContent->bayar;
         } else {
-            $sisa = $kasbonContent->bayar - $pinjamanKaryawan->total_kasbon;
+            $sisa = $pinjamanKaryawan->total_kasbon - $kasbonContent->bayar;
         }
 
         $pinjamanKaryawan->update([

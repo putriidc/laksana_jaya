@@ -187,7 +187,7 @@ class PinjamanContentController extends Controller
         $pinjamanKaryawan = PinjamanKaryawan::where('kode_karyawan', $content->kode_karyawan)->active()->firstOrFail();
 
         // Kurangi total_pinjam dengan nilai lama, lalu tambah nilai baru
-        $totalBaru = ($pinjamanKaryawan->total_pinjam - $content->bayar) + $request->bayar;
+        $totalBaru = ($pinjamanKaryawan->total_pinjam + $content->bayar) - $request->bayar;
 
         // Update PinjamanKaryawan
         $pinjamanKaryawan->update([
@@ -220,7 +220,7 @@ class PinjamanContentController extends Controller
         $pinjamanKaryawan = PinjamanKaryawan::where('kode_karyawan', $content->kode_karyawan)->active()->firstOrFail();
 
         // Kurangi total_pinjam dengan nilai lama, lalu tambah nilai baru
-        $totalBaru = ($pinjamanKaryawan->total_pinjam + $content->bayar) - $request->bayar;
+        $totalBaru = ($pinjamanKaryawan->total_pinjam - $content->bayar) + $request->bayar;
 
         // Update PinjamanKaryawan
         $pinjamanKaryawan->update([
@@ -261,7 +261,7 @@ class PinjamanContentController extends Controller
             ->firstOrFail();
 
         // Kurangi total_pinjam dengan nilai yang dihapus
-        $totalBaru = $pinjamanKaryawan->total_pinjam - $content->bayar;
+        $totalBaru = $pinjamanKaryawan->total_pinjam + $content->bayar;
 
         // Update PinjamanKaryawan
         $pinjamanKaryawan->update([
@@ -282,7 +282,7 @@ class PinjamanContentController extends Controller
             ->firstOrFail();
 
         // Kurangi total_pinjam dengan nilai yang dihapus
-        $totalBaru = $pinjamanKaryawan->total_pinjam + $content->bayar;
+        $totalBaru = $pinjamanKaryawan->total_pinjam - $content->bayar;
 
         // Update PinjamanKaryawan
         $pinjamanKaryawan->update([
