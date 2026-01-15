@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Laporan Harian</title>
+    <title>Laporan Form Acc Eaf</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -65,32 +65,42 @@
     <div class="logo-container">
         <img src="{{ public_path('assets/logo-font.png') }}" class="logo" style="width: 150px; height: 40px;">
     </div>
-    <h2 style="font-size: 20px; font-weight: bolder; margin-top: 20px; text-transform: uppercase;">LAPORAN harian cash in</h2>
+    <h2 style="font-size: 20px; font-weight: bolder; margin-top: 20px; text-transform: uppercase;">LAPORAN Form acc eaf</h2>
     <div>Dicetak pada: {{ $tanggalCetak }} - {{ $jamCetak }}</div>
     <table>
         <thead>
             <tr>
-                <th>Tanggal</th>
-                <th>Keterangan</th>
-                <th>Nama Perkiraan</th>
-                <th>Kd Akun</th>
+                <th>No</th>
+                <th>Tgl Pengajuan</th>
                 <th>Nama Proyek</th>
-                <th>Kd Proyek</th>
-                <th>Debet</th>
-                <th>Kredit</th>
+                <th>PIC</th>
+                <th>Sumber Dana</th>
+                <th>Nominal</th>
+                <th>Ket. Owner</th>
+                <th>Detail Biaya</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($cashIn as $cashIns)
+            @php
+            $no = 1;
+            @endphp
+           @foreach ($eafs as $eaf)
                 <tr>
-                    <td>{{ $cashIns->tanggal }}</td>
-                    <td>{{ $cashIns->keterangan }}</td>
-                    <td>{{ $cashIns->nama_perkiraan }}</td>
-                    <td>{{ $cashIns->kode_perkiraan }}</td>
-                    <td>{{ $cashIns->nama_proyek }}</td>
-                    <td>{{ $cashIns->kode_proyek }}</td>
-                    <td>Rp. {{ number_format($cashIns->debit, 0, ',', '.') }}</td>
-                    <td>Rp. {{ number_format($cashIns->kredit, 0, ',', '.') }}</td>
+                    <td>{{ $no++ }}</td>
+                    <td>{{ $eaf->tanggal }}</td>
+                    <td>{{ $eaf->nama_proyek }}</td>
+                    <td>{{ $eaf->pic }}</td>
+                    <td>{{ $eaf->bank->nama_akun }}</td>
+                    <td>{{ $eaf->ket_owner }}</td>
+                    <td>Rp. {{ number_format($eaf->nominal, 0, ',', '.') }}</td>
+                    @if ($eaf->acc_owner === 'accept')
+                        <span>Accept</span>
+                    @elseif ($eaf->acc_owner === 'decline')
+                        <span>Decline</span>
+                    @else
+                        <span>Pending</span>
+                    @endif
                 </tr>
             @endforeach
         </tbody>

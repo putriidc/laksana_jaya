@@ -8,6 +8,7 @@ use App\Models\Asset;
 use App\Models\EafDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AccEafOwnerController extends Controller
 {
@@ -31,6 +32,27 @@ class AccEafOwnerController extends Controller
 
         $today = Carbon::now('Asia/Jakarta')->toDateString();
         return view('owner.pengajuan-eaf.data', compact('eaf', 'today', 'eaf_needAcc'));
+    }
+
+    public function print()
+    {
+        $eafs = Eaf::with('bank') // tambahkan eager load relasi
+            ->whereNull('deleted_at')
+            ->where(function ($query) {
+                $query->where('acc_owner', '!=', 'accept')
+                    ->orWhere('acc_owner', '!=', 'decline');
+            })
+            ->get();
+
+        $owner = Auth::user()->name ?? 'Rian';
+        $role = Auth::user()->role ?? 'owner';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('owner.pengajuan-eaf.print', compact('eafs', 'owner', 'role', 'tanggalCetak', 'jamCetak'))
+            ->setPaper('A4', 'portrait');
+
+        return $pdf->stream('Form-acc-eaf.pdf');
     }
 
     /**

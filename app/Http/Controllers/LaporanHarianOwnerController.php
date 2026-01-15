@@ -66,20 +66,22 @@ class LaporanHarianOwnerController extends Controller
         $hari = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y'); // → 15 Desember 2025
 
         $cashIn = JurnalUmum::whereDate('tanggal', $today)
-            ->where('kredit', '!=', 0)
+            ->where('debit', '!=', 0)
             ->whereNull('deleted_at')
             ->orderBy('tanggal', 'desc')
             ->get();
 
-        $admin = Auth::user()->name ?? 'Administrator';
-        $role = Auth::user()->role ?? 'admin';
+        $owner = Auth::user()->name ?? 'Rian';
+        $role = Auth::user()->role ?? 'owner';
         $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
 
-        $pdf = Pdf::loadView('admin.laporan-harian.printCashIn', compact(
+        $pdf = Pdf::loadView('owner.laporan-harian.printCashIn', compact(
             'cashIn',
-            'admin',
+            'owner',
             'role',
             'hari',
+            'jamCetak',
             'tanggalCetak'
         ))->setPaper('A4', 'portrait');
 
@@ -91,18 +93,20 @@ class LaporanHarianOwnerController extends Controller
         $hari = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y'); // → 15 Desember 2025
 
         $cashOut = JurnalUmum::whereDate('tanggal', $today)
-            ->where('debit', '!=', 0)
+            ->where('kredit', '!=', 0)
             ->whereNull('deleted_at')
             ->orderBy('tanggal', 'desc')
             ->get();
 
-        $admin = Auth::user()->name ?? 'Administrator';
-        $role = Auth::user()->role ?? 'admin';
+        $owner = Auth::user()->name ?? 'Rian';
+        $role = Auth::user()->role ?? 'owner';
         $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
 
         $pdf = Pdf::loadView('owner.laporan-harian.printCashOut', compact(
             'cashOut',
-            'admin',
+            'owner',
+            'jamCetak',
             'role',
             'hari',
             'tanggalCetak'
@@ -116,21 +120,23 @@ class LaporanHarianOwnerController extends Controller
         $start = $request->input('start_in');
         $end   = $request->input('end_in');
 
-        $cashInGL = JurnalUmum::where('kredit', '!=', 0)
+        $cashInGL = JurnalUmum::where('debit', '!=', 0)
             ->whereNull('deleted_at')
             ->when($start && $end, fn($q) => $q->whereBetween('tanggal', [$start, $end]))
             ->orderBy('tanggal', 'desc')
             ->get();
 
-        $admin = Auth::user()->name ?? 'Administrator';
-        $role = Auth::user()->role ?? 'admin';
+        $owner = Auth::user()->name ?? 'Rian';
+        $role = Auth::user()->role ?? 'owner';
         $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
 
         $pdf = Pdf::loadView('owner.laporan-harian.printCashInGL', compact(
             'cashInGL',
-            'admin',
+            'owner',
             'role',
             'tanggalCetak',
+            'jamCetak',
             'start',
             'end'
         ))->setPaper('A4', 'landscape');
@@ -143,19 +149,21 @@ class LaporanHarianOwnerController extends Controller
         $start = $request->input('start_out');
         $end   = $request->input('end_out');
 
-        $cashOutGL = JurnalUmum::where('debit', '!=', 0)
+        $cashOutGL = JurnalUmum::where('kredit', '!=', 0)
             ->whereNull('deleted_at')
             ->when($start && $end, fn($q) => $q->whereBetween('tanggal', [$start, $end]))
             ->orderBy('tanggal', 'desc')
             ->get();
 
-        $admin = Auth::user()->name ?? 'Administrator';
-        $role = Auth::user()->role ?? 'admin';
+        $owner = Auth::user()->name ?? 'Rian';
+        $role = Auth::user()->role ?? 'owner';
         $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
 
         $pdf = Pdf::loadView('owner.laporan-harian.printCashOutGL', compact(
             'cashOutGL',
-            'admin',
+            'owner',
+            'jamCetak',
             'role',
             'tanggalCetak',
             'start',

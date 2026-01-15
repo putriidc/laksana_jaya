@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Laporan Harian</title>
+    <title>Laporan Jurnal</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -65,7 +65,7 @@
     <div class="logo-container">
         <img src="{{ public_path('assets/logo-font.png') }}" class="logo" style="width: 150px; height: 40px;">
     </div>
-    <h2 style="font-size: 20px; font-weight: bolder; margin-top: 20px; text-transform: uppercase;">LAPORAN harian cash in</h2>
+    <h2 style="font-size: 20px; font-weight: bolder; margin-top: 20px;">LAPORAN JURNAL UMUM</h2>
     <div>Dicetak pada: {{ $tanggalCetak }} - {{ $jamCetak }}</div>
     <table>
         <thead>
@@ -81,16 +81,16 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($cashIn as $cashIns)
+            @foreach ($jurnals as $jurnal)
                 <tr>
-                    <td>{{ $cashIns->tanggal }}</td>
-                    <td>{{ $cashIns->keterangan }}</td>
-                    <td>{{ $cashIns->nama_perkiraan }}</td>
-                    <td>{{ $cashIns->kode_perkiraan }}</td>
-                    <td>{{ $cashIns->nama_proyek }}</td>
-                    <td>{{ $cashIns->kode_proyek }}</td>
-                    <td>Rp. {{ number_format($cashIns->debit, 0, ',', '.') }}</td>
-                    <td>Rp. {{ number_format($cashIns->kredit, 0, ',', '.') }}</td>
+                    <td>{{ $jurnal->tanggal }}</td>
+                    <td>{{ $jurnal->keterangan }}</td>
+                    <td>{{ $jurnal->nama_perkiraan }}</td>
+                    <td>{{ $jurnal->kode_perkiraan }}</td>
+                    <td>{{ $jurnal->nama_proyek }}</td>
+                    <td>{{ $jurnal->kode_proyek }}</td>
+                    <td>Rp. {{ number_format($jurnal->debit, 0, ',', '.') }}</td>
+                    <td>Rp. {{ number_format($jurnal->kredit, 0, ',', '.') }}</td>
                 </tr>
             @endforeach
         </tbody>

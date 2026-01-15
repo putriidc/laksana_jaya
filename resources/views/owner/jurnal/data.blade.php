@@ -61,7 +61,7 @@
                             class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
                             <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" class="w-[20px]">
                         </button>
-                        <a href="{{ route('jurnalUmums.print', ['start' => request('start'), 'end' => request('end')]) }}"
+                        <a href="{{ route('jurnalOwner.print', ['start' => request('start'), 'end' => request('end')]) }}"
                             class="flex items-center gap-x-3 border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer "
                             target="_blank"><img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
                         </a>

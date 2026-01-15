@@ -260,6 +260,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/jurnalOwner/bulk-delete', [JurnalOwnerController::class, 'bulkDelete'])
             ->name('jurnalOwner.bulk-delete');
 
+        
         Route::get('/proyekOwner', [ProyekOwnerController::class, 'index'])->name('proyekOwner.index');
         Route::get('/proyekOwner/indexManage', [ProyekOwnerController::class, 'indexManage'])->name('proyekOwner.indexManage');
         Route::get('/proyekOwner/indexResume', [ProyekOwnerController::class, 'indexResume'])->name('proyekOwner.indexResume');
@@ -481,6 +482,9 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('role:Owner')->group(function () {
         // owner
+        Route::get('print-pinjaman-owner', [AccOwnerController::class, 'printPinjaman'])->name('accownerPinjaman.print');
+        Route::get('print-kasbon-owner', [AccOwnerController::class, 'printKasbon'])->name('accownerKasbon.print');
+        Route::get('print-kasbontukang-owner', [AccOwnerController::class, 'printKasbonTukang'])->name('accownerKasbonTukang.print');
         Route::resource('accowner', AccOwnerController::class);
 
         Route::post('/pinjamanO/{id}/decline', [AccOwnerController::class, 'decline'])
@@ -502,11 +506,12 @@ Route::middleware('auth')->group(function () {
         Route::put('/accowner/{id}/updateKasbon', [AccOwnerController::class, 'updateKasbon'])
             ->name('accowner.updateKasbon');
 
+        Route::get('print-accEafOwner', [AccEafOwnerController::class, 'print'])->name('accEafOwner.print');
         Route::resource('AccEafOwner', AccEafOwnerController::class);
         Route::post('/AcceafO/{id}/decline', [AccEafOwnerController::class, 'decline'])
             ->name('AcceafO.decline');
 
-
+        Route::get('print-jurnalOnwner', [JurnalOwnerController::class, 'print'])->name('jurnalOwner.print');
         Route::resource('jurnalOwner', JurnalOwnerController::class)->except(['show']);
         Route::post('jurnalOwner/storeCashIn', [JurnalOwnerController::class, 'storeCashIn'])
             ->name('jurnalOwner.storeCashIn');
@@ -521,6 +526,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/jurnalOwner/bulk-delete', [JurnalOwnerController::class, 'bulkDelete'])
             ->name('jurnalOwner.bulk-delete');
 
+        Route::get('print-resume', [ProyekOwnerController::class, 'print'])->name('resume.print');
+        Route::get('print-data-management', [ProyekOwnerController::class, 'printManagement'])->name('dataManagement.print');
         Route::get('/proyekOwner', [ProyekOwnerController::class, 'index'])->name('proyekOwner.index');
         Route::get('/proyekOwner/indexManage', [ProyekOwnerController::class, 'indexManage'])->name('proyekOwner.indexManage');
         Route::get('/proyekOwner/indexResume', [ProyekOwnerController::class, 'indexResume'])->name('proyekOwner.indexResume');
@@ -540,6 +547,7 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('progresOwner', ProgresOwnerController::class);
 
+        Route::get('print-lajur', [NeracaOwnerController::class, 'printLajur'])->name('neracaLajur.print');
         Route::resource('neracaOwner', NeracaOwnerController::class);
 
 

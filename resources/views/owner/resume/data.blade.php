@@ -3,7 +3,7 @@
     <div>
         <h1 class="font-bold text-2xl mb-4 uppercase">Resume Proyek</h1>
         <section>
-            <a href="{{ route('pinjamanKaryawans.create') }}"><button
+            <a target="_blank" href="{{ route('resume.print') }}"><button
                     class="cursor-pointer px-5 py-2 border-[#9A9A9A] border-2 rounded-lg flex items-center gap-x-2 bg-white mb-5">
                     <span class="text-[#72686B]">Cetak Data</span>
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
@@ -11,12 +11,12 @@
             <div class="rounded-lg shadow-[1px_1px_10px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1200px]:overflow-x-auto">
                 <table class="table-auto text-center text-sm w-full max-[1200px]:w-[1200px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
-                        <th class="py-2 w-[15%]">No</th>
-                        <th class="py-2 w-[20%]">Tgl Mulai</th>
-                        <th class="py-2 w-[25%]">Nama Proyek</th>
-                        <th class="py-2 w-[25%]">Nilai Proyek</th>
+                        <th class="py-2 w-[10%]">No</th>
+                        <th class="py-2 w-[15%]">Tgl Mulai</th>
+                        <th class="py-2 w-[20%]">Nama Proyek</th>
+                        <th class="py-2 w-[20%]">Nilai Proyek</th>
                         <th class="py-2 w-[15%]">Status</th>
-                        <th class="py-2 2-[10%]">Detail</th>
+                        <th class="py-2 w-[20%]">Detail</th>
                     </thead>
                     <tbody>
                         @foreach ($resume as $i => $item)
@@ -42,18 +42,18 @@
                                 <td class="py-2">
                                     <button class="text-blue-400 hover:underline cursor-pointer font-medium"
                                         onclick="detailResume(
-                '{{ $item['nama_proyek'] }}',
-                '{{ \Carbon\Carbon::parse($item['tgl_mulai'])->format('d/m/Y') }}',
-                '{{ number_format($item['total_pengeluaran'], 0, ',', '.') }}',
-                '{{ number_format($item['piutang_vendor'], 0, ',', '.') }}',
-                '{{ number_format($item['total_tp_pv'], 0, ',', '.') }}',
-                '{{ $item['jenis_proyek'] }}',
-                '{{ number_format($item['net'], 0, ',', '.') }}',
-                '{{ number_format($item['persentase'], 2, ',', '.') }}',
-                '{{ number_format($item['total_progres'], 2, ',', '.') }}',
-                '{{ number_format($item['sisa'], 0, ',', '.') }}',
-                '{{ $persen >= 100 ? 'FULL' : ($persen >= 80 ? 'WARNING' : ($persen >= 50 ? 'CAREFULL' : ($persen <= 25 ? 'SAVE' : 'CAREFULL'))) }}'
-                    )">
+                                        '{{ $item['nama_proyek'] }}',
+                                        '{{ \Carbon\Carbon::parse($item['tgl_mulai'])->format('d/m/Y') }}',
+                                        '{{ number_format($item['total_pengeluaran'], 0, ',', '.') }}',
+                                        '{{ number_format($item['piutang_vendor'], 0, ',', '.') }}',
+                                        '{{ number_format($item['total_tp_pv'], 0, ',', '.') }}',
+                                        '{{ $item['jenis_proyek'] }}',
+                                        '{{ number_format($item['net'], 0, ',', '.') }}',
+                                        '{{ number_format($item['persentase'], 2, ',', '.') }}',
+                                        '{{ number_format($item['total_progres'], 2, ',', '.') }}',
+                                        '{{ number_format($item['sisa'], 0, ',', '.') }}',
+                                        '{{ $persen >= 100 ? 'FULL' : ($persen >= 80 ? 'WARNING' : ($persen >= 50 ? 'CAREFULL' : ($persen <= 25 ? 'SAVE' : 'CAREFULL'))) }}'
+                                            )">
                                         Lihat Detail
                                     </button>
                                 </td>
@@ -146,7 +146,10 @@
                     </div>
                     <div class="flex justify-start items-center">
                         <span class="font-semibold w-[160px] text-start">Status</span>
-                        <span class="px-8 py-2 rounded-xl">${status}</span>
+                        ${status === 'FULL' ? `<span class="bg-[#DD4049] px-5 py-1 rounded-xl text-white">FULL</span>` : ""}
+                        ${status === 'WARNING' ? `<span class="bg-[#F98C2D] px-5 py-1 rounded-xl text-white">WARNING</span>` : ""}
+                        ${status === 'CAREFULL' ? `<span class="bg-[#F9E52D] px-5 py-1 rounded-xl text-black">CAREFULL</span>` : ""}
+                        ${status === 'SAVE' ? `<span class="bg-[#45D03E] px-5 py-1 rounded-xl text-white">SAVE</span>` : ""}
                     </div>
                 </div>
             </section>

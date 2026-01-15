@@ -12,7 +12,7 @@
     <div class="hidden" id="neraca-lajur">
         <div class="flex justify-between items-center mb-5 max-[380px]:gap-2 max-[380px]:flex-wrap">
             <h1 class="text-2xl font-bold">Neraca Lajur</h1>
-            <a href="" class="flex items-center gap-x-2 border-2 border-[#9A9A9A] rounded-lg px-4 py-2">
+            <a target="_blank" href="{{ route('neracaLajur.print') }}" class="flex items-center gap-x-2 border-2 border-[#9A9A9A] rounded-lg px-4 py-2">
                 <span class="text-[#72686B]">Cetak Laporan</span>
                 <img src="{{ asset('assets/printer.png') }}" alt="">
             </a>

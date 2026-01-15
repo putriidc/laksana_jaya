@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Laporan Harian</title>
+    <title>Laporan Pinjaman Karyawan</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -65,32 +65,38 @@
     <div class="logo-container">
         <img src="{{ public_path('assets/logo-font.png') }}" class="logo" style="width: 150px; height: 40px;">
     </div>
-    <h2 style="font-size: 20px; font-weight: bolder; margin-top: 20px; text-transform: uppercase;">LAPORAN harian cash in</h2>
+    <h2 style="font-size: 20px; font-weight: bolder; margin-top: 20px; text-transform: uppercase;">LAPORAN Persetujuan Pinjaman Karyawan</h2>
     <div>Dicetak pada: {{ $tanggalCetak }} - {{ $jamCetak }}</div>
     <table>
         <thead>
             <tr>
-                <th>Tanggal</th>
-                <th>Keterangan</th>
-                <th>Nama Perkiraan</th>
-                <th>Kd Akun</th>
-                <th>Nama Proyek</th>
-                <th>Kd Proyek</th>
-                <th>Debet</th>
-                <th>Kredit</th>
+                <th>Tgl Pengajuan</th>
+                <th>Nama Karyawan</th>
+                <th>Kontrak</th>
+                <th>Ket Owner</th>
+                <th>Jumlah Pinjaman</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($cashIn as $cashIns)
+           @foreach ($pinjamans as $pinjaman)
                 <tr>
-                    <td>{{ $cashIns->tanggal }}</td>
-                    <td>{{ $cashIns->keterangan }}</td>
-                    <td>{{ $cashIns->nama_perkiraan }}</td>
-                    <td>{{ $cashIns->kode_perkiraan }}</td>
-                    <td>{{ $cashIns->nama_proyek }}</td>
-                    <td>{{ $cashIns->kode_proyek }}</td>
-                    <td>Rp. {{ number_format($cashIns->debit, 0, ',', '.') }}</td>
-                    <td>Rp. {{ number_format($cashIns->kredit, 0, ',', '.') }}</td>
+                    <td>{{ $pinjaman->tanggal }}</td>
+                    <td>{{ $pinjaman->nama_karyawan }}</td>
+                    <td>{{ $pinjaman->kontrak }}</td>
+                    <td>{{ $pinjaman->ket_owner }}</td>
+                    <td>Rp. {{ number_format($pinjaman->bayar, 0, ',', '.') }}</td>
+                    @php
+                    if ($pinjaman->menunggu == 1) {
+                        echo '<td>Pending</td>';
+                    } else {
+                        if ($pinjaman->setuju == 1) {
+                            echo '<td>Accept</td>';
+                        } else {
+                            echo '<td>Decline</td>';
+                        }
+                    }
+                    @endphp
                 </tr>
             @endforeach
         </tbody>

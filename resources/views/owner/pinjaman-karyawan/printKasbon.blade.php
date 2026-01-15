@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Laporan Harian</title>
+    <title>Laporan Kasbon</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -65,37 +65,43 @@
     <div class="logo-container">
         <img src="{{ public_path('assets/logo-font.png') }}" class="logo" style="width: 150px; height: 40px;">
     </div>
-    <h2 style="font-size: 20px; font-weight: bolder; margin-top: 20px; text-transform: uppercase;">LAPORAN harian cash in</h2>
+    <h2 style="font-size: 20px; font-weight: bolder; margin-top: 20px; text-transform: uppercase;">LAPORAN Persetujuan Pinjaman kasbon</h2>
     <div>Dicetak pada: {{ $tanggalCetak }} - {{ $jamCetak }}</div>
     <table>
         <thead>
             <tr>
-                <th>Tanggal</th>
-                <th>Keterangan</th>
-                <th>Nama Perkiraan</th>
-                <th>Kd Akun</th>
-                <th>Nama Proyek</th>
-                <th>Kd Proyek</th>
-                <th>Debet</th>
-                <th>Kredit</th>
+                <th>Tgl Pengajuan</th>
+                <th>Nama Karyawan</th>
+                <th>Kontrak</th>
+                <th>Ket Owner</th>
+                <th>Jumlah Pinjaman</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($cashIn as $cashIns)
+            @foreach ($kasbons as $kasbon)
                 <tr>
-                    <td>{{ $cashIns->tanggal }}</td>
-                    <td>{{ $cashIns->keterangan }}</td>
-                    <td>{{ $cashIns->nama_perkiraan }}</td>
-                    <td>{{ $cashIns->kode_perkiraan }}</td>
-                    <td>{{ $cashIns->nama_proyek }}</td>
-                    <td>{{ $cashIns->kode_proyek }}</td>
-                    <td>Rp. {{ number_format($cashIns->debit, 0, ',', '.') }}</td>
-                    <td>Rp. {{ number_format($cashIns->kredit, 0, ',', '.') }}</td>
+                    <td>{{ $kasbon->tanggal }}</td>
+                    <td>{{ $kasbon->nama_karyawan }}</td>
+                    <td>{{ $kasbon->kontrak }}</td>
+                    <td>{{ $kasbon->ket_owner }}</td>
+                    <td>Rp. {{ number_format($kasbon->bayar, 0, ',', '.') }}</td>
+                    @php
+                    if ($kasbon->menunggu == 1) {
+                        echo '<td>Pending</td>';
+                    } else {
+                        if ($kasbon->setuju == 1) {
+                            echo '<td>Accept</td>';
+                        } else {
+                            echo '<td>Decline</td>';
+                        }
+                    }
+                    @endphp
                 </tr>
             @endforeach
         </tbody>
     </table>
-    <div>
+   <div>
         <div class="footer-owner">
             <p>{{ $role }}</p>
             <p style="margin-top: 70px">{{ $owner }}</p>

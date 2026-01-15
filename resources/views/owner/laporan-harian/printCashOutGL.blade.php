@@ -48,7 +48,7 @@
             background-color: rgba(240, 240, 240, 0.95);
         }
 
-        .footer {
+        .footer-owner {
             margin-top: 40px;
             font-size: 11px;
             width: 100px;
@@ -63,11 +63,10 @@
 
 <body>
     <div class="logo-container">
-        <img src="{{ public_path('assets/ar4anSmallLogo.png') }}" class="logo">
+        <img src="{{ public_path('assets/logo-font.png') }}" class="logo" style="width: 150px; height: 40px;">
     </div>
-        <h2>LAPORAN HARIAN CASH OUT <br> {{ $start }} s/d {{ $end }}<br>AR4N GROUP</h2>
-
-
+    <h2 style="font-size: 20px; font-weight: bolder; margin-top: 20px; text-transform: uppercase;">LAPORAN harian global cash out</h2>
+    <div>Dicetak pada: {{ $tanggalCetak }} - {{ $jamCetak }}</div>
     <table>
         <thead>
             <tr>
@@ -82,24 +81,25 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($cashOutGL as $jurnal)
+            @foreach ($cashOutGL as $cashOutGLs)
                 <tr>
-                    <td>{{ $jurnal->tanggal }}</td>
-                    <td>{{ $jurnal->keterangan }}</td>
-                    <td>{{ $jurnal->nama_perkiraan }}</td>
-                    <td>{{ $jurnal->kode_perkiraan }}</td>
-                    <td>{{ $jurnal->nama_proyek }}</td>
-                    <td>{{ $jurnal->kode_proyek }}</td>
-                    <td>Rp. {{ number_format($jurnal->debit, 0, ',', '.') }}</td>
-                    <td>Rp. {{ number_format($jurnal->kredit, 0, ',', '.') }}</td>
+                    <td>{{ $cashOutGLs->tanggal }}</td>
+                    <td>{{ $cashOutGLs->keterangan }}</td>
+                    <td>{{ $cashOutGLs->nama_perkiraan }}</td>
+                    <td>{{ $cashOutGLs->kode_perkiraan }}</td>
+                    <td>{{ $cashOutGLs->nama_proyek }}</td>
+                    <td>{{ $cashOutGLs->kode_proyek }}</td>
+                    <td>Rp. {{ number_format($cashOutGLs->debit, 0, ',', '.') }}</td>
+                    <td>Rp. {{ number_format($cashOutGLs->kredit, 0, ',', '.') }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-
-    <div class="footer">
-        <p>Dicetak oleh,<br>{{ $role }} - {{ $admin }}</p>
-        <p style="margin-top: 70px">{{ \Carbon\Carbon::parse($tanggalCetak)->translatedFormat('d F Y') }}</p>
+    <div>
+        <div class="footer-owner">
+            <p>{{ $role }}</p>
+            <p style="margin-top: 70px">{{ $owner }}</p>
+        </div>
     </div>
 </body>
 
