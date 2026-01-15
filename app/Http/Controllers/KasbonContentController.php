@@ -229,7 +229,7 @@ class KasbonContentController extends Controller
             ->firstOrFail();
 
         // Kurangi total_kasbon dengan nilai yang dihapus
-        $totalBaru = $pinjamanKaryawan->total_kasbon - $content->bayar;
+        $totalBaru = $pinjamanKaryawan->total_kasbon + $content->bayar;
 
         // Update PinjamanKaryawan
         $pinjamanKaryawan->update([
@@ -250,7 +250,7 @@ class KasbonContentController extends Controller
             ->firstOrFail();
 
         // Kurangi total_kasbon dengan nilai yang dihapus
-        $totalBaru = $pinjamanKaryawan->total_kasbon + $content->bayar;
+        $totalBaru = $pinjamanKaryawan->total_kasbon - $content->bayar;
 
         // Update PinjamanKaryawan
         $pinjamanKaryawan->update([
