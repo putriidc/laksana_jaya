@@ -482,6 +482,11 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('role:Owner')->group(function () {
         // owner
+        // user management
+        Route::get('/user-management', function () {
+            return view('owner.user-management/data');
+        });
+        // user management
         Route::get('print-pinjaman-owner', [AccOwnerController::class, 'printPinjaman'])->name('accownerPinjaman.print');
         Route::get('print-kasbon-owner', [AccOwnerController::class, 'printKasbon'])->name('accownerKasbon.print');
         Route::get('print-kasbontukang-owner', [AccOwnerController::class, 'printKasbonTukang'])->name('accownerKasbonTukang.print');
