@@ -251,7 +251,7 @@ class AccOwnerController extends Controller
             ->firstOrFail();
 
         // Hitung jumlah pinjaman content aktif untuk karyawan ini
-        $jumlahPinjam = PinjamanContent::active()
+        $jumlahPinjam = KasbonContent::active()
             ->where('kode_karyawan', $kasbonContent->kode_karyawan)
             ->where(function ($q) {
                 $q->whereNull('tolak')   // belum ditolak
