@@ -1037,7 +1037,7 @@
                             <label for="tanggal" class="font-medium w-[150px]">Dari Akun / Debet</label>
                             <div class="flex items-center w-full justify-between">
                                 <select name="from" id="namaPerkiraan" class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none appearance-none" required>
-                                        <option selected disabled>-Pilih kas/bank-</option>
+                                        <option selected disabled>-Pilih Akun-</option>
                                         @foreach ($akun as $item)
                                         <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
                                         @endforeach
@@ -1045,7 +1045,7 @@
                                 <div class="flex items-center w-[350px]">
                                     <label for="kode_akun" class="font-medium w-[35%]">Ke Akun / Kredit</label>
                                     <select name="to" id="namaPerkiraanTo" class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none appearance-none" required>
-                                        <option selected disabled>-Pilih kas/bank-</option>
+                                        <option selected disabled>-Pilih Akun-</option>
                                         @foreach ($akun as $item)
                                         <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
                                         @endforeach
