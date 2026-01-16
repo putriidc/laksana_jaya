@@ -3,7 +3,7 @@
     <div>
         <h1 class="font-bold text-2xl mb-4">Data Management Proyek</h1>
         <section>
-            <a href="{{ route('pinjamanKaryawans.create') }}"><button
+            <a target="_blank" href="{{ route('dataManagement.print') }}"><button
                     class="cursor-pointer px-5 py-2 border-[#9A9A9A] border-2 rounded-lg flex items-center gap-x-2 bg-white mb-5">
                     <span class="text-[#72686B]">Cetak Data</span>
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Laporan resume proyek</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 11px;
+            margin: 20px;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .logo {
+            width: 100px;
+        }
+
+        h2 {
+            text-align: center;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 10px;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            padding: 6px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.95);
+        }
+
+        th {
+            background-color: rgba(240, 240, 240, 0.95);
+        }
+
+        .footer-owner {
+            margin-top: 40px;
+            font-size: 11px;
+            width: 100px;
+            /* atau sesuai lebar yang kamu mau */
+            text-align: center;
+            float: right;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div class="logo-container">
+        <img src="{{ public_path('assets/logo-font.png') }}" class="logo" style="width: 150px; height: 40px;">
+    </div>
+    <h2 style="font-size: 20px; font-weight: bolder; margin-top: 20px; text-transform: uppercase;">LAPORAN resume proyek</h2>
+    <div>Dicetak pada: {{ $tanggalCetak }} - {{ $jamCetak }}</div>
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Tgl Mulai</th>
+                <th>Nama Proyek</th>
+                <th>Total Pengeluaran</th>
+                <th>Piutang Vendor</th>
+                <th>Total TP+PV</th>
+                <th>Jenis Proyek</th>
+                <th>NETT</th>
+                <th>Persentage</th>
+                <th>Bobot</th>
+                <th>Sisa</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($resume as $i => $item)
+                <tr>
+                    <td>{{ $i + 1 }}</td>
+                    <td>{{  \Carbon\Carbon::parse($item['tgl_mulai'])->format('d/m/Y') }}</td>
+                    <td>{{ $item['nama_proyek'] }}</td>
+                    <td>Rp. {{ number_format($item['total_pengeluaran'], 0, ',', '.') }}</td>
+                    <td>Rp. {{ number_format($item['piutang_vendor'], 0, ',', '.') }}</td>
+                    <td>Rp. {{ number_format($item['total_tp_pv'], 0, ',', '.') }}</td>
+                    <td>{{ $item['jenis_proyek'] }}</td>
+                    <td>Rp. {{ number_format($item['net'], 0, ',', '.') }}</td>
+                    <td>{{ $item['persentase'] }}</td>
+                    <td>{{ $item['total_progres'] }}</td>
+                    <td>Rp. {{ number_format($item['sisa'], 0, ',', '.') }}</td>
+                    <td class="py-2">
+                                    @php $persen = $item['persentase']; @endphp
+                                    @if ($persen >= 100)
+                                        <span>FULL</span>
+                                    @elseif($persen >= 80)
+                                        <span>WARNING</span>
+                                    @elseif($persen >= 50)
+                                        <span>CAREFULL</span>
+                                    @elseif($persen <= 25)
+                                        <span>SAVE</span>
+                                    @else
+                                        <span>CAREFULL</span>
+                                    @endif
+                                </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+    <div>
+        <div class="footer-owner">
+            <p>{{ $role }}</p>
+            <p style="margin-top: 70px">{{ $owner }}</p>
+        </div>
+    </div>
+</body>
+
+</html>

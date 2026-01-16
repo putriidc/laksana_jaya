@@ -44,13 +44,15 @@ class TukangContentController extends Controller
         $admin        = Auth::user()->name ?? 'Administrator';
         $role         = Auth::user()->role ?? 'admin';
         $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak     = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
 
         $pdf = Pdf::loadView('admin.pinjaman-tukang.detail.print', compact(
             'pinjaman',
             'pinjamanContents',
             'admin',
             'role',
-            'tanggalCetak'
+            'tanggalCetak',
+            'jamCetak'
         ))->setPaper('A4', 'portrait');
 
         return $pdf->stream('detail-pinjaman-tukang.pdf');

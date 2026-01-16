@@ -26,7 +26,7 @@
         <div class="flex flex-col gap-y-5 mb-5">
             <div class="flex justify-between items-center">
                 <h1 class="text-2xl font-bold">Cash In</h1>
-                <a href="{{ route('laporanHarian.printCashIn') }}" target="_blank"
+                <a href="{{ route('laporanHarianOwner.printCashIn') }}" target="_blank"
                     class="border-2 border-[#9A9A9A] py-2 px-4 rounded-lg flex items-center gap-x-3 cursor-pointer">
                     <span class="text-[#72686B] font-medium">Cetak Data</span>
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[25px]">
@@ -88,7 +88,7 @@
         <div class="flex flex-col gap-y-5 mb-5 pb-8 border-b border-gray-400">
             <div class="flex justify-between items-center">
                 <h1 class="text-2xl font-bold">Cash Out</h1>
-                <a href="{{ route('laporanHarian.printCashOut') }}" target="_blank"
+                <a href="{{ route('laporanHarianOwner.printCashOut') }}" target="_blank"
                     class="border-2 border-[#9A9A9A] py-2 px-4 rounded-lg flex items-center gap-x-3 cursor-pointer">
                     <span class="text-[#72686B] font-medium">Cetak Data</span>
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[25px]">
@@ -161,7 +161,7 @@
                             <img src="{{ asset('assets/search-normal.png') }}" class="w-[25px]">
                         </button>
                     </form>
-                    <a href="{{ route('laporanHarian.printCashInGlobal', ['start_in' => request('start_in'), 'end_in' => request('end_in')]) }}"
+                    <a href="{{ route('laporanHarianOwner.printCashInGlobal', ['start_in' => request('start_in'), 'end_in' => request('end_in')]) }}"
                         target="_blank"
                         class="border-2 border-[#9A9A9A] py-2 px-4 rounded-lg flex items-center gap-x-3 cursor-pointer ml-1">
                         <span class="text-[#72686B] font-medium">Cetak Cash In</span>
@@ -240,7 +240,7 @@
                             <img src="{{ asset('assets/search-normal.png') }}" class="w-[25px]">
                         </button>
                     </form>
-                    <a href="{{ route('laporanHarian.printCashOutGlobal', ['start_out' => request('start_out'), 'end_out' => request('end_out')]) }}"
+                    <a href="{{ route('laporanHarianOwner.printCashOutGlobal', ['start_out' => request('start_out'), 'end_out' => request('end_out')]) }}"
                         target="_blank"
                         class="border-2 border-[#9A9A9A] py-2 px-4 rounded-lg flex items-center gap-x-3 cursor-pointer ml-1">
                         <span class="text-[#72686B] font-medium">Cetak Cash Out</span>

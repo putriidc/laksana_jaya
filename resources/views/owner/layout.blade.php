@@ -295,6 +295,23 @@
                         </button>
                     </a>
                     <a
+                        href="{{ route('users.index') }}"
+                        class="cursor-pointer"
+                    >
+                        <button
+                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
+                        >
+                            <img
+                                src="{{ asset('assets/navbar-owner/document.png') }}"
+                                alt="devices icon"
+                                class="max-[1200px]:scale-200"
+                            />
+                            <span class="max-[1200px]:hidden"
+                                >User Management</span
+                            >
+                        </button>
+                    </a>
+                    <a
                         href="#"
                         onclick="triggerCheckbox(event)"
                         class="cursor-pointer"
@@ -746,6 +763,8 @@
                         item.children[0].src = "{{ asset('assets/navbar-owner/book2-click.png') }}";
                     } else if (index == 11) {
                         item.children[0].src = "{{ asset('assets/navbar-owner/coin-click.png') }}";
+                    } else if (index == 12) {
+                        item.children[0].src = "{{ asset('assets/navbar-owner/document-click.png') }}";
                     }
             } else {
                 item.classList.remove(

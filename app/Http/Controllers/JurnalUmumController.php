@@ -135,8 +135,9 @@ class JurnalUmumController extends Controller
         $admin = Auth::user()->name ?? 'Administrator';
         $role = Auth::user()->role ?? 'admin';
         $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
 
-        $pdf = Pdf::loadView('admin.jurnal-umum.print', compact('jurnals', 'admin', 'role', 'tanggalCetak'))
+        $pdf = Pdf::loadView('admin.jurnal-umum.print', compact('jurnals', 'admin', 'role', 'tanggalCetak', 'jamCetak'))
             ->setPaper('A4', 'portrait');
 
         return $pdf->stream('jurnal-umum.pdf');

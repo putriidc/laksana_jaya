@@ -41,6 +41,7 @@ use App\Http\Controllers\NeracaOwnerController;
 use App\Http\Controllers\ProgresOwnerController;
 use App\Http\Controllers\SaldoAwalOwnerController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\UserController;
 use App\Models\AlatDibeli;
 use App\Models\AlatDipinjam;
 use App\Models\JurnalUmum;
@@ -70,6 +71,11 @@ Route::middleware('auth')->group(function () {
         Route::resource('karyawan', KaryawanController::class);
 
         Route::resource('proyek', ProyekController::class);
+
+        Route::get('/users', [UserController::class, 'index'])->name('users.index');
+        Route::post('/users', [UserController::class, 'store'])->name('users.store');
+        Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+        Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
         Route::get('jurnalUmums/print', [JurnalUmumController::class, 'print'])->name('jurnalUmums.print');
         Route::resource('jurnalUmums', JurnalUmumController::class)->except(['show']);
@@ -167,6 +173,7 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('supplier', SupplierController::class);
 
+        Route::get('hutang_vendor/print', [HutangVendorController::class, 'print'])->name('hutang_vendor.print');
         Route::resource('hutang_vendor', HutangVendorController::class);
         Route::put('/hutang_vendor/{id}/bayar', [HutangVendorController::class, 'bayar'])->name('hutang-vendor.bayar');
         // ADMIN KEUANGAN
@@ -258,6 +265,7 @@ Route::middleware('auth')->group(function () {
             ->name('jurnalOwner.storeBank');
         Route::post('/jurnalOwner/bulk-delete', [JurnalOwnerController::class, 'bulkDelete'])
             ->name('jurnalOwner.bulk-delete');
+
 
         Route::get('/proyekOwner', [ProyekOwnerController::class, 'index'])->name('proyekOwner.index');
         Route::get('/proyekOwner/indexManage', [ProyekOwnerController::class, 'indexManage'])->name('proyekOwner.indexManage');
@@ -394,6 +402,7 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('supplier', SupplierController::class);
 
+        Route::get('hutang_vendor/print', [HutangVendorController::class, 'print'])->name('hutang_vendor.print');
         Route::resource('hutang_vendor', HutangVendorController::class);
         Route::put('/hutang_vendor/{id}/bayar', [HutangVendorController::class, 'bayar'])->name('hutang-vendor.bayar');
         Route::post('/hutang_vendor/{id}/generate', [HutangVendorController::class, 'generate'])
@@ -419,60 +428,68 @@ Route::middleware('auth')->group(function () {
         Route::post('/pinjaman/{id}/decline', [AccTukangSpvController::class, 'decline'])
             ->name('pinjaman.decline');
 
-    Route::get('alats/{id}/printDibeli', [AlatController::class, 'printDibeli'])
-        ->name('alats.printDibeli');
-    Route::get('alats/{id}/printDihapus', [AlatController::class, 'printDihapus'])
-        ->name('alats.printDihapus');
-    Route::get('alats/{id}/printDipinjam', [AlatController::class, 'printDipinjam'])
-        ->name('alats.printDipinjam');
-    Route::get('alats/{id}/printDikembalikan', [AlatController::class, 'printDikembalikan'])
-        ->name('alats.printDikembalikan');
+        Route::get('alats/{id}/printDibeli', [AlatController::class, 'printDibeli'])
+            ->name('alats.printDibeli');
+        Route::get('alats/{id}/printDihapus', [AlatController::class, 'printDihapus'])
+            ->name('alats.printDihapus');
+        Route::get('alats/{id}/printDipinjam', [AlatController::class, 'printDipinjam'])
+            ->name('alats.printDipinjam');
+        Route::get('alats/{id}/printDikembalikan', [AlatController::class, 'printDikembalikan'])
+            ->name('alats.printDikembalikan');
 
-    Route::resource('barangs', BarangController::class);
-    Route::resource('alats', AlatController::class);
-    // data barang
-    Route::resource('accspv', AccTukangSpvController::class);
-    Route::post('/pinjaman/{id}/decline', [AccTukangSpvController::class, 'decline'])
-        ->name('pinjaman.decline');
+        Route::resource('barangs', BarangController::class);
+        Route::resource('alats', AlatController::class);
+        // data barang
+        Route::resource('accspv', AccTukangSpvController::class);
+        Route::post('/pinjaman/{id}/decline', [AccTukangSpvController::class, 'decline'])
+            ->name('pinjaman.decline');
 
-    // Transaksi Alat
-    Route::resource('alat-beli', AlatDibeliController::class);
-    Route::get('alat-beli/create/{kode_alat}', [AlatDibeliController::class, 'createForAlat'])
-        ->name('alat-beli.create.for-alat');
-    Route::resource('alat-hapus', AlatDihapusController::class);
-    Route::get('alat-hapus/create/{kode_alat}', [AlatDihapusController::class, 'createForAlat'])
-        ->name('alat-hapus.create.for-alat');
-    Route::resource('alat-pinjam', AlatDipinjamController::class);
-    Route::get('alat-pinjam/create/{kode_alat}', [AlatDipinjamController::class, 'createForAlat'])
-        ->name('alat-pinjam.create.for-alat');
-    Route::resource('alat-kembalikan', AlatDikembalikanController::class);
-    Route::get('alat-kembalikan/create/{kode_alat}', [AlatDikembalikanController::class, 'createForAlat'])
-        ->name('alat-kembalikan.create.for-alat');
-    // Transaksi Alat
+        // Transaksi Alat
+        Route::resource('alat-beli', AlatDibeliController::class);
+        Route::get('alat-beli/create/{kode_alat}', [AlatDibeliController::class, 'createForAlat'])
+            ->name('alat-beli.create.for-alat');
+        Route::resource('alat-hapus', AlatDihapusController::class);
+        Route::get('alat-hapus/create/{kode_alat}', [AlatDihapusController::class, 'createForAlat'])
+            ->name('alat-hapus.create.for-alat');
+        Route::resource('alat-pinjam', AlatDipinjamController::class);
+        Route::get('alat-pinjam/create/{kode_alat}', [AlatDipinjamController::class, 'createForAlat'])
+            ->name('alat-pinjam.create.for-alat');
+        Route::resource('alat-kembalikan', AlatDikembalikanController::class);
+        Route::get('alat-kembalikan/create/{kode_alat}', [AlatDikembalikanController::class, 'createForAlat'])
+            ->name('alat-kembalikan.create.for-alat');
+        // Transaksi Alat
 
-    // transaksi barang
-    Route::resource('barang-masuk', BarangMasukController::class);
-    Route::get('barang-masuk/create/{kode_barang}', [BarangMasukController::class, 'createForBarang'])
-        ->name('barang-masuk.create.for-barang');
+        // transaksi barang
+        Route::resource('barang-masuk', BarangMasukController::class);
+        Route::get('barang-masuk/create/{kode_barang}', [BarangMasukController::class, 'createForBarang'])
+            ->name('barang-masuk.create.for-barang');
 
-    Route::resource('barang-keluar', BarangKeluarController::class);
-    Route::get('barang-keluar/create/{kode_barang}', [BarangKeluarController::class, 'createForBarang'])
-        ->name('barang-keluar.create.for-barang');
+        Route::resource('barang-keluar', BarangKeluarController::class);
+        Route::get('barang-keluar/create/{kode_barang}', [BarangKeluarController::class, 'createForBarang'])
+            ->name('barang-keluar.create.for-barang');
 
-    Route::resource('barang-retur', barangReturController::class);
-    Route::get('barang-retur/create/{kode_barang}', [barangReturController::class, 'createForBarang'])
-        ->name('barang-retur.create.for-barang');
-    // transaksi barang
+        Route::resource('barang-retur', barangReturController::class);
+        Route::get('barang-retur/create/{kode_barang}', [barangReturController::class, 'createForBarang'])
+            ->name('barang-retur.create.for-barang');
+        // transaksi barang
 
-    // detail barang
-    Route::resource('AccEafSpv', AccEafSpvController::class);
-    Route::post('/Acceaf/{id}/decline', [AccEafSpvController::class, 'decline'])
-        ->name('Acceaf.decline');
-
+        // detail barang
+        Route::resource('AccEafSpv', AccEafSpvController::class);
+        Route::post('/Acceaf/{id}/decline', [AccEafSpvController::class, 'decline'])
+            ->name('Acceaf.decline');
     });
 
     Route::middleware('role:Owner')->group(function () {
         // owner
+        // user management
+        Route::get('/users', [UserController::class, 'index'])->name('users.index');
+        Route::post('/users', [UserController::class, 'store'])->name('users.store');
+        Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+        Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+        // user management
+        Route::get('print-pinjaman-owner', [AccOwnerController::class, 'printPinjaman'])->name('accownerPinjaman.print');
+        Route::get('print-kasbon-owner', [AccOwnerController::class, 'printKasbon'])->name('accownerKasbon.print');
+        Route::get('print-kasbontukang-owner', [AccOwnerController::class, 'printKasbonTukang'])->name('accownerKasbonTukang.print');
         Route::resource('accowner', AccOwnerController::class);
 
         Route::post('/pinjamanO/{id}/decline', [AccOwnerController::class, 'decline'])
@@ -494,11 +511,12 @@ Route::middleware('auth')->group(function () {
         Route::put('/accowner/{id}/updateKasbon', [AccOwnerController::class, 'updateKasbon'])
             ->name('accowner.updateKasbon');
 
+        Route::get('print-accEafOwner', [AccEafOwnerController::class, 'print'])->name('accEafOwner.print');
         Route::resource('AccEafOwner', AccEafOwnerController::class);
         Route::post('/AcceafO/{id}/decline', [AccEafOwnerController::class, 'decline'])
             ->name('AcceafO.decline');
 
-
+        Route::get('print-jurnalOnwner', [JurnalOwnerController::class, 'print'])->name('jurnalOwner.print');
         Route::resource('jurnalOwner', JurnalOwnerController::class)->except(['show']);
         Route::post('jurnalOwner/storeCashIn', [JurnalOwnerController::class, 'storeCashIn'])
             ->name('jurnalOwner.storeCashIn');
@@ -513,6 +531,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/jurnalOwner/bulk-delete', [JurnalOwnerController::class, 'bulkDelete'])
             ->name('jurnalOwner.bulk-delete');
 
+        Route::get('print-resume', [ProyekOwnerController::class, 'print'])->name('resume.print');
+        Route::get('print-data-management', [ProyekOwnerController::class, 'printManagement'])->name('dataManagement.print');
         Route::get('/proyekOwner', [ProyekOwnerController::class, 'index'])->name('proyekOwner.index');
         Route::get('/proyekOwner/indexManage', [ProyekOwnerController::class, 'indexManage'])->name('proyekOwner.indexManage');
         Route::get('/proyekOwner/indexResume', [ProyekOwnerController::class, 'indexResume'])->name('proyekOwner.indexResume');
@@ -532,6 +552,7 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('progresOwner', ProgresOwnerController::class);
 
+        Route::get('print-lajur', [NeracaOwnerController::class, 'printLajur'])->name('neracaLajur.print');
         Route::resource('neracaOwner', NeracaOwnerController::class);
 
         Route::get('labarugi/print', [LabaRugiController::class, 'print'])->name('labarugi.print');

@@ -422,8 +422,9 @@
                                     <td class="py-2">{{ $piutangHutang->kode_akun }}</td>
                                     <td class="py-2">{{ $piutangHutang->nama_akun }}</td>
                                     <td class="py-2">{{ $piutangHutang->akun_header }}</td>
-                                    <td class="flex justify-center items-center gap-x-2 py-2">
-                                        {{-- Tombol Edit --}}
+                                    <td class="py-2">
+                                        <div class="flex items-center justify-center gap-x-2">
+                                            {{-- Tombol Edit --}}
                                         <a href="{{ route('piutangHutang.edit', $piutangHutang->id) }}"
                                             class="btn btn-sm btn-primary">
                                             <img src="https://ar4n-group.com/public/assets/more-circle.png"
@@ -440,6 +441,7 @@
                                                     alt="delete icon" class="w-[22px] cursor-pointer">
                                             </button>
                                         </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
@@ -523,25 +525,27 @@
                                     <td class="py-2">{{ $proyek->nama_proyek }}</td>
                                     <td class="py-2">{{ $proyek->nama_perusahaan }}</td>
                                     <td class="py-2">{{ $proyek->jenis }}</td>
-                                    <td class="py-2">{{ 'RP. ' . number_format($proyek->nilai_kontrak, 0, ',', '.') }}
-                                    </td>
-                                    <td class="flex justify-center items-center gap-x-2 py-2">
-                                        {{-- Tombol Edit --}}
-                                        <a href="{{ route('proyek.edit', $proyek->id) }}" class="btn btn-sm btn-primary">
-                                            <img src="https://ar4n-group.com/public/assets/more-circle.png"
-                                                alt="edit icon" class="w-[22px] cursor-pointer">
-                                        </a>
-                                        <span class="border-black border-l-[1px] h-[22px]"></span>
-                                        {{-- Tombol Delete --}}
-                                        <form action="{{ route('proyek.destroy', $proyek->id) }}" method="POST"
-                                            class="h-[22px]">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                <img src="https://ar4n-group.com/public/assets/close-circle.png"
-                                                    alt="delete icon" class="w-[22px] cursor-pointer">
-                                            </button>
-                                        </form>
+                                    <td class="py-2">{{ 'RP. ' . number_format($proyek->nilai_kontrak, 0, ',', '.') }}</td>
+                                    <td class="py-2">
+                                        <div class="flex items-center justify-center gap-x-2">
+                                            {{-- Tombol Edit --}}
+                                            <a href="{{ route('proyek.edit', $proyek->id) }}"
+                                                class="btn btn-sm btn-primary">
+                                                <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
+                                                    class="w-[22px] cursor-pointer">
+                                            </a>
+                                            <span class="border-black border-l-[1px] h-[22px]"></span>
+                                            {{-- Tombol Delete --}}
+                                            <form action="{{ route('proyek.destroy', $proyek->id) }}" method="POST"
+                                                class="h-[22px]">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                                    <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                        class="w-[22px] cursor-pointer">
+                                                </button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
@@ -574,23 +578,26 @@
                                     <td class="py-2">{{ $item->alamat }}</td>
                                     <td class="py-2">{{ $item->marketing }}</td>
                                     <td class="py-2">{{ $item->no_hp }}</td>
-                                    <td class="flex justify-center items-center gap-x-2 py-2">
-                                        {{-- Tombol Edit --}}
-                                        <a href="{{ route('supplier.edit', $item->id) }}" class="btn btn-sm btn-primary">
-                                            <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
-                                                class="w-[22px] cursor-pointer">
-                                        </a>
-                                        <span class="border-black border-l-[1px] h-[22px]"></span>
-                                        {{-- Tombol Delete --}}
-                                        <form action="{{ route('supplier.destroy', $item->id) }}" method="POST"
-                                            class="h-[22px]">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                    <td class="py-2">
+                                        <div class="flex items-center justify-center gap-x-2">
+                                            {{-- Tombol Edit --}}
+                                            <a href="{{ route('supplier.edit', $item->id) }}"
+                                                class="btn btn-sm btn-primary">
+                                                <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
                                                     class="w-[22px] cursor-pointer">
-                                            </button>
-                                        </form>
+                                            </a>
+                                            <span class="border-black border-l-[1px] h-[22px]"></span>
+                                            {{-- Tombol Delete --}}
+                                            <form action="{{ route('supplier.destroy', $item->id) }}" method="POST"
+                                                class="h-[22px]">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                                    <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
+                                                        class="w-[22px] cursor-pointer">
+                                                </button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

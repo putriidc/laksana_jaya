@@ -14,12 +14,12 @@
 
             <div class="flex items-center">
                 <label class="w-[180px] font-medium">Tgl Mulai</label>
-                <input type="date" name="tgl_mulai" value="{{ $sampingan->tgl_mulai }}" class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
+                <input type="text" name="tgl_mulai" data-flatpickr placeholder="Tanggal Mulai" value="{{ $sampingan->tgl_mulai }}" class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
             </div>
 
             <div class="flex items-center">
                 <label class="w-[180px] font-medium">Tgl Selesai</label>
-                <input type="date" name="tgl_selesai" value="{{ $sampingan->tgl_selesai }}" class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
+                <input type="text" name="tgl_selesai" data-flatpickr placeholder="Tanggal Selesai" value="{{ $sampingan->tgl_selesai }}" class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
             </div>
 
             <div class="flex items-center">

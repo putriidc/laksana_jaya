@@ -184,7 +184,7 @@
                         </button>
                     </a>
                     @endif
-                    <a
+                    {{-- <a
                         href="{{ route('eaf.index') }}"
                         class="cursor-pointer"
                     >
@@ -200,7 +200,7 @@
                             />
                             <span class="max-[1300px]:hidden">Form EAF</span>
                         </button>
-                    </a>
+                    </a> --}}
                     <a
                         href="{{ route('laporanHarian.index') }}"
                         class="cursor-pointer"
@@ -252,7 +252,74 @@
                             <span class="max-[1300px]:hidden">Hutang Vendor</span>
                         </button>
                     </a>
-
+                    <a
+                        href="#"
+                        onclick="triggerCheckbox2(event)"
+                        class="cursor-pointer"
+                    >
+                        <button
+                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1300px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
+                        >
+                            {{-- Bagian yang di responsive --}}
+                            <img
+                                src="{{ asset('assets/navbar-kepala-gudang/home-2.png') }}"
+                                alt="devices icon"
+                                class="max-[1300px]:scale-200"
+                            />
+                            <span class="max-[1300px]:hidden">Transaksi Proyek</span>
+                            <img
+                                src="{{ asset('assets/arrow-down.png') }}"
+                                alt=""
+                                class="ml-8 transition-all duration-300 ease-in-out max-[1300px]:hidden"
+                                id="arrowDataProyek2"
+                            />
+                        </button>
+                    </a>
+                    <input
+                        type="checkbox"
+                        name=""
+                        id="triggerMe2"
+                        class="hidden"
+                    />
+                    <div
+                        class="hidden flex-col items-center gap-y-3"
+                        id="dropdownDataProyek2"
+                    >
+                        <a
+                            href="{{ route('eaf.index') }}"
+                            class="cursor-pointer"
+                        >
+                            <button
+                                class="bg-white text-[#353132] flex items-center justify-start gap-x-5 w-[250px] max-[1300px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)] hover:bg-linear-to-r hover:from-[#DD4049] hover:to-[#F9E52D] hover:text-white"
+                            >
+                                <img
+                                    src="{{ asset('assets/navbar-owner/document.png') }}"
+                                    alt="devices icon"
+                                    class="max-[1300px]:scale-200"
+                                />
+                                <span class="text-center max-[1300px]:hidden"
+                                    >EAF</span
+                                >
+                            </button>
+                        </a>
+                        <a
+                            href="/nota-langsung"
+                            class="cursor-pointer"
+                        >
+                            <button
+                                class="bg-white text-[#353132] flex items-center justify-start gap-x-5 w-[250px] max-[1300px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)] hover:bg-linear-to-r hover:from-[#DD4049] hover:to-[#F9E52D] hover:text-white"
+                            >
+                                <img
+                                    src="{{ asset('assets/navbar-owner/document.png') }}"
+                                    alt="devices icon"
+                                    class="max-[1300px]:scale-200"
+                                />
+                                <span class="text-center max-[1300px]:hidden"
+                                    >Nota Langsung</span
+                                >
+                            </button>
+                        </a>
+                    </div>
                     {{--
                     <a href="" class="cursor-pointer">
                         <button
@@ -350,11 +417,18 @@
             const children = sideNavbarContent.querySelectorAll("a, button");
             const imgChild = sideNavbarContent.querySelectorAll("img");
             const spanChild = sideNavbarContent.querySelectorAll("span");
+            const dropdownDataProyek2 = document.getElementById(
+                "dropdownDataProyek2"
+            );
+            const childDropdown2 = dropdownDataProyek2.querySelectorAll("a, button");
+            const arrow2 = document.getElementById("arrowDataProyek2");
             buttonView.addEventListener("click", () => {
                 buttonView.classList.toggle("left-10");
                 buttonView.classList.toggle("left-[267px]");
                 arrowButton.classList.toggle("rotate-[-90deg]");
                 arrowButton.classList.toggle("rotate-[180deg]");
+                arrow2.classList.toggle("max-[1300px]:hidden");
+                arrow2.classList.toggle("max-[1300px]:scale-200");
                 nav.classList.toggle("max-[1300px]:w-[60px]");
                 nav.classList.toggle("max-[1300px]:w-[280px]");
                 logoFull.classList.toggle("max-[1300px]:hidden");
@@ -370,7 +444,29 @@
                 spanChild.forEach((item, index) => {
                     item.classList.toggle("max-[1300px]:hidden");
                 });
+                childDropdown2.forEach((item, index) => {
+                    item.classList.toggle("max-[1300px]:ml-[-67px]");
+                });
             });
+
+            function triggerCheckbox2(event) {
+                event.preventDefault(); // Mencegah scroll ke atas karena href="#"
+
+                const checkbox = document.getElementById("triggerMe2");
+                console.log('test_2')
+
+                // Cara 1: Meniru klik manusia (akan memicu event listener 'change' jika ada)
+                checkbox.click();
+                if (checkbox.checked) {
+                    dropdownDataProyek2.classList.remove('hidden');
+                    dropdownDataProyek2.classList.add('flex');
+                    arrow2.classList.add('-rotate-90');
+                } else {
+                    dropdownDataProyek2.classList.add('hidden');
+                    dropdownDataProyek2.classList.remove('flex');
+                    arrow2.classList.remove('-rotate-90');
+                }
+            }
 
             // menyimpan focus pada sidebar ketika di klik
             const link = document.querySelectorAll("nav a button");
@@ -399,14 +495,21 @@
                             item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
                         } else if (index == 3) {
                             item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
-                        } else if (index == 4) {
-                            item.children[0].src = "{{ asset('assets/navbar/receipt-click.png') }}";
-                        } else if (index == 5) {
+                        } 
+                        // else if (index == 4) {
+                        //     item.children[0].src = "{{ asset('assets/navbar/receipt-click.png') }}";}    
+                        else if (index == 4) {
                             item.children[0].src = "{{ asset('assets/navbar/status-up-click.png') }}";
-                        } else if (index == 6) {
+                        } else if (index == 5) {
                             item.children[0].src = "{{ asset('assets/navbar/book-click.png') }}";
-                        } else if (index == 7) {
+                        } else if (index == 6) {
                             item.children[0].src = "{{ asset('assets/navbar/receipt-discount-click.png') }}";
+                        } else if (index == 7) {
+                            item.children[0].src = "{{ asset('assets/navbar/home-click.png') }}";
+                        } else if (index == 8) {
+                            item.children[0].src = "{{ asset('assets/navbar-owner/document-click.png') }}";
+                        } else if (index == 9) {
+                            item.children[0].src = "{{ asset('assets/navbar-owner/document-click.png') }}";
                         }
                     } else if (user == "Adnin 2") {
                         if (index == 0) {
@@ -419,14 +522,22 @@
                             item.children[0].src = "{{ asset('assets/navbar/home-hashtag-click.png') }}";
                         } else if (index == 4) {
                             item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
-                        } else if (index == 5) {
-                            item.children[0].src = "{{ asset('assets/navbar/receipt-click.png') }}";
-                        } else if (index == 6) {
+                        } 
+                        // else if (index == 5) {
+                        //     item.children[0].src = "{{ asset('assets/navbar/receipt-click.png') }}";
+                        // } 
+                        else if (index == 5) {
                             item.children[0].src = "{{ asset('assets/navbar/status-up-click.png') }}";
-                        } else if (index == 7) {
+                        } else if (index == 6) {
                             item.children[0].src = "{{ asset('assets/navbar/book-click.png') }}";
-                        } else if (index == 8) {
+                        } else if (index == 7) {
                             item.children[0].src = "{{ asset('assets/navbar/receipt-discount-click.png') }}";
+                        } else if (index == 8) {
+                            item.children[0].src = "{{ asset('assets/navbar/home-click.png') }}";
+                        } else if (index == 9) {
+                            item.children[0].src = "{{ asset('assets/navbar-owner/document-click.png') }}";
+                        } else if (index == 10) {
+                            item.children[0].src = "{{ asset('assets/navbar-owner/document-click.png') }}";
                         }
                     } else {
                         if (index == 0) {
@@ -441,14 +552,22 @@
                             item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
                         } else if (index == 5) {
                             item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
-                        } else if (index == 6) {
-                            item.children[0].src = "{{ asset('assets/navbar/receipt-click.png') }}";
-                        } else if (index == 7) {
+                        } 
+                        // else if (index == 6) {
+                        //     item.children[0].src = "{{ asset('assets/navbar/receipt-click.png') }}";
+                        // } 
+                        else if (index == 6) {
                             item.children[0].src = "{{ asset('assets/navbar/status-up-click.png') }}";
-                        } else if (index == 8) {
+                        } else if (index == 7) {
                             item.children[0].src = "{{ asset('assets/navbar/book-click.png') }}";
-                        } else if (index == 9) {
+                        } else if (index == 8) {
                             item.children[0].src = "{{ asset('assets/navbar/receipt-discount-click.png') }}";
+                        } else if (index == 9) {
+                            item.children[0].src = "{{ asset('assets/navbar/home-click.png') }}";
+                        } else if (index == 10) {
+                            item.children[0].src = "{{ asset('assets/navbar-owner/document-click.png') }}";
+                        } else if (index == 11) {
+                            item.children[0].src = "{{ asset('assets/navbar-owner/document-click.png') }}";
                         }
                     }
                 } else {

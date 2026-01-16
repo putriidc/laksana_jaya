@@ -8,6 +8,7 @@ use App\Models\Proyek;
 use App\Models\Supplier;
 use App\Models\JurnalUmum;
 use App\Models\HutangVendor;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,6 +26,21 @@ class HutangVendorController extends Controller
         $today = Carbon::now('Asia/Jakarta')->toDateString();
 
         return view('admin.hutang-vendor.data', compact('hutangVendors', 'suppliers', 'proyeks', 'bank', 'today'));
+    }
+
+    public function print()
+    {
+        $query = HutangVendor::active();
+        $hutangVendors = $query->orderBy('tgl_hutang', 'desc')->get();
+        $admin = Auth::user()->name ?? 'Administrator';
+        $role = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('admin.hutang-vendor.print', compact('hutangVendors', 'admin', 'role', 'tanggalCetak', 'jamCetak'))
+            ->setPaper('A4', 'portrait');
+
+        return $pdf->stream('hutang-vendor.pdf');
     }
     /**
      * Tampilkan form create hutang vendor.

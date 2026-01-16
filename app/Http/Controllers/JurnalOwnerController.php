@@ -77,20 +77,62 @@ class JurnalOwnerController extends Controller
 
     public function print(Request $request)
     {
-        $query = JurnalUmum::active();
+        $query = JurnalUmum::active()->where('created_by', 'owner');
 
+        // Cek apakah user isi tanggal
         if ($request->filled('start') && $request->filled('end')) {
             $start = Carbon::parse($request->start)->startOfDay();
             $end = Carbon::parse($request->end)->endOfDay();
+
             $query->whereBetween('tanggal', [$start, $end]);
         }
 
-        $jurnals = $query->orderBy('tanggal', 'desc')->get();
-        $admin = Auth::user()->name ?? 'Administrator';
-        $role = Auth::user()->role ?? 'admin';
-        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        //debit
+        $akun = Asset::active()
+            ->where(function ($query) {
+                $query->whereIn('akun_header', ['asset_lancar_bank', 'asset_tetap', 'kewajiban', 'ekuitas', 'pendapatan']);
+            })
+            ->get();
 
-        $pdf = Pdf::loadView('admin.jurnal-umum.print', compact('jurnals', 'admin', 'role', 'tanggalCetak'))
+
+        $bank = Asset::Active()
+            ->where('akun_header', 'asset_lancar_bank')
+            ->get();
+        $kredit = Asset::Active()
+            ->whereIn('nama_akun', [
+                'Pendapatan Proyek Fisik',
+                'Pendapatan Konsultan',
+                'Pendapatan Online',
+                'Pendapatan AR4N Bangunan',
+                'Pendapatan Lain-Lain',
+                'Pendapatan PBG',
+                'Pendapatan Mining'
+            ])
+            ->get();
+
+        $daftarProyek = Proyek::active()
+            ->pluck('nama_proyek')
+            ->filter()
+            ->values();        // reset index biar rapi
+        $daftarAkun = Asset::active()
+            ->pluck('nama_akun')
+            ->filter()
+            ->values();
+
+        if ($request->filled('filter_proyek')) {
+            $query->whereIn('nama_proyek', $request->filter_proyek);
+        }
+        if ($request->filled('filter_akun')) {
+            $query->whereIn('nama_perkiraan', $request->filter_akun);
+        }
+
+        $jurnals = $query->orderBy('tanggal', 'desc')->get();
+        $owner = Auth::user()->name ?? 'Rian';
+        $role = Auth::user()->role ?? 'owner';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('owner.jurnal.print', compact('jurnals', 'owner', 'role', 'tanggalCetak', 'jamCetak'))
             ->setPaper('A4', 'portrait');
 
         return $pdf->stream('jurnal-umum.pdf');

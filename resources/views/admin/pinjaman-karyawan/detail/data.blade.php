@@ -93,7 +93,7 @@
                                                     class="w-[20px] cursor-pointer">
                                             </a>
                                         @endif
-                                        {{-- <span class="border-black border-l-[1px] h-[22px]"></span> --}}
+                                        <span class="border-black border-l-[1px] h-[22px]"></span>
                                         @if ($item->jenis === 'pinjam')
                                             {{ 'Edit' }}
                                         @else

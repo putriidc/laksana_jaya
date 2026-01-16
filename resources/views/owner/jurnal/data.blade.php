@@ -63,13 +63,16 @@
                             class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
                             <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" class="w-[20px]">
                         </button>
-                        <a href="{{ route('jurnalUmums.print', ['start' => request('start'), 'end' => request('end')]) }}"
+                        <a href="{{ route('jurnalOwner.print', ['start' => request('start'), 'end' => request('end')]) }}"
                             class="flex items-center gap-x-3 border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer "
                             target="_blank"><img src="{{ asset('assets/printer.png') }}" alt="printer icon"
                                 class="w-[20px]">
                         </a>
                     </div>
                 </form>
+            </div>
+            <div class="mb-2">
+                <button ype="button" onclick="bulkDelete()" id="btn-bulk-delete" class="border border-[#FF4B45] rounded-lg p-2 text-[#FF4B45] cursor-pointer">Hapus <span id="count-selected">0</span> Data</button>
             </div>
             <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1200px]:overflow-x-auto">
                 <table class="table-fixed text-center text-sm w-full max-[1200px]:w-[1200px]">

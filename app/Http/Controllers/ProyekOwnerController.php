@@ -12,6 +12,7 @@ use App\Models\KontrakProyek;
 use App\Models\DataPerusahaan;
 use App\Models\HutangVendor;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ProyekOwnerController extends Controller
 {
@@ -95,6 +96,85 @@ class ProyekOwnerController extends Controller
         });
 
         return view('owner.resume.data', compact('resume'));
+    }
+
+    public function print()
+    {
+        $proyeks = Proyek::active()->get();
+        $assetBankAccounts = Asset::where('akun_header', 'asset_lancar_bank')->pluck('nama_akun');
+        $resume = $proyeks->map(function ($proyek) use ($assetBankAccounts) {
+            $jurnal = JurnalUmum::where('nama_proyek', $proyek->nama_proyek)->where('nama_perkiraan', '!=', 'Piutang Proyek')->whereNotIn('nama_perkiraan', $assetBankAccounts)->get();
+            $totalPengeluaran = $jurnal->sum('debit');
+            $kontrak = KontrakProyek::where('kode_proyek', $proyek->kode_akun)->first();
+            $net = $kontrak->net ?? 0;
+
+            $dataPerusahaan = DataPerusahaan::whereNull('deleted_at')
+                ->where('nama_paket', $proyek->nama_proyek)
+                ->first();
+
+            $progres = collect(); // default kosong
+
+            if ($dataPerusahaan) {
+                $progres = Progres::where('kode_paket', $dataPerusahaan->kode_paket)
+                    ->whereNull('deleted_at')
+                    ->orderBy('minggu', 'asc')
+                    ->get();
+            }
+
+            // Hitung total progres (maksimal 100%)
+            $totalProgress = $progres->sum('persen');
+            if ($totalProgress > 100) {
+                $totalProgress = 100;
+            }
+            $Hutang_vendor = HutangVendor::active()
+                ->where('kode_proyek', $proyek->kode_akun)
+                ->first();
+
+            $piutangVendor = 0; // default
+
+            if ($Hutang_vendor) {
+                $piutangVendor = $Hutang_vendor->is_generate ? 0 : $Hutang_vendor->nominal;
+            }
+
+            return [
+                'nama_proyek' => $proyek->nama_proyek,
+                'nilai_kontrak' => $proyek->nilai_kontrak,
+                'tgl_mulai' => $proyek->tgl_mulai,
+                'jenis_proyek' => $proyek->jenis ?? '-',
+                'total_pengeluaran' => $totalPengeluaran,
+                'piutang_vendor' => $piutangVendor,
+                'total_tp_pv' => $totalPengeluaran + $piutangVendor,
+                'persentase' => $net > 0 ? ($totalPengeluaran / $net) * 100 : 0,
+                'sisa' => $net - $totalPengeluaran,
+                'net' => $net,
+                'total_progres' => $totalProgress ?? 0,
+            ];
+        });
+
+        $owner = Auth::user()->name ?? 'Rian';
+        $role = Auth::user()->role ?? 'owner';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('owner.resume.print', compact('resume', 'owner', 'role', 'tanggalCetak', 'jamCetak'))
+            ->setPaper('A4', 'landscape');
+
+        return $pdf->stream('resume-proyek.pdf');
+    }
+
+    public function printManagement()
+    {
+        $kontraks = KontrakProyek::whereNull('deleted_at')->get();
+
+        $owner = Auth::user()->name ?? 'Rian';
+        $role = Auth::user()->role ?? 'owner';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('owner.management.print', compact('kontraks', 'owner', 'role', 'tanggalCetak', 'jamCetak'))
+            ->setPaper('A4', 'landscape');
+
+        return $pdf->stream('data-management.pdf');
     }
 
 

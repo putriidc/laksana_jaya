@@ -78,18 +78,21 @@
         .text-right { text-align: right; }
         .font-bold { font-weight: bold; }
 
-        /* Footer Cetak */
-        .footer-print {
-            margin-top: 50px;
-            margin-right: 40px;
-            text-align: right;
-            color: #999;
-            font-size: 12px;
+        .footer-owner {
+            margin-top: 40px;
+            font-size: 11px;
+            width: 100px;
+            /* atau sesuai lebar yang kamu mau */
+            text-align: center;
+            float: left;
         }
-        .footer-print .name {
-            font-weight: bold;
-            color: #666;
-            margin-bottom: 30px;
+        .footer-admin {
+            margin-top: 40px;
+            font-size: 11px;
+            width: 100px;
+            /* atau sesuai lebar yang kamu mau */
+            text-align: center;
+            float: right;
         }
 
         /* Penanganan Page Break */
@@ -102,7 +105,7 @@
         <img src="{{ public_path('assets/logo-font.png') }}" class="logo" alt="AR4N Logo">
         <h1 class="title">LAPORAN BUKU BESAR – {{ strtoupper($account->nama_akun) }}</h1>
     </div>
-
+    <div>Dicetak pada: {{ $tanggalCetak }} - {{ $jamCetak }}</div>
     <div class="table-container">
         <table>
             <thead>
@@ -136,10 +139,15 @@
         </table>
     </div>
 
-    <div class="footer-print">
-        <p>Di cetak oleh,</p>
-        <p class="name">Admin Keuangan – {{ $admin }}</p>
-        <p>{{ $tanggalCetak }}</p>
+    <div>
+        <div class="footer-owner">
+            <p>Owner</p>
+            <p style="margin-top: 70px">Rian Purnama</p>
+        </div>
+        <div class="footer-admin">
+            <p>Admin Kuangan</p>
+            <p style="margin-top: 70px">{{ $admin }}</p>
+        </div>
     </div>
 
 </body>

@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Asset;
 use App\Models\Proyek;
 use App\Models\JurnalUmum;
+use App\Models\Karyawan;
 use App\Models\KasbonTukang;
 use Illuminate\Http\Request;
 use App\Models\KasbonContent;
@@ -13,7 +14,8 @@ use App\Models\TukangContent;
 use App\Models\PinjamanContent;
 use App\Models\PinjamanKaryawan;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\DB;
 
 class AccOwnerController extends Controller
 {
@@ -345,9 +347,79 @@ class AccOwnerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    // public function show(string $id)
+    // {
+    //     //
+    // }
+
+    public function printPinjaman()
     {
-        //
+        $pinjamans = DB::table('pinjaman_contents')
+        // Join ke tabel perantara (karyawan_pinjamans)
+        ->join('karyawans', 'pinjaman_contents.kode_karyawan', '=', 'karyawans.kode_karyawan')
+        ->select(
+           'pinjaman_contents.*', 
+            'karyawans.nama as nama_karyawan' // Kita ambil namanya saja
+        )
+        ->whereNull('pinjaman_contents.deleted_at')
+        ->orderBy('pinjaman_contents.tanggal', 'desc')
+        ->get();
+
+        $owner = Auth::user()->name ?? 'Rian';
+        $role = Auth::user()->role ?? 'owner';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('owner.pinjaman-karyawan.printPinjaman', compact('pinjamans', 'owner', 'role', 'tanggalCetak', 'jamCetak'))
+            ->setPaper('A4', 'portrait');
+
+        return $pdf->stream('Pinjaman-Karyawan.pdf');
+    }
+    public function printKasbon()
+    {
+        $kasbons = DB::table('kasbon_contents')
+        // Join ke tabel perantara (karyawan_kasbons)
+        ->join('karyawans', 'kasbon_contents.kode_karyawan', '=', 'karyawans.kode_karyawan')
+        ->select(
+           'kasbon_contents.*', 
+            'karyawans.nama as nama_karyawan' // Kita ambil namanya saja
+        )
+        ->whereNull('kasbon_contents.deleted_at')
+        ->orderBy('kasbon_contents.tanggal', 'desc')
+        ->get();
+
+        $owner = Auth::user()->name ?? 'Rian';
+        $role = Auth::user()->role ?? 'owner';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('owner.pinjaman-karyawan.printKasbon', compact('kasbons', 'owner', 'role', 'tanggalCetak', 'jamCetak'))
+            ->setPaper('A4', 'portrait');
+
+        return $pdf->stream('Kasbon-Karyawan.pdf');
+    }
+    public function printKasbonTukang()
+    {
+        $kasbons = DB::table('tukang_contents')
+        // Join ke tabel perantara (karyawan_kasbons)
+        ->join('kasbon_tukangs', 'tukang_contents.kode_kasbon', '=', 'kasbon_tukangs.kode_kasbon')
+        ->select(
+           'tukang_contents.*', 
+            'kasbon_tukangs.nama_tukang as nama_tukang' // Kita ambil namanya saja
+        )
+        ->whereNull('tukang_contents.deleted_at')
+        ->orderBy('tukang_contents.tanggal', 'desc')
+        ->get();
+
+        $owner = Auth::user()->name ?? 'Rian';
+        $role = Auth::user()->role ?? 'owner';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('owner.pinjaman-karyawan.printKasbonTukang', compact('kasbons', 'owner', 'role', 'tanggalCetak', 'jamCetak'))
+            ->setPaper('A4', 'portrait');
+
+        return $pdf->stream('Pinjaman-Tukang.pdf');
     }
 
     /**
