@@ -951,7 +951,7 @@
                                 });
 
                                 // // kirim pakai fetch
-                                // const formData = new FormData(form);
+                                const formData = new FormData(form);
 
                                 fetch(form.action, {
                                         method: "POST",
