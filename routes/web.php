@@ -36,6 +36,7 @@ use App\Http\Controllers\pinjamanTukangController;
 use App\Http\Controllers\PinjamanContentController;
 use App\Http\Controllers\PinjamanKaryawanController;
 use App\Http\Controllers\BukuBesarController;
+use App\Http\Controllers\DashboardOwnerController;
 use App\Http\Controllers\HutangVendorController;
 use App\Http\Controllers\NeracaOwnerController;
 use App\Http\Controllers\ProgresOwnerController;
@@ -289,9 +290,9 @@ Route::middleware('auth')->group(function () {
         Route::resource('neracaOwner', NeracaOwnerController::class);
 
 
-        Route::get('/owner-dashboard', function () {
-            return view('owner.dashboard');
-        });
+        // Route::get('/owner-dashboard', function () {
+        //     return view('owner.dashboard');
+        // });
 
         Route::resource('saldo', SaldoAwalOwnerController::class);
         // owner
@@ -487,6 +488,10 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('role:Owner')->group(function () {
         // owner
+        // dashboard
+        Route::get('/owner-dashboard', [DashboardOwnerController::class, 'index'])->name('owner-dashboard', DashboardOwnerController::class);
+        Route::resource('labarugi', LabaRugiController::class);
+        // dashboard
         // user management
         Route::get('/users', [UserController::class, 'index'])->name('users.index');
         Route::post('/users', [UserController::class, 'store'])->name('users.store');
@@ -562,9 +567,9 @@ Route::middleware('auth')->group(function () {
         Route::resource('neracaOwner', NeracaOwnerController::class);
 
 
-        Route::get('/owner-dashboard', function () {
-            return view('owner.dashboard');
-        });
+        // Route::get('/owner-dashboard', function () {
+        //     return view('owner.dashboard');
+        // });
 
         Route::resource('saldo', SaldoAwalOwnerController::class);
 

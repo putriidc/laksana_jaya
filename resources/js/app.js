@@ -4,6 +4,9 @@ import "./bootstrap";
 import Swal from "sweetalert2";
 window.Swal = Swal; // Pastikan Swal tersedia secara global
 
+import Chart from "chart.js/auto";
+window.Chart = Chart; // Ini penting supaya bisa dipanggil di tag <script> Blade
+
 // Import modul notifikasi yang baru dibuat
 import { showFlashMessages } from "../../public/js/notification.js";
 
