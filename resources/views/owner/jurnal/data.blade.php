@@ -1036,16 +1036,14 @@
                         <div class="flex items-center mt-4">
                             <label for="tanggal" class="font-medium w-[150px]">Dari Akun / Debet</label>
                             <div class="flex items-center w-full justify-between">
-                                <select name="from" id="namaPerkiraan" class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none" required>
-                                        <option selected disabled>-Pilih Akun-</option>
+                                <select name="from" id="From" class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none" required>
                                         @foreach ($akun as $item)
                                         <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
                                         @endforeach
                                 </select>
                                 <div class="flex items-center w-[350px]">
                                     <label for="kode_akun" class="font-medium w-[35%]">Ke Akun / Kredit</label>
-                                    <select name="to" id="namaPerkiraanTo" class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none" required>
-                                        <option selected disabled>-Pilih Akun-</option>
+                                    <select name="to" id="To" class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none" required>
                                         @foreach ($akun as $item)
                                         <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
                                         @endforeach
@@ -1085,13 +1083,13 @@
                     showCloseButton: false,
                     showConfirmButton: false,
                     didOpen: () => {
-                        new TomSelect('#namaPerkiraan', {
+                        new TomSelect('#From', {
                             placeholder: 'Cari akun...',
                             create: false,
                             maxItems: 1,
                             hideSelected: true,
 
-                        });new TomSelect('#namaPerkiraanTo', {
+                        });new TomSelect('#To', {
                             placeholder: 'Cari akun...',
                             create: false,
                             maxItems: 1,
