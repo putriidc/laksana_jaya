@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('kode_alat');
             $table->integer('qty');
             $table->text('keterangan')->nullable();
+            $table->string('proyek')->nullable();
+            $table->string('pic')->nullable();
             $table->date('tanggal')->nullable();
             $table->string('refrensi')->nullable();
             $table->string('created_by')->nullable();

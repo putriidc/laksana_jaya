@@ -44,7 +44,11 @@ class AlatDikembalikanController extends Controller
             return redirect()->back()->with('error', 'Data alat yang dipinjam tidak ditemukan');
         }
         $alatPinjam->update(['deleted_at' => Carbon::now('Asia/Jakarta')]);
-        // dd($request->all());
+        
+        // pada proyek ambil nama proyek dan pic
+        $proyek = Proyek::where('kode_akun', $request->kode_akun)->first();
+        $pic = $proyek->pic;
+        $nama_proyek = $proyek->nama_proyek;
 
         // Simpan barang masuk
         $alatMasuk = AlatDikembalikan::create([
@@ -62,7 +66,8 @@ class AlatDikembalikanController extends Controller
         if ($alat) {
             $alat->increment('stok', $request->qty);
         }
-        CatatStok($request->kode_alat, $request->qty, 'Stok Alat Dikembalikan', $alatMasuk->id);
+        
+        CatatStok($request->kode_alat, $nama_proyek, $pic, $request->qty, 'Stok Alat Dikembalikan', $alatMasuk->id);
         return redirect()->route('alats.show', $alat->id)->with('success', 'Stok Alat berhasil dikembalikan');
     }
 
@@ -96,6 +101,11 @@ class AlatDikembalikanController extends Controller
         $alatDikembalikan = AlatDikembalikan::findOrFail($id);
         $alat = alat::where('kode_alat', $alatDikembalikan->kode_alat)->first();
 
+        // pada proyek ambil nama proyek dan pic
+        $proyek = Proyek::where('kode_akun', $request->kode_akun)->first();
+        $pic = $proyek->pic;
+        $nama_proyek = $proyek->nama_proyek;
+
         if ($alat) {
             // 1. Kembalikan stok ke posisi sebelum transaksi ini
             $alat->decrement('stok', $alatDikembalikan->qty);
@@ -122,7 +132,7 @@ class AlatDikembalikanController extends Controller
             'qty'         => $request->qty,
         ]);
 
-        CatatStok($request->kode_alat, $request->qty, 'Stok Alat Dikembalikan telah Diedit', $alatDikembalikan->id);
+        CatatStok($request->kode_alat, $nama_proyek, $pic, $request->qty, 'Stok Alat Dikembalikan telah Diedit', $alatDikembalikan->id);
         return redirect()->route('alats.show', $alat->id)->with('success', 'Stok Alat Dikembalikan berhasil diupdate');
     }
 
@@ -136,13 +146,18 @@ class AlatDikembalikanController extends Controller
             $alat->decrement('stok', $alatDikembalikan->qty);
         }
 
+        // pada proyek ambil nama proyek dan pic
+        $proyek = Proyek::where('kode_akun', $alatDikembalikan->kode_akun)->first();
+        $pic = $proyek->pic;
+        $nama_proyek = $proyek->nama_proyek;
+
         $alatPinjam = AlatDipinjam::where('id', $alatDikembalikan->id_pinjaman)->first();
         $alatPinjam->update(['deleted_at' => null]);
 
         // Soft delete
         $alatDikembalikan->update(['deleted_at' => Carbon::now('Asia/Jakarta')]);
-        CatatStok($alatDikembalikan->kode_alat, $alatDikembalikan->qty, 'Stok Alat Dikembalikan Di Hapus', $alatDikembalikan->id);
+        CatatStok($alatDikembalikan->kode_alat, $nama_proyek, $pic, $alatDikembalikan->qty, 'Stok Alat Dikembalikan Di Hapus', $alatDikembalikan->id);
 
-        return redirect()->route('alats.show', $alat->id)->with('success', 'Stok Alat Dibeli berhasil dihapus');
+        return redirect()->route('alats.show', $alat->id)->with('success', 'Stok Alat Dikembalikan berhasil dihapus');
     }
 }

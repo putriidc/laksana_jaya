@@ -59,23 +59,29 @@ class AlatDipinjamController extends Controller
             'qty'         => 'required|integer|min:1',
         ]);
 
-        // Simpan barang masuk
-        $alatMasuk = AlatDipinjam::create([
-            'kode_alat' => $request->kode_alat,
-            'kode_akun' => $request->kode_akun,
-            'tanggal'     => $request->tanggal,
-            'keterangan'  => $request->keterangan,
-            'qty'         => $request->qty,
-            'created_by'  => Auth::check() ? Auth::user()->id : null,
-        ]);
-
         // Tambah stok barang
         $alat = Alat::where('kode_alat', $request->kode_alat)->first();
-        if ($alat) {
+        if ($alat->stok < $request->qty) {
+            return redirect()->route('alats.show', $alat->id)->with('error', 'Total stok yang tersedia tidak cukup');
+        } else {
+            // pada proyek ambil nama proyek dan pic
+            $proyek = Proyek::where('kode_akun', $request->kode_akun)->first();
+            $pic = $proyek->pic;
+            $nama_proyek = $proyek->nama_proyek;
+    
+            // Simpan barang masuk
+            $alatMasuk = AlatDipinjam::create([
+                'kode_alat' => $request->kode_alat,
+                'kode_akun' => $request->kode_akun,
+                'tanggal'     => $request->tanggal,
+                'keterangan'  => $request->keterangan,
+                'qty'         => $request->qty,
+                'created_by'  => Auth::check() ? Auth::user()->id : null,
+            ]);
             $alat->decrement('stok', $request->qty);
+            CatatStok($request->kode_alat, $nama_proyek, $pic, $request->qty, 'Stok Alat Dipinjam', $alatMasuk->id);
+            return redirect()->route('alats.show', $alat->id)->with('success', 'Stok Alat berhasil dipinjam');
         }
-        CatatStok($request->kode_alat, $request->qty, 'Stok Alat Dipinjam', $alatMasuk->id);
-        return redirect()->route('alats.show', $alat->id)->with('success', 'Stok Alat berhasil dipinjam');
     }
 
     /**
@@ -101,33 +107,45 @@ class AlatDipinjamController extends Controller
             'qty'         => 'required|integer|min:1',
         ]);
 
+        // pada proyek ambil nama proyek dan pic
+        $proyek = Proyek::where('kode_akun', $request->kode_akun)->first();
+        $pic = $proyek->pic;
+        $nama_proyek = $proyek->nama_proyek;
+
         $alatMasuk = AlatDipinjam::findOrFail($id);
         $alat = alat::where('kode_alat', $alatMasuk->kode_alat)->first();
 
-        if ($alat) {
+        if (($alat->stok + $alatMasuk->qty) < $request->qty) {
+            return redirect()->route('alats.show', $alat->id)->with('error', 'Total stok yang tersedia tidak cukup');
+        } else {
             // 1. Kembalikan stok ke posisi sebelum transaksi ini
             $alat->increment('stok', $alatMasuk->qty);
 
             // 2. kurangi stok dengan qty baru
             $alat->decrement('stok', $request->qty);
+
+            // Update data barang masuk
+            $alatMasuk->update([
+                'kode_alat' => $request->kode_alat,
+                'kode_akun' => $request->kode_akun,
+                'tanggal'     => $request->tanggal,
+                'keterangan'  => $request->keterangan,
+                'qty'         => $request->qty,
+            ]);
+
+            CatatStok($request->kode_alat, $nama_proyek, $pic, $request->qty, 'Stok Alat Dipinjam telah Diedit', $alatMasuk->id);
+            return redirect()->route('alats.show', $alat->id)->with('success', 'Stok Alat berhasil diupdate');
         }
-
-        // Update data barang masuk
-        $alatMasuk->update([
-            'kode_alat' => $request->kode_alat,
-            'kode_akun' => $request->kode_akun,
-            'tanggal'     => $request->tanggal,
-            'keterangan'  => $request->keterangan,
-            'qty'         => $request->qty,
-        ]);
-
-        CatatStok($request->kode_alat, $request->qty, 'Stok Alat Dipinjam telah Diedit', $alatMasuk->id);
-        return redirect()->route('alats.show', $alat->id)->with('success', 'Stok Alat berhasil diupdate');
     }
 
     public function destroy($id)
     {
         $alatMasuk = AlatDipinjam::findOrFail($id);
+
+        // pada proyek ambil nama proyek dan pic
+        $proyek = Proyek::where('kode_akun', $alatMasuk->kode_akun)->first();
+        $pic = $proyek->pic;
+        $nama_proyek = $proyek->nama_proyek;
 
         // Kurangi stok barang sesuai qty
         $alat = Alat::where('kode_alat', $alatMasuk->kode_alat)->first();
@@ -137,7 +155,7 @@ class AlatDipinjamController extends Controller
 
         // Soft delete
         $alatMasuk->update(['deleted_at' => Carbon::now('Asia/Jakarta')]);
-        CatatStok($alatMasuk->kode_alat, $alatMasuk->qty, 'Stok Alat Dipinjam Di Hapus', $alatMasuk->id);
+        CatatStok($alatMasuk->kode_alat, $nama_proyek, $pic, $alatMasuk->qty, 'Stok Alat Dipinjam Di Hapus', $alatMasuk->id);
 
         return redirect()->route('alats.show', $alat->id)->with('success', 'Stok Alat Dibeli berhasil dihapus');
     }

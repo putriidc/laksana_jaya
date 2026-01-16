@@ -32,23 +32,25 @@ class AlatDihapusController extends Controller
             'qty'         => 'required|integer|min:1',
         ]);
 
-        // Simpan barang masuk
-        $alatMasuk = AlatDihapus::create([
-            'kode_alat' => $request->kode_alat,
-            'tanggal'     => $request->tanggal,
-            'keterangan'  => $request->keterangan,
-            'qty'         => $request->qty,
-            'created_by'  => Auth::check() ? Auth::user()->id : null,
-        ]);
-
         // kurangi stok barang
         $alat = Alat::where('kode_alat', $request->kode_alat)->first();
-        if ($alat) {
+        if ($alat->stok < $request->qty) {
+            // keluarkan notif bahwa stok tidak cukup dan gagalkan menyimpan
+            return redirect()->route('alats.show', $alat->id)->with('error', 'Total Stok Alat yang dikeluarkan lebih besar dari stok yang tersedia');
+        } else {
+            // Simpan barang masuk
+            $alatMasuk = AlatDihapus::create([
+                'kode_alat' => $request->kode_alat,
+                'tanggal'     => $request->tanggal,
+                'keterangan'  => $request->keterangan,
+                'qty'         => $request->qty,
+                'created_by'  => Auth::check() ? Auth::user()->id : null,
+                ]);
+                
             $alat->decrement('stok', $request->qty);
+            CatatStok($request->kode_alat, null, null, $request->qty, 'Stok Alat Di kurangi(dihapus)', $alatMasuk->id);
+            return redirect()->route('alats.show', $alat->id)->with('success', 'Stok Alat yang dihapus berhasil ditambahkan');
         }
-        CatatStok($request->kode_alat, $request->qty, 'Stok Alat Di kurangi(dihapus)', $alatMasuk->id);
-
-        return redirect()->route('alats.show', $alat->id)->with('success', 'Stok Alat yang dihapus berhasil ditambahkan');
     }
 
     /**
@@ -74,24 +76,27 @@ class AlatDihapusController extends Controller
         $alatMasuk = AlatDihapus::findOrFail($id);
         $alat = alat::where('kode_alat', $alatMasuk->kode_alat)->first();
 
-        if ($alat) {
+        if (($alat->stok + $alatMasuk->qty) < $request->qty) {
+            return redirect()->route('alats.show', $alat->id)->with('error', 'Total Stok Alat yang dikeluarkan lebih besar dari stok yang tersedia');
+        } else {
             // 1. Kembalikan stok ke posisi sebelum transaksi ini
             $alat->increment('stok', $alatMasuk->qty);
 
             // 2. Tambahkan stok dengan qty baru
             $alat->decrement('stok', $request->qty);
+
+            // Update data barang masuk
+            $alatMasuk->update([
+                'kode_alat' => $request->kode_alat,
+                'tanggal'     => $request->tanggal,
+                'keterangan'  => $request->keterangan,
+                'qty'         => $request->qty,
+            ]);
+    
+            CatatStok($request->kode_alat, null, null, $request->qty, 'Stok Alat Dikurangi(dihapus) telah Di Edit', $alatMasuk->id);
+            return redirect()->route('alats.show', $alat->id)->with('success', 'Stok Alat yang dihapus berhasil diupdate');
         }
 
-        // Update data barang masuk
-        $alatMasuk->update([
-            'kode_alat' => $request->kode_alat,
-            'tanggal'     => $request->tanggal,
-            'keterangan'  => $request->keterangan,
-            'qty'         => $request->qty,
-        ]);
-
-        CatatStok($request->kode_alat, $request->qty, 'Stok Alat Dikurangi(dihapus) telah Di Edit', $alatMasuk->id);
-        return redirect()->route('alats.show', $alat->id)->with('success', 'Stok Alat yang dihapus berhasil diupdate');
     }
 
     public function destroy($id)
@@ -106,7 +111,7 @@ class AlatDihapusController extends Controller
 
         // Soft delete
         $alatMasuk->update(['deleted_at' => Carbon::now('Asia/Jakarta')]);
-        CatatStok($alatMasuk->kode_alat, $alatMasuk->qty, 'Stok Alat yang dikurangi(dihapus) Di Hapus', $alatMasuk->id);
+        CatatStok($alatMasuk->kode_alat, null, null, $alatMasuk->qty, 'Stok Alat yang dikurangi(dihapus) Di Hapus', $alatMasuk->id);
 
         return redirect()->route('alats.show', $alat->id)->with('success', 'Stok Alat yang dihapus berhasil didelete dari data');
     }

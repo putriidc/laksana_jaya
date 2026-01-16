@@ -73,7 +73,7 @@ class AlatDibeliController extends Controller
         if ($alat) {
             $alat->increment('stok', $request->qty);
         }
-        CatatStok($request->kode_alat, $request->qty, 'Stok Alat Masuk', $alatMasuk->id);
+        CatatStok($request->kode_alat, null, null, $request->qty, 'Stok Alat Masuk', $alatMasuk->id);
 
         return redirect()->route('alats.show', $alat->id)->with('success', 'Stok Alat berhasil ditambahkan');
     }
@@ -117,7 +117,7 @@ class AlatDibeliController extends Controller
             'qty'         => $request->qty,
         ]);
 
-        CatatStok($request->kode_alat, $request->qty, 'Stok Alat Masuk Di Edit', $alatMasuk->id);
+        CatatStok($request->kode_alat, null, null, $request->qty, 'Stok Alat Masuk Di Edit', $alatMasuk->id);
         return redirect()->route('alats.show', $alat->id)->with('success', 'Stok Alat berhasil diupdate');
     }
 
@@ -133,7 +133,7 @@ class AlatDibeliController extends Controller
 
         // Soft delete
         $alatMasuk->update(['deleted_at' => Carbon::now('Asia/Jakarta')]);
-        CatatStok($alatMasuk->kode_alat, $alatMasuk->qty, 'Stok Alat Masuk Di Hapus', $alatMasuk->id);
+        CatatStok($alatMasuk->kode_alat, null, null, $alatMasuk->qty, 'Stok Alat Masuk Di Hapus', $alatMasuk->id);
 
         return redirect()->route('alats.show', $alat->id)->with('success', 'Stok Alat Dibeli berhasil dihapus');
     }

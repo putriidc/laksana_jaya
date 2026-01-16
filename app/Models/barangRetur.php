@@ -13,6 +13,7 @@ class barangRetur extends Model
         'kode_barang',
         'tanggal',
         'keterangan',
+        'kode_akun',
         'qty',
         'created_by',
         'deleted_at',
