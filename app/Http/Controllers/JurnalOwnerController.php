@@ -436,4 +436,84 @@ class JurnalOwnerController extends Controller
             return response()->json(['success' => false, 'message' => 'Gagal menghapus data']);
         }
     }
+
+    public function storeTrans(Request $request)
+    {
+        try {
+            $lastId = JurnalUmum::max('id') ?? 0;
+            $nextId = $lastId + 1;
+            $kodeJurnal = 'J-' . str_pad($nextId, 3, '0', STR_PAD_LEFT);
+
+            $tanggal    = $request->input('tanggal');
+            $keterangan = $request->input('keterangan');
+            $nominal    = (int) $request->input('nominal');
+            $from       = $request->input('from'); // kode akun asal
+            $to         = $request->input('to');   // kode akun tujuan
+
+            // ambil data akun langsung dari tabel Asset
+            $akunFrom = Asset::where('kode_akun', $from)->first();
+            $akunTo   = Asset::where('kode_akun', $to)->first();
+            // update saldo di assets (Kas/Bank asal)
+            $asset = Asset::where('kode_akun', $akunFrom->kode_akun)->where('akun_header', 'asset_lancar_bank')->first();
+            if ($asset) {
+                if ($nominal > 0) {
+                    // kredit → saldo berkurang, tapi jangan sampai minus
+                    if ($asset->saldo < $nominal) {
+                        return response()->json(['error' => "Saldo {$asset->nama_akun} tidak mencukupi"], 400);
+                    }
+                    $modal = Asset::where('nama_akun', 'Modal')->first();
+                    $asset->saldo -= $nominal;
+                    $modal->saldo -= $nominal;
+                    $modal->save();
+                }
+                $asset->save();
+            }
+            $asset = Asset::where('kode_akun', $akunTo->kode_akun)->where('akun_header', 'asset_lancar_bank')->first();
+            if ($asset) {
+                if ($nominal > 0) {
+                    $modal = Asset::where('nama_akun', 'Modal')->first();
+                    $asset->saldo += $nominal;
+                    $modal->saldo += $nominal;
+                    $modal->save();
+                }
+                $asset->save();
+            }
+
+            // baris 2: debit ke kas/bank tujuan
+            JurnalUmum::create([
+                'kode_jurnal'   => $kodeJurnal,
+                'detail_order' => 3,
+                'tanggal'       => $tanggal,
+                'kode_perkiraan' => $akunTo->kode_akun ?? '-',
+                'nama_perkiraan' => $akunTo->nama_akun ?? '-',
+                'keterangan'    => $keterangan,
+                'nama_proyek'   => '-',
+                'kode_proyek'   => '-',
+                'debit'         => $nominal,
+                'kredit'        => 0,
+                'created_by'    => 'owner',
+            ]);
+
+            // baris 2: debit ke kas/bank tujuan
+            JurnalUmum::create([
+                'kode_jurnal'   => $kodeJurnal,
+                'detail_order' => 3,
+                'tanggal'       => $tanggal,
+                'kode_perkiraan' => $akunFrom->kode_akun ?? '-',
+                'nama_perkiraan' => $akunFrom->nama_akun ?? '-',
+                'keterangan'    => $keterangan,
+                'nama_proyek'   => '-',
+                'kode_proyek'   => '-',
+                'debit'         => 0,
+                'kredit'        => $nominal,
+                'created_by'    => 'owner',
+            ]);
+
+
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Gagal simpan transfer: '.$e->getMessage()], 400);
+        }
+    }
 }

@@ -29,7 +29,7 @@
             <div
                 class="flex justify-between items-center pb-4 max-[820px]:gap-x-8 max-[360px]:gap-x-2 max-[820px]:items-start">
                 <div class="flex items-center gap-2 max-[500px]:flex-col max-[820px]:items-start">
-                    <button onclick="transaksiMasuk()" data-url="{{ route('jurnalOwner.storeDebit') }}"
+                    {{-- <button onclick="transaksiMasuk()" data-url="{{ route('jurnalOwner.storeDebit') }}"
                         data-token="{{ csrf_token() }}"
                         class="flex items-center gap-x-3 border-2 border-[#9A9A9A] px-4 py-2 rounded-lg cursor-pointer">
                         <span class="text-gray-700">Pendapatan</span>
@@ -46,6 +46,13 @@
                     <button onclick="transferBank()"
                         class="flex items-center gap-x-3 border-2 border-[#9A9A9A] px-4 py-2 rounded-lg cursor-pointer">
                         <span class="text-gray-700">Transfer Bank</span>
+                        <img src="https://ar4n-group.com/public/assets/money-send.png" alt="card receive icon"
+                            class="w-[20px]">
+                    </button> --}}
+
+                    <button onclick="transaksiJurnal()"
+                        class="flex items-center gap-x-3 border-2 border-[#9A9A9A] px-4 py-2 rounded-lg cursor-pointer">
+                        <span class="text-gray-700">Jurnal Transaksi</span>
                         <img src="https://ar4n-group.com/public/assets/money-send.png" alt="card receive icon"
                             class="w-[20px]">
                     </button>
@@ -1014,6 +1021,161 @@
                                         .then(() => location.reload()); // Refresh halaman
                                 }
                             });
+                    }
+                });
+            }
+        </script>
+        <script>
+            function transaksiJurnal() {
+                // buat form modal dengan sweetalert2
+                Swal.fire({
+                    html: `
+                    <form action="{{ route('jurnalOwner.storeTrans') }}" method="POST" class="flex flex-col text-left" id="myForm">
+                        @csrf
+                        <h1 class="font-bold text-2xl mb-4">Jurnal Transaksi</h1>
+                        <div class="flex items-center mt-4">
+                            <label for="tanggal" class="font-medium w-[150px]">Dari Akun / Debet</label>
+                            <div class="flex items-center w-full justify-between">
+                                <select name="from" id="namaPerkiraan" class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none appearance-none" required>
+                                        <option selected disabled>-Pilih kas/bank-</option>
+                                        @foreach ($akun as $item)
+                                        <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
+                                        @endforeach
+                                </select>
+                                <div class="flex items-center w-[350px]">
+                                    <label for="kode_akun" class="font-medium w-[35%]">Ke Akun / Kredit</label>
+                                    <select name="to" id="namaPerkiraanTo" class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none appearance-none" required>
+                                        <option selected disabled>-Pilih kas/bank-</option>
+                                        @foreach ($akun as $item)
+                                        <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center mt-4">
+                            <label for="keterangan" class="font-medium w-[150px]">Tgl Transaksi</label>
+                            <div class="flex items-center w-full justify-between">
+                                <input value="{{ $today }}" type="date" name="tanggal" id="tanggal" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none" readonly>
+                                <div class="flex items-center w-[350px]">
+                                    <label for="nominal" class="font-medium w-[35%]">Nominal</label>
+                                    <input type="text" name="nominal" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2 rupiah-format">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center mt-4">
+                            <label for="kas/bank" class="font-medium w-[125px]">keretangan</label>
+                            <textarea name="keterangan" row="3" id="keterangan" required class="bg-[#D9D9D9]/40 rounded-lg h-[100px] px-4 py-2 w-[220px] outline-none resize-none"></textarea>
+                        </div>
+                        <div class="flex items-center mt-6 gap-x-4">
+                            <div class="w-[110px]"></div>
+                            <button type="submit" class="border-[#3E98D0] border text-[#3E98D0] py-1 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
+                                <span class="">Simpan Data</span>
+                                <img src="https://ar4n-group.com/public/assets/plus-circle-blue.png" alt="arrow right blue icon" class="w-[30px]">
+                            </button>
+                            <button type="button" onclick="Swal.close()" class="border-[#DD4049] border text-[#DD4049] py-2 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
+                                <span class="">Batal</span>
+                                <img src="https://ar4n-group.com/public/assets/close-circle-red.png" alt="arrow right blue icon" class="w-[22px]">
+                            </button>
+                        </div>
+                    </form>
+                    `,
+                    width: '800px',
+                    showCancelButton: false,
+                    showCloseButton: false,
+                    showConfirmButton: false,
+                    didOpen: () => {
+                        new TomSelect('#namaPerkiraan', {
+                            placeholder: 'Cari akun...',
+                            create: false,
+                            maxItems: 1,
+                            hideSelected: true,
+                            shouldLoadImmediately: false,
+                            sortField: {
+                                field: "text",
+                                direction: "asc"
+                            }
+                        });new TomSelect('#namaPerkiraanTo', {
+                            placeholder: 'Cari akun...',
+                            create: false,
+                            maxItems: 1,
+                            hideSelected: true,
+                            shouldLoadImmediately: false,
+                            sortField: {
+                                field: "text",
+                                direction: "asc"
+                            }
+                        });
+                        const rupiahFormat = document.querySelectorAll('.rupiah-format');
+                        rupiahFormat.forEach(input => {
+                            input.addEventListener('input', function() {
+                                console.log('test')
+                                // hapus karakter yang bukan angka atau koma
+                                let value = this.value.replace(/[^,\d]/g, "").toString();
+                                // pisahkan antara angka dan koma
+                                let split = value.split(",");
+                                // format angka menjadi rupiah
+                                let sisa = split[0].length % 3;
+                                // ambil angka yang tidak termasuk dalam kelipatan 3
+                                let rupiah = split[0].substr(0, sisa);
+                                // ambil angka yang termasuk dalam kelipatan 3
+                                let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+                                // tambahkan titik sebagai pemisah ribuan
+                                if (ribuan) {
+                                    let separator = sisa ? "." : "";
+                                    rupiah += separator + ribuan.join(".");
+                                }
+
+                                // tambahkan kembali koma dan angka di belakangnya jika ada
+                                rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+                                // tampilkan hasil format rupiah pada input
+                                this.value = rupiah ? "Rp. " + rupiah : "";
+                            });
+                        });
+                        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                        const form = document.getElementById('myForm');
+                        if (form) {
+                            form.addEventListener('submit', function(e) {
+                                e.preventDefault(); // cegah submit default
+
+                                // bersihkan input rupiah
+                                const rupiahInputs = document.querySelectorAll('.rupiah-format');
+                                rupiahInputs.forEach(input => {
+                                    let value = input.value;
+                                    let cleanValue = parseInt(value.replace(/[^,\d]/g, ""));
+                                    input.value = cleanValue;
+                                });
+
+                                // kirim pakai fetch
+                                const formData = new FormData(form);
+
+                                fetch(form.action, {
+                                        method: "POST",
+                                        headers: {
+                                            "X-CSRF-TOKEN": token,
+                                            "X-Requested-With": "XMLHttpRequest"
+                                        },
+                                        body: formData
+                                    })
+                                    .then(res => res.json())
+                                    .then(res => {
+                                        if (res.error) {
+                                            Swal.fire("Error", res.error, "error");
+                                        } else {
+                                            Swal.fire("Sukses", "Transfer kas/bank berhasil dicatat",
+                                                "success").then(() => {
+                                                location.reload();
+                                            });
+                                        }
+                                    })
+                                    .catch(err => {
+                                        Swal.fire("Error", "Terjadi kesalahan: " + err.message,
+                                            "error");
+                                    });
+                            });
+                        }
+
                     }
                 });
             }

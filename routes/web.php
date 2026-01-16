@@ -89,6 +89,8 @@ Route::middleware('auth')->group(function () {
             ->name('jurnalUmums.storeCashOut');
         Route::post('jurnalUmums/storeBank', [JurnalUmumController::class, 'storeBank'])
             ->name('jurnalUmums.storeBank');
+        Route::post('jurnalOwner/storeTrans', [JurnalOwnerController::class, 'storeTrans'])
+            ->name('jurnalOwner.storeTrans');
         Route::post('/jurnalUmums/bulk-delete', [JurnalUmumController::class, 'bulkDelete'])
             ->name('jurnalUmums.bulk-delete');
         Route::get('jurnalUmums/print', [JurnalUmumController::class, 'print'])->name('jurnalUmums.print');
@@ -528,6 +530,8 @@ Route::middleware('auth')->group(function () {
             ->name('jurnalOwner.storeKredit');
         Route::post('jurnalOwner/storeBank', [JurnalOwnerController::class, 'storeBank'])
             ->name('jurnalOwner.storeBank');
+        Route::post('jurnalOwner/storeTrans', [JurnalOwnerController::class, 'storeTrans'])
+            ->name('jurnalOwner.storeTrans');
         Route::post('/jurnalOwner/bulk-delete', [JurnalOwnerController::class, 'bulkDelete'])
             ->name('jurnalOwner.bulk-delete');
 
