@@ -941,6 +941,7 @@
                         const form = document.getElementById('myForm');
                         if (form) {
                             form.addEventListener('submit', function(e) {
+                                e.preventDefault();
 
                                 // bersihkan input rupiah
                                 const rupiahInputs = document.querySelectorAll('.rupiah-format');
