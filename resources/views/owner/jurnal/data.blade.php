@@ -1091,20 +1091,14 @@
                             maxItems: 1,
                             hideSelected: true,
                             shouldLoadImmediately: false,
-                            sortField: {
-                                field: "text",
-                                direction: "asc"
-                            }
+
                         });new TomSelect('#namaPerkiraanTo', {
                             placeholder: 'Cari akun...',
                             create: false,
                             maxItems: 1,
                             hideSelected: true,
                             shouldLoadImmediately: false,
-                            sortField: {
-                                field: "text",
-                                direction: "asc"
-                            }
+
                         });
                         const rupiahFormat = document.querySelectorAll('.rupiah-format');
                         rupiahFormat.forEach(input => {
