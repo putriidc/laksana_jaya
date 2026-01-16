@@ -290,7 +290,7 @@
                         </button>
                     </a>
                     <a
-                        href="/user-management"
+                        href="{{ route('users.index') }}"
                         class="cursor-pointer"
                     >
                         <button
