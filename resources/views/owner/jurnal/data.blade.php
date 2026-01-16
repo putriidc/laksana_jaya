@@ -1065,7 +1065,7 @@
                         </div>
                         <div class="flex items-center mt-4">
                             <label for="kas/bank" class="font-medium w-[125px]">keretangan</label>
-                            <textarea name="keterangan" row="3" id="keterangan" required class="bg-[#D9D9D9]/40 rounded-lg h-[100px] px-4 py-2 w-[220px] outline-none resize-none"></textarea>
+                            <textarea name="keterangan" row="5" id="keterangan" required class="bg-[#D9D9D9]/40 rounded-lg h-[100px] px-4 py-2 w-[220px] outline-none resize-none"></textarea>
                         </div>
                         <div class="flex items-center mt-6 gap-x-4">
                             <div class="w-[110px]"></div>
