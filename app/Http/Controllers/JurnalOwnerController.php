@@ -27,9 +27,6 @@ class JurnalOwnerController extends Controller
 
         //debit
         $akun = Asset::active()
-            ->where(function ($query) {
-                $query->whereIn('akun_header', ['asset_lancar_bank', 'asset_tetap', 'kewajiban', 'ekuitas', 'pendapatan']);
-            })
             ->get();
 
 
