@@ -31,9 +31,9 @@
                 id="sideNavbar"
             >
                 {{-- button view --}}
-                {{-- <button class="min-[1300px]:hidden cursor-pointer max-[550px]:hidden bg-white shadow-[0px_1px_8px_rgba(0,0,0,0.25)] rounded-full p-2 fixed top-[50%] left-12 rotate-[-90deg] z-[99] transition-all duration-200 ease-in-out" id="buttonView">
+                <button class="min-[1300px]:hidden cursor-pointer max-[550px]:hidden bg-white shadow-[0px_1px_8px_rgba(0,0,0,0.25)] rounded-full p-2 fixed top-[50%] left-12 rotate-[-90deg] z-[99] transition-all duration-200 ease-in-out" id="buttonView">
                     <img src="{{ asset('assets/arrow-down.png') }}" alt="arrow view" class="w-[15px]">
-                </button> --}}
+                </button>
                 {{-- button view --}}
                 {{-- Logo --}}
                 <div
@@ -64,12 +64,12 @@
                         ></span>
                     </button>
                 </div>
-                {{-- <img
+                <img
                     src="{{ asset('assets/ar4anSmallLogo.png') }}"
                     alt="LOGO AR4N GROUP"
                     class="w-[60px] min-[1300px]:hidden mb-8 scale-200"
                     id="justLogo"
-                /> --}}
+                />
                 {{-- logo --}}
                 <div class="flex flex-col gap-y-3 h-full max-[1300px]:items-center" id="sideNavbarContent">
                     <a href="/admin/dashboard" class="cursor-pointer">
