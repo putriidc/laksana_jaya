@@ -59,9 +59,9 @@
                     <td class="py-2">{{ $no++ }}</td>
                     <td class="py-2">{{ $transaction->tanggal }}</td>
                     <td class="py-2">{{ $transaction->keterangan }}</td>
-                    <td class="py-2">{{ $transaction->debit }}</td>
-                    <td class="py-2">{{ $transaction->kredit }}</td>
-                    <td class="py-2">{{ $transaction->saldo_temp }}</td>
+                    <td class="py-2">{{ 'RP. ' . number_format($transaction->debit, 0, ',', '.') }}</td>
+                    <td class="py-2">{{ 'RP. ' . number_format($transaction->kredit, 0, ',', '.') }}</td>
+                    <td class="py-2">{{ 'RP. ' . number_format($transaction->saldo_temp, 0, ',', '.') }}</td>
                 </tr>
                 {{-- <tr class="bg-[#E9E9E9] border-b-[1px] border-[#CCCCCC]">
                     <td class="py-2">1</td>
