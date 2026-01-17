@@ -147,6 +147,10 @@
                             class="text-sm text-red-600 px-4 py-2 transition-all duration-300 ease-in-out text-center italic">
                             Belum ada perusahaan terdaftar</div>
                     @endforelse
+                    <button id="modal-add"
+                            class="bg-white text-[#353132] flex items-center justify-center w-[250px] py-3 px-5 cursor-pointer rounded-lg transition-all duration-300 ease-in-out">
+                            <span>TAMBAH PERUSAHAAN +</span>
+                        </button>
                 </div>
 
 
