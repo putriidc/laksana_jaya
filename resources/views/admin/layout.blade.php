@@ -96,6 +96,7 @@
                             <span class="max-[1300px]:hidden">Master Data</span>
                         </button>
                     </a>
+                    @if (Auth::user()->role != "Admin 1")
                     <a
                         href="{{ route('jurnalUmums.index') }}"
                         class="cursor-pointer"
@@ -113,6 +114,7 @@
                             <span class="max-[1300px]:hidden">Jurnal Umum</span>
                         </button>
                     </a>
+                    @endif
                     {{--
                     <a href="" class="cursor-pointer">
                         <button
@@ -235,6 +237,7 @@
                             <span class="max-[1300px]:hidden">Buku Besar</span>
                         </button>
                     </a>
+                    @if (Auth::user()->role != "Admin 1")
                     <a
                         href="{{ route('hutang_vendor.index') }}"
                         class="cursor-pointer"
@@ -252,6 +255,7 @@
                             <span class="max-[1300px]:hidden">Hutang Vendor</span>
                         </button>
                     </a>
+                    @endif
                     <a
                         href="#"
                         onclick="triggerCheckbox2(event)"
@@ -495,9 +499,9 @@
                             item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
                         } else if (index == 3) {
                             item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
-                        } 
+                        }
                         // else if (index == 4) {
-                        //     item.children[0].src = "{{ asset('assets/navbar/receipt-click.png') }}";}    
+                        //     item.children[0].src = "{{ asset('assets/navbar/receipt-click.png') }}";}
                         else if (index == 4) {
                             item.children[0].src = "{{ asset('assets/navbar/status-up-click.png') }}";
                         } else if (index == 5) {
@@ -522,10 +526,10 @@
                             item.children[0].src = "{{ asset('assets/navbar/home-hashtag-click.png') }}";
                         } else if (index == 4) {
                             item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
-                        } 
+                        }
                         // else if (index == 5) {
                         //     item.children[0].src = "{{ asset('assets/navbar/receipt-click.png') }}";
-                        // } 
+                        // }
                         else if (index == 5) {
                             item.children[0].src = "{{ asset('assets/navbar/status-up-click.png') }}";
                         } else if (index == 6) {
@@ -552,10 +556,10 @@
                             item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
                         } else if (index == 5) {
                             item.children[0].src = "{{ asset('assets/navbar/receipt-item-click.png') }}";
-                        } 
+                        }
                         // else if (index == 6) {
                         //     item.children[0].src = "{{ asset('assets/navbar/receipt-click.png') }}";
-                        // } 
+                        // }
                         else if (index == 6) {
                             item.children[0].src = "{{ asset('assets/navbar/status-up-click.png') }}";
                         } else if (index == 7) {
