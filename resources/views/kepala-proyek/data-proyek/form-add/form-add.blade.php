@@ -115,11 +115,6 @@
                     <div class="w-[200px] max-[600px]:hidden"></div>
                     <div class="w-full flex flex-wrap gap-8">
                         <div class="flex items-center gap-x-3">
-                            <label for="" class="text-sm">PHO</label>
-                            <input type="checkbox" name="is_pho" id=""
-                                class="w-[35px] h-[35px] bg-[#D9D9D9]/40 rounded-lg outline-none cursor-pointer focus:bg-[#D9D9D9]/40" />
-                        </div>
-                        <div class="flex items-center gap-x-3">
                             <label for="" class="flex flex-col text-sm">
                                 <span>Progress Kontraktor</span>
                                 <span>(Sudah di serahkan ke admin)</span>
@@ -137,8 +132,8 @@
                         </div>
                         <div class="flex items-center gap-x-3">
                             <label for="" class="flex flex-col text-sm">
-                                <span>RAR Dokumen Konsultan</span>
-                                <span>(Sudah di ambil kontraktor)</span>
+                                <span>RAR Dokumen </span>
+                                <span>Konsultan</span>
                             </label>
                             <input type="checkbox" name="is_konsultan_kontraktor" id=""
                                 class="w-[35px] h-[35px] bg-[#D9D9D9]/40 rounded-lg outline-none cursor-pointer focus:bg-[#D9D9D9]/40" />
@@ -149,6 +144,18 @@
                                 <span>(Sudah di serahkan ke admin)</span>
                             </label>
                             <input type="checkbox" name="is_pengawas_admin" id=""
+                                class="w-[35px] h-[35px] bg-[#D9D9D9]/40 rounded-lg outline-none cursor-pointer focus:bg-[#D9D9D9]/40" />
+                        </div>
+                        <div class="flex items-center gap-x-3">
+                            <label for="" class="text-sm">Dokumentasi</label>
+                            <input type="checkbox" name="is_pho" id=""
+                                class="w-[35px] h-[35px] bg-[#D9D9D9]/40 rounded-lg outline-none cursor-pointer focus:bg-[#D9D9D9]/40" />
+                        </div>
+                        <div class="flex items-center gap-x-3">
+                            <label for="" class="flex flex-col text-sm">
+                                <span>Gambar</span>
+                            </label>
+                            <input type="checkbox" name="is_gambar" id=""
                                 class="w-[35px] h-[35px] bg-[#D9D9D9]/40 rounded-lg outline-none cursor-pointer focus:bg-[#D9D9D9]/40" />
                         </div>
                     </div>

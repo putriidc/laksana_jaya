@@ -55,15 +55,15 @@
                 <button class=" border border-blue-500 text-blue-500 px-5 py-2 rounded-lg cursor-pointer hover:bg-blue-500 hover:text-white" onclick="detailRiwayat({{ json_encode($catatStok) }})">Lihat Riwayat</button>
             </div>
         </div>
-        <div class="flex gap-x-4 mb-10 max-[600px]:flex-wrap max-[600px]:gap-y-2 max-[600px]:gap-x-2">
+        <div class="flex gap-x-2 mb-10 max-[600px]:flex-wrap max-[600px]:gap-y-2 max-[600px]:gap-x-2">
             <a href="{{ route('alat-beli.create.for-alat', $alat->kode_alat) }}"
-                class="block bg-white border-2 border-[#9A9A9A] rounded-lg w-fit py-2 px-5">Tambah Stok</a>
+                class="block bg-white border-2 border-[#9A9A9A] rounded-lg w-fit py-2 px-5">Stok Masuk</a>
             <a href="{{ route('alat-hapus.create.for-alat', $alat->kode_alat) }}"
-                class="block bg-white border-2 border-[#9A9A9A] rounded-lg w-fit py-2 px-5">Kurangi Stok</a>
+                class="block bg-white border-2 border-[#9A9A9A] rounded-lg w-fit py-2 px-5">Stok Keluar(hilang/rusak)</a>
             <a href="{{ route('alat-pinjam.create.for-alat', $alat->kode_alat) }}"
-                class="block bg-white border-2 border-[#9A9A9A] rounded-lg w-fit py-2 px-5">Pinjam Alat</a>
+                class="block bg-white border-2 border-[#9A9A9A] rounded-lg w-fit py-2 px-5">Peminjaman</a>
             <a href="{{ route('alat-kembalikan.create.for-alat', $alat->kode_alat) }}"
-                class="bg-white border-2 border-[#9A9A9A] rounded-lg w-fit py-2 px-5 flex items-center gap-x-2">Kembalikan Alat</a>
+                class="bg-white border-2 border-[#9A9A9A] rounded-lg w-fit py-2 px-5 flex items-center gap-x-2">Pengembalian</a>
         </div>
         <div class="border-b-2 border-[#B6B6B6] pb-8 mb-10">
             <h1 class="font-bold text-2xl mb-6">Data Stok Masuk</h1>
@@ -98,7 +98,7 @@
                 <table class="table-fixed text-center text-sm w-full max-[900px]:w-[900px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
                         <th class="py-2 w-[20%]">No</th>
-                        <th class="py-2 w-[20%]">Tgl Masuk</th>
+                        <th class="py-2 w-[20%]">Tanggal</th>
                         <th class="py-2 w-[20%]">Qty</th>
                         <th class="py-2 w-[20%]">Keterangan</th>
                         <th class="py-2 w-[25%]">Action</th>
@@ -141,7 +141,7 @@
             </div>
         </div>
         <div class="border-b-2 border-[#B6B6B6] pb-8 mb-10">
-            <h1 class="font-bold text-2xl mb-6">Data Stok Dihapus</h1>
+            <h1 class="font-bold text-2xl mb-6">Data Stok Keluar</h1>
             {{-- Barang Masuk --}}
             <form method="GET" action="{{ route('alats.show', $alat->id) }}" class="flex gap-x-2 mb-4 max-[600px]:flex-wrap max-[600px]:gap-y-2">
                 <input type="text" data-flatpickr placeholder="Pilih tanggal awal" name="start_dihapus" value="{{ request('start_dihapus') }}"
@@ -173,7 +173,7 @@
                 <table class="table-fixed text-center text-sm w-full max-[900px]:w-[900px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
                         <th class="py-2 w-[20%]">No</th>
-                        <th class="py-2 w-[20%]">Tgl Masuk</th>
+                        <th class="py-2 w-[20%]">Tanggal</th>
                         <th class="py-2 w-[20%]">Qty</th>
                         <th class="py-2 w-[20%]">Keterangan</th>
                         <th class="py-2 w-[25%]">Action</th>
@@ -216,7 +216,7 @@
             </div>
         </div>
         <div class="border-b-2 border-[#B6B6B6] pb-8 mb-10">
-            <h1 class="font-bold text-2xl mb-6">Data Stok Di Pinjam</h1>
+            <h1 class="font-bold text-2xl mb-6">Data Peminjaman</h1>
             {{-- Barang Keluar --}}
             <form method="GET" action="{{ route('alats.show', $alat->id) }}" class="flex gap-x-2 mb-4 max-[600px]:flex-wrap max-[600px]:gap-y-2">
                 <input type="text" data-flatpickr placeholder="Pilih tanggal awal" name="start_dipinjam" value="{{ request('start_dipinjam') }}"
@@ -248,7 +248,7 @@
                 <table class="table-fixed text-center text-sm w-full max-[900px]:w-[900px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
                         <th class="py-2 w-[20%]">No</th>
-                        <th class="py-2 w-[20%]">Tgl Keluar</th>
+                        <th class="py-2 w-[20%]">Tanggal</th>
                         <th class="py-2 w-[20%]">Proyek</th>
                         <th class="py-2 w-[20%]">PIC</th>
                         <th class="py-2 w-[20%]">Qty</th>
@@ -305,7 +305,7 @@
             </div>
         </div>
         <div class="border-b-2 border-[#B6B6B6] pb-8 mb-10">
-            <h1 class="font-bold text-2xl mb-6">Data Stok Dikembalikan</h1>
+            <h1 class="font-bold text-2xl mb-6">Data Pengembalian</h1>
             {{-- Barang Retur --}}
             <form method="GET" action="{{ route('alats.show', $alat->id) }}" class="flex gap-x-2 mb-4 max-[600px]:flex-wrap max-[600px]:gap-y-2">
                 <input type="text" data-flatpickr placeholder="Pilih tanggal awal" name="start_dikembalikan" value="{{ request('start_dikembalikan') }}"
@@ -337,7 +337,7 @@
                 <table class="table-fixed text-center text-sm w-full max-[900px]:w-[900px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
                         <th class="py-2 w-[20%]">No</th>
-                        <th class="py-2 w-[20%]">Tgl Retur</th>
+                        <th class="py-2 w-[20%]">Tanggal</th>
                         <th class="py-2 w-[20%]">Proyek</th>
                         <th class="py-2 w-[20%]">PIC</th>
                         <th class="py-2 w-[20%]">Qty</th>
@@ -401,7 +401,7 @@
                         <div class="grid grid-cols-2 gap-4">
                             <div class="flex flex-col">
                                 <span class="text-gray-500 font-semibold uppercase text-[10px]">Tanggal</span>
-                                <span class="text-gray-800 text-sm font-medium">${item.tanggal || item.created_at}</span>
+                                <span class="text-gray-800 text-sm font-medium">${item.tanggal}</span>
                             </div>
                             <div class="flex flex-col text-right">
                                 <span class="text-gray-500 font-semibold uppercase text-[10px]">Jumlah</span>
@@ -409,6 +409,20 @@
                                     ${item.qty}
                                 </span>
                             </div>
+                            ${item.proyek ? `
+                             <div class="flex flex-col text-left">
+                                <span class="text-gray-500 font-semibold uppercase text-[10px]">Proyek</span>
+                                <span class="text-gray-800 text-sm font-medium">
+                                    ${item.proyek}
+                                </span>
+                            </div>
+                             <div class="flex flex-col text-right">
+                                <span class="text-gray-500 font-semibold uppercase text-[10px]">PIC</span>
+                                <span class="text-gray-800 text-sm font-medium">
+                                    ${item.pic}
+                                </span>
+                            </div>
+                            ` : ''}
                         </div>
                         <div class="mt-2 p-2 bg-gray-50 rounded text-xs italic">
                             "${item.keterangan}"

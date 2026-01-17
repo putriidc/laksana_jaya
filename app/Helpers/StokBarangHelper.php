@@ -1,17 +1,17 @@
 <?php
 
-use App\Models\CatatStok;
+use App\Models\CatatStokBarang;
 
-if (! function_exists('CatatStok')) {
-    function CatatStok($kode_alat, $proyek, $pic, $qty, $keterangan, $refrensi = null)
+if (! function_exists('CatatStokBarang')) {
+    function CatatStokBarang($kode_barang, $proyek, $pic, $qty, $keterangan, $refrensi = null)
     {
         // Generate kode_barang otomatis
-        $lastId = CatatStok::max('id') ?? 0;
+        $lastId = CatatStokBarang::max('id') ?? 0;
         $kodeKartu = 'CSA-00' . ($lastId + 1);
 
-        CatatStok::create([
+        CatatStokBarang::create([
             'kode_kartu' => $kodeKartu,
-            'kode_alat' => $kode_alat,
+            'kode_barang' => $kode_barang,
             'proyek' => $proyek,
             'pic' => $pic,
             'qty' => $qty,

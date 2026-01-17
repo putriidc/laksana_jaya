@@ -7,6 +7,8 @@ use App\Models\Barang;
 use App\Models\BarangMasuk;
 use App\Models\barangRetur;
 use App\Models\BarangKeluar;
+use App\Models\CatatStokBarang;
+use App\Models\Proyek;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
@@ -78,6 +80,8 @@ class BarangController extends Controller
     {
         $barang = Barang::findOrFail($id);
 
+        $catatStok = CatatStokBarang::where('kode_barang', $barang->kode_barang)->latest()->get();
+
         // Barang Masuk
         $queryMasuk = BarangMasuk::with('barang')
             ->where('kode_barang', $barang->kode_barang)
@@ -107,9 +111,12 @@ class BarangController extends Controller
             $queryRetur->whereBetween('tanggal', [$request->start_retur, $request->end_retur]);
         }
         $barangReturs = $queryRetur->get();
+        $proyeks = Proyek::whereNull('deleted_at')->get();
 
         return view('kepala-gudang.detail-barang.index', compact(
             'barang',
+            'proyeks',
+            'catatStok',
             'barangMasuks',
             'barangKeluars',
             'barangReturs'

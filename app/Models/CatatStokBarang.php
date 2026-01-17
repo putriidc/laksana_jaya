@@ -4,16 +4,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CatatStok extends Model
+class CatatStokBarang extends Model
 {
     use HasFactory;
 
     // Paksa Laravel menggunakan nama tabel ini
-    protected $table = 'catat_stok';
+    protected $table = 'catat_stok_barang';
 
     protected $fillable = [
         'kode_kartu',
-        'kode_alat',
+        'kode_barang',
         'qty',
         'keterangan',
         'proyek',
@@ -28,8 +28,8 @@ class CatatStok extends Model
         return $query->whereNull('deleted_at');
     }
     // Relasi ke Barang
-    public function alat()
+    public function barang()
     {
-        return $this->belongsTo(Alat::class, 'kode_alat', 'kode_alat');
+        return $this->belongsTo(Barang::class, 'kode_barang', 'kode_barang');
     }
 }

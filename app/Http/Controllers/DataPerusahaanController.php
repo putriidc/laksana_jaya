@@ -60,26 +60,27 @@ class DataPerusahaanController extends Controller
             $nextId = $last ? $last->id + 1 : 1;
             $kodePaket = 'PK-' . str_pad($nextId, 4, '0', STR_PAD_LEFT);
 
-            // Simpan DataPerusahaan
-            $dataPerusahaan = DataPerusahaan::create([
-                'kode_perusahaan'        => $request->kode_perusahaan,
-                'kode_paket'             => $kodePaket,
-                'nama_paket'             => $request->nama_paket,
-                'pic'                    => $request->pic,
-                'no_hp'                  => $request->no_hp,
-                'mc0'                    => $request->mc0,
-                'korlap'                 => $request->korlap,
-                'kontraktor'             => $request->kontraktor,
-                'tgl_pho'                => $request->tgl_pho,
-                'tgl_ambil'              => $request->tgl_ambil,
-                'kendala'                => $request->kendala,
-                'is_pho'                 => $request->has('is_pho'),
-                'is_kontraktor_admin'    => $request->has('is_kontraktor_admin'),
-                'is_pengawas_admin'      => $request->has('is_pengawas_admin'),
-                'is_kontraktor_kontraktor' => $request->has('is_kontraktor_kontraktor'),
-                'is_konsultan_kontraktor'  => $request->has('is_konsultan_kontraktor'),
-                'created_by'             => Auth::check() ? Auth::user()->id : null,
-            ]);
+        // Simpan DataPerusahaan
+        $dataPerusahaan = DataPerusahaan::create([
+            'kode_perusahaan'        => $request->kode_perusahaan,
+            'kode_paket'             => $kodePaket,
+            'nama_paket'             => $request->nama_paket,
+            'pic'                    => $request->pic,
+            'no_hp'                  => $request->no_hp,
+            'mc0'                    => $request->mc0,
+            'korlap'                 => $request->korlap,
+            'kontraktor'             => $request->kontraktor,
+            'tgl_pho'                => $request->tgl_pho,
+            'tgl_ambil'              => $request->tgl_ambil,
+            'kendala'                => $request->kendala,
+            'is_pho'                 => $request->has('is_pho'),
+            'is_gambar'                 => $request->has('is_gambar'),
+            'is_kontraktor_admin'    => $request->has('is_kontraktor_admin'),
+            'is_pengawas_admin'      => $request->has('is_pengawas_admin'),
+            'is_kontraktor_kontraktor' => $request->has('is_kontraktor_kontraktor'),
+            'is_konsultan_kontraktor'  => $request->has('is_konsultan_kontraktor'),
+            'created_by'             => Auth::check() ? Auth::user()->id : null,
+        ]);
 
             // Simpan progres pertama
             Progres::create([
@@ -169,6 +170,7 @@ class DataPerusahaanController extends Controller
             'tgl_ambil'              => $request->tgl_ambil,
             'kendala'                => $request->kendala,
             'is_pho'                 => $request->has('is_pho'),
+            'is_gambar'                 => $request->has('is_gambar'),
             'is_kontraktor_admin'    => $request->has('is_kontraktor_admin'),
             'is_pengawas_admin'      => $request->has('is_pengawas_admin'),
             'is_kontraktor_kontraktor' => $request->has('is_kontraktor_kontraktor'),

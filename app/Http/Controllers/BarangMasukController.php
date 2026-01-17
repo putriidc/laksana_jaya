@@ -64,7 +64,7 @@ class BarangMasukController extends Controller
         if ($barang) {
             $barang->increment('stok', $request->qty);
         }
-
+        CatatStokBarang($request->kode_barang, null, null, $request->qty, 'Stok Barang Masuk telah ditambahkan', $barangMasuk->id);
         return redirect()->route('barangs.show', $barang->id)->with('success', 'Barang masuk berhasil ditambahkan');
     }
 
@@ -102,7 +102,7 @@ class BarangMasukController extends Controller
             'keterangan'  => $request->keterangan,
             'qty'         => $request->qty,
         ]);
-
+        CatatStokBarang($request->kode_barang, null, null, $request->qty, 'Stok Barang Masuk telah Diedit', $barangMasuk->id);
         return redirect()->route('barangs.show', $barang->id)->with('success', 'Data barang masuk berhasil diupdate');
     }
 
@@ -118,7 +118,7 @@ class BarangMasukController extends Controller
 
         // Soft delete
         $barangMasuk->update(['deleted_at' => Carbon::now('Asia/Jakarta')]);
-
+        CatatStokBarang($barangMasuk->kode_barang, null, null, $barangMasuk->qty, 'Stok Barang Masuk telah dihapus', $barangMasuk->id);
         return redirect()->route('barangs.show', $barang->id)->with('success', 'Barang masuk berhasil dihapus');
     }
 }

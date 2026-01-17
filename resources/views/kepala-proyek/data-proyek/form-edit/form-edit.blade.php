@@ -176,46 +176,56 @@
                     <div class="w-[200px] max-[810px]:hidden"></div>
                     <div class="w-full flex flex-wrap gap-8">
                         <div class="flex items-center gap-x-3">
-                            <label class="text-sm">PHO</label>
-                            <input type="checkbox" name="is_pho"
-                                class="w-[35px] h-[35px] bg-[#D9D9D9]/40 rounded-lg outline-none cursor-pointer"
-                                {{ $dataPerusahaan->is_pho ? 'checked' : '' }} />
-                        </div>
-                        <div class="flex items-center gap-x-3">
-                            <label class="flex flex-col text-sm">
+                            <label for="" class="flex flex-col text-sm">
                                 <span>Progress Kontraktor</span>
-                                <span>(Sudah diserahkan ke admin)</span>
+                                <span>(Sudah di serahkan ke admin)</span>
                             </label>
-                            <input type="checkbox" name="is_kontraktor_admin"
+                            <input type="checkbox" name="is_kontraktor_admin" id=""
                                 class="w-[35px] h-[35px] bg-[#D9D9D9]/40 rounded-lg outline-none cursor-pointer"
                                 {{ $dataPerusahaan->is_kontraktor_admin ? 'checked' : '' }} />
                         </div>
                         <div class="flex items-center gap-x-3">
-                            <label class="flex flex-col text-sm">
+                            <label for="" class="flex flex-col text-sm">
                                 <span>Progress Kontraktor</span>
-                                <span>(Sudah diambil kontraktor)</span>
+                                <span>(Sudah di ambil kontraktor)</span>
                             </label>
-                            <input type="checkbox" name="is_kontraktor_kontraktor"
+                            <input type="checkbox" name="is_kontraktor_kontraktor" id=""
                                 class="w-[35px] h-[35px] bg-[#D9D9D9]/40 rounded-lg outline-none cursor-pointer"
                                 {{ $dataPerusahaan->is_kontraktor_kontraktor ? 'checked' : '' }} />
+
                         </div>
                         <div class="flex items-center gap-x-3">
-                            <label class="flex flex-col text-sm">
-                                <span>RAR Dokumen Konsultan</span>
-                                <span>(Sudah diambil kontraktor)</span>
+                            <label for="" class="flex flex-col text-sm">
+                                <span>RAR Dokumen </span>
+                                <span>Konsultan</span>
                             </label>
-                            <input type="checkbox" name="is_konsultan_kontraktor"
-                                class="w-[35px] h-[35px] bg-[#D9D9D9]/40 rounded-lg outline-none cursor-pointer"
+                            <input type="checkbox" name="is_konsultan_kontraktor" id=""
+                                class="w-[35px] h-[35px] bg-[#D9D9D9]/40 rounded-lg outline-none cursor-pointe"
                                 {{ $dataPerusahaan->is_konsultan_kontraktor ? 'checked' : '' }} />
                         </div>
                         <div class="flex items-center gap-x-3">
-                            <label class="flex flex-col text-sm">
-                                <span>Progress Pengawas</span>
-                                <span>(Sudah diserahkan ke admin)</span>
+                            <label for="" class="flex flex-col text-sm">
+                                <span>Progress Pengawas </span>
+                                <span>(Sudah di serahkan ke admin)</span>
                             </label>
-                            <input type="checkbox" name="is_pengawas_admin"
+                            <input type="checkbox" name="is_pengawas_admin" id=""
                                 class="w-[35px] h-[35px] bg-[#D9D9D9]/40 rounded-lg outline-none cursor-pointer"
                                 {{ $dataPerusahaan->is_pengawas_admin ? 'checked' : '' }} />
+                        </div>
+                        </div>
+                        <div class="flex items-center gap-x-3">
+                            <label for="" class="text-sm">Dokumentasi</label>
+                            <input type="checkbox" name="is_pho" id=""
+                                class="w-[35px] h-[35px] bg-[#D9D9D9]/40 rounded-lg outline-none cursor-pointer"
+                                {{ $dataPerusahaan->is_pho ? 'checked' : '' }} />
+                        </div>
+                        <div class="flex items-center gap-x-3">
+                            <label for="" class="flex flex-col text-sm">
+                                <span>Gambar</span>
+                            </label>
+                            <input type="checkbox" name="is_gambar" id=""
+                                class="w-[35px] h-[35px] bg-[#D9D9D9]/40 rounded-lg outline-none cursor-pointer"
+                                {{ $dataPerusahaan->is_gambar ? 'checked' : '' }} />
                         </div>
                     </div>
                 </div>
