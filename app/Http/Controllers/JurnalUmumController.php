@@ -45,27 +45,28 @@ class JurnalUmumController extends Controller
             })
             ->get();
         $akunDebit = Asset::active()
-        ->whereIn('kode_akun', ['450', '451'])
+            ->whereIn('kode_akun', ['450', '451'])
             ->get();
         $akunKredit = Asset::active()
-        ->where('akun_header', 'hpp_proyek')
+            ->where('akun_header', 'hpp_proyek')
             ->get();
 
 
-        $allowedAccounts = [];
-        if (Auth::user()->role === 'Admin 2') {
-            $allowedAccounts = ['Kas Kecil', 'Kas Flip', 'OVO'];
-        } elseif (Auth::user()->role === 'Admin 1') {
+        if (Auth::user()->role === 'Admin 1') {
             $allowedAccounts = ['Kas Besar', 'Kas Bank BCA', 'Kas Flip', 'OVO'];
+
+            $bank = Asset::Active()
+                ->where('akun_header', 'asset_lancar_bank')
+                ->whereIn('nama_akun', $allowedAccounts)
+                ->where('nama_akun', '!=', 'Kas BJB')
+                ->get();
+        } elseif (Auth::user()->role === 'Admin 2') {
+            $bank = Asset::Active()
+                ->where('akun_header', 'asset_lancar_bank')
+                ->where('nama_akun', '!=', 'Kas BJB')
+                ->get();
         }
-        $bank = Asset::Active()->where('akun_header', 'asset_lancar_bank')
-            ->whereIn('nama_akun', $allowedAccounts)
-            ->where('nama_akun', '!=', 'Kas BJB')
-            ->get();
-        $bank = Asset::Active()->where('akun_header', 'asset_lancar_bank')
-            ->whereIn('nama_akun', $allowedAccounts)
-            ->where('nama_akun', '!=', 'Kas BJB')
-            ->get();
+
 
         $bankTo = Asset::Active()->where('akun_header', 'asset_lancar_bank')
             ->where('nama_akun', '!=', 'Kas BJB')
