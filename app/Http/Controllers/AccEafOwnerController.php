@@ -125,7 +125,7 @@ class AccEafOwnerController extends Controller
                 EafDetail::create([
                     'kode_eaf'   => $eaf->kode_eaf,
                     'tanggal'    => $eaf->tanggal,
-                    'keterangan'    => 'Closing'. $eaf-> nama_proyek,
+                    'keterangan'    => 'Closing '. $eaf-> nama_proyek,
                     'kode_akun'  => $piutang->kode_akun,
                     'nama_akun'  => $piutang->nama_akun,
                     'debit'      =>  0,
