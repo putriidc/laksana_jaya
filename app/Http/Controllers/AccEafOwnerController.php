@@ -122,6 +122,17 @@ class AccEafOwnerController extends Controller
                     'is_generate' => false,
                     'created_by' => Auth::user()->id ?? 'system',
                 ]);
+                EafDetail::create([
+                    'kode_eaf'   => $eaf->kode_eaf,
+                    'tanggal'    => $eaf->tanggal,
+                    'keterangan'    => 'Closing'. $eaf-> nama_proyek,
+                    'kode_akun'  => $piutang->kode_akun,
+                    'nama_akun'  => $piutang->nama_akun,
+                    'debit'      =>  0,
+                    'kredit'     => $eaf->nominal ?? 0,
+                    'is_generate' => false,
+                    'created_by' => Auth::user()->id ?? 'system',
+                ]);
             }
         }
 
