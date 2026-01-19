@@ -11,7 +11,7 @@
                     <select name="" id="selectMasterData"
                         class="py-2 w-[200px] px-4 appearance-none border-2 border-[#9A9A9A] rounded-xl cursor-pointer outline-none">
                         <option disabled selected>-Pilih Data-</option>
-                        <option value="data-asset">Data Asset</option>
+                        <option value="data-asset">COA Akun</option>
                         <option value="data-piutang">Data Piutang</option>
                         <option value="data-karyawan">Data Karyawan</option>
                         <option value="data-proyek">Data Proyek</option>
