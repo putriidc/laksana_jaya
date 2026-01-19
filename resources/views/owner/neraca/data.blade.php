@@ -76,9 +76,10 @@
     </div>
     <div id="neraca-saldo" class="{{ request('tipe') == 'neraca-saldo' ? '' : 'hidden' }}">
             <h1 class="font-bold text-2xl mb-5">Neraca Saldo</h1>
-                <a href="" class="border-2 border-[#9A9A9A] rounded-lg px-3 py-2">
+                <a href="" target="_blank"
+            class="py-[10px] px-[10px] border-[#9A9A9A] border-2 rounded-lg cursor-pointer flex items-center gap-x-2 w-fit">
                     <span class="text-gray-500">Cetak Laporan</span>
-                    <img src="{{ asset('assets/printer.png') }}" alt="" class="">
+                    <img src="{{ asset('assets/printer.png') }}" alt="" class="w-[22px]">
                 </a>
             <div class="py-10 w-full rounded-xl shadow-[0px_0px_20px_rgba(0,0,0,0.1)] max-[630px]:overflow-x-scroll">
                 <div class="max-[630px]:w-[630px]">
