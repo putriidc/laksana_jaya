@@ -158,8 +158,8 @@ class LabaRugiController extends Controller
             'role',
             'tanggalCetak'
         ))->setPaper('A4', 'portrait');
-
-        return $pdf->stream('laporan-laba-rugi-' . str_replace(' ', '-', $periodeLabel) . '.pdf');
+        $filename = 'laporan-laba-rugi-' . preg_replace('/[\/\\\\]/', '-', $periodeLabel) . '.pdf';
+        return $pdf->stream($filename);
     }
 
 
