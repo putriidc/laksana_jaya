@@ -5,12 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>LOGIN AR4N GROUP</title>
-       <link rel="preload" as="style" href="https://ar4n-group.com/public/build/assets/app-B0Qmn0OF.css" />
-       <link rel="stylesheet" href="https://ar4n-group.com/public/build/assets/app-B0Qmn0OF.css" /> 
-        <link rel="preload" as="style" href="https://ar4n-group.com/public/build/assets/app-CksuuEqD.css" />
-        <link rel="modulepreload" as="script" href="https://ar4n-group.com/public/build/assets/app-Dp50F7vr.js" />
-        <link rel="stylesheet" href="https://ar4n-group.com/public/build/assets/app-CksuuEqD.css" />
-        <script type="module" src="https://ar4n-group.com/public/build/assets/app-Dp50F7vr.js"></script>    
+       @vite('resources/css/app.css') @vite('resources/js/app.js')
     </head>
     <body class="flex justify-center items-center h-screen font-poppins">
         @if(session('error'))
