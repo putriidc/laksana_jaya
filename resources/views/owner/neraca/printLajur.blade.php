@@ -72,7 +72,7 @@
             text-align: center;
             float: right;
         }
-        
+
 
         .clear { clear: both; }
     </style>
@@ -82,7 +82,7 @@
     <div class="header">
         <img src="{{ public_path('assets/logo-font.png') }}" class="logo">
         <h1 class="title">Laporan Neraca Lajur</h1>
-        <div class="periode">Periode : 1 Januari 2025 - 31 Desember 2025</div>
+        <div class="periode">Periode : {{ $periodeLabel }}</div>
     </div>
     <div>Dicetak pada: {{ $tanggalCetak }} - {{ $jamCetak }}</div>
     <table>

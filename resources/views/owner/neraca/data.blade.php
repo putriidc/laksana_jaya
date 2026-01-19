@@ -3,19 +3,35 @@
 <div>
     <div class="mb-5 flex items-center justify-between pb-5 border-b-2 border-[#CCCCCC] max-[420px]:flex-wrap max-[420px]:gap-2">
         <h1 class="text-2xl font-bold">Data Neraca</h1>
-        <select name="" id="pilih-neraca" class="py-2 w-[200px] px-4 appearance-none border-2 border-[#9A9A9A] rounded-xl cursor-pointer outline-none">
-            <option disabled selected>-Pilih Data Neraca-</option>
-            <option value="neraca-lajur">Neraca Lajur</option>
-            <option value="neraca-saldo">Neraca Saldo</option>
+        <select name="tipe" id="pilih-neraca" class="py-2 w-[200px] px-4 appearance-none border-2 border-[#9A9A9A] rounded-xl cursor-pointer outline-none">
+            <option disabled {{ request('tipe') ? '' : 'selected' }}>-Pilih Data Neraca-</option>
+            <option value="neraca-lajur" {{ request('tipe') == 'neraca-lajur' ? 'selected' : '' }}>Neraca Lajur</option>
+            <option value="neraca-saldo" {{ request('tipe') == 'neraca-saldo' ? 'selected' : '' }}>Neraca Saldo</option>
         </select>
     </div>
-    <div class="hidden" id="neraca-lajur">
+    <div class="{{ request('tipe') == 'neraca-lajur' ? '' : 'hidden' }}" id="neraca-lajur">
         <div class="flex justify-between items-center mb-5 max-[380px]:gap-2 max-[380px]:flex-wrap">
             <h1 class="text-2xl font-bold">Neraca Lajur</h1>
-            <a target="_blank" href="{{ route('neracaLajur.print') }}" class="flex items-center gap-x-2 border-2 border-[#9A9A9A] rounded-lg px-4 py-2">
+            <form action="{{ route('neracaOwner.index') }}" method="GET" class="flex items-center gap-x-2">
+    <input type="text" name="start" data-flatpickr placeholder="Tgl Mulai" value="{{ request('start') }}"
+           class="border-2 border-[#9A9A9A] px-4 py-2 rounded-lg w-[200px] outline-none">
+    <input type="text" name="end" data-flatpickr placeholder="Tgl Selesai" value="{{ request('end') }}"
+           class="border-2 border-[#9A9A9A] px-4 py-2 rounded-lg w-[200px] outline-none">
+
+    <button type="submit" class="py-[10px] px-[10px] border-[#9A9A9A] border-2 rounded-lg cursor-pointer">
+        <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" class="w-[20px]">
+    </button>
+</form>
+
+        <a href="{{ route('neracaLajur.print', ['start' => request('start'), 'end' => request('end')]) }}" target="_blank"
+            class="py-[10px] px-[10px] border-[#9A9A9A] border-2 rounded-lg cursor-pointer flex items-center gap-x-2 w-fit">
+            <span class="text-gray-500">Cetak Laporan</span>
+            <img src="{{ asset('assets/printer.png') }}" alt="search icon" class="w-[22px]">
+        </a>
+            {{-- <a target="_blank" href="{{ route('neracaLajur.print') }}" class="flex items-center gap-x-2 border-2 border-[#9A9A9A] rounded-lg px-4 py-2">
                 <span class="text-[#72686B]">Cetak Laporan</span>
                 <img src="{{ asset('assets/printer.png') }}" alt="">
-            </a>
+            </a> --}}
         </div>
         <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1200px]:overflow-x-scroll">
         <table class="table-fixed text-center text-sm w-full max-[1200px]:w-[1200px]">
@@ -57,7 +73,7 @@
         </table>
         </div>
     </div>
-    <div id="neraca-saldo" class="hidden">
+    <div id="neraca-saldo" class="{{ request('tipe') == 'neraca-saldo' ? '' : 'hidden' }}">
             <h1 class="font-bold text-2xl mb-5">Neraca Saldo</h1>
             <form action="" class="flex gap-2 mb-5 max-[420px]:flex-wrap">
                 <select name="" id="" class="border-2 border-[#9A9A9A] rounded-lg py-2 px-4 appearance-none w-[200px] outline-none cursor-pointer">
