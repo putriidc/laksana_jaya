@@ -76,29 +76,10 @@
     </div>
     <div id="neraca-saldo" class="{{ request('tipe') == 'neraca-saldo' ? '' : 'hidden' }}">
             <h1 class="font-bold text-2xl mb-5">Neraca Saldo</h1>
-            <form action="" class="flex gap-2 mb-5 max-[420px]:flex-wrap">
-                <select name="" id="" class="border-2 border-[#9A9A9A] rounded-lg py-2 px-4 appearance-none w-[200px] outline-none cursor-pointer">
-                    <option selected disabled>-Pilih Bulan-</option>
-                    <option value="Januari">Januari</option>
-                    <option value="Februari">Februari</option>
-                    <option value="Maret">Maret</option>
-                    <option value="April">April</option>
-                    <option value="Mei">Mei</option>
-                    <option value="Juni">Juni</option>
-                    <option value="Juli">Juli</option>
-                    <option value="Agustus">Agustus</option>
-                    <option value="September">September</option>
-                    <option value="Oktober">Oktober</option>
-                    <option value="November">November</option>
-                    <option value="Desember">Desember</option>
-                </select>
-                <button type="submit" class="border-2 border-[#9A9A9A] rounded-lg px-3 py-2 cursor-pointer">
-                    <img src="{{ asset('assets/search-normal.png') }}" alt="" class="w-[20px]">
-                </button>
                 <a href="" class="border-2 border-[#9A9A9A] rounded-lg px-3 py-2">
+                    <span class="text-gray-500">Cetak Laporan</span>
                     <img src="{{ asset('assets/printer.png') }}" alt="" class="">
                 </a>
-            </form>
             <div class="py-10 w-full rounded-xl shadow-[0px_0px_20px_rgba(0,0,0,0.1)] max-[630px]:overflow-x-scroll">
                 <div class="max-[630px]:w-[630px]">
                     <div class="w-full flex bg-[#E9E9E9] py-2 px-6 mb-3">
