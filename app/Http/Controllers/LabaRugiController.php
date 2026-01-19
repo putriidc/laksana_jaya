@@ -18,14 +18,14 @@ class LabaRugiController extends Controller
     public function index(Request $request)
     {
         // Master akun pendapatan
-        $akunPendapatan = Asset::active()->where('akun_header', 'pendapatan')->pluck('nama_akun')->get();
+        $akunPendapatan = Asset::active()->where('akun_header', 'pendapatan')->get();
 
         // Master akun biaya
-        $akunBiaya = Asset::active()->where('akun_header', 'hpp_proyek')->pluck('nama_akun')->get();
+        $akunBiaya = Asset::active()->where('akun_header', 'hpp_proyek')->get();
 
         // Base query
-        $queryPendapatan = JurnalUmum::active()->whereIn('nama_perkiraan', $akunPendapatan);
-        $queryBiaya      = JurnalUmum::active()->whereIn('nama_perkiraan', $akunBiaya);
+        $queryPendapatan = JurnalUmum::active()->whereIn('nama_perkiraan', $akunPendapatan->nama_akun);
+        $queryBiaya      = JurnalUmum::active()->whereIn('nama_perkiraan', $akunBiaya->nama_akun);
 
         // Filter bulan kalau ada request
         if ($request->filled('bulan')) {
@@ -87,10 +87,10 @@ class LabaRugiController extends Controller
     public function print(Request $request)
     {
         // Master akun pendapatan
-        $akunPendapatan = Asset::active()->where('akun_header', 'pendapatan')->pluck('nama_akun')->get();
+        $akunPendapatan = Asset::active()->where('akun_header', 'pendapatan')->get();
 
         // Master akun biaya
-        $akunBiaya = Asset::active()->where('akun_header', 'hpp_proyek')->pluck('nama_akun')->get();
+        $akunBiaya = Asset::active()->where('akun_header', 'hpp_proyek')->get();
 
         // Base query
         $queryPendapatan = JurnalUmum::active()->whereIn('nama_perkiraan', $akunPendapatan);
