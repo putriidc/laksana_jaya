@@ -4,9 +4,9 @@
     <h1 class="font-bold text-2xl mb-5">Laporan Laba Rugi</h1>
     <div class="flex items-center gap-2 mb-5 max-[500px]:flex-wrap">
             <form action="{{ route('labarugi.index') }}" method="GET" class="flex items-center gap-x-2">
-    <input type="date" name="start" data-flatpickr placeholder="Tgl Mulai" value="{{ request('start') }}"
+    <input type="text" name="start" data-flatpickr placeholder="Tgl Mulai" value="{{ request('start') }}"
            class="border-2 border-[#9A9A9A] px-4 py-2 rounded-lg w-[200px] outline-none">
-    <input type="date" name="end" data-flatpickr placeholder="Tgl Selesai" value="{{ request('end') }}"
+    <input type="text" name="end" data-flatpickr placeholder="Tgl Selesai" value="{{ request('end') }}"
            class="border-2 border-[#9A9A9A] px-4 py-2 rounded-lg w-[200px] outline-none">
 
     <button type="submit" class="py-[10px] px-[10px] border-[#9A9A9A] border-2 rounded-lg cursor-pointer">
@@ -14,7 +14,7 @@
     </button>
 </form>
 
-        <a href="{{ route('labarugi.print', ['bulan' => request('bulan')]) }}" target="_blank"
+        <a href="{{ route('labarugi.print', ['start' => request('start'), 'end' => request('end')]) }}" target="_blank"
             class="py-[10px] px-[10px] border-[#9A9A9A] border-2 rounded-lg cursor-pointer flex items-center gap-x-2 w-fit">
             <span class="text-gray-500">Cetak Laporan</span>
             <img src="{{ asset('assets/printer.png') }}" alt="search icon" class="w-[22px]">
