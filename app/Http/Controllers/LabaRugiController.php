@@ -22,10 +22,12 @@ class LabaRugiController extends Controller
 
         // Master akun biaya
         $akunBiaya = Asset::active()->where('akun_header', 'hpp_proyek')->get();
-
+        // Ambil list nama akun untuk filter
+        $akunPendapatanNames = $akunPendapatan->pluck('nama_akun')->toArray();
+        $akunBiayaNames = $akunBiaya->pluck('nama_akun')->toArray();
         // Base query
-        $queryPendapatan = JurnalUmum::active()->whereIn('nama_perkiraan', $akunPendapatan->nama_akun);
-        $queryBiaya      = JurnalUmum::active()->whereIn('nama_perkiraan', $akunBiaya->nama_akun);
+        $queryPendapatan = JurnalUmum::active()->whereIn('nama_perkiraan', $akunPendapatan);
+        $queryBiaya      = JurnalUmum::active()->whereIn('nama_perkiraan', $akunBiaya);
 
         // Filter bulan kalau ada request
         if ($request->filled('bulan')) {
@@ -91,7 +93,8 @@ class LabaRugiController extends Controller
 
         // Master akun biaya
         $akunBiaya = Asset::active()->where('akun_header', 'hpp_proyek')->get();
-
+        $akunPendapatanNames = $akunPendapatan->pluck('nama_akun')->toArray();
+        $akunBiayaNames = $akunBiaya->pluck('nama_akun')->toArray();
         // Base query
         $queryPendapatan = JurnalUmum::active()->whereIn('nama_perkiraan', $akunPendapatan);
         $queryBiaya      = JurnalUmum::active()->whereIn('nama_perkiraan', $akunBiaya);
