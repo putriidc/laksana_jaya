@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Asset;
 use Carbon\Carbon;
 use App\Models\JurnalUmum;
 use Illuminate\Http\Request;
@@ -17,30 +18,10 @@ class LabaRugiController extends Controller
     public function index(Request $request)
     {
         // Master akun pendapatan
-        $akunPendapatan = [
-            'Pendapatan Proyek Fisik',
-            'Pendapatan Konsultan',
-            'Pendapatan Mining',
-        ];
+        $akunPendapatan = Asset::active()->where('akun_header', 'pendapatan')->pluck('nama_akun')->get();
 
         // Master akun biaya
-        $akunBiaya = [
-            'Biaya Material, Alat dan Barang',
-            'Biaya Gaji Tukang & Pengawas Lapangan',
-            'Biaya Sewa Alat Berat',
-            'Biaya Asuransi',
-            'Biaya Transportasi dan Perjalanan Dinas',
-            'Biaya Listrik, Air, Telp dan Internet',
-            'Biaya Infaq dan Sumbangan',
-            'Biaya Operasional Lainnya',
-            'Biaya Alat Tulis Kantor',
-            'Biaya Sewa Gedung Kantor',
-            'Biaya Gaji Staf Kantor',
-            'Biaya Konsumsi',
-            'Biaya Adm dan Umum Lainnya',
-            'Fee Perusahaan',
-            'Beban PPh',
-        ];
+        $akunBiaya = Asset::active()->where('akun_header', 'hpp_proyek')->pluck('nama_akun')->get();
 
         // Base query
         $queryPendapatan = JurnalUmum::active()->whereIn('nama_perkiraan', $akunPendapatan);
@@ -106,30 +87,10 @@ class LabaRugiController extends Controller
     public function print(Request $request)
     {
         // Master akun pendapatan
-        $akunPendapatan = [
-            'Pendapatan Proyek Fisik',
-            'Pendapatan Konsultan',
-            'Pendapatan Mining',
-        ];
+        $akunPendapatan = Asset::active()->where('akun_header', 'pendapatan')->pluck('nama_akun')->get();
 
         // Master akun biaya
-        $akunBiaya = [
-            'Biaya Material, Alat dan Barang',
-            'Biaya Gaji Tukang & Pengawas Lapangan',
-            'Biaya Sewa Alat Berat',
-            'Biaya Asuransi',
-            'Biaya Transportasi dan Perjalanan Dinas',
-            'Biaya Listrik, Air, Telp dan Internet',
-            'Biaya Infaq dan Sumbangan',
-            'Biaya Operasional Lainnya',
-            'Biaya Alat Tulis Kantor',
-            'Biaya Sewa Gedung Kantor',
-            'Biaya Gaji Staf Kantor',
-            'Biaya Konsumsi',
-            'Biaya Adm dan Umum Lainnya',
-            'Fee Perusahaan',
-            'Beban PPh',
-        ];
+        $akunBiaya = Asset::active()->where('akun_header', 'hpp_proyek')->pluck('nama_akun')->get();
 
         // Base query
         $queryPendapatan = JurnalUmum::active()->whereIn('nama_perkiraan', $akunPendapatan);
