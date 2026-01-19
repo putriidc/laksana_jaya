@@ -13,6 +13,7 @@
         <div class="flex justify-between items-center mb-5 max-[380px]:gap-2 max-[380px]:flex-wrap">
             <h1 class="text-2xl font-bold">Neraca Lajur</h1>
             <form action="{{ route('neracaOwner.index') }}" method="GET" class="flex items-center gap-x-2">
+                <input type="hidden" name="tipe" value="neraca-lajur">
     <input type="text" name="start" data-flatpickr placeholder="Tgl Mulai" value="{{ request('start') }}"
            class="border-2 border-[#9A9A9A] px-4 py-2 rounded-lg w-[200px] outline-none">
     <input type="text" name="end" data-flatpickr placeholder="Tgl Selesai" value="{{ request('end') }}"
