@@ -26,8 +26,8 @@ class LabaRugiController extends Controller
         $akunPendapatanNames = $akunPendapatan->pluck('nama_akun')->toArray();
         $akunBiayaNames = $akunBiaya->pluck('nama_akun')->toArray();
         // Base query
-        $queryPendapatan = JurnalUmum::active()->whereIn('nama_perkiraan', $akunPendapatan);
-        $queryBiaya      = JurnalUmum::active()->whereIn('nama_perkiraan', $akunBiaya);
+        $queryPendapatan = JurnalUmum::active()->whereIn('nama_perkiraan', $akunPendapatanNames);
+        $queryBiaya      = JurnalUmum::active()->whereIn('nama_perkiraan', $akunBiayaNames);
 
         // Filter bulan kalau ada request
         if ($request->filled('bulan')) {
@@ -59,14 +59,14 @@ class LabaRugiController extends Controller
             ->pluck('total', 'nama_perkiraan');
 
         // Gabungkan dengan master list → isi 0 kalau tidak ada
-        $pendapatanFinal = collect($akunPendapatan)->map(function ($akun) use ($detailPendapatan) {
+        $pendapatanFinal = collect($akunPendapatanNames)->map(function ($akun) use ($detailPendapatan) {
             return [
                 'nama_perkiraan' => $akun,
                 'total' => $detailPendapatan[$akun] ?? 0,
             ];
         });
 
-        $biayaFinal = collect($akunBiaya)->map(function ($akun) use ($detailBiaya) {
+        $biayaFinal = collect($akunBiayaNames)->map(function ($akun) use ($detailBiaya) {
             return [
                 'nama_perkiraan' => $akun,
                 'total' => $detailBiaya[$akun] ?? 0,
@@ -96,8 +96,8 @@ class LabaRugiController extends Controller
         $akunPendapatanNames = $akunPendapatan->pluck('nama_akun')->toArray();
         $akunBiayaNames = $akunBiaya->pluck('nama_akun')->toArray();
         // Base query
-        $queryPendapatan = JurnalUmum::active()->whereIn('nama_perkiraan', $akunPendapatan);
-        $queryBiaya      = JurnalUmum::active()->whereIn('nama_perkiraan', $akunBiaya);
+        $queryPendapatan = JurnalUmum::active()->whereIn('nama_perkiraan', $akunPendapatanNames);
+        $queryBiaya      = JurnalUmum::active()->whereIn('nama_perkiraan', $akunBiayaNames);
 
         // Filter bulan kalau ada request
         if ($request->filled('bulan')) {
@@ -129,14 +129,14 @@ class LabaRugiController extends Controller
             ->pluck('total', 'nama_perkiraan');
 
         // Gabungkan dengan master list → isi 0 kalau tidak ada
-        $pendapatanFinal = collect($akunPendapatan)->map(function ($akun) use ($detailPendapatan) {
+        $pendapatanFinal = collect($akunPendapatanNames)->map(function ($akun) use ($detailPendapatan) {
             return [
                 'nama_perkiraan' => $akun,
                 'total' => $detailPendapatan[$akun] ?? 0,
             ];
         });
 
-        $biayaFinal = collect($akunBiaya)->map(function ($akun) use ($detailBiaya) {
+        $biayaFinal = collect($akunBiayaNames)->map(function ($akun) use ($detailBiaya) {
             return [
                 'nama_perkiraan' => $akun,
                 'total' => $detailBiaya[$akun] ?? 0,
