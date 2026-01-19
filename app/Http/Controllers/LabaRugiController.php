@@ -17,30 +17,19 @@ class LabaRugiController extends Controller
      */
     public function index(Request $request)
     {
-        // Master akun pendapatan
         $akunPendapatan = Asset::active()->where('akun_header', 'pendapatan')->get();
+        $akunBiaya      = Asset::active()->where('akun_header', 'hpp_proyek')->get();
 
-        // Master akun biaya
-        $akunBiaya = Asset::active()->where('akun_header', 'hpp_proyek')->get();
-        // Ambil list nama akun untuk filter
         $akunPendapatanNames = $akunPendapatan->pluck('nama_akun')->toArray();
-        $akunBiayaNames = $akunBiaya->pluck('nama_akun')->toArray();
-        // Base query
+        $akunBiayaNames      = $akunBiaya->pluck('nama_akun')->toArray();
+
         $queryPendapatan = JurnalUmum::active()->whereIn('nama_perkiraan', $akunPendapatanNames);
         $queryBiaya      = JurnalUmum::active()->whereIn('nama_perkiraan', $akunBiayaNames);
 
-        // Filter bulan kalau ada request
-        if ($request->filled('bulan')) {
-            $bulan = Carbon::parse($request->bulan);
-            $start = $bulan->copy()->startOfMonth();
-            $end   = $bulan->copy()->endOfMonth();
-
-            $queryPendapatan->whereBetween('tanggal', [$start, $end]);
-            $queryBiaya->whereBetween('tanggal', [$start, $end]);
-        } else {
-            $bulan = Carbon::now();
-            $start = $bulan->copy()->startOfMonth();
-            $end   = $bulan->copy()->endOfMonth();
+        // 🔎 Filter periode tanggal
+        if ($request->filled('start') && $request->filled('end')) {
+            $start = Carbon::parse($request->start)->startOfDay();
+            $end   = Carbon::parse($request->end)->endOfDay();
 
             $queryPendapatan->whereBetween('tanggal', [$start, $end]);
             $queryBiaya->whereBetween('tanggal', [$start, $end]);
@@ -58,22 +47,16 @@ class LabaRugiController extends Controller
             ->groupBy('nama_perkiraan')
             ->pluck('total', 'nama_perkiraan');
 
-        // Gabungkan dengan master list → isi 0 kalau tidak ada
-        $pendapatanFinal = collect($akunPendapatanNames)->map(function ($akun) use ($detailPendapatan) {
-            return [
-                'nama_perkiraan' => $akun,
-                'total' => $detailPendapatan[$akun] ?? 0,
-            ];
-        });
+        $pendapatanFinal = collect($akunPendapatanNames)->map(fn($akun) => [
+            'nama_perkiraan' => $akun,
+            'total' => $detailPendapatan[$akun] ?? 0,
+        ]);
 
-        $biayaFinal = collect($akunBiayaNames)->map(function ($akun) use ($detailBiaya) {
-            return [
-                'nama_perkiraan' => $akun,
-                'total' => $detailBiaya[$akun] ?? 0,
-            ];
-        });
+        $biayaFinal = collect($akunBiayaNames)->map(fn($akun) => [
+            'nama_perkiraan' => $akun,
+            'total' => $detailBiaya[$akun] ?? 0,
+        ]);
 
-        // Hitung total
         $totalPendapatan = $pendapatanFinal->sum('total');
         $totalBiaya      = $biayaFinal->sum('total');
         $totalLabaRugi   = $totalPendapatan - $totalBiaya;
@@ -88,37 +71,52 @@ class LabaRugiController extends Controller
     }
     public function print(Request $request)
     {
-        // Master akun pendapatan
+        // Master akun pendapatan & biaya
         $akunPendapatan = Asset::active()->where('akun_header', 'pendapatan')->get();
+        $akunBiaya      = Asset::active()->where('akun_header', 'hpp_proyek')->get();
 
-        // Master akun biaya
-        $akunBiaya = Asset::active()->where('akun_header', 'hpp_proyek')->get();
         $akunPendapatanNames = $akunPendapatan->pluck('nama_akun')->toArray();
-        $akunBiayaNames = $akunBiaya->pluck('nama_akun')->toArray();
+        $akunBiayaNames      = $akunBiaya->pluck('nama_akun')->toArray();
+
         // Base query
         $queryPendapatan = JurnalUmum::active()->whereIn('nama_perkiraan', $akunPendapatanNames);
         $queryBiaya      = JurnalUmum::active()->whereIn('nama_perkiraan', $akunBiayaNames);
 
-        // Filter bulan kalau ada request
-        if ($request->filled('bulan')) {
+        // 🔎 Filter periode
+        if ($request->filled('start') && $request->filled('end')) {
+            // kalau ada tanggal awal & akhir
+            $start = Carbon::parse($request->start)->startOfDay();
+            $end   = Carbon::parse($request->end)->endOfDay();
+
+            $queryPendapatan->whereBetween('tanggal', [$start, $end]);
+            $queryBiaya->whereBetween('tanggal', [$start, $end]);
+
+            $periodeLabel = $start->translatedFormat('d F Y') . ' s/d ' . $end->translatedFormat('d F Y');
+        } elseif ($request->filled('bulan')) {
+            // fallback: filter bulan
             $bulan = Carbon::parse($request->bulan);
             $start = $bulan->copy()->startOfMonth();
             $end   = $bulan->copy()->endOfMonth();
 
             $queryPendapatan->whereBetween('tanggal', [$start, $end]);
             $queryBiaya->whereBetween('tanggal', [$start, $end]);
+
+            $periodeLabel = $bulan->translatedFormat('F Y');
         } else {
+            // default: bulan berjalan
             $bulan = Carbon::now();
             $start = $bulan->copy()->startOfMonth();
             $end   = $bulan->copy()->endOfMonth();
 
             $queryPendapatan->whereBetween('tanggal', [$start, $end]);
             $queryBiaya->whereBetween('tanggal', [$start, $end]);
+
+            $periodeLabel = $bulan->translatedFormat('F Y');
         }
 
         // Query pendapatan → ambil dari kredit
         $detailPendapatan = $queryPendapatan
-            ->select('nama_perkiraan', DB::raw('SUM(debit) as total'))
+            ->select('nama_perkiraan', DB::raw('SUM(kredit) as total'))
             ->groupBy('nama_perkiraan')
             ->pluck('total', 'nama_perkiraan');
 
@@ -129,27 +127,23 @@ class LabaRugiController extends Controller
             ->pluck('total', 'nama_perkiraan');
 
         // Gabungkan dengan master list → isi 0 kalau tidak ada
-        $pendapatanFinal = collect($akunPendapatanNames)->map(function ($akun) use ($detailPendapatan) {
-            return [
-                'nama_perkiraan' => $akun,
-                'total' => $detailPendapatan[$akun] ?? 0,
-            ];
-        });
+        $pendapatanFinal = collect($akunPendapatanNames)->map(fn($akun) => [
+            'nama_perkiraan' => $akun,
+            'total' => $detailPendapatan[$akun] ?? 0,
+        ]);
 
-        $biayaFinal = collect($akunBiayaNames)->map(function ($akun) use ($detailBiaya) {
-            return [
-                'nama_perkiraan' => $akun,
-                'total' => $detailBiaya[$akun] ?? 0,
-            ];
-        });
+        $biayaFinal = collect($akunBiayaNames)->map(fn($akun) => [
+            'nama_perkiraan' => $akun,
+            'total' => $detailBiaya[$akun] ?? 0,
+        ]);
 
         // Hitung total
         $totalPendapatan = $pendapatanFinal->sum('total');
         $totalBiaya      = $biayaFinal->sum('total');
         $totalLabaRugi   = $totalPendapatan - $totalBiaya;
 
-        $admin = Auth::user()->name ?? 'Administrator';
-        $role = Auth::user()->role ?? 'admin';
+        $admin        = Auth::user()->name ?? 'Administrator';
+        $role         = Auth::user()->role ?? 'admin';
         $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
 
         // Render ke PDF
@@ -159,13 +153,13 @@ class LabaRugiController extends Controller
             'totalPendapatan',
             'totalBiaya',
             'totalLabaRugi',
-            'bulan',
+            'periodeLabel',
             'admin',
             'role',
             'tanggalCetak'
         ))->setPaper('A4', 'portrait');
 
-        return $pdf->stream('laporan-laba-rugi-' . $bulan->format('F-Y') . '.pdf');
+        return $pdf->stream('laporan-laba-rugi-' . str_replace(' ', '-', $periodeLabel) . '.pdf');
     }
 
 

@@ -4,24 +4,16 @@
     <h1 class="font-bold text-2xl mb-5">Laporan Laba Rugi</h1>
     <div class="flex items-center gap-2 mb-5 max-[500px]:flex-wrap">
             <form action="{{ route('labarugi.index') }}" method="GET" class="flex items-center gap-x-2">
-            @csrf
-            <select name="bulan" class="border-2 border-[#9A9A9A] px-4 py-2 rounded-lg w-[200px] appearance-none outline-none">
-                <option selected disabled class="border-2 border-[#9A9A9A] px-4 py-2 rounded-lg w-[200px]">-- Pilih Bulan --
-                </option>
-                @for ($i = 1; $i <= 12; $i++)
-                    @php
-                        $val = date('Y') . '-' . str_pad($i, 2, '0', STR_PAD_LEFT); // contoh: 2025-01
-                        $namaBulan = \Carbon\Carbon::create()->month($i)->translatedFormat('F');
-                    @endphp
-                    <option value="{{ $val }}" {{ request('bulan') == $val ? 'selected' : '' }}>
-                        {{ $namaBulan }}
-                    </option>
-                @endfor
-            </select>
-            <button type="submit" class="py-[10px] px-[10px] border-[#9A9A9A] border-2 rounded-lg cursor-pointer">
-                <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" class="w-[20px]">
-            </button>
-            </form>
+    <input type="date" name="start" value="{{ request('start') }}"
+           class="border-2 border-[#9A9A9A] px-4 py-2 rounded-lg w-[200px] outline-none">
+    <input type="date" name="end" value="{{ request('end') }}"
+           class="border-2 border-[#9A9A9A] px-4 py-2 rounded-lg w-[200px] outline-none">
+
+    <button type="submit" class="py-[10px] px-[10px] border-[#9A9A9A] border-2 rounded-lg cursor-pointer">
+        <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" class="w-[20px]">
+    </button>
+</form>
+
         <a href="{{ route('labarugi.print', ['bulan' => request('bulan')]) }}" target="_blank"
             class="py-[10px] px-[10px] border-[#9A9A9A] border-2 rounded-lg cursor-pointer flex items-center gap-x-2 w-fit">
             <span class="text-gray-500">Cetak Laporan</span>
