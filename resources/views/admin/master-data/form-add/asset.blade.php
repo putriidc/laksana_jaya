@@ -1,8 +1,7 @@
 @extends('admin.layout') @section('content')
 <div class="flex flex-col items-center">
     <h1 class="text-2xl font-bold mb-4 w-full">
-        Form Data Asset Lancar, Asset Tetap, Kewajiban, Ekuitas, Pendapatan &
-        HPP Proyek
+        Form Data COA Akun
     </h1>
     <div
         class="shadow-[0px_0px_15px_rgba(0,0,0,0.25)] w-full p-10 rounded-lg bg-white"
