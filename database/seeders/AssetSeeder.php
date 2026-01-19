@@ -42,6 +42,7 @@ class AssetSeeder extends Seeder
             ['kode_akun' => '120', 'nama_akun' => 'Piutang Pihak Lain', 'for_admin' => true],
             ['kode_akun' => '121', 'nama_akun' => 'Piutang Mandor/Tukang'],
             ['kode_akun' => '122', 'nama_akun' => 'Piutang Kontrak'],
+            ['kode_akun' => '124', 'nama_akun' => 'Aktiva Lancar'],
         ];
 
         foreach ($data as $item) {
@@ -86,6 +87,7 @@ class AssetSeeder extends Seeder
             ['kode_akun' => '212', 'nama_akun' => 'Hutang PPN'],
             ['kode_akun' => '213', 'nama_akun' => 'Uang Muka Proyek'],
             ['kode_akun' => '221', 'nama_akun' => 'Hutang Bank'],
+            ['kode_akun' => '222', 'nama_akun' => 'Kewajiban Lancar'],
         ];
 
         foreach ($dataKewajiban as $item) {

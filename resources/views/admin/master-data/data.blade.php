@@ -29,14 +29,14 @@
                             id="dropdown-menu">
                             <a href="{{ route('akun.create') }}" class="py-2 px-4 block hover:bg-[#E9E9E9]">
                                 <p class="truncate">
-                                    Asset Lancar, Asset Tetap, Kewajiban, Ekuitas, Pendatan & HPP Proyek
+                                    COA Akun
                                 </p>
                             </a>
-                            <a href="{{ route('piutangHutang.create') }}" class="py-2 px-4 block hover:bg-[#E9E9E9]">
+                            {{-- <a href="{{ route('piutangHutang.create') }}" class="py-2 px-4 block hover:bg-[#E9E9E9]">
                                 <p class="truncate">
                                     Piutang & Hutang Usaha
                                 </p>
-                            </a>
+                            </a> --}}
                             <a href="{{ route('karyawan.create') }}" class="py-2 px-4 block hover:bg-[#E9E9E9]">
                                 <p class="truncate">
                                     Karyawan
@@ -66,8 +66,7 @@
             </div>
             <div class="h-[300px]" id="data-kosong"></div>
             <div class="flex-col pb-10 tabelMasterData hidden" id="data-asset">
-                <h1 class="text-[#C0C0C0] font-bold text-xl">Data Asset Lancar, Asset Tetap, Kewajiban, Ekuitas, Pendatan &
-                    HPP Proyek</h1>
+                <h1 class="text-[#C0C0C0] font-bold text-xl">COA Akun</h1>
                 <div
                     class="w-full flex flex-col justify-center py-8 gap-y-8 shadow-[1px_1px_5px_rgba(0,0,0,0.25)] rounded-lg mt-2 items-center">
                     <div class="flex flex-col w-[80%] gap-y-3">
@@ -399,54 +398,6 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </div>
-            <div class="flex-col pb-10 tabelMasterData hidden" id="data-piutang">
-                <h1 class="text-[#C0C0C0] font-bold text-xl">Piutang & Hutang Usaha</h1>
-                <div class="w-full flex justify-center pt-2 pb-4 shadow-[1px_1px_5px_rgba(0,0,0,0.25)] rounded-lg mt-2">
-                    <table class="table-fixed w-[80%] text-center">
-                        <thead class="border-b-2 border-[#CCCCCC]">
-                            <th class="py-2 w-[10%]">No</th>
-                            <th class="py-2 w-[15%]">Kode Akun</th>
-                            <th class="py-2 w-[25%]">Nama Akun</th>
-                            <th class="py-2 w-[20%]">Akun Header</th>
-                            <th class="py-2 w-[20%]">Action</th>
-                        </thead>
-                        <tbody>
-                            @php
-                                $noPiutang = 1;
-                            @endphp
-                            @foreach ($piutangHutangs as $piutangHutang)
-                                <tr class="bg-white">
-                                    <td class="py-2">{{ $noPiutang++ }}</td>
-                                    <td class="py-2">{{ $piutangHutang->kode_akun }}</td>
-                                    <td class="py-2">{{ $piutangHutang->nama_akun }}</td>
-                                    <td class="py-2">{{ $piutangHutang->akun_header }}</td>
-                                    <td class="py-2">
-                                        <div class="flex items-center justify-center gap-x-2">
-                                            {{-- Tombol Edit --}}
-                                        <a href="{{ route('piutangHutang.edit', $piutangHutang->id) }}"
-                                            class="btn btn-sm btn-primary">
-                                            <img src="https://ar4n-group.com/public/assets/more-circle.png"
-                                                alt="edit icon" class="w-[22px] cursor-pointer">
-                                        </a>
-                                        <span class="border-black border-l-[1px] h-[22px]"></span>
-                                        {{-- Tombol Delete --}}
-                                        <form action="{{ route('piutangHutang.destroy', $piutangHutang->id) }}"
-                                            method="POST" class="h-[22px]">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                <img src="https://ar4n-group.com/public/assets/close-circle.png"
-                                                    alt="delete icon" class="w-[22px] cursor-pointer">
-                                            </button>
-                                        </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
                 </div>
             </div>
             <div class="flex-col pb-10 tabelMasterData hidden" id="data-karyawan">
