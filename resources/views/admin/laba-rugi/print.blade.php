@@ -66,7 +66,7 @@
         <img src="{{ public_path('assets/logo-font.png') }}" class="logo" style="width: 150px; height: 40px;">
     </div>
     <h2 style="font-size: 30px; font-weight: bolder; margin-top: 20px;">LAPORAN LABA RUGI</h2>
-    <span style="">Periode: {{ $bulan ? \Carbon\Carbon::parse($bulan)->translatedFormat('F Y') : 'Semua Periode' }}</span>
+    <span style="">Periode: {{ $periodeLabel }}</span>
 
     <table style="width:100%; border-collapse:collapse; margin-top: 20px;">
             <tr style="font-weight: bold; background-color: #E7E7E7;">
