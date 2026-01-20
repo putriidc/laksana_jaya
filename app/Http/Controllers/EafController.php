@@ -130,16 +130,20 @@ class EafController extends Controller
                 'Pajak'
             ])
             ->get();
-        $allowedAccounts = [];
-        if (Auth::user()->name === 'Siska') {
-            $allowedAccounts = ['Kas Kecil', 'Kas Flip', 'OVO'];
-        } elseif (Auth::user()->name === 'Novi') {
+       if (Auth::user()->role === 'Admin 1') {
             $allowedAccounts = ['Kas Besar', 'Kas Bank BCA', 'Kas Flip', 'OVO'];
+
+            $bank = Asset::Active()
+                ->where('akun_header', 'asset_lancar_bank')
+                ->whereIn('nama_akun', $allowedAccounts)
+                ->where('nama_akun', '!=', 'Kas BJB')
+                ->get();
+        } elseif (Auth::user()->role === 'Admin 2') {
+            $bank = Asset::Active()
+                ->where('akun_header', 'asset_lancar_bank')
+                ->where('nama_akun', '!=', 'Kas BJB')
+                ->get();
         }
-        $bank = Asset::Active()->where('akun_header', 'asset_lancar_bank')
-            ->whereIn('nama_akun', $allowedAccounts)
-            ->where('nama_akun', '!=', 'Kas BJB')
-            ->get();
         // Kirim ke view detail
         return view('admin.form-eaf.detail', compact('eaf', 'today', 'akun', 'bank'));
     }
