@@ -47,11 +47,16 @@
                                     <td class="py-2">
                                         <div class="flex items-center justify-center gap-x-2">
                                             {{-- Tombol Edit --}}
-                                            <a href=""
+                                            {{-- <a href=""
                                                 class="btn btn-sm btn-primary">
                                                 <img src="{{ asset('assets/edit-icon.png') }}"
                                                     alt="edit icon" class="w-[22px] cursor-pointer">
-                                            </a>
+                                            </a> --}}
+                                            <button
+                                                class="btn btn-sm btn-primary cursor-pointer" onclick="editNotaLangsung()">
+                                                <img src="{{ asset('assets/edit-icon.png') }}"
+                                                    alt="edit icon" class="w-[22px] cursor-pointer">
+                                            </button>
                                             <span class="border-black border-l-[1px] h-[22px]"></span>
                                             {{-- Tombol Delete --}}
                                             <form action="" method="POST"
@@ -77,39 +82,39 @@
                             <form action="" method="POST" class="flex flex-col gap-y-4">
                                 @csrf
                                 <h1 class="font-bold text-2xl text-start mb-5">Form Nota Langsung</h1>
-                                <div class="flex items-center">
+                                <div class="flex items-center max-[550px]:flex-col max-[550px]:items-start">
                                     <label for="tanggal" class="font-medium w-[160px] text-start">Tanggal</label>
                                     <input type="date" name="tanggal" id="tanggal" class="bg-[#D9D9D9]/40 px-6 py-2 rounded-lg w-full">
                                 </div>
-                                <div class="flex items-center">
+                                <div class="flex items-center max-[550px]:flex-col max-[550px]:items-start">
                                     <label for="proyek" class="font-medium w-[160px] text-start">Nama Proyek</label>
                                     <select name="proyek" id="proyek" class="bg-[#D9D9D9]/40 px-6 py-2 rounded-lg w-full appearance-none">
                                         <option selected disabled>~Pilih Nama Proyek~</option>
                                     </select>
                                 </div>
-                                <div class="flex items-center">
+                                <div class="flex items-center max-[550px]:flex-col max-[550px]:items-start">
                                     <label for="pic" class="font-medium w-[160px] text-start">PIC</label>
                                     <input type="text" name="pic" id="pic" class="bg-[#D9D9D9]/40 px-6 py-2 rounded-lg w-full" readonly>
                                 </div>
-                                <div class="flex items-center">
+                                <div class="flex items-center max-[550px]:flex-col max-[550px]:items-start">
                                     <label for="keterangan" class="font-medium w-[160px] text-start">Keterangan</label>
                                     <input type="text" name="keterangan" id="keterangan" class="bg-[#D9D9D9]/40 px-6 py-2 rounded-lg w-full">
                                 </div>
-                                <div class="flex items-center">
+                                <div class="flex items-center max-[550px]:flex-col max-[550px]:items-start">
                                     <label for="nominal" class="font-medium w-[160px] text-start">Nominal</label>
                                     <input type="text" name="nominal" id="nominal" class="bg-[#D9D9D9]/40 px-6 py-2 rounded-lg w-full rupiah-format">
                                 </div>
-                                <div class="flex items-center">
+                                <div class="flex items-start">
                                     <label for="detail_biaya" class="font-medium w-[160px] text-start">Detail Biaya</label>
-                                    <textarea name="detail_biaya" id="detail_biaya" cols="20" rows="8" class="bg-[#D9D9D9]/40 px-6 py-2 rounded-lg w-full"></textarea>
+                                    <textarea name="detail_biaya" id="detail_biaya" cols="20" rows="5" class="bg-[#D9D9D9]/40 px-6 py-2 rounded-lg w-full"></textarea>
                                 </div>
-                                <div class="flex items-center">
+                                <div class="flex items-center max-[550px]:flex-col max-[550px]:items-start">
                                     <label for="kas" class="font-medium w-[160px] text-start">Kas / Bank</label>
                                     <select name="kas" id="kas" class="bg-[#D9D9D9]/40 px-4 appearance-none py-2 rounded-lg w-full cursor-pointer">
                                         <option selected disabled>~Pilih kas / bank~</option>
                                     </select>
                                 </div>
-                                <div class="flex items-center">
+                                <div class="flex items-center max-[550px]:flex-col max-[550px]:items-start">
                                     <label for="" class="font-medium w-[130px]"></label>
                                     <button class="flex items-center gap-x-1 border border-[#3E98D0] text-[#3E98D0] px-4 py-[6px] rounded-lg cursor-pointer">
                                         <span class="text-[#3E98D0]">Simpan Data</span>
