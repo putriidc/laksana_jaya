@@ -3,7 +3,7 @@
     <div>
         <div class="flex items-center justify-between">
             <h1 class="text-2xl font-bold mb-5">Nota Langsung</h1>
-            <div class="flex items-center gap-x-1">
+            <div class="flex items-center gap-x-2">
                 <button class="border border-[#9A9A9A] rounded-lg px-4 py-2 cursor-pointer" onclick="formNotaLangsung()">Tambah Data +</button>
                 <a href="" class="border border-[#9A9A9A] rounded-lg px-4 py-2 cursor-pointer flex items-center gap-x-1">
                     <span class="text-[#726868]">Cetak Data</span>
@@ -12,6 +12,14 @@
             </div>
         </div>
         <div class="mt-5">
+            <div class="flex justify-end">
+                <button id="modal-generate" data-id=""
+                    class="flex items-center gap-x-2 border border-[#45D03E] px-4 py-2 rounded-lg cursor-pointer">
+                    <span class="text-[#45D03E]">Generate</span>
+                    <img src="{{ asset('assets/card-send-greeen.png') }}" alt="card send icon"
+                        class="w-[20px] h-[20px]">
+                </button>
+            </div>
             <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
                 <table class="table-auto text-center text-sm w-full">
                     <thead class="border-b-2 border-[#CCCCCC]">
@@ -94,6 +102,28 @@
                     showConfirmButton: false,
                 })
             }
+
+            const modalGenerate = document.getElementById('modal-generate');
+            modalGenerate.addEventListener('click', function(e) {
+                e.preventDefault();
+                Swal.fire({
+                    html: `
+                            <div>
+                                <h1 class="font-bold text-2xl text-center mb-5">Lanjutkan Generate Laporan?</h1>
+                                <div class="w-full flex justify-center items-center">
+                                    <form action="" method="POST">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <button type="submit" class="bg-[#8CE987] w-[100px] py-2 font-semibold rounded-lg cursor-pointer mx-2">YA</button>
+                                    </form>
+                                    <button onclick="Swal.close()" class="bg-[#DD4049] w-[100px] py-2 font-semibold rounded-lg cursor-pointer mx-2">BATAL</button>
+                                </div>
+                            </div>
+                        `,
+                    showCancelButton: false,
+                    showCloseButton: false,
+                    showConfirmButton: false,
+                })
+            });
 
             function detailBiaya(el) {
                 const detail = el.getAttribute('data-detail');
