@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="mt-5">
-            <div class="flex justify-end">
+            <div class="flex justify-end mb-2">
                 <button id="modal-generate" data-id=""
                     class="flex items-center gap-x-2 border border-[#45D03E] px-4 py-2 rounded-lg cursor-pointer">
                     <span class="text-[#45D03E]">Generate</span>
@@ -24,7 +24,7 @@
                 <table class="table-auto text-center text-sm w-full">
                     <thead class="border-b-2 border-[#CCCCCC]">
                         <th class="py-2 w-[5%]">No</th>
-                        <th class="py-2 w-[10%]">Tgl Pengajuan</th>
+                        <th class="py-2 w-[10%]">Tanggal</th>
                         <th class="py-2 w-[15%]">Nama Proyek</th>
                         <th class="py-2 w-[10%]">PIC</th>
                         <th class="py-2 w-[10%]">Nominal</th>
@@ -33,16 +33,37 @@
                     </thead>
                     <tbody>
                                 <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
-                                    <td class="py-2"></td>
-                                    <td class="py-2"></td>
-                                    <td class="py-2"></td>
-                                    <td class="py-2"></td>
-                                    <td class="py-2"></td>
+                                    <td class="py-2">1</td>
+                                    <td class="py-2">1/1/2025</td>
+                                    <td class="py-2">Proyek Pa Dwi</td>
+                                    <td class="py-2">Rhama</td>
+                                    <td class="py-2">Rp. 5.000.000</td>
                                     <td class="py-2">
                                         <span data-detail="" onclick="detailBiaya(this)"
                                             class="hover:underline text-blue-400 cursor-pointer">
                                             Lihat Detail
                                         </span>
+                                    </td>
+                                    <td class="py-2">
+                                        <div class="flex items-center justify-center gap-x-2">
+                                            {{-- Tombol Edit --}}
+                                            <a href=""
+                                                class="btn btn-sm btn-primary">
+                                                <img src="{{ asset('assets/edit-icon.png') }}"
+                                                    alt="edit icon" class="w-[22px] cursor-pointer">
+                                            </a>
+                                            <span class="border-black border-l-[1px] h-[22px]"></span>
+                                            {{-- Tombol Delete --}}
+                                            <form action="" method="POST"
+                                                class="h-[22px]">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                                    <img src="https://ar4n-group.com/public/assets/close-circle.png"
+                                                        alt="delete icon" class="w-[22px] cursor-pointer">
+                                                </button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                     </tbody>
