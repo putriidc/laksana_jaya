@@ -1,11 +1,6 @@
 @extends('admin.layout')
 @section('content')
     <div>
-        @if (session('success'))
-            <div id="flash-message" data-type="success" data-message="{{ session('success') }}"></div>
-        @elseif (session('error'))
-            <div id="flash-message" data-type="error" data-message="{{ session('error') }}"></div>
-        @endif
         <h1 class="text-2xl font-bold mb-5">Form Pengajuan EAF</h1>
         <form method="POST" action="{{ route('eaf.store') }}" class="flex flex-col gap-y-5 pb-10 border-b border-gray-300"
             id="myForm">
