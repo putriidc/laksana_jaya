@@ -4,8 +4,8 @@
         <div class="flex items-center justify-between">
             <h1 class="text-2xl font-bold mb-5">Nota Langsung</h1>
             <div class="flex items-center gap-x-1">
-                <button class="border border-[#9A9A9A] rounded-lg px-4 cursor-pointer" onclick="{}">Tambah Data +</button>
-                <a href="" class="border border-[#9A9A9A] rounded-lg px-4 cursor-pointer flex items-center gap-x-1">
+                <button class="border border-[#9A9A9A] rounded-lg px-4 py-2 cursor-pointer" onclick="formNotaLangsung()">Tambah Data +</button>
+                <a href="" class="border border-[#9A9A9A] rounded-lg px-4 py-2 cursor-pointer flex items-center gap-x-1">
                     <span class="text-[#726868]">Cetak Data</span>
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
                 </a>
@@ -90,21 +90,21 @@
                 })
             }
 
-            // function detailBiaya(el) {
-            //     const detail = el.getAttribute('data-detail');
-            //     Swal.fire({
-            //         html: `
-            //                 <div class="flex flex-col gap-y-4 items-center">
-            //                     <h1 class="font-bold text-2xl text-center mb-5">Detail Biaya</h1>
-            //                         <textarea readonly
-            //                             class="w-full px-4 py-2 border rounded-lg bg-[#D9D9D9]/40"
-            //                         rows="6">${detail}</textarea>
-            //                 </div>
-            //             `,
-            //         showCloseButton: true,
-            //         showConfirmButton: false,
-            //     })
-            // }
+            function detailBiaya(el) {
+                const detail = el.getAttribute('data-detail');
+                Swal.fire({
+                    html: `
+                            <div class="flex flex-col gap-y-4 items-center">
+                                <h1 class="font-bold text-2xl text-center mb-5">Detail Biaya</h1>
+                                    <textarea readonly
+                                        class="w-full px-4 py-2 border rounded-lg bg-[#D9D9D9]/40"
+                                    rows="6">${detail}</textarea>
+                            </div>
+                        `,
+                    showCloseButton: true,
+                    showConfirmButton: false,
+                })
+            }
         </script>
         <script src="{{ asset('js/form.js') }}"></script>
     </div>
