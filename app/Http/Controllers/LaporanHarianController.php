@@ -19,7 +19,7 @@ class LaporanHarianController extends Controller
 
         $today = Carbon::now('Asia/Jakarta')->toDateString();
         $excludedAccounts = Asset::active()->whereIn('akun_header', ['asset_tetap', 'kewajiban', 'ekuitas', 'pendapatan'])
-        ->whereNotIn('kode_akun', ['450', '451'])
+        ->whereNotIn('kode_akun', ['450', '451', '211'])
         ->pluck('nama_akun');
         $cashIn = JurnalUmum::whereDate('tanggal', $today)
             ->whereNotIn('nama_perkiraan', $excludedAccounts)
