@@ -84,7 +84,7 @@
                                 </div>
                             </form>
                         `,
-                    width: 500,
+                    width: 800,
                     showCloseButton: true,
                     showConfirmButton: false,
                 })
