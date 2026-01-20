@@ -89,6 +89,12 @@
                 </div>
                 <div class="px-6 flex mb-3 max-[1250px]:gap-x-4">
                     <div class="w-[50%] flex flex-col gap-y-2">
+                        @foreach ($akunKas as $item)
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">{{ $item->nama_akun }}</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. {{ number_format($item->saldo, 0, ',', '.') }}</p>
+                        </span>
+                        @endforeach
                         @foreach ($lancarFinal as $item)
                         <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
                             <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">{{ $item['nama_perkiraan'] }}</p>
@@ -108,7 +114,7 @@
                 <div class="w-full flex items-center bg-[#E9E9E9] py-2 px-6 mb-6 max-[900px]:gap-x-4">
                     <span class="font-bold w-[50%] flex items-center justify-between max-[830px]:flex-col max-[830px]:items-start">
                         <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">JUMLAH AKTIVA LANCAR</p>
-                        <p class="w-[180px] max-[900px]:w-auto max-[900px]:text-xs max-[830px]:text-base max-[630px]:text-sm">Rp. {{ number_format($totalLancar, 0, ',', '.') }}</p>
+                        <p class="w-[180px] max-[900px]:w-auto max-[900px]:text-xs max-[830px]:text-base max-[630px]:text-sm">Rp. {{ number_format(($totalLancar + $totalKas), 0, ',', '.') }}</p>
                     </span>
                     <span class="font-bold w-[50%] flex items-center justify-between max-[830px]:flex-col max-[830px]:items-start">
                         <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">JUMLAH KEWAJIBAN</p>
@@ -158,7 +164,7 @@
                 <div class="w-full flex bg-[#E9E9E9] max-[900px]:gap-x-4 py-2 px-6">
                     <span class="font-bold w-[50%] flex items-center justify-between max-[830px]:flex-col max-[830px]:items-start">
                         <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">TOTAL AKTIVA</p>
-                        <p class="w-[180px] max-[900px]:w-auto max-[900px]:text-xs max-[830px]:text-base max-[630px]:text-sm">Rp. {{ number_format(($totalTetap + $totalLancar), 0, ',', '.') }}</p>
+                        <p class="w-[180px] max-[900px]:w-auto max-[900px]:text-xs max-[830px]:text-base max-[630px]:text-sm">Rp. {{ number_format(($totalTetap + $totalLancar + $totalKas), 0, ',', '.') }}</p>
                     </span>
                     <span class="font-bold w-[50%] flex items-center justify-between max-[830px]:flex-col max-[830px]:items-start">
                         <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">TOTAL PASIVA</p>

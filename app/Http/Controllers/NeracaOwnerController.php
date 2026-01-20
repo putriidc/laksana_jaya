@@ -44,7 +44,9 @@ class NeracaOwnerController extends Controller
         });
 
         //NERACA SALDO
-        $akunLancar = Asset::active()->whereIn('akun_header', ['asset_lancar', 'asset_lancar_bank'])->get();
+        $akunKas = Asset::active()->where('akun_header', 'asset_lancar_bank')->get();
+        $totalKas = $akunKas->sum('saldo');
+        $akunLancar = Asset::active()->where('akun_header', 'asset_lancar')->get();
         $akunKewajiban  = Asset::active()->where('akun_header', 'kewajiban')->get();
         $akunTetap      = Asset::active()->where('akun_header', 'asset_tetap')->get();
 
@@ -144,7 +146,7 @@ class NeracaOwnerController extends Controller
         $saldoModal = Asset::active()->where('nama_akun', 'Modal')->value('saldo') ?? 0;
 
         // Laba ditahan
-        $labaDitahan = $labaSebelumnya + $labaBerjalan - $deviden + $saldoModal;
+        $labaDitahan = $labaSebelumnya + $labaBerjalan - $deviden;
 
         // return $labaDitahan;
 
@@ -183,6 +185,8 @@ class NeracaOwnerController extends Controller
             'labaDitahan',
             'labaTahunBerjalan',
             'saldoModal',
+            'akunKas',
+            'totalKas',
         ));
     }
 
