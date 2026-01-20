@@ -46,6 +46,8 @@
                 Swal.fire({
                     html: `
                             <form action="" method="POST" class="flex flex-col gap-y-4">
+                                @csrf
+                                <h1 class="font-bold text-2xl text-start mb-5">Form Nota Langsung</h1>
                                 <div class="flex items-center">
                                     <label for="tanggal" class="font-medium w-[150px]">Tanggal</label>
                                     <input type="date" name="tanggal" id="tanggal" class="bg-[#D9D9D9]/40 px-6 py-2 rounded-lg w-full">
