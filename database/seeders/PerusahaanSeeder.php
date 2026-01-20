@@ -21,6 +21,11 @@ class PerusahaanSeeder extends Seeder
             'nama_perusahaan' => 'CV. ARN PURNAMA CONSULTAN',
             'created_by' => 'system',
         ]);
+        Perusahaan::create([
+            'kode_perusahaan' => 'PR-0003',
+            'nama_perusahaan' => 'CV. Bakti Perdana',
+            'created_by' => 'system',
+        ]);
     }
 }
 
