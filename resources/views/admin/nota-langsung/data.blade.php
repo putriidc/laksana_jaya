@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="flex items-center">
                                     <label for="proyek" class="font-medium w-[160px] text-start">Nama Proyek</label>
-                                    <select name="proyek" id="proyek" class="bg-[#D9D9D9]/40 px-6 py-2 rounded-lg w-full">
+                                    <select name="proyek" id="proyek" class="bg-[#D9D9D9]/40 px-6 py-2 rounded-lg w-full appearance-none">
                                         <option selected disabled>~Pilih Nama Proyek~</option>
                                     </select>
                                 </div>
@@ -82,7 +82,10 @@
                                 </div>
                                 <div class="flex items-center">
                                     <label for="" class="font-medium w-[130px]"></label>
-                                    <button type="submit" class="bg-[#D9D9D9]/40 px-6 py-2 rounded-lg font-semibold">Simpan</button>
+                                    <button class="flex items-center gap-x-1">
+                                        <span class="text-[#3E98D0]">Simpan Data</span>
+                                        <img src="{{ asset('assets/plus-circle-blue.png') }}" class="w-[25px] h-[25px]" alt="plus icon">}}"    
+                                    </button>
                                 </div>
                             </form>
                         `,
