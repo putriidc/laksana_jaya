@@ -62,6 +62,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/dashboard', function () {
             return view('admin.dashboard');
         });
+         Route::get('/nota-langsung', function () {
+            return view('admin.nota-langsung.data');
+        });
         // ADMIN KEUANGAN
         Route::get('/admin/master-data', [MasterDataController::class, 'index'])->name('master-data.index');
 
@@ -303,6 +306,10 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['role:Admin 1,Admin 2'])->group(function () {
         Route::get('/admin/dashboard', function () {
             return view('admin.dashboard');
+        });
+
+        Route::get('/nota-langsung', function () {
+            return view('admin.nota-langsung.data');
         });
         // ADMIN KEUANGAN
         Route::get('/admin/master-data', [MasterDataController::class, 'index'])->name('master-data.index');
