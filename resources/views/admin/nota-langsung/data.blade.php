@@ -84,7 +84,7 @@
                                     <label for="" class="font-medium w-[130px]"></label>
                                     <button class="flex items-center gap-x-1">
                                         <span class="text-[#3E98D0]">Simpan Data</span>
-                                        <img src="{{ asset('assets/plus-circle-blue.png') }}" class="w-[25px] h-[25px]" alt="plus icon">}}"    
+                                        <img src="{{ asset('assets/plus-circle-blue.png') }}" class="w-[25px] h-[25px]" alt="plus icon">}}" />
                                     </button>
                                 </div>
                             </form>
