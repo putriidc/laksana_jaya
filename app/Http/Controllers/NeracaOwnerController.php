@@ -44,7 +44,7 @@ class NeracaOwnerController extends Controller
         });
 
         //NERACA SALDO
-        $akunLancar = Asset::active()->where('akun_header', ['asset_lancar', 'asset_lancar_bank'])->get();
+        $akunLancar = Asset::active()->whereIn('akun_header', ['asset_lancar', 'asset_lancar_bank'])->get();
         $akunKewajiban  = Asset::active()->where('akun_header', 'kewajiban')->get();
         $akunTetap      = Asset::active()->where('akun_header', 'asset_tetap')->get();
 
@@ -83,7 +83,7 @@ class NeracaOwnerController extends Controller
         ]);
         $tetapFinal = collect($akunTetapNames)->map(fn($akun) => [
             'nama_perkiraan' => $akun,
-            'total' => $detailKewajiban[$akun] ?? 0,
+            'total' => $detailTetap[$akun] ?? 0,
         ]);
 
         $totalLancar = $lancarFinal->sum('total');
