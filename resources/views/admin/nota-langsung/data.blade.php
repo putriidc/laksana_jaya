@@ -82,7 +82,7 @@
                                 </div>
                                 <div class="flex items-center">
                                     <label for="" class="font-medium w-[130px]"></label>
-                                    <button class="flex items-center gap-x-1">
+                                    <button class="flex items-center gap-x-1 border border-[#3E98D0] text-[#3E98D0] px-4 py-[6px] rounded-lg cursor-pointer">
                                         <span class="text-[#3E98D0]">Simpan Data</span>
                                         <img src="{{ asset('assets/plus-circle-blue.png') }}" class="w-[25px] h-[25px]" alt="plus icon" />
                                     </button>
