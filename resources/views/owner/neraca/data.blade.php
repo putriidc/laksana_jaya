@@ -89,106 +89,30 @@
                 </div>
                 <div class="px-6 flex mb-3 max-[1250px]:gap-x-4">
                     <div class="w-[50%] flex flex-col gap-y-2">
+                        @foreach ($lancarFinal as $item)
                         <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
-                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Aktiva Lancar</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">{{ $item['nama_perkiraan'] }}</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. {{ number_format($item['total'], 0, ',', '.') }}</p>
                         </span>
-
-                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
-                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Kas Besar</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
-                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Kas Kecil</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
-                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Kas Bank BCA</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
-                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Piutang Usaha</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
-                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Piutang Proyek</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
-                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Piutang Karyawan</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
-                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Persediaan Material</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
-                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Uang Muka PPh</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
-                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Kas Flip</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
-                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Piutang Pihak Lain</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
-                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Piutang Mando/Tukang</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
-                        </span>
+                        @endforeach
                     </div>
                     <div class="w-[50%] flex flex-col gap-y-2">
+                        @foreach ($kewajibanFinal as $item)
                         <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
-                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Kewajiban Lancar</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">{{ $item['nama_perkiraan'] }}</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. {{ number_format($item['total'], 0, ',', '.') }}</p>
                         </span>
-
-                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
-                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Hutang Usaha</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
-                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Hutang Pihak ke-3</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
-                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Hutang PPN</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
-                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Uang Muka Proyek</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
-                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Hutang Bank</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
-                        </span>
+                        @endforeach
                     </div>
                 </div>
                 <div class="w-full flex items-center bg-[#E9E9E9] py-2 px-6 mb-6 max-[900px]:gap-x-4">
                     <span class="font-bold w-[50%] flex items-center justify-between max-[830px]:flex-col max-[830px]:items-start">
                         <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">JUMLAH AKTIVA LANCAR</p>
-                        <p class="w-[180px] max-[900px]:w-auto max-[900px]:text-xs max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
+                        <p class="w-[180px] max-[900px]:w-auto max-[900px]:text-xs max-[830px]:text-base max-[630px]:text-sm">Rp. {{ number_format($totalLancar, 0, ',', '.') }}</p>
                     </span>
                     <span class="font-bold w-[50%] flex items-center justify-between max-[830px]:flex-col max-[830px]:items-start">
                         <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">JUMLAH KEWAJIBAN</p>
-                        <p class="w-[180px] max-[900px]:w-auto max-[900px]:text-xs max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
+                        <p class="w-[180px] max-[900px]:w-auto max-[900px]:text-xs max-[830px]:text-base max-[630px]:text-sm">Rp. {{ number_format($totalKewajiban, 0, ',', '.') }}</p>
                     </span>
                 </div>
                 <div class="w-full flex bg-[#E9E9E9] py-2 px-6 mb-3">
@@ -197,86 +121,48 @@
                 </div>
                 <div class="px-6 flex mb-3 max-[1250px]:gap-x-4">
                     <div class="w-[50%] flex flex-col gap-y-2">
+                        @foreach ($tetapFinal as $item)
                         <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
-                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Tanah</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">{{ $item['nama_perkiraan'] }}</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. {{ number_format($item['total'], 0, ',', '.') }}</p>
                         </span>
-
-                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
-                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Bangunan</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
-                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Peralatan Kantor</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
-                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Peralatan Workshop Interior</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
-                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Kendaraan Operasional</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
-                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Akum. Peny. Bangunan</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
-                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Akum. Peny. Peralatan Kantor</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
-                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Akum. Peny. Mesin & Peralatan Pompa</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
-                        </span>
-
-                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
-                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Akum. Peny. Kendaraan Operasional</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
-                        </span>
+                        @endforeach
                     </div>
                     <div class="w-[50%] flex flex-col gap-y-2">
                         <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
                             <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Modal</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. {{ number_format($saldoModal, 0, ',', '.') }}</p>
                         </span>
 
                         <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
                             <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Laba Ditahan</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. {{ number_format($labaDitahan, 0, ',', '.') }}</p>
                         </span>
 
                         <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
                             <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Laba Tahun Berjalan</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. 10.000.000</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. {{ number_format($labaTahunBerjalan, 0, ',', '.') }}</p>
                         </span>
                     </div>
                 </div>
                 <div class="w-full flex bg-[#E9E9E9] max-[900px]:gap-x-4 py-2 px-6 mb-3">
                     <span class="font-bold w-[50%] flex items-center justify-between max-[830px]:flex-col max-[830px]:items-start">
                         <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">JUMLAH AKTIVA TETAP</p>
-                        <p class="w-[180px] max-[900px]:w-auto max-[900px]:text-xs max-[830px]:text-base max-[630px]:text-sm">Rp.</p>
+                        <p class="w-[180px] max-[900px]:w-auto max-[900px]:text-xs max-[830px]:text-base max-[630px]:text-sm">Rp. {{ number_format($totalTetap, 0, ',', '.') }}</p>
                     </span>
                     <span class="font-bold w-[50%] flex items-center justify-between max-[830px]:flex-col max-[830px]:items-start">
                         <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">JUMLAH MODAL</p>
-                        <p class="w-[180px] max-[900px]:w-auto max-[900px]:text-xs max-[830px]:text-base max-[630px]:text-sm">Rp.</p>
+                        <p class="w-[180px] max-[900px]:w-auto max-[900px]:text-xs max-[830px]:text-base max-[630px]:text-sm">Rp. {{ number_format(($saldoModal + $labaDitahan + $labaTahunBerjalan), 0, ',', '.') }}</p>
                     </span>
                 </div>
                 <div class="w-full flex bg-[#E9E9E9] max-[900px]:gap-x-4 py-2 px-6">
                     <span class="font-bold w-[50%] flex items-center justify-between max-[830px]:flex-col max-[830px]:items-start">
                         <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">TOTAL AKTIVA</p>
-                        <p class="w-[180px] max-[900px]:w-auto max-[900px]:text-xs max-[830px]:text-base max-[630px]:text-sm">Rp.</p>
+                        <p class="w-[180px] max-[900px]:w-auto max-[900px]:text-xs max-[830px]:text-base max-[630px]:text-sm">Rp. {{ number_format(($totalTetap + $totalLancar), 0, ',', '.') }}</p>
                     </span>
                     <span class="font-bold w-[50%] flex items-center justify-between max-[830px]:flex-col max-[830px]:items-start">
                         <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">TOTAL PASIVA</p>
-                        <p class="w-[180px] max-[900px]:w-auto max-[900px]:text-xs max-[830px]:text-base max-[630px]:text-sm">Rp.</p>
+                        <p class="w-[180px] max-[900px]:w-auto max-[900px]:text-xs max-[830px]:text-base max-[630px]:text-sm">Rp. {{ number_format((($saldoModal + $labaDitahan + $labaTahunBerjalan) + $totalKewajiban), 0, ',', '.') }}</p>
                     </span>
                 </div>
                 </div>
