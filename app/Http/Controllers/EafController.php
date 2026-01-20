@@ -24,16 +24,20 @@ class EafController extends Controller
         $today = Carbon::now('Asia/Jakarta')->toDateString();
         $proyek = Proyek::whereNull('deleted_at')
             ->get();
-        $allowedAccounts = [];
-        if (Auth::user()->role === 'Admin 2') {
-            $allowedAccounts = ['Kas Kecil', 'Kas Flip', 'OVO'];
-        } elseif (Auth::user()->role === 'Admin 1') {
+        if (Auth::user()->role === 'Admin 1') {
             $allowedAccounts = ['Kas Besar', 'Kas Bank BCA', 'Kas Flip', 'OVO'];
+
+            $bank = Asset::Active()
+                ->where('akun_header', 'asset_lancar_bank')
+                ->whereIn('nama_akun', $allowedAccounts)
+                ->where('nama_akun', '!=', 'Kas BJB')
+                ->get();
+        } elseif (Auth::user()->role === 'Admin 2') {
+            $bank = Asset::Active()
+                ->where('akun_header', 'asset_lancar_bank')
+                ->where('nama_akun', '!=', 'Kas BJB')
+                ->get();
         }
-        $bank = Asset::Active()->where('akun_header', 'asset_lancar_bank')
-            ->whereIn('nama_akun', $allowedAccounts)
-            ->where('nama_akun', '!=', 'Kas BJB')
-            ->get();
         return view('admin.form-eaf.form', compact('eaf', 'today', 'proyek', 'bank'));
     }
 
