@@ -33,4 +33,9 @@ class KasbonContent extends Model
     {
         return $this->belongsTo(PinjamanKaryawan::class, 'kode_karyawan', 'kode_karyawan');
     }
+    public function kas()
+    {
+        return $this->belongsTo(Asset::class, 'kode_kas', 'kode_akun')
+                    ->whereNull('deleted_at');
+    }
 }

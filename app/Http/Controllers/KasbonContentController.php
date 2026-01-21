@@ -25,13 +25,41 @@ class KasbonContentController extends Controller
     {
         $today = Carbon::now('Asia/Jakarta')->toDateString();
         $pinjaman = PinjamanKaryawan::with('karyawan')->active()->findOrFail($id);
-        return view('admin.pinjaman-karyawan.detail.form-add.kasbon', compact('pinjaman', 'today'));
+         if (Auth::user()->role === 'Admin 1') {
+            $allowedAccounts = ['Kas Besar', 'Kas Bank BCA', 'Kas Flip', 'OVO'];
+
+            $bank = Asset::Active()
+                ->where('akun_header', 'asset_lancar_bank')
+                ->whereIn('nama_akun', $allowedAccounts)
+                ->where('nama_akun', '!=', 'Kas BJB')
+                ->get();
+        } elseif (Auth::user()->role === 'Admin 2') {
+            $bank = Asset::Active()
+                ->where('akun_header', 'asset_lancar_bank')
+                ->where('nama_akun', '!=', 'Kas BJB')
+                ->get();
+        }
+        return view('admin.pinjaman-karyawan.detail.form-add.kasbon', compact('pinjaman', 'today', 'bank'));
     }
     public function bayar($id)
     {
         $today = Carbon::now('Asia/Jakarta')->toDateString();
         $pinjaman = PinjamanKaryawan::with('karyawan')->active()->findOrFail($id);
-        return view('admin.pinjaman-karyawan.detail.form-add.pengembalian-kasbon', compact('pinjaman', 'today'));
+         if (Auth::user()->role === 'Admin 1') {
+            $allowedAccounts = ['Kas Besar', 'Kas Bank BCA', 'Kas Flip', 'OVO'];
+
+            $bank = Asset::Active()
+                ->where('akun_header', 'asset_lancar_bank')
+                ->whereIn('nama_akun', $allowedAccounts)
+                ->where('nama_akun', '!=', 'Kas BJB')
+                ->get();
+        } elseif (Auth::user()->role === 'Admin 2') {
+            $bank = Asset::Active()
+                ->where('akun_header', 'asset_lancar_bank')
+                ->where('nama_akun', '!=', 'Kas BJB')
+                ->get();
+        }
+        return view('admin.pinjaman-karyawan.detail.form-add.pengembalian-kasbon', compact('pinjaman', 'today', 'bank'));
     }
 
     public function store(Request $request)
