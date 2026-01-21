@@ -69,6 +69,7 @@ class KasbonContentController extends Controller
             'tanggal'       => 'required|date',
             'kontrak'       => 'nullable|string',
             'bayar'         => 'required|numeric|min:0',
+            'kode_kas'       => 'required',
         ]);
 
         // Ambil pinjaman utama
@@ -85,6 +86,7 @@ class KasbonContentController extends Controller
         // Simpan PinjamanContent
         KasbonContent::create([
             'kode_karyawan' => $pinjamanKaryawan->kode_karyawan,
+            'kode_kas' => $pinjamanKaryawan->kode_kas,
             'kontrak'       => $request->kontrak,
             'tanggal'       => $request->tanggal,
             'jenis'         => 'pinjam',
@@ -101,6 +103,7 @@ class KasbonContentController extends Controller
     {
         $request->validate([
             'kode_karyawan' => 'required',
+            'kode_kas' => 'required',
             'tanggal'       => 'required|date',
             'kontrak'       => 'nullable|string',
             'bayar'         => 'required|numeric|min:0',
@@ -120,6 +123,7 @@ class KasbonContentController extends Controller
         // Simpan PinjamanContent
         $content = KasbonContent::create([
             'kode_karyawan' => $pinjamanKaryawan->kode_karyawan,
+            'kode_kas' => $pinjamanKaryawan->kode_kas,
             'kontrak'       => $request->kontrak,
             'tanggal'       => $request->tanggal,
             'jenis'         => 'cicil',
@@ -138,6 +142,36 @@ class KasbonContentController extends Controller
         $nextId = $lastId + 1;
         $kodeJurnal = 'J-' . str_pad($nextId, 3, '0', STR_PAD_LEFT);
 
+        // update saldo di assets
+        $bank = Asset::where('kode_akun', $request->kode_kas)->first();
+        if ($bank) {
+            if (($request->bayar ?? 0) > 0) {
+                $bank->saldo += $request->bayar;
+            }
+            $bank->save();
+        }
+        // update saldo akun Modal
+        $modal = Asset::where('nama_akun', 'Modal')->first();
+        if ($modal) {
+            if (($request->bayar ?? 0) > 0) {
+                $modal->saldo += $request->bayar;
+            }
+            $modal->save();
+        }
+
+        JurnalUmum::create([
+            'id_content'   => $content->id, // generate kode unik
+            'kode_jurnal'   => $kodeJurnal, // generate kode unik
+            'tanggal'       => $request->tanggal,         // sama dengan tanggal content
+            'keterangan'    => $request->kontrak,         // isi kontrak
+            'nama_perkiraan' => $bank ? $bank->nama_akun : null,
+            'kode_perkiraan' => $request->kode_kas,
+            'nama_proyek'   => '-',
+            'kode_proyek'   => '-',
+            'debit'         => $request->bayar,
+            'kredit'        => 0,
+            'created_by'    => Auth::check() ? Auth::user()->id : null,
+        ]);
         JurnalUmum::create([
             'id_kasbon'   => $content->id, // generate kode unik
             'kode_jurnal'   => $kodeJurnal, // generate kode unik
@@ -242,6 +276,34 @@ class KasbonContentController extends Controller
             ]);
         }
 
+        // 🔥 Update saldo Asset (bank)
+        $assetKas = Asset::where('kode_akun', $content->kode_kas)
+            ->where('akun_header', 'asset_lancar_bank')
+            ->first();
+
+        if ($assetKas) {
+            // rollback saldo lama
+            $assetKas->saldo -= $content->bayar;
+
+            // apply saldo baru
+            $assetKas->saldo += $request->bayar;
+
+            $assetKas->save();
+
+            // 🔥 Update saldo Modal
+            $assetModal = Asset::where('nama_akun', 'Modal')->first();
+
+            if ($assetModal) {
+                // rollback saldo lama
+                $assetModal->saldo -= $content->bayar;
+
+                // apply saldo baru
+                $assetModal->saldo += $request->bayar;
+
+                $assetModal->save();
+            }
+        }
+
         return redirect()->route('pinjamanKaryawans.show', $pinjamanKaryawan->id)
             ->with('success', 'Data pinjaman berhasil diupdate');
     }
@@ -284,6 +346,26 @@ class KasbonContentController extends Controller
         $pinjamanKaryawan->update([
             'total_kasbon' => $totalBaru,
         ]);
+        // 🔥 Update saldo Asset (bank)
+        $assetKas = Asset::where('kode_akun', $content->kode_kas)
+            ->where('akun_header', 'asset_lancar_bank')
+            ->first();
+
+        if ($assetKas) {
+            $assetKas->saldo -= $content->bayar;
+
+            $assetKas->save();
+
+            // 🔥 Update saldo Modal
+            $assetModal = Asset::where('nama_akun', 'Modal')->first();
+
+            if ($assetModal) {
+                // rollback saldo lama
+                $assetModal->saldo -= $content->bayar;
+
+                $assetModal->save();
+            }
+        }
         $content->update(['deleted_at' => Carbon::now('Asia/Jakarta')]);
          return redirect()->route('pinjamanKaryawans.show', $pinjamanKaryawan->id)
                      ->with('success', 'Data pinjaman berhasil dihapus');

@@ -120,6 +120,7 @@ class PinjamanContentController extends Controller
         // Simpan PinjamanContent
         PinjamanContent::create([
             'kode_karyawan' => $pinjamanKaryawan->kode_karyawan,
+            'kode_kas' => $pinjamanKaryawan->kode_kas,
             'kontrak'       => $request->kontrak,
             'tanggal'       => $request->tanggal,
             'jenis'         => 'pinjam',
@@ -308,6 +309,34 @@ class PinjamanContentController extends Controller
             ]);
         }
 
+        // 🔥 Update saldo Asset (bank)
+        $assetKas = Asset::where('kode_akun', $content->kode_kas)
+            ->where('akun_header', 'asset_lancar_bank')
+            ->first();
+
+        if ($assetKas) {
+            // rollback saldo lama
+            $assetKas->saldo -= $content->bayar;
+
+            // apply saldo baru
+            $assetKas->saldo += $request->bayar;
+
+            $assetKas->save();
+
+            // 🔥 Update saldo Modal
+            $assetModal = Asset::where('nama_akun', 'Modal')->first();
+
+            if ($assetModal) {
+                // rollback saldo lama
+                $assetModal->saldo -= $content->bayar;
+
+                // apply saldo baru
+                $assetModal->saldo += $request->bayar;
+
+                $assetModal->save();
+            }
+        }
+
         return redirect()->route('pinjamanKaryawans.show', $pinjamanKaryawan->id)
             ->with('success', 'Data pinjaman berhasil diupdate');
     }
@@ -350,6 +379,27 @@ class PinjamanContentController extends Controller
         $pinjamanKaryawan->update([
             'total_pinjam' => $totalBaru,
         ]);
+
+        // 🔥 Update saldo Asset (bank)
+        $assetKas = Asset::where('kode_akun', $content->kode_kas)
+            ->where('akun_header', 'asset_lancar_bank')
+            ->first();
+
+        if ($assetKas) {
+            $assetKas->saldo -= $content->bayar;
+
+            $assetKas->save();
+
+            // 🔥 Update saldo Modal
+            $assetModal = Asset::where('nama_akun', 'Modal')->first();
+
+            if ($assetModal) {
+                // rollback saldo lama
+                $assetModal->saldo -= $content->bayar;
+
+                $assetModal->save();
+            }
+        }
         $content->update(['deleted_at' => Carbon::now('Asia/Jakarta')]);
         return redirect()->route('pinjamanKaryawans.show', $pinjamanKaryawan->id)
             ->with('success', 'Data pinjaman berhasil dihapus');
