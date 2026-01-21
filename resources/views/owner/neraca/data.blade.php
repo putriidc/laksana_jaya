@@ -89,10 +89,10 @@
                 </div>
                 <div class="px-6 flex mb-3 max-[1250px]:gap-x-4">
                     <div class="w-[50%] flex flex-col gap-y-2">
-                        @foreach ($akunKas as $item)
+                        @foreach ($kasFinal as $item)
                         <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
-                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">{{ $item->nama_akun }}</p>
-                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. {{ number_format($item->saldo, 0, ',', '.') }}</p>
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">{{ $item['nama_perkiraan'] }}</p>
+                            <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. {{ number_format($item['total'], 0, ',', '.') }}</p>
                         </span>
                         @endforeach
                         @foreach ($lancarFinal as $item)

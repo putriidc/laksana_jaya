@@ -45,49 +45,83 @@ class NeracaOwnerController extends Controller
 
         //NERACA SALDO
         $akunKas = Asset::active()->where('akun_header', 'asset_lancar_bank')->get();
-        $totalKas = $akunKas->sum('saldo');
         $akunLancar = Asset::active()->where('akun_header', 'asset_lancar')->get();
         $akunKewajiban  = Asset::active()->where('akun_header', 'kewajiban')->get();
         $akunTetap      = Asset::active()->where('akun_header', 'asset_tetap')->get();
 
+        $akunKasNames = $akunKas->pluck('nama_akun')->toArray();
         $akunLancarNames = $akunLancar->pluck('nama_akun')->toArray();
         $akunKewajibanNames = $akunKewajiban->pluck('nama_akun')->toArray();
         $akunTetapNames = $akunTetap->pluck('nama_akun')->toArray();
 
+        $queryKas = JurnalUmum::active()->whereIn('nama_perkiraan', $akunKasNames);
         $queryLancar = JurnalUmum::active()->whereIn('nama_perkiraan', $akunLancarNames);
         $queryKewajiban      = JurnalUmum::active()->whereIn('nama_perkiraan', $akunKewajibanNames);
         $queryTetap      = JurnalUmum::active()->whereIn('nama_perkiraan', $akunTetapNames);
 
-
+        // kas bank
+        $detailKas = $queryKas
+            ->select(
+                'nama_perkiraan',
+                DB::raw('SUM(debit) as total_debit'),
+                DB::raw('SUM(kredit) as total_kredit')
+            )
+            ->groupBy('nama_perkiraan')
+            ->get()
+            ->keyBy('nama_perkiraan');
+        $kasFinal = collect($akunKasNames)->map(fn($akun) => [
+            'nama_perkiraan' => $akun,
+            'total' => ($detailKas[$akun]->total_debit ?? 0) - ($detailKas[$akun]->total_kredit ?? 0),
+        ]);
+        // Lancar
         $detailLancar = $queryLancar
-            ->select('nama_perkiraan', DB::raw('SUM(debit) as total'))
+            ->select(
+                'nama_perkiraan',
+                DB::raw('SUM(debit) as total_debit'),
+                DB::raw('SUM(kredit) as total_kredit')
+            )
             ->groupBy('nama_perkiraan')
-            ->pluck('total', 'nama_perkiraan');
-
-
-        $detailKewajiban = $queryKewajiban
-            ->select('nama_perkiraan', DB::raw('SUM(kredit) as total'))
-            ->groupBy('nama_perkiraan')
-            ->pluck('total', 'nama_perkiraan');
-        $detailTetap = $queryTetap
-            ->select('nama_perkiraan', DB::raw('SUM(debit) as total'))
-            ->groupBy('nama_perkiraan')
-            ->pluck('total', 'nama_perkiraan');
+            ->get()
+            ->keyBy('nama_perkiraan');
 
         $lancarFinal = collect($akunLancarNames)->map(fn($akun) => [
             'nama_perkiraan' => $akun,
-            'total' => $detailLancar[$akun] ?? 0,
+            'total' => ($detailLancar[$akun]->total_debit ?? 0) - ($detailLancar[$akun]->total_kredit ?? 0),
         ]);
+
+        // Kewajiban
+        $detailKewajiban = $queryKewajiban
+            ->select(
+                'nama_perkiraan',
+                DB::raw('SUM(debit) as total_debit'),
+                DB::raw('SUM(kredit) as total_kredit')
+            )
+            ->groupBy('nama_perkiraan')
+            ->get()
+            ->keyBy('nama_perkiraan');
 
         $kewajibanFinal = collect($akunKewajibanNames)->map(fn($akun) => [
             'nama_perkiraan' => $akun,
-            'total' => $detailKewajiban[$akun] ?? 0,
-        ]);
-        $tetapFinal = collect($akunTetapNames)->map(fn($akun) => [
-            'nama_perkiraan' => $akun,
-            'total' => $detailTetap[$akun] ?? 0,
+            'total' => ($detailKewajiban[$akun]->total_debit ?? 0) - ($detailKewajiban[$akun]->total_kredit ?? 0),
         ]);
 
+        // Tetap
+        $detailTetap = $queryTetap
+            ->select(
+                'nama_perkiraan',
+                DB::raw('SUM(debit) as total_debit'),
+                DB::raw('SUM(kredit) as total_kredit')
+            )
+            ->groupBy('nama_perkiraan')
+            ->get()
+            ->keyBy('nama_perkiraan');
+
+        $tetapFinal = collect($akunTetapNames)->map(fn($akun) => [
+            'nama_perkiraan' => $akun,
+            'total' => ($detailTetap[$akun]->total_debit ?? 0) - ($detailTetap[$akun]->total_kredit ?? 0),
+        ]);
+
+        $totalKas = $kasFinal->sum('total');
         $totalLancar = $lancarFinal->sum('total');
         $totalKewajiban      = $kewajibanFinal->sum('total');
         $totalTetap     = $tetapFinal->sum('total');
@@ -143,7 +177,7 @@ class NeracaOwnerController extends Controller
         $deviden = $debitKewajiban - $kreditKewajiban;
 
         // Saldo modal
-        $saldoModal = Asset::active()->where('nama_akun', 'Modal')->value('saldo') ?? 0;
+        $saldoModal = $totalLancar + $totalKas + $totalTetap - $totalKewajiban;
 
         // Laba ditahan
         $labaDitahan = $labaSebelumnya + $labaBerjalan - $deviden;
