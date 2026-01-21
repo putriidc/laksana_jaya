@@ -219,7 +219,7 @@ class NeracaOwnerController extends Controller
             'labaDitahan',
             'labaTahunBerjalan',
             'saldoModal',
-            'akunKas',
+            'kasFinal',
             'totalKas',
         ));
     }
