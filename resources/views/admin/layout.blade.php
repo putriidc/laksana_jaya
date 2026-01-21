@@ -72,7 +72,7 @@
                 />
                 {{-- logo --}}
                 <div class="flex flex-col gap-y-3 h-full max-[1300px]:items-center" id="sideNavbarContent">
-                    <a href="/admin/dashboard" class="cursor-pointer">
+                    <a href="/admin-dashboard" class="cursor-pointer">
                         <button
                             class="bg-linear-to-r from-[#DD4049] to-[#F9E52D] text-white flex items-center gap-x-5 w-[250px] max-[1300px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >

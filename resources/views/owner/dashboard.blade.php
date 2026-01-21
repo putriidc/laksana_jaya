@@ -50,6 +50,31 @@
         </div>
 
     </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+            <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+                <p class="text-gray-500 text-sm font-medium">Total Aktiva</p>
+                <h2 class="text-2xl font-bold text-green-600 mt-1">Rp. {{ number_format(($totalTetap + $totalLancar + $totalKas), 0, ',', '.') }}</h2>
+                <div class="flex gap-x-2 mt-3 text-[10px] text-gray-400">
+                    <span>Lancar: Rp. {{ number_format(($totalLancar + $totalKas), 0, ',', '.') }}</span>
+                    <span>•</span>
+                    <span>Tetap: Rp. {{ number_format($totalTetap, 0, ',', '.') }}</span>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+                <p class="text-gray-500 text-sm font-medium">Total Kewajiban</p>
+                <h2 class="text-2xl font-bold text-red-500 mt-1">Rp. {{ number_format($totalKewajiban, 0, ',', '.') }}</h2>
+                <p class="text-[10px] text-gray-400 mt-3 italic">*Total hutang usaha, vendor, dll</p>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+                <p class="text-gray-500 text-sm font-medium">Total Pasiva</p>
+                <h2 class="text-2xl font-bold text-blue-600 mt-1">Rp. {{ number_format((($saldoModal + $labaDitahan + $labaTahunBerjalan) + $totalKewajiban), 0, ',', '.') }}</h2>
+                <div class="flex gap-x-2 mt-3 text-[10px] text-gray-400">
+                    <span>Modal: Rp. {{ number_format(($saldoModal + $labaDitahan + $labaTahunBerjalan), 0, ',', '.') }}</span>
+                </div>
+            </div>
+        </div>
 </div>
 <script>
     window.onload = function() {

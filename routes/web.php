@@ -36,6 +36,7 @@ use App\Http\Controllers\pinjamanTukangController;
 use App\Http\Controllers\PinjamanContentController;
 use App\Http\Controllers\PinjamanKaryawanController;
 use App\Http\Controllers\BukuBesarController;
+use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\DashboardOwnerController;
 use App\Http\Controllers\HutangVendorController;
 use App\Http\Controllers\NeracaOwnerController;
@@ -59,9 +60,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 // Halaman yang butuh login
 Route::middleware('auth')->group(function () {
     Route::middleware('role:Super Admin')->group(function () {
-        Route::get('/admin/dashboard', function () {
-            return view('admin.dashboard');
-        });
+       Route::get('/admin-dashboard', [DashboardAdminController::class, 'index'])->name('admin-dashboard', DashboardAdminController::class);
          Route::get('/nota-langsung', function () {
             return view('admin.nota-langsung.data');
         });
@@ -304,9 +303,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware(['role:Admin 1,Admin 2'])->group(function () {
-        Route::get('/admin/dashboard', function () {
-            return view('admin.dashboard');
-        });
+        Route::get('/admin-dashboard', [DashboardAdminController::class, 'index'])->name('admin-dashboard', DashboardAdminController::class);
 
         Route::get('/nota-langsung', function () {
             return view('admin.nota-langsung.data');
