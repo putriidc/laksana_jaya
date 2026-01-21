@@ -47,7 +47,7 @@ class ProyekOwnerController extends Controller
         $proyeks = Proyek::active()->get();
         $assetBankAccounts = Asset::where('akun_header', 'asset_lancar_bank')->pluck('nama_akun');
         $resume = $proyeks->map(function ($proyek) use ($assetBankAccounts) {
-            $jurnal = JurnalUmum::active()->where('nama_proyek', $proyek->nama_proyek)->where('nama_perkiraan', '!=', 'Piutang Proyek')->whereNotIn('nama_perkiraan', $assetBankAccounts)->get();
+            $jurnal = JurnalUmum::active()->where('nama_proyek', $proyek->nama_proyek)->where('nama_perkiraan', '!=', 'Piutang Proyek')->where('nama_perkiraan', '!=', 'Pendapatan Proyek Fisik')->whereNotIn('nama_perkiraan', $assetBankAccounts)->get();
             $totalPengeluaran = $jurnal->sum('debit');
             $kontrak = KontrakProyek::where('kode_proyek', $proyek->kode_akun)->first();
             $net = $kontrak->net ?? 0;
@@ -322,6 +322,7 @@ class ProyekOwnerController extends Controller
 
         $jurnal = JurnalUmum::active()->where('nama_proyek', $proyek->nama_proyek)
             ->where('nama_perkiraan', '!=', 'Piutang Proyek')
+            ->where('nama_perkiraan', '!=', 'Pendapatan Proyek Fisik')
             ->whereNotIn('nama_perkiraan', $assetBankAccounts)
             ->where('debit', '>', 0)
             ->orderBy('tanggal', 'desc')
