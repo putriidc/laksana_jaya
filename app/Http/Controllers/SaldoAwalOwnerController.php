@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Asset;
+use App\Models\JurnalUmum;
 use Illuminate\Http\Request;
 
 class SaldoAwalOwnerController extends Controller
@@ -52,6 +54,29 @@ class SaldoAwalOwnerController extends Controller
             $modal->saldo += $request->nominal;
             $modal->save();
         }
+
+            $lastId = JurnalUmum::max('id') ?? 0;
+            $nextId = $lastId + 1;
+            $kodeJurnal = 'J-' . str_pad($nextId, 3, '0', STR_PAD_LEFT);
+
+            $tanggal    = Carbon::now('Asia/Jakarta');
+            $keterangan = 'Saldo Awal'. $asset->nama_akun;
+            $nominal    = $request->nominal;
+
+            // baris 2: debit ke kas/bank tujuan
+            JurnalUmum::create([
+                'kode_jurnal'   => $kodeJurnal,
+                'detail_order' => 3,
+                'tanggal'       => $tanggal,
+                'kode_perkiraan' => $asset->kode_akun ?? '-',
+                'nama_perkiraan' => $asset->nama_akun ?? '-',
+                'keterangan'    => $keterangan,
+                'nama_proyek'   => '-',
+                'kode_proyek'   => '-',
+                'debit'         => $nominal,
+                'kredit'        => 0,
+                'created_by'    => 'owner',
+            ]);
 
         return redirect()->route('saldo.index')->with('success', 'Saldo awal berhasil disimpan');
     }
