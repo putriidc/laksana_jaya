@@ -282,7 +282,7 @@ class ProyekOwnerController extends Controller
                 'nama_proyek'   => $manag->nama_proyek,
                 'kode_proyek'   => $manag->kode_proyek,
                 'debit'         => 0,
-                'kredit'        => $manag->real_untung,
+                'kredit'        => $manag->sisa_potong_pajak,
                 'created_by'    => 'owner',
             ]);
 
@@ -296,7 +296,7 @@ class ProyekOwnerController extends Controller
                 'keterangan'    => 'Pendapatan Proyek' . $manag->nama_proyek,
                 'nama_proyek'   => $manag->nama_proyek,
                 'kode_proyek'   => $manag->kode_proyek,
-                'debit'         => $manag->real_untung,
+                'debit'         => $manag->sisa_potong_pajak,
                 'kredit'        => 0,
                 'created_by'    => 'owner',
             ]);
