@@ -218,9 +218,9 @@
                             kodeInput.value = kode;
 
                             if (type === 'bank') {
-                                showDebitHideKredit();
-                            } else if (type === 'akun') {
                                 showKreditHideDebit();
+                            } else if (type === 'akun') {
+                                showDebitHideKredit();
                             } else {
                                 // fallback kalau tidak ada type
                                 debitWrapper.style.display = 'flex';
