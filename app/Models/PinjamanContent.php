@@ -10,6 +10,7 @@ class PinjamanContent extends Model
 
     protected $fillable = [
         'kode_karyawan',
+        'kode_kas',
         'ket_owner',
         'kontrak',
         'tanggal',

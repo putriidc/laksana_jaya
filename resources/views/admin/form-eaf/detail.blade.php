@@ -218,7 +218,7 @@
                             kodeInput.value = kode;
 
                             if (type === 'bank') {
-                                showKreditHideDebit();
+                                showDebitHideKredit();
                             } else if (type === 'akun') {
                                 showDebitHideKredit();
                             } else {
