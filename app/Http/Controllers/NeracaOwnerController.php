@@ -176,8 +176,10 @@ class NeracaOwnerController extends Controller
 
         $deviden = $debitKewajiban - $kreditKewajiban;
 
+        $saldo_awal = Asset::active()->where('akun_header', 'asset_lancar_bank')->get();
+        $total_saldo_awal = $saldo_awal->sum('saldo_awal');
         // Saldo modal
-        $saldoModal = $totalLancar + $totalKas + $totalTetap - $totalKewajiban;
+        $saldoModal = $total_saldo_awal - $totalKewajiban;
 
         // Laba ditahan
         $labaDitahan = $labaSebelumnya + $labaBerjalan - $deviden;
