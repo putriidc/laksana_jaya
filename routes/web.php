@@ -40,6 +40,7 @@ use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\DashboardOwnerController;
 use App\Http\Controllers\HutangVendorController;
 use App\Http\Controllers\NeracaOwnerController;
+use App\Http\Controllers\NotaLangsungController;
 use App\Http\Controllers\ProgresOwnerController;
 use App\Http\Controllers\SaldoAwalOwnerController;
 use App\Http\Controllers\SupplierController;
@@ -306,7 +307,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['role:Admin 1,Admin 2'])->group(function () {
         Route::get('/admin-dashboard', [DashboardAdminController::class, 'index'])->name('admin-dashboard', DashboardAdminController::class);
 
-        Route::resource('notaLangsung', NotaLangsung::class);
+        Route::resource('notaLangsung', NotaLangsungController::class);
         // ADMIN KEUANGAN
         Route::get('/admin/master-data', [MasterDataController::class, 'index'])->name('master-data.index');
 

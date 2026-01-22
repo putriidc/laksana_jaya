@@ -140,10 +140,10 @@
                             <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. {{ number_format($saldoModal, 0, ',', '.') }}</p>
                         </span>
 
-                        {{-- <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
+                        <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
                             <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Laba Ditahan</p>
                             <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. {{ number_format($labaDitahan, 0, ',', '.') }}</p>
-                        </span> --}}
+                        </span>
 
                         <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
                             <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Laba Tahun Berjalan</p>
@@ -168,7 +168,7 @@
                     </span>
                     <span class="font-bold w-[50%] flex items-center justify-between max-[830px]:flex-col max-[830px]:items-start">
                         <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">TOTAL PASIVA</p>
-                        <p class="w-[180px] max-[900px]:w-auto max-[900px]:text-xs max-[830px]:text-base max-[630px]:text-sm">Rp. {{ number_format(($saldoModal  + $labaTahunBerjalan ), 0, ',', '.') }}</p>
+                        <p class="w-[180px] max-[900px]:w-auto max-[900px]:text-xs max-[830px]:text-base max-[630px]:text-sm">Rp. {{ number_format(($saldoModal + $labaDitahan + $labaTahunBerjalan ), 0, ',', '.') }}</p>
                     </span>
                 </div>
                 </div>

@@ -128,9 +128,11 @@ class NeracaOwnerController extends Controller
 
         $now = Carbon::now();
 
-        // periode bulan sebelumnya (Desember ke belakang)
-        $startPrev = JurnalUmum::active()->min('tanggal'); // tanggal transaksi pertama
-        $endPrev   = $now->copy()->subMonth()->endOfMonth();
+
+        // ambil periode tahun sebelumnya penuh
+        $startPrev = $now->copy()->subYear()->startOfYear();   // 1 Januari 2025
+        $endPrev   = $now->copy()->subYear()->endOfYear();     // 31 Desember 2025
+
 
 
         // periode bulan ini
@@ -179,10 +181,10 @@ class NeracaOwnerController extends Controller
         $saldo_awal = Asset::active()->where('akun_header', 'asset_lancar_bank')->get();
         $total_saldo_awal = $saldo_awal->sum('saldo_awal');
         // Saldo modal
-        $saldoModal = $total_saldo_awal - $totalKewajiban;
-
+        $saldoModal = $total_saldo_awal;
+        $a = $labaSebelumnya - $deviden;
         // Laba ditahan
-        $labaDitahan = $labaSebelumnya + $labaBerjalan - $deviden;
+        $labaDitahan = $labaSebelumnya + $a;
 
         // return $labaDitahan;
 
