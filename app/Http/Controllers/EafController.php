@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Models\PiutangHutang;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class EafController extends Controller
 {
@@ -146,6 +147,39 @@ class EafController extends Controller
         }
         // Kirim ke view detail
         return view('admin.form-eaf.detail', compact('eaf', 'today', 'akun', 'bank'));
+    }
+
+    public function print($id)
+    {
+        $eaf = Eaf::where('id', $id)
+                ->whereNull('deleted_at')->orderBy('id', 'desc')->get();
+        $today = Carbon::now('Asia/Jakarta')->toDateString();
+        $proyek = Proyek::whereNull('deleted_at')
+            ->get();
+        if (Auth::user()->role === 'Admin 1') {
+            $allowedAccounts = ['Kas Besar', 'Kas Bank BCA', 'Kas Flip', 'OVO'];
+
+            $bank = Asset::Active()
+                ->where('akun_header', 'asset_lancar_bank')
+                ->whereIn('nama_akun', $allowedAccounts)
+                ->where('nama_akun', '!=', 'Kas BJB')
+                ->get();
+        } elseif (Auth::user()->role === 'Admin 2') {
+            $bank = Asset::Active()
+                ->where('akun_header', 'asset_lancar_bank')
+                ->where('nama_akun', '!=', 'Kas BJB')
+                ->get();
+        }
+
+        $admin = Auth::user()->name ?? 'Administrator';
+        $role = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('admin.form-eaf.print', compact('eaf', 'today', 'proyek', 'bank', 'admin', 'role', 'tanggalCetak', 'jamCetak'))
+            ->setPaper('A4', 'landscape');
+
+        return $pdf->stream('form-eaf.pdf');
     }
 
     public function storeDetail(Request $request, $id)

@@ -76,7 +76,7 @@
     </div>
     <h2 style="font-size: 20px; font-weight: bolder; margin-top: 20px;">LAPORAN KEUANGAN HARIAN</h2>
     <h2 style="font-size: 18px; margin-top: 10px; font-weight: normal; margin-bottom: 20px;">CASH IN</h2>
-
+    <div>Dicetak pada: {{ $tanggalCetak }} - {{ $jamCetak }}</div>
     <table>
         <thead>
             <tr>

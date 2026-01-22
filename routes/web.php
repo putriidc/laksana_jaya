@@ -307,6 +307,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['role:Admin 1,Admin 2'])->group(function () {
         Route::get('/admin-dashboard', [DashboardAdminController::class, 'index'])->name('admin-dashboard', DashboardAdminController::class);
 
+        Route::get('print-nota-langsung', [NotaLangsungController::class, 'print'])->name('nota-langsung.print');
         Route::resource('notaLangsung', NotaLangsungController::class);
         // ADMIN KEUANGAN
         Route::get('/admin/master-data', [MasterDataController::class, 'index'])->name('master-data.index');
@@ -399,10 +400,10 @@ Route::middleware('auth')->group(function () {
 
         Route::get('bukubesar/{code}', [BukuBesarController::class, 'index'])
             ->name('bukubesar.index');
-        Route::get('bukubesar/{code}/print', [BukuBesarController::class, 'print'])
-            ->name('buku-besar.print');
+        Route::get('bukubesarAdmin/{code}/print', [BukuBesarController::class, 'print_owner'])
+            ->name('buku-besar-admin.print');
 
-
+        Route::get('print-eaf/{id}', [EafController::class, 'print'])->name('eaf.print');
         Route::resource('eaf', EafController::class);
         Route::post('/eaf/{id}/detail', [EafController::class, 'storeDetail'])->name('eaf.storeDetail');
         Route::post('/eaf/{id}/generate', [EafController::class, 'generate'])->name('eaf.generate');

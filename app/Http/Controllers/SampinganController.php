@@ -25,7 +25,8 @@ class SampinganController extends Controller
         $admin = Auth::user()->name ?? 'Admin';
 
         $pdf = Pdf::loadView('admin.freelance.print', compact('sampingans', 'tanggalCetak', 'admin', 'role', 'jamCetak'))
-            ->setPaper('A4', 'portrait');
+            ->setPaper('A4', 'landscape');
+
 
         return $pdf->stream('laporan-freelance.pdf');
     }

@@ -38,7 +38,7 @@ class HutangVendorController extends Controller
         $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
 
         $pdf = Pdf::loadView('admin.hutang-vendor.print', compact('hutangVendors', 'admin', 'role', 'tanggalCetak', 'jamCetak'))
-            ->setPaper('A4', 'portrait');
+            ->setPaper('A4', 'landscape');
 
         return $pdf->stream('hutang-vendor.pdf');
     }

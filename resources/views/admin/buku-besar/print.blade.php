@@ -1,82 +1,52 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <title>Laporan Buku Besar - {{ $account->nama_akun }}</title>
     <style>
-        /* Pengaturan Dasar */
         body {
-            font-family: 'Helvetica', 'Arial', sans-serif;
-            color: #1a1a1a;
-            margin: 0;
-            padding: 0;
-            line-height: 1.4;
+            font-family: Arial, sans-serif;
+            font-size: 11px;
+            margin: 20px;
         }
 
-        /* Header Area */
-        .header {
+        .logo-container {
             text-align: center;
-            margin-top: 20px;
-            margin-bottom: 40px;
-        }
-        .logo {
-            width: 150px; /* Sesuaikan ukuran logo AR4N */
-            height: 40px;
-            margin-bottom: 20px;
-        }
-        .title {
-            text-transform: uppercase;
-            font-size: 24px;
-            font-weight: bold;
-            margin: 0;
+            margin-bottom: 10px;
         }
 
-        /* Container Tabel dengan efek Rounded */
-        .table-container {
-            margin: 0 20px;
-            border: 1px solid #e0e0e0;
-            border-radius: 15px; /* Efek rounded corner di gambar */
-            overflow: hidden; /* Supaya isi tabel tidak keluar dari border rounded */
-            background-color: #ffffff;
+        .logo {
+            width: 100px;
+        }
+
+        h2 {
+            text-align: center;
+            margin: 10px 0;
+            font-size: 16px;
         }
 
         table {
             width: 100%;
-            border-collapse: collapse;
-            background-color: white;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 10px;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            overflow: hidden;
         }
 
-        /* Header Tabel */
-        thead {
-            background-color: #ffffff;
-        }
-        th {
-            padding: 15px 10px;
-            font-size: 13px;
-            font-weight: bold;
-            color: #333;
-            border-bottom: 2px solid #f0f0f0;
-            text-align: center;
-        }
-
-        /* Baris Tabel */
+        th,
         td {
-            padding: 12px 10px;
-            font-size: 12px;
-            color: #555;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            padding: 6px;
             text-align: center;
-            border-bottom: 1px solid #f9f9f9;
+            background-color: rgba(255, 255, 255, 0.95);
         }
 
-        /* Baris Selang-seling (Zebra) */
-        tbody tr:nth-child(even) {
-            background-color: #f2f2f2; /* Warna abu-abu muda sesuai gambar */
+        th {
+            background-color: rgba(240, 240, 240, 0.95);
         }
-
-        /* Alignment Khusus */
-        .text-left { text-align: left; }
-        .text-right { text-align: right; }
-        .font-bold { font-weight: bold; }
 
         .footer-owner {
             margin-top: 40px;
@@ -94,51 +64,41 @@
             text-align: center;
             float: right;
         }
-
-        /* Penanganan Page Break */
-        tr { page-break-inside: avoid; }
     </style>
-</head>
-<body>
 
-    <div class="header">
-        <img src="{{ public_path('assets/logo-font.png') }}" class="logo" alt="AR4N Logo">
-        <h1 class="title">LAPORAN BUKU BESAR – {{ strtoupper($account->nama_akun) }}</h1>
+
+</head>
+
+<body>
+    <div class="logo-container">
+        <img src="{{ public_path('assets/logo-font.png') }}" class="logo" style="width: 150px; height: 40px;">
     </div>
+    
     <div>Dicetak pada: {{ $tanggalCetak }} - {{ $jamCetak }}</div>
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th width="5%">No</th>
-                    <th width="15%">Tanggal</th>
-                    <th width="35%">Keterangan</th>
-                    <th width="15%">Debit</th>
-                    <th width="15%">Kredit</th>
-                    <th width="15%">Saldo</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($transactions as $index => $trx)
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Tanggal</th>
+                <th>Keterangan</th>
+                <th>Debit</th>
+                <th>Kredit</th>
+                <th>Saldo</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($transactions as $index => $trx)
                 <tr>
                     <td>{{ $index + 1 }}</td>
                     <td>{{ \Carbon\Carbon::parse($trx->tanggal)->format('j/n/Y') }}</td>
                     <td>{{ $trx->keterangan }}</td>
-                    <td>
-                        {{ $trx->debit > 0 ? 'Rp. ' . number_format($trx->debit, 0, ',', '.') : 0 }}
-                    </td>
-                    <td>
-                        {{ $trx->kredit > 0 ? 'Rp. ' . number_format($trx->kredit, 0, ',', '.') : 0 }}
-                    </td>
-                    <td class="font-bold">
-                        Rp. {{ number_format($trx->saldo_temp, 0, ',', '.') }}
-                    </td>
+                    <td>{{ $trx->debit > 0 ? 'Rp. ' . number_format($trx->debit, 0, ',', '.') : 0 }}</td>
+                    <td>{{ $trx->kredit > 0 ? 'Rp. ' . number_format($trx->kredit, 0, ',', '.') : 0 }}</td>
+                    <td>Rp. {{ number_format($trx->saldo_temp, 0, ',', '.') }}</td>
                 </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-
+            @endforeach
+        </tbody>
+    </table>
     <div>
         <div class="footer-owner">
             <p>Owner</p>
@@ -149,6 +109,6 @@
             <p style="margin-top: 70px">{{ $admin }}</p>
         </div>
     </div>
-
 </body>
+
 </html>

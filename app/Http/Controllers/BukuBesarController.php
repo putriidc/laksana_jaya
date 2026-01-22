@@ -181,6 +181,7 @@ class BukuBesarController extends Controller
         $admin = Auth::user()->name ?? 'Administrator';
         $role = Auth::user()->role ?? 'admin';
         $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
 
         $pdf = Pdf::loadView('admin.buku-besar.print', [
             'account' => $account,
@@ -188,6 +189,7 @@ class BukuBesarController extends Controller
             'admin' => $admin,
             'role' => $role,
             'tanggalCetak' => $tanggalCetak,
+            'jamCetak' => $jamCetak,
             'tgl_mulai' => $request->tgl_mulai,
             'tgl_selesai' => $request->tgl_selesai,
         ])->setPaper('A4', 'portrait');

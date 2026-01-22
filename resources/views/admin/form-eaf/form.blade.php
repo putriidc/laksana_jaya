@@ -124,6 +124,12 @@
                                                     <img src="{{ asset('assets/more-circle.png') }}" alt="detail icon"
                                                         class="w-[22px] cursor-pointer">
                                                 </a>
+                                                <span class="border-black border-l-[1px] h-[22px]"></span>
+                                                <a target="_blank" href="{{ route('eaf.print', $item->id) }}"
+                                                    class="btn btn-sm btn-primary">
+                                                    <img src="{{ asset('assets/printer-oren.png') }}" alt="printer icon"
+                                                        class="w-[22px] cursor-pointer">
+                                                </a>
                                             @endif
                                         </div>
                                     </td>
@@ -171,7 +177,7 @@
                                             {{-- Status Owner --}}
                                             <button type="button"
                                                 class="px-4 py-1 text-xs rounded-sm text-white
-               {{ $item->acc_owner === 'accept' ? 'bg-[#45D03E]' : ($item->acc_owner === 'decline' ? 'bg-red-500' : 'bg-gray-400') }}"
+                                                {{ $item->acc_owner === 'accept' ? 'bg-[#45D03E]' : ($item->acc_owner === 'decline' ? 'bg-red-500' : 'bg-gray-400') }}"
                                                 data-ket="{{ $item->ket_owner }}" onclick="showKet(this, 'Owner')">
                                                 Owner: {{ ucfirst($item->acc_owner ?? 'Pending') }}
                                             </button>
@@ -179,7 +185,7 @@
                                             {{-- Status SPV --}}
                                             <button type="button"
                                                 class="px-4 py-1 text-xs rounded-sm text-white
-               {{ $item->acc_spv === 'accept' ? 'bg-[#45D03E]' : ($item->acc_spv === 'decline' ? 'bg-red-500' : 'bg-gray-400') }}"
+                                                {{ $item->acc_spv === 'accept' ? 'bg-[#45D03E]' : ($item->acc_spv === 'decline' ? 'bg-red-500' : 'bg-gray-400') }}"
                                                 data-ket="{{ $item->ket_spv }}" onclick="showKet(this, 'SPV')">
                                                 SPV: {{ ucfirst($item->acc_spv ?? 'Pending') }}
                                             </button>

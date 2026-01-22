@@ -6,7 +6,7 @@
             <div class="flex items-center gap-x-2">
                 <button class="border border-[#9A9A9A] rounded-lg px-4 py-2 cursor-pointer"
                     onclick="formNotaLangsung()">Tambah Data +</button>
-                <a href=""
+               <a target="_blank" href="{{ route('nota-langsung.print') }}"
                     class="border border-[#9A9A9A] rounded-lg px-4 py-2 cursor-pointer flex items-center gap-x-1">
                     <span class="text-[#726868]">Cetak Data</span>
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">

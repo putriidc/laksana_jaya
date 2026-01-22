@@ -11,7 +11,7 @@
                 <input value="{{ $today }}" type="date" name="tanggal" id="" class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2" readonly>
             </div>
             <div class="flex items-center">
-                    <label for="" class="w-[200px] font-medium">Kas / Bank</label>
+                    <label for="" class="w-[180px] font-medium">Kas / Bank</label>
                     <select name="kode_kas" id=""
                         class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2 appearance-none cursor-pointer">
                         <option selected disabled>Pilih Kas / Bank</option>

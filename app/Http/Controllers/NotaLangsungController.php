@@ -9,6 +9,7 @@ use App\Models\JurnalUmum;
 use App\Models\NotaLangsung;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class NotaLangsungController extends Controller
 {
@@ -117,6 +118,40 @@ class NotaLangsungController extends Controller
 
         return redirect()->route('notaLangsung.index')
             ->with('success', 'Nota Langsung berhasil dibuat');
+    }
+
+    public function print()
+    {
+        $nota = NotaLangsung::active()->orderBy('id', 'desc')->get();
+        $today = Carbon::now('Asia/Jakarta')->toDateString();
+        $proyek = Proyek::whereNull('deleted_at')
+            ->get();
+        $hpp = Asset::whereNull('deleted_at')
+            ->where('akun_header', 'hpp_proyek')->get();
+        if (Auth::user()->role === 'Admin 1') {
+            $allowedAccounts = ['Kas Besar', 'Kas Bank BCA', 'Kas Flip', 'OVO'];
+
+            $bank = Asset::Active()
+                ->where('akun_header', 'asset_lancar_bank')
+                ->whereIn('nama_akun', $allowedAccounts)
+                ->where('nama_akun', '!=', 'Kas BJB')
+                ->get();
+        } elseif (Auth::user()->role === 'Admin 2') {
+            $bank = Asset::Active()
+                ->where('akun_header', 'asset_lancar_bank')
+                ->where('nama_akun', '!=', 'Kas BJB')
+                ->get();
+        }
+
+        $admin = Auth::user()->name ?? 'Administrator';
+        $role = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('admin.nota-langsung.print', compact('nota', 'today', 'proyek', 'hpp', 'bank', 'admin', 'role', 'tanggalCetak', 'jamCetak'))
+            ->setPaper('A4', 'landscape');
+
+        return $pdf->stream('nota-langsung.pdf');
     }
 
     /**

@@ -86,13 +86,15 @@ class LaporanHarianController extends Controller
         $admin = Auth::user()->name ?? 'Administrator';
         $role = Auth::user()->role ?? 'admin';
         $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
 
         $pdf = Pdf::loadView('admin.laporan-harian.printCashIn', compact(
             'cashIn',
             'admin',
             'role',
             'hari',
-            'tanggalCetak'
+            'tanggalCetak',
+            'jamCetak'
         ))->setPaper('A4', 'portrait');
 
         return $pdf->stream('Laporan Harian Cash In ' . $hari . '.pdf');
@@ -113,13 +115,15 @@ class LaporanHarianController extends Controller
         $admin = Auth::user()->name ?? 'Administrator';
         $role = Auth::user()->role ?? 'admin';
         $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
 
         $pdf = Pdf::loadView('admin.laporan-harian.printCashOut', compact(
             'cashOut',
             'admin',
             'role',
             'hari',
-            'tanggalCetak'
+            'tanggalCetak',
+            'jamCetak'
         ))->setPaper('A4', 'portrait');
 
         return $pdf->stream('Laporan Harian Cash Out ' . $hari . '.pdf');
@@ -141,12 +145,14 @@ class LaporanHarianController extends Controller
         $admin = Auth::user()->name ?? 'Administrator';
         $role = Auth::user()->role ?? 'admin';
         $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
 
         $pdf = Pdf::loadView('admin.laporan-harian.printCashInGL', compact(
             'cashInGL',
             'admin',
             'role',
             'tanggalCetak',
+            'jamCetak',
             'start',
             'end'
         ))->setPaper('A4', 'landscape');
@@ -170,12 +176,14 @@ class LaporanHarianController extends Controller
         $admin = Auth::user()->name ?? 'Administrator';
         $role = Auth::user()->role ?? 'admin';
         $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
 
         $pdf = Pdf::loadView('admin.laporan-harian.printCashOutGL', compact(
             'cashOutGL',
             'admin',
             'role',
             'tanggalCetak',
+            'jamCetak',
             'start',
             'end'
         ))->setPaper('A4', 'landscape');

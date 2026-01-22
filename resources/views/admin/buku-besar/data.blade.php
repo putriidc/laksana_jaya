@@ -17,9 +17,7 @@
             <button type="submit" class="border-2 border-[#9A9A9A] py-2 px-2 rounded-lg cursor-pointer">
                 <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" class="">
             </button>
-            <a target="_blank" href="{{ route('buku-besar.print', [$account->kode_akun, 'tgl_mulai' => request('tgl_mulai'), 'tgl_selesai' => request('tgl_selesai')]) }}" class="border-2 border-[#9A9A9A] py-2 px-2 rounded-lg cursor-pointer">
-                <img src="{{ asset('assets/printer.png') }}" alt="printer icon">
-            </a>
+            <a target="_blank" href="{{ route('buku-besar-admin.print', [$account->kode_akun, 'tgl_mulai' => request('tgl_mulai'), 'tgl_selesai' => request('tgl_selesai')]) }}" class="border-2 border-[#9A9A9A] py-2 px-2 rounded-lg cursor-pointer">
         </form>
     </div>
     <div class="flex justify-end items-center gap-x-5 mb-5">

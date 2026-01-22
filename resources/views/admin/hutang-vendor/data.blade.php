@@ -61,38 +61,13 @@
                                     @endif
                                 </td>
 
-                                <td class="flex justify-center items-center gap-x-2 py-2">
-                                    <button class="flex flex-col items-center mt-[2px] w-[20px] gap-y-1 cursor-pointer"
+                                <td class="flex justify-center gap-x-2 py-5">
+                                    <button class="flex flex-col items-center w-[25px] gap-y-[6px] cursor-pointer"
                                             onclick='detailAction(@json($item), @json($bank))'>
                                         <span class="w-full border border-gray-500 rounded-lg"></span>
                                         <span class="w-full border border-gray-500 rounded-lg"></span>
                                         <span class="w-full border border-gray-500 rounded-lg"></span>
                                     </button>
-                                    <span class="border-black border-l-[1px] h-[22px]"></span>
-                                    {{-- Tombol Edit --}}
-                                    <button type="button" onclick='editData(@json($item))'>
-                                        <img src="{{ asset('assets/edit-icon.png') }}" alt="edit icon"
-                                            class="w-[22px] cursor-pointer">
-                                    </button>
-                                    <span class="border-black border-l-[1px] h-[22px]"></span>
-                                    {{-- Tombol Detail --}}
-                                    <button type="button" onclick='detailData(@json($item))'>
-                                        <img src="{{ asset('assets/more-circle.png') }}" alt="detail icon"
-                                            class="w-[22px] cursor-pointer">
-                                    </button>
-                                    @if (!$item->is_generate && $item->tgl_bayar === null)
-                                        <span class="border-black border-l-[1px] h-[22px]"></span>
-                                        {{-- Tombol Delete --}}
-                                        <form action="{{ route('hutang_vendor.destroy', $item->id) }}" method="POST"
-                                            class="h-[22px]">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                <img src="{{ asset('assets/close-circle.png') }}" alt="delete icon"
-                                                    class="w-[22px] cursor-pointer">
-                                            </button>
-                                        </form>
-                                    @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -202,11 +177,13 @@
                     showCloseButton: true,
                     html: `
                         <div class="grid grid-cols-2 gap-4 mt-4">
-                            <div onclick="Swal.close(); bayarHutang(${JSON.stringify(item).replace(/"/g, '&quot;')}, ${JSON.stringify(bank).replace(/"/g, '&quot;')})"
-                                class="flex flex-col items-center p-4 border rounded-xl hover:bg-green-50 cursor-pointer transition">
-                                <img src="/assets/pay.jpg" class="w-8 h-8 mb-2 object-contain">
-                                <span class="text-xs font-bold text-gray-700">BAYAR</span>
-                            </div>
+                            ${(!item.is_generate && item.tgl_bayar === null) ? `
+                                <div onclick="Swal.close(); bayarHutang(${JSON.stringify(item).replace(/"/g, '&quot;')}, ${JSON.stringify(bank).replace(/"/g, '&quot;')})"
+                                    class="flex flex-col items-center p-4 border rounded-xl hover:bg-green-50 cursor-pointer transition">
+                                    <img src="/assets/pay.jpg" class="w-8 h-8 mb-2 object-contain">
+                                    <span class="text-xs font-bold text-gray-700">BAYAR</span>
+                                </div>
+                            ` : ''}
 
                             <div onclick="Swal.close(); editData(${JSON.stringify(item).replace(/"/g, '&quot;')})"
                                 class="flex flex-col items-center p-4 border rounded-xl hover:bg-blue-50 cursor-pointer transition">
@@ -287,7 +264,7 @@
                        class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2" readonly/>
             </div>
             <div class="flex items-center w-full">
-                <label class="w-[200px] text-start">Status</label>
+                <label class="w-[150px] text-start">Status</label>
                 ${ item.tgl_bayar ? `<span class="px-2 py-1 rounded-full bg-blue-200 text-blue-800 text-xs font-semibold">Sudah dibayar</span>` : item.is_generate ? `<span class="px-2 py-1 rounded-full bg-green-200 text-green-800 text-xs font-semibold">Sudah digenerate</span>` : `<span class="px-2 py-1 rounded-full bg-red-200 text-red-800 text-xs font-semibold">Belum digenerate</span>` }
             </div>
 

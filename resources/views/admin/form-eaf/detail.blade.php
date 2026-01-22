@@ -119,7 +119,7 @@
                     html: `
             <div>
                 <h1 class="font-bold text-2xl text-center mb-5">Tambah Rincian</h1>
-                <form action="/eaf/${id}/detail" method="POST" class="flex flex-col gap-y-4">
+                <form action="/eaf/${id}/detail" method="POST" class="flex flex-col gap-y-4" id="myForm">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="kode_eaf" value="${kodeEaf}">
 
@@ -134,15 +134,15 @@
                             class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
                             <option value="" disabled selected>-Pilih Nama Akun-</option>
                             @foreach ($akun as $item)
-<option value="{{ $item->nama_akun }}" data-kode="{{ $item->kode_akun }}" data-type="akun">
-    {{ $item->nama_akun }}
-</option>
-@endforeach
-@foreach ($bank as $item)
-<option value="{{ $item->nama_akun }}" data-kode="{{ $item->kode_akun }}" data-type="bank">
-    {{ $item->nama_akun }}
-</option>
-@endforeach
+                            <option value="{{ $item->nama_akun }}" data-kode="{{ $item->kode_akun }}" data-type="akun">
+                                {{ $item->nama_akun }}
+                            </option>
+                            @endforeach
+                            @foreach ($bank as $item)
+                            <option value="{{ $item->nama_akun }}" data-kode="{{ $item->kode_akun }}" data-type="bank">
+                                {{ $item->nama_akun }}
+                            </option>
+                            @endforeach
 
                         </select>
                     </div>
@@ -158,13 +158,13 @@
                     </div>
                     <div class="flex items-center" id="debit-wrapper">
                         <label class="w-[240px] text-start">Debet</label>
-                        <input type="number" name="debit" value="0" id="debit"
-                            class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
+                        <input type="text" name="debit" value="0" id="debit"
+                            class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2 rupiah-format">
                     </div>
                     <div class="flex items-center" id="kredit-wrapper">
                         <label class="w-[240px] text-start">Kredit</label>
-                        <input type="number" name="kredit" value="0" id="kredit"
-                            class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
+                        <input type="text" name="kredit" value="0" id="kredit"
+                            class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2 rupiah-format">
                     </div>
                     <div class="flex items-center">
                         <label class="w-[240px] text-start">Kategori</label>
@@ -232,6 +232,49 @@
                         if (select.value) {
                             const event = new Event('change');
                             select.dispatchEvent(event);
+                        }
+
+                        function formatRupiah(angka, prefix) {
+                            let number_string = angka.replace(/[^,\d]/g, "").toString(),
+                                split = number_string.split(","),
+                                sisa = split[0].length % 3,
+                                rupiah = split[0].substr(0, sisa),
+                                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+                            if (ribuan) {
+                                let separator = sisa ? "." : "";
+                                rupiah += separator + ribuan.join(".");
+                            }
+                            rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+                            return prefix == undefined ? rupiah : rupiah ? "Rp. " + rupiah : "";
+                        }
+                        // 2. Jalankan fungsi saat input diketik (Event Input)
+                        const rupiahInputs = document.querySelectorAll('.rupiah-format');
+                        rupiahInputs.forEach(input => {
+                            input.addEventListener('input', function(e) {
+                                this.value = formatRupiah(this.value, "Rp. ");
+                            });
+                        });
+                        // // 3. FUNGSI KUNCI: Jalankan format saat data pertama kali muncul (untuk EDIT)
+                        // Panggil ini tepat setelah modal edit terbuka atau data di-set
+                        function inisialisasiRupiah() {
+                            const rupiahInputs = document.querySelectorAll('.rupiah-format');
+                            rupiahInputs.forEach(input => {
+                                if (input.value) {
+                                    input.value = formatRupiah(input.value, "Rp. ");
+                                }
+                            });
+                        }
+                        // Panggil fungsi ini!
+                        inisialisasiRupiah();
+                        // 4. Logika Submit (Tetap sama, membersihkan format)
+                        const form = document.getElementById('myForm');
+                        if (form) {
+                            form.addEventListener('submit', function(e) {
+                                document.querySelectorAll('.rupiah-format').forEach(input => {
+                                    let cleanValue = input.value.replace(/[^0-9]/g, ""); // Lebih aman hapus semua selain angka
+                                    input.value = cleanValue;
+                                });
+                            });
                         }
                     }
 
