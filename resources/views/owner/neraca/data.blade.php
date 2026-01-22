@@ -146,7 +146,7 @@
                         </span>
 
                         <span class="w-full flex items-center justify-between max-[1320px]:gap-x-2 max-[830px]:flex-col max-[830px]:items-start">
-                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Laba Tahun Berjalan</p>
+                            <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">Laba Bulan Berjalan</p>
                             <p class="w-[180px] text-[#9A9A9A] max-[1320px]:text-xs max-[1250px]:w-auto max-[830px]:text-base max-[630px]:text-sm">Rp. {{ number_format($labaTahunBerjalan, 0, ',', '.') }}</p>
                         </span>
                     </div>
@@ -158,7 +158,7 @@
                     </span>
                     <span class="font-bold w-[50%] flex items-center justify-between max-[830px]:flex-col max-[830px]:items-start">
                         <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">JUMLAH MODAL</p>
-                        <p class="w-[180px] max-[900px]:w-auto max-[900px]:text-xs max-[830px]:text-base max-[630px]:text-sm">Rp. {{ number_format(($saldoModal  + $labaTahunBerjalan), 0, ',', '.') }}</p>
+                        <p class="w-[180px] max-[900px]:w-auto max-[900px]:text-xs max-[830px]:text-base max-[630px]:text-sm">Rp. {{ number_format(($saldoModal + $labaDitahan + $labaTahunBerjalan), 0, ',', '.') }}</p>
                     </span>
                 </div>
                 <div class="w-full flex bg-[#E9E9E9] max-[900px]:gap-x-4 py-2 px-6">

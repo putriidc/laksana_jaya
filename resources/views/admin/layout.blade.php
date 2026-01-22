@@ -96,7 +96,6 @@
                             <span class="max-[1300px]:hidden">Master Data</span>
                         </button>
                     </a>
-                    @if (Auth::user()->role != "Admin 1")
                     <a
                         href="{{ route('jurnalUmums.index') }}"
                         class="cursor-pointer"
@@ -114,7 +113,6 @@
                             <span class="max-[1300px]:hidden">Jurnal Umum</span>
                         </button>
                     </a>
-                    @endif
                     {{--
                     <a href="" class="cursor-pointer">
                         <button

@@ -130,8 +130,8 @@ class NeracaOwnerController extends Controller
 
 
         // ambil periode tahun sebelumnya penuh
-        $startPrev = $now->copy()->subYear()->startOfYear();   // 1 Januari 2025
-        $endPrev   = $now->copy()->subYear()->endOfYear();     // 31 Desember 2025
+        $startPrev = $now->copy()->subMonth()->startOfMonth();   // 1 Januari 2025
+        $endPrev   = $now->copy()->subMonth()->endOfMonth();     // 31 Desember 2025
 
 
 
@@ -184,13 +184,13 @@ class NeracaOwnerController extends Controller
         $saldoModal = $total_saldo_awal;
         $a = $labaSebelumnya - $deviden;
         // Laba ditahan
-        $labaDitahan = $labaSebelumnya + $a;
+        $labaDitahan = $a;
 
         // return $labaDitahan;
 
         // periode tahun ini (1 Januari s/d 31 Desember tahun berjalan)
-        $startYear = $now->copy()->startOfYear();
-        $endYear   = $now->copy()->endOfYear();
+        $startYear = $now->copy()->startOfMonth();
+        $endYear   = $now->copy()->endOfMonth();
 
         // Pendapatan tahun ini (kredit)
         $pendapatanTahunIni = JurnalUmum::active()->whereIn(

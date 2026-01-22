@@ -269,35 +269,17 @@ class ProyekOwnerController extends Controller
             $today = Carbon::now('Asia/Jakarta')->toDateString();
 
 
-
-
-
-            JurnalUmum::create([
-                'kode_jurnal'   => $kodeJurnal,
-                'detail_order' => 3,
-                'tanggal'       => $today,
-                'kode_perkiraan' => '122',
-                'nama_perkiraan' => 'Piutang Kontrak',
-                'keterangan'    => 'Pendapatan Proyek' . $manag->nama_proyek,
-                'nama_proyek'   => $manag->nama_proyek,
-                'kode_proyek'   => $manag->kode_proyek,
-                'debit'         => 0,
-                'kredit'        => $manag->sisa_potong_pajak,
-                'created_by'    => 'owner',
-            ]);
-
-
             JurnalUmum::create([
                 'kode_jurnal'   => $kodeJurnal,
                 'detail_order' => 3,
                 'tanggal'       => $today,
                 'kode_perkiraan' => '410',
                 'nama_perkiraan' => 'Pendapatan Proyek Fisik',
-                'keterangan'    => 'Pendapatan Proyek' . $manag->nama_proyek,
+                'keterangan'    => 'Pendapatan Proyek ' . $manag->nama_proyek,
                 'nama_proyek'   => $manag->nama_proyek,
                 'kode_proyek'   => $manag->kode_proyek,
-                'debit'         => $manag->sisa_potong_pajak,
-                'kredit'        => 0,
+                'debit'         => 0,
+                'kredit'        => $manag->sisa_potong_pajak,
                 'created_by'    => 'owner',
             ]);
 

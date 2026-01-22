@@ -33,8 +33,12 @@ class LabaRugiController extends Controller
 
             $queryPendapatan->whereBetween('tanggal', [$start, $end]);
             $queryBiaya->whereBetween('tanggal', [$start, $end]);
+        } else {
+            $start = now()->startOfMonth();
+            $end = now()->endOfMonth();
         }
-
+        $queryPendapatan->whereBetween('tanggal', [$start, $end]);
+        $queryBiaya->whereBetween('tanggal', [$start, $end]);
         // Query pendapatan → ambil dari kredit
         $detailPendapatan = $queryPendapatan
             ->select('nama_perkiraan', DB::raw('SUM(kredit) as total'))
