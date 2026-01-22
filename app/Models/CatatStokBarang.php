@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Models;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class CatatStokBarang extends Model
 {
     use HasFactory;
+    use SoftDeletes;
+
 
     // Paksa Laravel menggunakan nama tabel ini
     protected $table = 'catat_stok_barang';

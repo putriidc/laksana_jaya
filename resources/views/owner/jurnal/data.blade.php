@@ -1034,7 +1034,7 @@
                         @csrf
                         <h1 class="font-bold text-2xl mb-4">Jurnal Transaksi</h1>
                         <div class="flex items-center mt-4">
-                            <label for="tanggal" class="font-medium w-[150px]">Dari Akun / Debet</label>
+                            <label for="tanggal" class="font-medium w-[150px]">Dari Akun / Kredit</label>
                             <div class="flex items-center w-full justify-between">
                                 <select name="from" id="From" class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none" required>
                                         @foreach ($akun as $item)
@@ -1042,7 +1042,7 @@
                                         @endforeach
                                 </select>
                                 <div class="flex items-center w-[350px]">
-                                    <label for="kode_akun" class="font-medium w-[35%]">Ke Akun / Kredit</label>
+                                    <label for="kode_akun" class="font-medium w-[35%]">Ke Akun / Debit</label>
                                     <select name="to" id="To" class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none" required>
                                         @foreach ($akun as $item)
                                         <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>

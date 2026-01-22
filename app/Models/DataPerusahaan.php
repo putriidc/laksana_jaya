@@ -2,9 +2,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DataPerusahaan extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'kode_perusahaan','kode_paket','nama_paket','pic','no_hp','mc0','korlap','kontraktor',
         'tgl_pho','tgl_ambil','kendala','is_pho','is_gambar','is_kontraktor_admin','is_pengawas_admin',
@@ -19,5 +22,9 @@ class DataPerusahaan extends Model
     public function progres()
     {
         return $this->hasMany(Progres::class, 'kode_paket', 'kode_paket');
+    }
+    public function scopeActive($query)
+    {
+        return $query->whereNull('deleted_at');
     }
 }

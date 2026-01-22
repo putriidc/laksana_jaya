@@ -307,7 +307,7 @@
                             </button>
                         </a>
                         <a
-                            href="/nota-langsung"
+                            href="{{ route('notaLangsung.index') }}"
                             class="cursor-pointer"
                         >
                             <button

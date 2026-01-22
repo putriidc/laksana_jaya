@@ -47,6 +47,7 @@ use App\Http\Controllers\UserController;
 use App\Models\AlatDibeli;
 use App\Models\AlatDipinjam;
 use App\Models\JurnalUmum;
+use App\Models\NotaLangsung;
 
 Route::get('/', function () {
     return view('login');
@@ -305,9 +306,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['role:Admin 1,Admin 2'])->group(function () {
         Route::get('/admin-dashboard', [DashboardAdminController::class, 'index'])->name('admin-dashboard', DashboardAdminController::class);
 
-        Route::get('/nota-langsung', function () {
-            return view('admin.nota-langsung.data');
-        });
+        Route::resource('notaLangsung', NotaLangsung::class);
         // ADMIN KEUANGAN
         Route::get('/admin/master-data', [MasterDataController::class, 'index'])->name('master-data.index');
 
