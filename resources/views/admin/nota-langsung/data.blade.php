@@ -72,7 +72,7 @@
                                 <h1 class="font-bold text-2xl text-start mb-5">Form Nota Langsung</h1>
                                 <div class="flex items-center max-[550px]:flex-col max-[550px]:items-start">
                                     <label for="tanggal" class="font-medium w-[160px] text-start">Tanggal</label>
-                                    <input type="date" name="tanggal" id="tanggal" class="bg-[#D9D9D9]/40 px-6 py-2 rounded-lg w-full">
+                                    <input type="date" name="tanggal" id="tanggal" value="{{ $today }}" readonly class="bg-[#D9D9D9]/40 px-6 py-2 rounded-lg w-full">
                                 </div>
                                 <div class="flex items-center max-[550px]:flex-col max-[550px]:items-start">
                                     <label for="proyek" class="font-medium w-[160px] text-start">Nama Proyek</label>
