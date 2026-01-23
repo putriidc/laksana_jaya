@@ -242,7 +242,7 @@
                             <p class="max-[1320px]:text-sm max-[830px]:text-base max-[630px]:text-sm">TOTAL PASIVA</p>
                             <p
                                 class="w-[180px] max-[900px]:w-auto max-[900px]:text-xs max-[830px]:text-base max-[630px]:text-sm">
-                                Rp. {{ number_format($saldoModal + $labaDitahan + $labaTahunBerjalan, 0, ',', '.') }}
+                                Rp. {{ number_format($saldoModal + $labaDitahan + $labaTahunBerjalan - $totalKewajiban, 0, ',', '.') }}
                             </p>
                         </span>
                     </div>
