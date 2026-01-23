@@ -64,8 +64,8 @@ class NeracaOwnerController extends Controller
         $akunLancarNames = $akunLancar->pluck('nama_akun')->toArray();
         $akunKewajibanNames = $akunKewajiban->pluck('nama_akun')->toArray();
         $akunTetapNames = $akunTetap->pluck('nama_akun')->toArray();
-        $akunlabaDitahanNames = $akunTetap->pluck('nama_akun')->toArray();
-        $akunModalNames = $akunTetap->pluck('nama_akun')->toArray();
+        $akunlabaDitahanNames = $akunlabaDitahan->pluck('nama_akun')->toArray();
+        $akunModalNames = $akunModal->pluck('nama_akun')->toArray();
 
         $queryKas = JurnalUmum::active()->whereIn('nama_perkiraan', $akunKasNames)->whereBetween('tanggal', [$startCurr, $endCurr]);
         $queryLancar = JurnalUmum::active()->whereIn('nama_perkiraan', $akunLancarNames)->whereBetween('tanggal', [$startCurr, $endCurr]);
@@ -136,7 +136,7 @@ class NeracaOwnerController extends Controller
             'total' => ($detailTetap[$akun]->total_debit ?? 0) - ($detailTetap[$akun]->total_kredit ?? 0),
         ]);
         // laba di tahan
-        $detaillabaDitahan = $akunlabaDitahanNames
+        $detaillabaDitahan = $querylabaDitahan
             ->select(
                 'nama_perkiraan',
                 DB::raw('SUM(debit) as total_debit'),
@@ -151,7 +151,7 @@ class NeracaOwnerController extends Controller
             'total' => ($detaillabaDitahan[$akun]->total_debit ?? 0) - ($detaillabaDitahan[$akun]->total_kredit ?? 0),
         ]);
         // modal
-        $detailModal = $akunModalNames
+        $detailModal = $queryModal
             ->select(
                 'nama_perkiraan',
                 DB::raw('SUM(debit) as total_debit'),
