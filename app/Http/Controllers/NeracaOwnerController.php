@@ -44,6 +44,15 @@ class NeracaOwnerController extends Controller
         });
 
         //NERACA SALDO
+        $now = Carbon::now();
+        if ($request->filled('start') && $request->filled('end')) {
+            $startCurr = Carbon::parse($request->start)->startOfDay(); // 15 Januari 2026 00:00
+            $endCurr   = Carbon::parse($request->end)->endOfDay();     // 15 Februari 2026 23:59
+        } else {
+            // default bulan ini
+            $startCurr = now()->startOfMonth();
+            $endCurr   = now()->endOfMonth();
+        }
         $akunKas = Asset::active()->where('akun_header', 'asset_lancar_bank')->get();
         $akunLancar = Asset::active()->where('akun_header', 'asset_lancar')->get();
         $akunKewajiban  = Asset::active()->where('akun_header', 'kewajiban')->get();
@@ -54,10 +63,10 @@ class NeracaOwnerController extends Controller
         $akunKewajibanNames = $akunKewajiban->pluck('nama_akun')->toArray();
         $akunTetapNames = $akunTetap->pluck('nama_akun')->toArray();
 
-        $queryKas = JurnalUmum::active()->whereIn('nama_perkiraan', $akunKasNames);
-        $queryLancar = JurnalUmum::active()->whereIn('nama_perkiraan', $akunLancarNames);
-        $queryKewajiban      = JurnalUmum::active()->whereIn('nama_perkiraan', $akunKewajibanNames);
-        $queryTetap      = JurnalUmum::active()->whereIn('nama_perkiraan', $akunTetapNames);
+        $queryKas = JurnalUmum::active()->whereIn('nama_perkiraan', $akunKasNames)->whereBetween('tanggal', [$start, $end]);
+        $queryLancar = JurnalUmum::active()->whereIn('nama_perkiraan', $akunLancarNames)->whereBetween('tanggal', [$start, $end]);
+        $queryKewajiban = JurnalUmum::active()->whereIn('nama_perkiraan', $akunKewajibanNames)->whereBetween('tanggal', [$start, $end]);
+        $queryTetap = JurnalUmum::active()->whereIn('nama_perkiraan', $akunTetapNames)->whereBetween('tanggal', [$start, $end]);
 
         // kas bank
         $detailKas = $queryKas
@@ -126,88 +135,103 @@ class NeracaOwnerController extends Controller
         $totalKewajiban      = $kewajibanFinal->sum('total');
         $totalTetap     = $tetapFinal->sum('total');
 
-        $now = Carbon::now();
-
-
         // ambil periode tahun sebelumnya penuh
-        $startPrev = $now->copy()->subMonth()->startOfMonth();   // 1 Januari 2025
-        $endPrev   = $now->copy()->subMonth()->endOfMonth();     // 31 Desember 2025
+        // $startPrev = $now->copy()->subMonth()->startOfMonth();
+        // $endPrev   = $now->copy()->subMonth()->endOfMonth();
 
 
+        // // Pendapatan & Biaya bulan sebelumnya
+        // $pendapatanPrev = JurnalUmum::active()->whereIn(
+        //     'nama_perkiraan',
+        //     Asset::active()->where('akun_header', 'pendapatan')->pluck('nama_akun')
+        // )->whereBetween('tanggal', [$startPrev, $endPrev])->sum('kredit');
 
-        // periode bulan ini
-        $startCurr = $now->copy()->startOfMonth();
-        $endCurr   = $now->copy()->endOfMonth();
+        // $biayaPrev = JurnalUmum::active()->whereIn(
+        //     'nama_perkiraan',
+        //     Asset::active()->where('akun_header', 'hpp_proyek')->pluck('nama_akun')
+        // )->whereBetween('tanggal', [$startPrev, $endPrev])->sum('debit');
 
-        // Pendapatan & Biaya bulan sebelumnya
-        $pendapatanPrev = JurnalUmum::active()->whereIn(
-            'nama_perkiraan',
-            Asset::active()->where('akun_header', 'pendapatan')->pluck('nama_akun')
-        )->whereBetween('tanggal', [$startPrev, $endPrev])->sum('kredit');
-
-        $biayaPrev = JurnalUmum::active()->whereIn(
-            'nama_perkiraan',
-            Asset::active()->where('akun_header', 'hpp_proyek')->pluck('nama_akun')
-        )->whereBetween('tanggal', [$startPrev, $endPrev])->sum('debit');
-
-        $labaSebelumnya = $pendapatanPrev - $biayaPrev;
-
-        // Pendapatan & Biaya bulan ini
-        $pendapatanCurr = JurnalUmum::active()->whereIn(
-            'nama_perkiraan',
-            Asset::active()->where('akun_header', 'pendapatan')->pluck('nama_akun')
-        )->whereBetween('tanggal', [$startCurr, $endCurr])->sum('kredit');
-
-        $biayaCurr = JurnalUmum::active()->whereIn(
-            'nama_perkiraan',
-            Asset::active()->where('akun_header', 'hpp_proyek')->pluck('nama_akun')
-        )->whereBetween('tanggal', [$startCurr, $endCurr])->sum('debit');
-
-        $labaBerjalan = $pendapatanCurr - $biayaCurr;
+        // $labaSebelumnya = $pendapatanPrev - $biayaPrev;
 
         // Deviden (kewajiban)
         $debitKewajiban = JurnalUmum::active()->whereIn(
             'nama_perkiraan',
             Asset::active()->where('akun_header', 'kewajiban')->pluck('nama_akun')
-        )->sum('debit');
+        )->whereBetween('tanggal', [$startCurr, $endCurr])->sum('debit');
 
         $kreditKewajiban = JurnalUmum::active()->whereIn(
             'nama_perkiraan',
             Asset::active()->where('akun_header', 'kewajiban')->pluck('nama_akun')
-        )->sum('kredit');
+        )->whereBetween('tanggal', [$startCurr, $endCurr])->sum('kredit');
 
         $deviden = $debitKewajiban - $kreditKewajiban;
 
-        $saldo_awal = Asset::active()->where('akun_header', 'asset_lancar_bank')->get();
-        $total_saldo_awal = $saldo_awal->sum('saldo_awal');
-        // Saldo modal
-        $saldoModal = $total_saldo_awal;
+        // $saldo_awal = Asset::active()->where('akun_header', 'asset_lancar_bank')->get();
+        // $total_saldo_awal = $saldo_awal->sum('saldo_awal');
+        // $saldoModal = $total_saldo_awal;
+
+        // $a = $labaSebelumnya - $deviden;
+        // // Laba ditahan
+        // $labaDitahan = $a;
+
+        // $startYear = $now->copy()->startOfMonth();
+        // $endYear   = $now->copy()->endOfMonth();
+
+
+        // $pendapatanTahunIni = JurnalUmum::active()->whereIn(
+        //     'nama_perkiraan',
+        //     Asset::active()->where('akun_header', 'pendapatan')->pluck('nama_akun')
+        // )->whereBetween('tanggal', [$startYear, $endYear])->sum('kredit');
+
+        // // Biaya tahun ini (debit)
+        // $biayaTahunIni = JurnalUmum::active()->whereIn(
+        //     'nama_perkiraan',
+        //     Asset::active()->where('akun_header', 'hpp_proyek')->pluck('nama_akun')
+        // )->whereBetween('tanggal', [$startYear, $endYear])->sum('debit');
+
+        // // Laba tahun berjalan
+        // $labaTahunBerjalan = $pendapatanTahunIni - $biayaTahunIni;
+
+
+
+        // 🔎 periode bulan sebelumnya → ambil bulan sebelum startCurr
+        $startPrev = $startCurr->copy()->subMonth()->startOfMonth();
+        $endPrev   = $startCurr->copy()->subMonth()->endOfMonth();
+
+        // Pendapatan & Biaya bulan sebelumnya
+        $pendapatanPrev = JurnalUmum::active()
+            ->whereIn('nama_perkiraan', Asset::active()->where('akun_header', 'pendapatan')->pluck('nama_akun'))
+            ->whereBetween('tanggal', [$startPrev, $endPrev])
+            ->sum('kredit');
+
+        $biayaPrev = JurnalUmum::active()
+            ->whereIn('nama_perkiraan', Asset::active()->where('akun_header', 'hpp_proyek')->pluck('nama_akun'))
+            ->whereBetween('tanggal', [$startPrev, $endPrev])
+            ->sum('debit');
+
+        $labaSebelumnya = $pendapatanPrev - $biayaPrev;
+
+        // 🔎 Pendapatan & Biaya periode pencarian (15 Jan – 15 Feb)
+        $pendapatanCurr = JurnalUmum::active()
+            ->whereIn('nama_perkiraan', Asset::active()->where('akun_header', 'pendapatan')->pluck('nama_akun'))
+            ->whereBetween('tanggal', [$startCurr, $endCurr])
+            ->sum('kredit');
+
+        $biayaCurr = JurnalUmum::active()
+            ->whereIn('nama_perkiraan', Asset::active()->where('akun_header', 'hpp_proyek')->pluck('nama_akun'))
+            ->whereBetween('tanggal', [$startCurr, $endCurr])
+            ->sum('debit');
+
+        $labaTahunBerjalan = $pendapatanCurr - $biayaCurr;
         $a = $labaSebelumnya - $deviden;
         // Laba ditahan
         $labaDitahan = $a;
 
-        // return $labaDitahan;
+        $saldo_awal = Asset::active()->where('akun_header', 'asset_lancar_bank')->get();
+        $total_saldo_awal = $saldo_awal->sum('saldo_awal');
+        $saldoModal = $total_saldo_awal;
 
-        // periode tahun ini (1 Januari s/d 31 Desember tahun berjalan)
-        $startYear = $now->copy()->startOfMonth();
-        $endYear   = $now->copy()->endOfMonth();
 
-        // Pendapatan tahun ini (kredit)
-        $pendapatanTahunIni = JurnalUmum::active()->whereIn(
-            'nama_perkiraan',
-            Asset::active()->where('akun_header', 'pendapatan')->pluck('nama_akun')
-        )->whereBetween('tanggal', [$startYear, $endYear])->sum('kredit');
-
-        // Biaya tahun ini (debit)
-        $biayaTahunIni = JurnalUmum::active()->whereIn(
-            'nama_perkiraan',
-            Asset::active()->where('akun_header', 'hpp_proyek')->pluck('nama_akun')
-        )->whereBetween('tanggal', [$startYear, $endYear])->sum('debit');
-
-        // Laba tahun berjalan
-        $labaTahunBerjalan = $pendapatanTahunIni - $biayaTahunIni;
-
-        // return $labaTahunBerjalan;
 
 
         return view('owner.neraca.data', compact(
