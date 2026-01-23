@@ -16,7 +16,7 @@ class AssetSeeder extends Seeder
             ['kode_akun' => '111', 'nama_akun' => 'Kas Besar'],
             ['kode_akun' => '112', 'nama_akun' => 'Kas Kecil'],
             ['kode_akun' => '113', 'nama_akun' => 'Kas Bank BCA'],
-            ['kode_akun' => '119', 'nama_akun' => 'Kas OVO'],
+            ['kode_akun' => '119', 'nama_akun' => 'Kas FLIP'],
             ['kode_akun' => '123', 'nama_akun' => 'Kas BJB'],
             ['kode_akun' => '531', 'nama_akun' => 'Kas BJB Kantor'],
 
