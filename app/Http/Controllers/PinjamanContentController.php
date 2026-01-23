@@ -120,7 +120,7 @@ class PinjamanContentController extends Controller
         // Simpan PinjamanContent
         PinjamanContent::create([
             'kode_karyawan' => $pinjamanKaryawan->kode_karyawan,
-            'kode_kas' => $pinjamanKaryawan->kode_kas,
+            'kode_kas'     => $request->kode_kas,
             'kontrak'       => $request->kontrak,
             'tanggal'       => $request->tanggal,
             'jenis'         => 'pinjam',
