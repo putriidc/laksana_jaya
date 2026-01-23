@@ -6,7 +6,7 @@
             <div class="flex items-center gap-x-2">
                 <button class="border border-[#9A9A9A] rounded-lg px-4 py-2 cursor-pointer"
                     onclick="formNotaLangsung()">Tambah Data +</button>
-               <a target="_blank" href="{{ route('nota-langsung.print') }}"
+                <a target="_blank" href="{{ route('nota-langsung.print') }}"
                     class="border border-[#9A9A9A] rounded-lg px-4 py-2 cursor-pointer flex items-center gap-x-1">
                     <span class="text-[#726868]">Cetak Data</span>
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
@@ -44,17 +44,18 @@
                                 </td>
                                 <td class="py-2">
                                     @if ($today === $item->tanggal)
-                                    <div class="flex items-center justify-center gap-x-2">
-                                        {{-- Tombol Delete --}}
-                                        <form action="{{ route('notaLangsung.destroy', $item->id) }}" method="POST" class="h-[22px]">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
-                                                <img src="https://ar4n-group.com/public/assets/close-circle.png"
-                                                    alt="delete icon" class="w-[22px] cursor-pointer">
-                                            </button>
-                                        </form>
-                                    </div>
+                                        <div class="flex items-center justify-center gap-x-2">
+                                            {{-- Tombol Delete --}}
+                                            <form action="{{ route('notaLangsung.destroy', $item->id) }}" method="POST"
+                                                class="h-[22px]">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" onclick="return confirm('Yakin hapus data ini?')">
+                                                    <img src="https://ar4n-group.com/public/assets/close-circle.png"
+                                                        alt="delete icon" class="w-[22px] cursor-pointer">
+                                                </button>
+                                            </form>
+                                        </div>
                                     @endif
                                 </td>
                             </tr>
@@ -94,7 +95,7 @@
                                     <label for="" class="font-medium w-[160px] text-start">Dari Kas/Bank</label>
                                     <select name="kode_kas" id=""
                     class="bg-[#D9D9D9]/40 px-4 appearance-none py-2 rounded-lg w-full cursor-pointer">
-                    <option selected disabled>~Pilih Nama Proyek~</option>
+                    <option selected disabled>~Pilih Kas/Bank~</option>
                     @foreach ($bank as $item)
                         <option value="{{ $item->kode_akun }}">
                             {{ $item->nama_akun }}
@@ -138,6 +139,15 @@
                     width: 800,
                     showCloseButton: true,
                     showConfirmButton: false,
+                    didOpen: () => {
+                        const proyekSelect = document.getElementById('nama_proyek');
+                        const picInput = document.getElementById('pic');
+                        proyekSelect.addEventListener('change', function() {
+                            const selectedOption = proyekSelect.options[proyekSelect.selectedIndex];
+                            const picValue = selectedOption.getAttribute('data-pic');
+                            picInput.value = picValue ?? '';
+                        });
+                    }
                 })
             }
             document.addEventListener('DOMContentLoaded', function() {
@@ -155,28 +165,6 @@
                 });
             });
 
-
-            const modalGenerate = document.getElementById('modal-generate');
-            modalGenerate.addEventListener('click', function(e) {
-                e.preventDefault();
-                Swal.fire({
-                    html: `
-                            <div>
-                                <h1 class="font-bold text-2xl text-center mb-5">Lanjutkan Generate Laporan?</h1>
-                                <div class="w-full flex justify-center items-center">
-                                    <form action="" method="POST">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <button type="submit" class="bg-[#8CE987] w-[100px] py-2 font-semibold rounded-lg cursor-pointer mx-2">YA</button>
-                                    </form>
-                                    <button onclick="Swal.close()" class="bg-[#DD4049] w-[100px] py-2 font-semibold rounded-lg cursor-pointer mx-2">BATAL</button>
-                                </div>
-                            </div>
-                        `,
-                    showCancelButton: false,
-                    showCloseButton: false,
-                    showConfirmButton: false,
-                })
-            });
 
             function detailBiaya(el) {
                 const detail = el.getAttribute('data-detail');
