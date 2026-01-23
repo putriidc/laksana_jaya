@@ -126,7 +126,7 @@
                                 <th class="py-2 w-[25%]">Nama Akun</th>
                                 <th class="py-2 w-[20%]">Post Saldo</th>
                                 <th class="py-2 w-[20%]">Post Laporan</th>
-                                <th class="py-2 w-[20%]">Action</th>
+                                {{-- <th class="py-2 w-[20%]">Action</th> --}}
                             </thead>
                             <tbody>
                                 @php
@@ -139,17 +139,17 @@
                                         <td class="py-2">{{ $lancar->nama_akun }}</td>
                                         <td class="py-2">{{ $lancar->post_saldo }}</td>
                                         <td class="py-2">{{ $lancar->post_laporan }}</td>
-                                        <td class="flex justify-center items-center gap-x-2 py-2">
+                                        {{-- <td class="flex justify-center items-center gap-x-2 py-2"> --}}
                                             {{-- Tombol Edit --}}
-                                            <a href="{{ route('akun.edit', $lancar->id) }}"
+                                            {{-- <a href="{{ route('akun.edit', $lancar->id) }}"
                                                 class="btn btn-sm btn-primary">
                                                 <img src="https://ar4n-group.com/public/assets/more-circle.png"
                                                     alt="edit icon" class="w-[22px] cursor-pointer">
                                             </a>
-                                            <span class="border-black border-l-[1px] h-[22px]"></span>
+                                            <span class="border-black border-l-[1px] h-[22px]"></span> --}}
 
                                             {{-- Tombol Delete --}}
-                                            <form action="{{ route('akun.destroy', $lancar->id) }}" method="POST"
+                                            {{-- <form action="{{ route('akun.destroy', $lancar->id) }}" method="POST"
                                                 class="h-[22px]">
                                                 @csrf
                                                 @method('DELETE')
@@ -158,7 +158,7 @@
                                                         alt="delete icon" class="w-[22px] cursor-pointer">
                                                 </button>
                                             </form>
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -173,7 +173,7 @@
                                 <th class="py-2 w-[25%]">Nama Akun</th>
                                 <th class="py-2 w-[20%]">Post Saldo</th>
                                 <th class="py-2 w-[20%]">Post Laporan</th>
-                                <th class="py-2 w-[20%]">Action</th>
+                                {{-- <th class="py-2 w-[20%]">Action</th> --}}
                             </thead>
                             <tbody>
                                 @php
@@ -186,17 +186,17 @@
                                         <td class="py-2">{{ $tetap->nama_akun }}</td>
                                         <td class="py-2">{{ $tetap->post_saldo }}</td>
                                         <td class="py-2">{{ $tetap->post_laporan }}</td>
-                                        <td class="flex justify-center items-center gap-x-2 py-2">
+                                        {{-- <td class="flex justify-center items-center gap-x-2 py-2"> --}}
                                             {{-- Tombol Edit --}}
-                                            <a href="{{ route('akun.edit', $tetap->id) }}"
+                                            {{-- <a href="{{ route('akun.edit', $tetap->id) }}"
                                                 class="btn btn-sm btn-primary">
                                                 <img src="https://ar4n-group.com/public/assets/more-circle.png"
                                                     alt="edit icon" class="w-[22px] cursor-pointer">
                                             </a>
-                                            <span class="border-black border-l-[1px] h-[22px]"></span>
+                                            <span class="border-black border-l-[1px] h-[22px]"></span> --}}
 
                                             {{-- Tombol Delete --}}
-                                            <form action="{{ route('akun.destroy', $tetap->id) }}" method="POST"
+                                            {{-- <form action="{{ route('akun.destroy', $tetap->id) }}" method="POST"
                                                 class="h-[22px]">
                                                 @csrf
                                                 @method('DELETE')
@@ -205,7 +205,7 @@
                                                         alt="delete icon" class="w-[22px] cursor-pointer">
                                                 </button>
                                             </form>
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -220,7 +220,7 @@
                                 <th class="py-2 w-[25%]">Nama Akun</th>
                                 <th class="py-2 w-[20%]">Post Saldo</th>
                                 <th class="py-2 w-[20%]">Post Laporan</th>
-                                <th class="py-2 w-[20%]">Action</th>
+                                {{-- <th class="py-2 w-[20%]">Action</th> --}}
                             </thead>
                             <tbody>
                                 @php
@@ -233,17 +233,17 @@
                                         <td class="py-2">{{ $kewajiban->nama_akun }}</td>
                                         <td class="py-2">{{ $kewajiban->post_saldo }}</td>
                                         <td class="py-2">{{ $kewajiban->post_laporan }}</td>
-                                        <td class="flex justify-center items-center gap-x-2 py-2">
+                                        {{-- <td class="flex justify-center items-center gap-x-2 py-2"> --}}
                                             {{-- Tombol Edit --}}
-                                            <a href="{{ route('akun.edit', $kewajiban->id) }}"
+                                            {{-- <a href="{{ route('akun.edit', $kewajiban->id) }}"
                                                 class="btn btn-sm btn-primary">
                                                 <img src="https://ar4n-group.com/public/assets/more-circle.png"
                                                     alt="edit icon" class="w-[22px] cursor-pointer">
                                             </a>
-                                            <span class="border-black border-l-[1px] h-[22px]"></span>
+                                            <span class="border-black border-l-[1px] h-[22px]"></span> --}}
 
                                             {{-- Tombol Delete --}}
-                                            <form action="{{ route('akun.destroy', $kewajiban->id) }}" method="POST"
+                                            {{-- <form action="{{ route('akun.destroy', $kewajiban->id) }}" method="POST"
                                                 class="h-[22px]">
                                                 @csrf
                                                 @method('DELETE')
@@ -252,7 +252,7 @@
                                                         alt="delete icon" class="w-[22px] cursor-pointer">
                                                 </button>
                                             </form>
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -267,7 +267,7 @@
                                 <th class="py-2 w-[25%]">Nama Akun</th>
                                 <th class="py-2 w-[20%]">Post Saldo</th>
                                 <th class="py-2 w-[20%]">Post Laporan</th>
-                                <th class="py-2 w-[20%]">Action</th>
+                                {{-- <th class="py-2 w-[20%]">Action</th> --}}
                             </thead>
                             <tbody>
                                 @php
@@ -280,17 +280,17 @@
                                         <td class="py-2">{{ $ekuitas->nama_akun }}</td>
                                         <td class="py-2">{{ $ekuitas->post_saldo }}</td>
                                         <td class="py-2">{{ $ekuitas->post_laporan }}</td>
-                                        <td class="flex justify-center items-center gap-x-2 py-2">
+                                        {{-- <td class="flex justify-center items-center gap-x-2 py-2"> --}}
                                             {{-- Tombol Edit --}}
-                                            <a href="{{ route('akun.edit', $ekuitas->id) }}"
+                                            {{-- <a href="{{ route('akun.edit', $ekuitas->id) }}"
                                                 class="btn btn-sm btn-primary">
                                                 <img src="https://ar4n-group.com/public/assets/more-circle.png"
                                                     alt="edit icon" class="w-[22px] cursor-pointer">
                                             </a>
-                                            <span class="border-black border-l-[1px] h-[22px]"></span>
+                                            <span class="border-black border-l-[1px] h-[22px]"></span> --}}
 
                                             {{-- Tombol Delete --}}
-                                            <form action="{{ route('akun.destroy', $ekuitas->id) }}" method="POST"
+                                            {{-- <form action="{{ route('akun.destroy', $ekuitas->id) }}" method="POST"
                                                 class="h-[22px]">
                                                 @csrf
                                                 @method('DELETE')
@@ -299,7 +299,7 @@
                                                         alt="delete icon" class="w-[22px] cursor-pointer">
                                                 </button>
                                             </form>
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -314,7 +314,7 @@
                                 <th class="py-2 w-[25%]">Nama Akun</th>
                                 <th class="py-2 w-[20%]">Post Saldo</th>
                                 <th class="py-2 w-[20%]">Post Laporan</th>
-                                <th class="py-2 w-[20%]">Action</th>
+                                {{-- <th class="py-2 w-[20%]">Action</th> --}}
                             </thead>
                             <tbody>
                                 @php
@@ -327,17 +327,17 @@
                                         <td class="py-2">{{ $pendapatan->nama_akun }}</td>
                                         <td class="py-2">{{ $pendapatan->post_saldo }}</td>
                                         <td class="py-2">{{ $pendapatan->post_laporan }}</td>
-                                        <td class="flex justify-center items-center gap-x-2 py-2">
+                                        {{-- <td class="flex justify-center items-center gap-x-2 py-2"> --}}
                                             {{-- Tombol Edit --}}
-                                            <a href="{{ route('akun.edit', $pendapatan->id) }}"
+                                            {{-- <a href="{{ route('akun.edit', $pendapatan->id) }}"
                                                 class="btn btn-sm btn-primary">
                                                 <img src="https://ar4n-group.com/public/assets/more-circle.png"
                                                     alt="edit icon" class="w-[22px] cursor-pointer">
                                             </a>
-                                            <span class="border-black border-l-[1px] h-[22px]"></span>
+                                            <span class="border-black border-l-[1px] h-[22px]"></span> --}}
 
                                             {{-- Tombol Delete --}}
-                                            <form action="{{ route('akun.destroy', $pendapatan->id) }}" method="POST"
+                                            {{-- <form action="{{ route('akun.destroy', $pendapatan->id) }}" method="POST"
                                                 class="h-[22px]">
                                                 @csrf
                                                 @method('DELETE')
@@ -346,7 +346,7 @@
                                                         alt="delete icon" class="w-[22px] cursor-pointer">
                                                 </button>
                                             </form>
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -361,7 +361,7 @@
                                 <th class="py-2 w-[25%]">Nama Akun</th>
                                 <th class="py-2 w-[20%]">Post Saldo</th>
                                 <th class="py-2 w-[20%]">Post Laporan</th>
-                                <th class="py-2 w-[20%]">Action</th>
+                                {{-- <th class="py-2 w-[20%]">Action</th> --}}
                             </thead>
                             <tbody>
                                 @php
@@ -374,16 +374,16 @@
                                         <td class="py-2">{{ $hpp->nama_akun }}</td>
                                         <td class="py-2">{{ $hpp->post_saldo }}</td>
                                         <td class="py-2">{{ $hpp->post_laporan }}</td>
-                                        <td class="flex justify-center items-center gap-x-2 py-2">
+                                        {{-- <td class="flex justify-center items-center gap-x-2 py-2"> --}}
                                             {{-- Tombol Edit --}}
-                                            <a href="{{ route('akun.edit', $hpp->id) }}" class="btn btn-sm btn-primary">
+                                            {{-- <a href="{{ route('akun.edit', $hpp->id) }}" class="btn btn-sm btn-primary">
                                                 <img src="https://ar4n-group.com/public/assets/more-circle.png"
                                                     alt="edit icon" class="w-[22px] cursor-pointer">
                                             </a>
-                                            <span class="border-black border-l-[1px] h-[22px]"></span>
+                                            <span class="border-black border-l-[1px] h-[22px]"></span> --}}
 
                                             {{-- Tombol Delete --}}
-                                            <form action="{{ route('akun.destroy', $hpp->id) }}" method="POST"
+                                            {{-- <form action="{{ route('akun.destroy', $hpp->id) }}" method="POST"
                                                 class="h-[22px]">
                                                 @csrf
                                                 @method('DELETE')
@@ -392,7 +392,7 @@
                                                         alt="delete icon" class="w-[22px] cursor-pointer">
                                                 </button>
                                             </form>
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                 @endforeach
                             </tbody>
