@@ -35,7 +35,7 @@ class AlatController extends Controller
 
         return view('kepala-gudang.data-alat.data', compact('alats'));
     }
-    
+
     public function print(Request $request)
     {
         $query = Alat::active();
@@ -180,11 +180,12 @@ class AlatController extends Controller
         }
 
         $alatDibelis = $query->orderBy('tanggal', 'desc')->get();
-        $admin = Auth::user()->name ?? 'Administrator';
-        $role = Auth::user()->role ?? 'admin';
+        $spv = Auth::user()->name ?? 'Rudi';
+        $role = Auth::user()->role ?? 'supervisor';
         $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
 
-        $pdf = Pdf::loadView('kepala-gudang.data_alat.data_dibeli.print', compact('alat', 'alatDibelis', 'admin', 'role', 'tanggalCetak'))
+        $pdf = Pdf::loadView('kepala-gudang.data-alat.alatDibeli.print', compact('alat', 'jamCetak', 'alatDibelis', 'spv', 'role', 'tanggalCetak'))
             ->setPaper('A4', 'portrait');
 
         return $pdf->stream("AlatDibeli_{$alat->nama_alat}.pdf");
@@ -206,8 +207,9 @@ class AlatController extends Controller
         $admin = Auth::user()->name ?? 'Administrator';
         $role = Auth::user()->role ?? 'admin';
         $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
 
-        $pdf = Pdf::loadView('kepala-gudang.data_alat.data_dihapus.print', compact('alat', 'alatDihapus', 'admin', 'role', 'tanggalCetak'))
+        $pdf = Pdf::loadView('kepala-gudang.data-alat.alatDihapus.print', compact('alat', 'jamCetak', 'alatDihapus', 'admin', 'role', 'tanggalCetak'))
             ->setPaper('A4', 'portrait');
 
         return $pdf->stream("AlatDihapus_{$alat->nama_alat}.pdf");
@@ -225,12 +227,14 @@ class AlatController extends Controller
             $query->whereBetween('tanggal', [$request->start_dipinjam, $request->end_dipinjam]);
         }
 
+        $proyeks = Proyek::whereNull('deleted_at')->get();
         $alatDipinjams = $query->orderBy('tanggal', 'desc')->get();
         $admin = Auth::user()->name ?? 'Administrator';
         $role = Auth::user()->role ?? 'admin';
         $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
 
-        $pdf = Pdf::loadView('kepala-gudang.data_alat.data_dipinjam.print', compact('alat', 'alatDipinjams', 'admin', 'role', 'tanggalCetak'))
+        $pdf = Pdf::loadView('kepala-gudang.data-alat.alatDipinjam.print', compact('alat', 'proyeks', 'jamCetak',  'alatDipinjams', 'admin', 'role', 'tanggalCetak'))
             ->setPaper('A4', 'portrait');
 
         return $pdf->stream("AlatDipinjam_{$alat->nama_alat}.pdf");
@@ -248,12 +252,14 @@ class AlatController extends Controller
             $query->whereBetween('tanggal', [$request->start_dikembalikan, $request->end_dikembalikan]);
         }
 
+        $proyeks = Proyek::whereNull('deleted_at')->get();
         $alatDikembalikans = $query->orderBy('tanggal', 'desc')->get();
         $admin = Auth::user()->name ?? 'Administrator';
         $role = Auth::user()->role ?? 'admin';
         $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
 
-        $pdf = Pdf::loadView('kepala-gudang.data_alat.data_dikembalikan.print', compact('alat', 'alatDikembalikans', 'admin', 'role', 'tanggalCetak'))
+        $pdf = Pdf::loadView('kepala-gudang.data-alat.alatDikembalikan.print', compact('alat', 'jamCetak', 'proyeks', 'alatDikembalikans', 'admin', 'role', 'tanggalCetak'))
             ->setPaper('A4', 'portrait');
 
         return $pdf->stream("AlatDikembalikan_{$alat->nama_alat}.pdf");
@@ -264,7 +270,7 @@ class AlatController extends Controller
      */
     public function edit($id)
     {
-        $barang = Alat::findOrFail($id);
+        $alat = Alat::findOrFail($id);
         return view('kepala-gudang.data-alat.edit', compact('alat'));
     }
 

@@ -159,6 +159,7 @@ class BarangController extends Controller
         $barangMasuks = $query->orderBy('tanggal', 'desc')->get();
         $admin = Auth::user()->name ?? 'Administrator';
         $role = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
         $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
 
         $pdf = Pdf::loadView('kepala-gudang.detail-barang.printIn', compact('barang', 'jamCetak', 'barangMasuks', 'admin', 'role', 'tanggalCetak'))
@@ -182,6 +183,7 @@ class BarangController extends Controller
         $barangKeluars = $query->orderBy('tanggal', 'desc')->get();
         $admin = Auth::user()->name ?? 'Administrator';
         $role = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
         $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
 
         $pdf = Pdf::loadView('kepala-gudang.detail-barang.printOut', compact('barang', 'jamCetak', 'barangKeluars', 'admin', 'role', 'tanggalCetak'))
@@ -205,6 +207,7 @@ class BarangController extends Controller
         $barangReturs = $query->orderBy('tanggal', 'desc')->get();
         $admin = Auth::user()->name ?? 'Administrator';
         $role = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
         $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
 
         $pdf = Pdf::loadView('kepala-gudang.detail-barang.printRtr', compact('barang', 'jamCetak', 'barangReturs', 'admin', 'role', 'tanggalCetak'))
