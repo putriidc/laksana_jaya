@@ -185,7 +185,6 @@
                                 <td class="py-2">{{ 'RP. ' . number_format($jurnal->debit, 0, ',', '.') }}</td>
                                 <td class="py-2">{{ 'RP. ' . number_format($jurnal->kredit, 0, ',', '.') }}</td>
                                 <td class="flex justify-center items-center gap-x-2 py-2">
-                                    @if ($jurnal->tanggal == $today)
                                         <button
                                             onclick="editLaporanKeuangan({{ $jurnal->id }},
                                         '{{ $jurnal->tanggal }}',
@@ -210,9 +209,6 @@
                                                     class="w-[22px] cursor-pointer">
                                             </button>
                                         </form>
-                                    @else
-                                        <span class="text-gray-600 font-bold">Lewat <br> Tanggal</span>
-                                    @endif
                                 </td>
                                 {{-- <td class="flex justify-center items-center gap-x-2 py-2">{{ $jurnal->tanggal }} | {{ $today }}</td> --}}
                             </tr>
