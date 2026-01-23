@@ -63,10 +63,10 @@ class NeracaOwnerController extends Controller
         $akunKewajibanNames = $akunKewajiban->pluck('nama_akun')->toArray();
         $akunTetapNames = $akunTetap->pluck('nama_akun')->toArray();
 
-        $queryKas = JurnalUmum::active()->whereIn('nama_perkiraan', $akunKasNames)->whereBetween('tanggal', [$start, $end]);
-        $queryLancar = JurnalUmum::active()->whereIn('nama_perkiraan', $akunLancarNames)->whereBetween('tanggal', [$start, $end]);
-        $queryKewajiban = JurnalUmum::active()->whereIn('nama_perkiraan', $akunKewajibanNames)->whereBetween('tanggal', [$start, $end]);
-        $queryTetap = JurnalUmum::active()->whereIn('nama_perkiraan', $akunTetapNames)->whereBetween('tanggal', [$start, $end]);
+        $queryKas = JurnalUmum::active()->whereIn('nama_perkiraan', $akunKasNames)->whereBetween('tanggal', [$startCurr, $endCurr]);
+        $queryLancar = JurnalUmum::active()->whereIn('nama_perkiraan', $akunLancarNames)->whereBetween('tanggal', [$startCurr, $endCurr]);
+        $queryKewajiban = JurnalUmum::active()->whereIn('nama_perkiraan', $akunKewajibanNames)->whereBetween('tanggal', [$startCurr, $endCurr]);
+        $queryTetap = JurnalUmum::active()->whereIn('nama_perkiraan', $akunTetapNames)->whereBetween('tanggal', [$startCurr, $endCurr]);
 
         // kas bank
         $detailKas = $queryKas
