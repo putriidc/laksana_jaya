@@ -57,16 +57,22 @@ class NeracaOwnerController extends Controller
         $akunLancar = Asset::active()->where('akun_header', 'asset_lancar')->get();
         $akunKewajiban  = Asset::active()->where('akun_header', 'kewajiban')->get();
         $akunTetap      = Asset::active()->where('akun_header', 'asset_tetap')->get();
+        $akunlabaDitahan      = Asset::active()->where('kode_akun', '320')->get();
+        $akunModal      = Asset::active()->where('kode_akun', '310')->get();
 
         $akunKasNames = $akunKas->pluck('nama_akun')->toArray();
         $akunLancarNames = $akunLancar->pluck('nama_akun')->toArray();
         $akunKewajibanNames = $akunKewajiban->pluck('nama_akun')->toArray();
         $akunTetapNames = $akunTetap->pluck('nama_akun')->toArray();
+        $akunlabaDitahanNames = $akunTetap->pluck('nama_akun')->toArray();
+        $akunModalNames = $akunTetap->pluck('nama_akun')->toArray();
 
         $queryKas = JurnalUmum::active()->whereIn('nama_perkiraan', $akunKasNames)->whereBetween('tanggal', [$startCurr, $endCurr]);
         $queryLancar = JurnalUmum::active()->whereIn('nama_perkiraan', $akunLancarNames)->whereBetween('tanggal', [$startCurr, $endCurr]);
         $queryKewajiban = JurnalUmum::active()->whereIn('nama_perkiraan', $akunKewajibanNames)->whereBetween('tanggal', [$startCurr, $endCurr]);
         $queryTetap = JurnalUmum::active()->whereIn('nama_perkiraan', $akunTetapNames)->whereBetween('tanggal', [$startCurr, $endCurr]);
+        $querylabaDitahan = JurnalUmum::active()->whereIn('nama_perkiraan', $akunlabaDitahanNames)->whereBetween('tanggal', [$startCurr, $endCurr]);
+        $queryModal = JurnalUmum::active()->whereIn('nama_perkiraan', $akunModalNames)->whereBetween('tanggal', [$startCurr, $endCurr]);
 
         // kas bank
         $detailKas = $queryKas
@@ -129,11 +135,43 @@ class NeracaOwnerController extends Controller
             'nama_perkiraan' => $akun,
             'total' => ($detailTetap[$akun]->total_debit ?? 0) - ($detailTetap[$akun]->total_kredit ?? 0),
         ]);
+        // laba di tahan
+        $detaillabaDitahan = $akunlabaDitahanNames
+            ->select(
+                'nama_perkiraan',
+                DB::raw('SUM(debit) as total_debit'),
+                DB::raw('SUM(kredit) as total_kredit')
+            )
+            ->groupBy('nama_perkiraan')
+            ->get()
+            ->keyBy('nama_perkiraan');
+
+        $labaDitahanFinal = collect($akunlabaDitahanNames)->map(fn($akun) => [
+            'nama_perkiraan' => $akun,
+            'total' => ($detaillabaDitahan[$akun]->total_debit ?? 0) - ($detaillabaDitahan[$akun]->total_kredit ?? 0),
+        ]);
+        // modal
+        $detailModal = $akunModalNames
+            ->select(
+                'nama_perkiraan',
+                DB::raw('SUM(debit) as total_debit'),
+                DB::raw('SUM(kredit) as total_kredit')
+            )
+            ->groupBy('nama_perkiraan')
+            ->get()
+            ->keyBy('nama_perkiraan');
+
+        $modalFinal = collect($akunModalNames)->map(fn($akun) => [
+            'nama_perkiraan' => $akun,
+            'total' => ($detailModal[$akun]->total_debit ?? 0) - ($detailModal[$akun]->total_kredit ?? 0),
+        ]);
 
         $totalKas = $kasFinal->sum('total');
         $totalLancar = $lancarFinal->sum('total');
         $totalKewajiban      = $kewajibanFinal->sum('total');
         $totalTetap     = $tetapFinal->sum('total');
+        $totallabaDitahan     = $labaDitahanFinal->sum('total');
+        $totalModal     = $modalFinal->sum('total');
 
         // ambil periode tahun sebelumnya penuh
         // $startPrev = $now->copy()->subMonth()->startOfMonth();
@@ -225,11 +263,13 @@ class NeracaOwnerController extends Controller
         $labaTahunBerjalan = $pendapatanCurr - $biayaCurr;
         $a = $labaSebelumnya - $deviden;
         // Laba ditahan
-        $labaDitahan = $a;
+        // $labaDitahan = $a;
+        $labaDitahan = $totallabaDitahan;
 
         $saldo_awal = Asset::active()->where('akun_header', 'asset_lancar_bank')->get();
         $total_saldo_awal = $saldo_awal->sum('saldo_awal');
-        $saldoModal = $total_saldo_awal;
+        // $saldoModal = $total_saldo_awal;
+        $saldoModal = $totalModal;
 
 
 

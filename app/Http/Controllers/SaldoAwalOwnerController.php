@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Asset;
 use App\Models\JurnalUmum;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SaldoAwalOwnerController extends Controller
 {
@@ -44,6 +45,7 @@ class SaldoAwalOwnerController extends Controller
 
         // update saldo kas/bank sesuai kode akun
         $asset = Asset::where('kode_akun', $request->kode_akun)->firstOrFail();
+        $assetModal = Asset::where('kode_akun', '310')->firstOrFail();
         $asset->saldo += $request->nominal;
         $asset->saldo_awal += $request->nominal;
         $asset->save();
@@ -60,7 +62,8 @@ class SaldoAwalOwnerController extends Controller
             $kodeJurnal = 'J-' . str_pad($nextId, 3, '0', STR_PAD_LEFT);
 
             $tanggal    = Carbon::now('Asia/Jakarta');
-            $keterangan = 'Saldo Awal'. $asset->nama_akun;
+            $keterangan = 'Saldo Awal '. $asset->nama_akun;
+            $keteranganModal = 'Tambah saldo Modal dari '. $asset->nama_akun;
             $nominal    = $request->nominal;
 
             // baris 2: debit ke kas/bank tujuan
@@ -75,7 +78,20 @@ class SaldoAwalOwnerController extends Controller
                 'kode_proyek'   => '-',
                 'debit'         => $nominal,
                 'kredit'        => 0,
-                'created_by'    => 'owner',
+                'created_by'    => Auth::check() ? Auth::user()->id : null,
+            ]);
+            JurnalUmum::create([
+                'kode_jurnal'   => $kodeJurnal,
+                'detail_order' => 3,
+                'tanggal'       => $tanggal,
+                'kode_perkiraan' => $assetModal->kode_akun ?? '-',
+                'nama_perkiraan' => $assetModal->nama_akun ?? '-',
+                'keterangan'    => $keteranganModal,
+                'nama_proyek'   => '-',
+                'kode_proyek'   => '-',
+                'debit'         => $nominal,
+                'kredit'        => 0,
+                'created_by'    => Auth::check() ? Auth::user()->id : null,
             ]);
 
         return redirect()->route('saldo.index')->with('success', 'Saldo awal berhasil disimpan');
