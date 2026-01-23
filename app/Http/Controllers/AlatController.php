@@ -35,6 +35,29 @@ class AlatController extends Controller
 
         return view('kepala-gudang.data-alat.data', compact('alats'));
     }
+    
+    public function print(Request $request)
+    {
+        $query = Alat::active();
+
+        if ($request->filled('q')) {
+            $search = $request->q;
+            $query->where(function ($q) use ($search) {
+                $q->where('nama_alat', 'like', "%{$search}%")
+                    ->orWhere('kategori', 'like', "%{$search}%");
+            });
+        }
+
+        $alats = $query->get();
+
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('kepala-gudang.data-alat.print', compact('alats', 'jamCetak', 'tanggalCetak'))
+            ->setPaper('A4', 'portrait');
+
+        return $pdf->stream("Data Alat.pdf");
+    }
 
     /**
      * Show the form for creating a new resource.

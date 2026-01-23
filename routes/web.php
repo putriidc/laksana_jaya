@@ -430,7 +430,9 @@ Route::middleware('auth')->group(function () {
             ->name('barangs.printKeluar');
         Route::get('barangs/{id}/printRetur', [BarangController::class, 'printRetur'])
             ->name('barangs.printRetur');
+        Route::get('print-barang', [BarangController::class, 'print'])->name('barang.print');
         Route::resource('barangs', BarangController::class);
+        Route::get('print-accspv', [AccTukangSpvController::class, 'print'])->name('accspv.print');
 
         Route::resource('accspv', AccTukangSpvController::class);
         Route::post('/pinjaman/{id}/decline', [AccTukangSpvController::class, 'decline'])
@@ -446,6 +448,7 @@ Route::middleware('auth')->group(function () {
             ->name('alats.printDikembalikan');
 
         Route::resource('barangs', BarangController::class);
+         Route::get('print-alat', [AlatController::class, 'print'])->name('alat.print');
         Route::resource('alats', AlatController::class);
         // data barang
         Route::resource('accspv', AccTukangSpvController::class);
@@ -592,8 +595,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/kepala-proyek', function () {
             return view('kepala-proyek.dashboard');
         });
+        Route::get('print-perusahaan/{id}', [PerusahaanController::class, 'print'])->name('perusahaan.print');
         //kepala proyek
         Route::resource('perusahaan', PerusahaanController::class);
+
+        Route::get('print-data-perusahaan/{id}', [DataPerusahaanController::class, 'print'])->name('data-perusahaan.print');
 
         Route::resource('data-perusahaan', DataPerusahaanController::class);
         Route::prefix('perusahaan/{kode_perusahaan}')->group(function () {

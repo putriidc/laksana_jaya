@@ -9,6 +9,8 @@ use App\Models\KasbonTukang;
 use Illuminate\Http\Request;
 use App\Models\TukangContent;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 
 class AccTukangSpvController extends Controller
 {
@@ -25,6 +27,25 @@ class AccTukangSpvController extends Controller
             ->where('status_spv', 'pending')
             ->get();
         return view('kepala-gudang.pinjaman-karyawan.data', compact('pinjamans', 'contents'));
+    }
+
+     public function print()
+    {
+        $pinjamans = TukangContent::with('kasbon')->where('jenis', 'pinjam')
+            ->whereNull('deleted_at')
+            ->get();
+        $contents = TukangContent::with('kasbon')->where('jenis', 'pinjam')
+            ->whereNull('deleted_at')
+            ->where('status_spv', 'pending')
+            ->get();
+
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('kepala-gudang.pinjaman-karyawan.print', compact('pinjamans', 'jamCetak', 'contents', 'tanggalCetak'))
+            ->setPaper('A4', 'portrait');
+
+        return $pdf->stream("PinjamanKaryawan.pdf");
     }
 
     /**

@@ -148,7 +148,7 @@
                             Belum ada perusahaan terdaftar</div>
                     @endforelse
                     <button id="modal-add"
-                            class="bg-white text-[#353132] flex items-center justify-center w-[250px] py-3 px-5 cursor-pointer rounded-lg transition-all duration-300 ease-in-out">
+                            class="bg-white text-[#353132] gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]">
                             <span>TAMBAH PERUSAHAAN +</span>
                         </button>
                 </div>

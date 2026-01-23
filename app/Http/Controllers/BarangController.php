@@ -33,6 +33,27 @@ class BarangController extends Controller
         return view('kepala-gudang.data-barang.data', compact('barangs'));
     }
 
+    public function print(Request $request) {
+         $query = Barang::active();
+
+        if ($request->filled('q')) {
+            $search = $request->q;
+            $query->where(function ($q) use ($search) {
+                $q->where('nama_barang', 'like', "%{$search}%")
+                    ->orWhere('kategori', 'like', "%{$search}%");
+            });
+        }
+
+        $barangs = $query->get();
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('kepala-gudang.data-barang.print', compact('barangs', 'jamCetak', 'tanggalCetak'))
+            ->setPaper('A4', 'portrait');
+
+        return $pdf->stream("Data Barang.pdf");
+    }
+
 
     public function create()
     {
@@ -138,9 +159,9 @@ class BarangController extends Controller
         $barangMasuks = $query->orderBy('tanggal', 'desc')->get();
         $admin = Auth::user()->name ?? 'Administrator';
         $role = Auth::user()->role ?? 'admin';
-        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
 
-        $pdf = Pdf::loadView('kepala-gudang.detail-barang.printIn', compact('barang', 'barangMasuks', 'admin', 'role', 'tanggalCetak'))
+        $pdf = Pdf::loadView('kepala-gudang.detail-barang.printIn', compact('barang', 'jamCetak', 'barangMasuks', 'admin', 'role', 'tanggalCetak'))
             ->setPaper('A4', 'portrait');
 
         return $pdf->stream("BarangMasuk_{$barang->nama_barang}.pdf");
@@ -161,9 +182,9 @@ class BarangController extends Controller
         $barangKeluars = $query->orderBy('tanggal', 'desc')->get();
         $admin = Auth::user()->name ?? 'Administrator';
         $role = Auth::user()->role ?? 'admin';
-        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
 
-        $pdf = Pdf::loadView('kepala-gudang.detail-barang.printOut', compact('barang', 'barangKeluars', 'admin', 'role', 'tanggalCetak'))
+        $pdf = Pdf::loadView('kepala-gudang.detail-barang.printOut', compact('barang', 'jamCetak', 'barangKeluars', 'admin', 'role', 'tanggalCetak'))
             ->setPaper('A4', 'portrait');
 
         return $pdf->stream("BarangKeluar_{$barang->nama_barang}.pdf");
@@ -184,9 +205,9 @@ class BarangController extends Controller
         $barangReturs = $query->orderBy('tanggal', 'desc')->get();
         $admin = Auth::user()->name ?? 'Administrator';
         $role = Auth::user()->role ?? 'admin';
-        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
 
-        $pdf = Pdf::loadView('kepala-gudang.detail-barang.printRtr', compact('barang', 'barangReturs', 'admin', 'role', 'tanggalCetak'))
+        $pdf = Pdf::loadView('kepala-gudang.detail-barang.printRtr', compact('barang', 'jamCetak', 'barangReturs', 'admin', 'role', 'tanggalCetak'))
             ->setPaper('A4', 'portrait');
 
         return $pdf->stream("BarangRetur_{$barang->nama_barang}.pdf");

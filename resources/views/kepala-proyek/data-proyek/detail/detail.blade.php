@@ -4,6 +4,11 @@
         <h1 class="font-bold text-2xl mb-4 max-[600px]:text-xl">Detail Data Proyek</h1>
 
         <div class="flex gap-x-4 mb-8 max-[600px]:flex-col max-[600px]:gap-y-2">
+            <a target="_blank" href="{{ route('data-perusahaan.print', $dataPerusahaan->id) }}"
+                class="flex items-center border border-gray-600 text-gray-600 w-fit px-4 py-2 rounded-lg">
+                <span>Cetak Data</span>
+                <img src="{{ asset('assets/printer.png') }}" alt="icon printer" class="inline-block ml-3" />
+            </a>
             <a href="{{ route('data-perusahaan.edit', $dataPerusahaan->id) }}"
                 class="flex items-center border border-[#45D03E] text-[#45D03E] w-fit px-4 py-2 rounded-lg">
                 <span>Edit Data</span>
@@ -79,26 +84,31 @@
                 </div>
 
                 @foreach ($progres as $p)
-                    <div class="flex items-center gap-x-5 add-input-section max-[600px]:hidden">
-                        <label class="w-[200px]">Minggu</label>
-                        <div class="w-full flex items-center justify-between">
-                            <input type="text" value="{{ $p->minggu }}"
-                                class="bg-[#D9D9D9]/40 w-[40%] py-2 px-5 rounded-lg outline-none" readonly />
-                            <div class="flex items-center w-[50%]">
-                                <label class="w-[150px]">Persentase</label>
-                                <input type="number" value="{{ $p->persen }}"
+                    <div class="flex items-center gap-x-5 add-input-section">
+                        <label class="w-[200px]"></label>
+                        <div class="w-full flex items-center justify-between gap-x-4">
+                            <div class="flex flex-col gap-y-1">
+                                <label class="">Minggu</label>
+                                <input type="text" value="{{ $p->minggu }}"
+                                class="bg-[#D9D9D9]/40 w-[100px] py-2 px-5 rounded-lg outline-none" readonly />
+                            </div>
+                            <div class="flex flex-col gap-y-1">
+                                <label class="">Persentase</label>
+                                <div class="w-[120px] flex items-center">
+                                    <input type="number" value="{{ $p->persen }}"
                                     class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" readonly />
-                                <div class="px-2">%</div>
+                                    <div class="px-2">%</div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-y-1 grow">
+                                <label for="keterangan_{{ $p->id }}" class="">Keterangan</label>
+                                <textarea name="keterangan[{{ $p->id }}]" id="keterangan_{{ $p->id }}"
+                                    class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" rows="1"
+                                    placeholder="Isi keterangan di sini" readonly>{{ $p->keterangan }}</textarea>
                             </div>
                         </div>
-                        <div class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start">
-                            <label for="keterangan_{{ $p->id }}" class="w-[200px]">Keterangan</label>
-                            <textarea name="keterangan[{{ $p->id }}]" id="keterangan_{{ $p->id }}"
-                                class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" rows="3" placeholder="Isi keterangan di sini"
-                                readonly>{{ $p->keterangan }}</textarea>
-                        </div>
                     </div>
-                    <div
+                    {{-- <div
                         class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-1 min-[600px]:hidden">
                         <label class="w-[200px]">Minggu</label>
                         <input type="text" value="{{ $p->minggu }}"
@@ -115,7 +125,7 @@
                         <textarea name="keterangan[{{ $p->id }}]" id="keterangan_{{ $p->id }}"
                             class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" rows="3"
                             placeholder="Isi keterangan di sini" readonly>{{ $p->keterangan }}</textarea>
-                    </div>
+                    </div> --}}
                 @endforeach
 
                 <div class="flex items-center gap-x-5">
@@ -174,7 +184,6 @@
                             <input type="checkbox" name="is_pengawas_admin" id="" disabled
                                 class="w-[35px] h-[35px] bg-[#D9D9D9]/40 rounded-lg outline-none cursor-pointer"
                                 {{ $dataPerusahaan->is_pengawas_admin ? 'checked' : '' }} />
-                        </div>
                         </div>
                         <div class="flex items-center gap-x-3">
                             <label for="" class="text-sm">Dokumentasi</label>

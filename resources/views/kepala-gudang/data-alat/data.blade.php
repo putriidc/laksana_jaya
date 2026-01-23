@@ -12,7 +12,7 @@
                     class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
                     <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" class="w-[20px]">
                 </button>
-                <a href="" class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
+                <a target="_blank" href="{{ route('alat.print') }}" class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
                 </a>
             </form>

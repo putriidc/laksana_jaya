@@ -33,7 +33,7 @@
                     </button>
                 </form>
                 <div class="flex items-center gap-x-2 max-[720px]:order-1 max-[720px]:flex-col max-[720px]:items-start max-[720px]:gap-y-2">
-                    <a href="{{ route('pinjamanKaryawans.create') }}"><button class="cursor-pointer px-4 py-2 border-[#9A9A9A] border-2 rounded-lg flex items-center gap-x-2 bg-white">
+                    <a target="_blank" href="{{ route('perusahaan.print', $perusahaan->id) }}"><button class="cursor-pointer px-4 py-2 border-[#9A9A9A] border-2 rounded-lg flex items-center gap-x-2 bg-white">
                         <span class="text-[#72686B]">Cetak Semua Data</span>
                         <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
                     </button></a>

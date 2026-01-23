@@ -1,7 +1,10 @@
 @extends('kepala-gudang.layout')
 @section('content')
     <div>
-        <h1 class="font-bold text-2xl mb-10">Detail Data Alat</h1>
+        <div class="flex items-center justify-between mb-10">
+            <h1 class="font-bold text-2xl">Detail Data Alat</h1>
+            <a href="{{ route('alats.edit', $alat->id) }}" class="border border-gray-600 rounded-lg py-2 px-4">Edit Alat</a>
+        </div>
         <div class="flex flex-col gap-y-7 pb-14 mb-8 border-b-2 border-[#B6B6B6]">
             <div class="flex mb-5 max-[900px]:mb-0 max-[900px]:flex-col max-[900px]:items-center">
                 <span class="w-[150px] max-[900px]:text-center max-[900px]:hidden">Image</span>
@@ -55,15 +58,19 @@
                 <button class=" border border-blue-500 text-blue-500 px-5 py-2 rounded-lg cursor-pointer hover:bg-blue-500 hover:text-white" onclick="detailRiwayat({{ json_encode($catatStok) }})">Lihat Riwayat</button>
             </div>
         </div>
-        <div class="flex gap-x-2 mb-10 max-[600px]:flex-wrap max-[600px]:gap-y-2 max-[600px]:gap-x-2">
-            <a href="{{ route('alat-beli.create.for-alat', $alat->kode_alat) }}"
-                class="block bg-white border-2 border-[#9A9A9A] rounded-lg w-fit py-2 px-5">Stok Masuk</a>
-            <a href="{{ route('alat-hapus.create.for-alat', $alat->kode_alat) }}"
-                class="block bg-white border-2 border-[#9A9A9A] rounded-lg w-fit py-2 px-5">Stok Keluar(hilang/rusak)</a>
-            <a href="{{ route('alat-pinjam.create.for-alat', $alat->kode_alat) }}"
-                class="block bg-white border-2 border-[#9A9A9A] rounded-lg w-fit py-2 px-5">Peminjaman</a>
-            <a href="{{ route('alat-kembalikan.create.for-alat', $alat->kode_alat) }}"
-                class="bg-white border-2 border-[#9A9A9A] rounded-lg w-fit py-2 px-5 flex items-center gap-x-2">Pengembalian</a>
+        <div class="flex justify-between items-center mb-10 max-[600px]:flex-wrap max-[600px]:gap-y-2 max-[600px]:gap-x-2">
+            <div class="flex items-center gap-x-2">
+                <a href="{{ route('alat-beli.create.for-alat', $alat->kode_alat) }}"
+                    class="block text-white bg-green-400 rounded-lg w-fit py-2 px-5">Alat Masuk</a>
+                <a href="{{ route('alat-hapus.create.for-alat', $alat->kode_alat) }}"
+                    class="block text-white bg-green-400 rounded-lg w-fit py-2 px-5">Alat Keluar(hilang/rusak)</a>
+            </div>
+           <div class="flex items-center gap-x-2">
+                <a href="{{ route('alat-pinjam.create.for-alat', $alat->kode_alat) }}"
+                    class="block text-white bg-blue-400 rounded-lg w-fit py-2 px-5">Diambil Alat</a>
+                <a href="{{ route('alat-kembalikan.create.for-alat', $alat->kode_alat) }}"
+                    class="text-white bg-blue-400 rounded-lg w-fit py-2 px-5 flex items-center gap-x-2">Dikembalikan Alat</a>
+           </div>
         </div>
         <div class="border-b-2 border-[#B6B6B6] pb-8 mb-10">
             <h1 class="font-bold text-2xl mb-6">Data Stok Masuk</h1>
@@ -216,7 +223,7 @@
             </div>
         </div>
         <div class="border-b-2 border-[#B6B6B6] pb-8 mb-10">
-            <h1 class="font-bold text-2xl mb-6">Data Peminjaman</h1>
+            <h1 class="font-bold text-2xl mb-6">Data Diambil Alat</h1>
             {{-- Barang Keluar --}}
             <form method="GET" action="{{ route('alats.show', $alat->id) }}" class="flex gap-x-2 mb-4 max-[600px]:flex-wrap max-[600px]:gap-y-2">
                 <input type="text" data-flatpickr placeholder="Pilih tanggal awal" name="start_dipinjam" value="{{ request('start_dipinjam') }}"

@@ -177,9 +177,9 @@ class EafController extends Controller
         $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
 
         $pdf = Pdf::loadView('admin.form-eaf.print', compact('eaf', 'today', 'proyek', 'bank', 'admin', 'role', 'tanggalCetak', 'jamCetak'))
-            ->setPaper('A4', 'landscape');
+            ->setPaper('A4', 'portrait');
 
-        return $pdf->stream('form-eaf.pdf');
+        return $pdf->stream('pengajuan-eaf.pdf');
     }
 
     public function storeDetail(Request $request, $id)

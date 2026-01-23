@@ -45,7 +45,7 @@
             </section>
             <section class="mb-5">
                 <h1 class="font-bold text-2xl mb-4 text-[#C0C0C0]">Data Persetujuan Pinjaman Tukang</h1>
-                <a href=""
+                <a target="_blank" href="{{ route('accspv.print') }}"
                     class="px-4 py-2 border-2 border-[#9A9A9A] rounded-lg w-fit flex items-center gap-x-2 mb-4">
                     <span class="text-[#72686B]">Cetak Laporan</span>
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon">

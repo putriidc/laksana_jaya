@@ -1,7 +1,10 @@
 @extends('kepala-gudang.layout')
 @section('content')
     <div>
-        <h1 class="font-bold text-2xl mb-10">Detail Data Barang</h1>
+        <div class="flex items-center justify-between mb-10">
+            <h1 class="font-bold text-2xl">Detail Data Barang</h1>
+            <a href="{{ route('barangs.edit', $barang->id) }}" class="border border-gray-600 rounded-lg py-2 px-4">Edit Barang</a>
+        </div>
         <div class="flex flex-col gap-y-7 pb-14 mb-8 border-b-2 border-[#B6B6B6]">
             <div class="flex mb-5 max-[900px]:mb-0 max-[900px]:flex-col max-[900px]:items-center">
                 <span class="w-[150px] max-[900px]:text-center max-[900px]:hidden">Image</span>
@@ -56,15 +59,15 @@
         </div>
         <div class="flex gap-x-4 mb-10 max-[600px]:flex-wrap max-[600px]:gap-y-2 max-[600px]:gap-x-2">
             <a href="{{ route('barang-masuk.create.for-barang', $barang->kode_barang) }}"
-                class="block bg-white border-2 border-[#9A9A9A] rounded-lg w-fit py-2 px-5">Tambah Stok +</a>
+                class="block bg-green-400 text-white rounded-lg w-fit py-2 px-5">Barang Masuk +</a>
             <a href="{{ route('barang-keluar.create.for-barang', $barang->kode_barang) }}"
-                class="block bg-white border-2 border-[#9A9A9A] rounded-lg w-fit py-2 px-5">Stok Keluar -</a>
+                class="block bg-green-400 text-white rounded-lg w-fit py-2 px-5">Barang Keluar -</a>
             <a href="{{ route('barang-retur.create.for-barang', $barang->kode_barang) }}"
-                class="bg-white border-2 border-[#9A9A9A] rounded-lg w-fit py-2 px-5 flex items-center gap-x-2">Return Stok
+                class="bg-green-400 text-white rounded-lg w-fit py-2 px-5 flex items-center gap-x-2">Barang Return
                 <img src="{{ asset('assets/rotate-left.png') }}" alt="rotate icon" class="w-[18px] h-[18px]"></a>
         </div>
         <div class="border-b-2 border-[#B6B6B6] pb-8 mb-10">
-            <h1 class="font-bold text-2xl mb-6">Data Stok Masuk</h1>
+            <h1 class="font-bold text-2xl mb-6">Data Barang Masuk</h1>
             {{-- Barang Masuk --}}
             <form method="GET" action="{{ route('barangs.show', $barang->id) }}" class="flex gap-x-2 mb-4 max-[600px]:flex-wrap max-[600px]:gap-y-2">
                 <input type="text" data-flatpickr placeholder="Pilih tanggal awal" name="start_masuk" value="{{ request('start_masuk') }}"
@@ -139,7 +142,7 @@
             </div>
         </div>
         <div class="border-b-2 border-[#B6B6B6] pb-8 mb-10">
-            <h1 class="font-bold text-2xl mb-6">Data Stok Keluar</h1>
+            <h1 class="font-bold text-2xl mb-6">Data Barang Keluar</h1>
             {{-- Barang Keluar --}}
             <form method="GET" action="{{ route('barangs.show', $barang->id) }}" class="flex gap-x-2 mb-4 max-[600px]:flex-wrap max-[600px]:gap-y-2">
                 <input type="text" data-flatpickr placeholder="Pilih tanggal awal" name="start_keluar" value="{{ request('start_keluar') }}"
@@ -228,7 +231,7 @@
             </div>
         </div>
         <div class="border-b-2 border-[#B6B6B6] pb-8 mb-10">
-            <h1 class="font-bold text-2xl mb-6">Data Return Stok</h1>
+            <h1 class="font-bold text-2xl mb-6">Data Barang Return</h1>
             {{-- Barang Retur --}}
             <form method="GET" action="{{ route('barangs.show', $barang->id) }}" class="flex gap-x-2 mb-4 max-[600px]:flex-wrap max-[600px]:gap-y-2">
                 <input type="text" data-flatpickr placeholder="Pilih tanggal awal" name="start_retur" value="{{ request('start_retur') }}"

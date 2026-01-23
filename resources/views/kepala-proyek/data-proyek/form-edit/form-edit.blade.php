@@ -11,29 +11,31 @@
                 <div class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-1">
                     <label for="nama_paket" class="w-[200px]">Nama Paket</label>
 
-                    <!-- Select default -->
-                    <select id="selectPaket"
-                        class="{{ in_array($dataPerusahaan->nama_paket, $proyek->pluck('nama_proyek')->toArray()) ? '' : 'hidden' }} bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none appearance-none cursor-pointer"
-                        {{ in_array($dataPerusahaan->nama_paket, $proyek->pluck('nama_proyek')->toArray()) ? 'name=nama_paket' : '' }}>
-                        <option disabled>-Pilih Paket-</option>
-                        @foreach ($proyek as $p)
-                            <option value="{{ $p->nama_proyek }}"
-                                {{ $dataPerusahaan->nama_paket == $p->nama_proyek ? 'selected' : '' }}>
-                                {{ $p->nama_proyek }}
-                            </option>
-                        @endforeach
-                    </select>
+                    <div class="w-full flex items-center gap-x-4">
+                        <!-- Select default -->
+                        <select id="selectPaket"
+                            class="{{ in_array($dataPerusahaan->nama_paket, $proyek->pluck('nama_proyek')->toArray()) ? '' : 'hidden' }} bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none appearance-none cursor-pointer"
+                            {{ in_array($dataPerusahaan->nama_paket, $proyek->pluck('nama_proyek')->toArray()) ? 'name=nama_paket' : '' }}>
+                            <option disabled>-Pilih Paket-</option>
+                            @foreach ($proyek as $p)
+                                <option value="{{ $p->nama_proyek }}"
+                                    {{ $dataPerusahaan->nama_paket == $p->nama_proyek ? 'selected' : '' }}>
+                                    {{ $p->nama_proyek }}
+                                </option>
+                            @endforeach
+                        </select>
 
-                    <!-- Input manual -->
-                    <input id="inputPaket" type="text"
-                        class="{{ in_array($dataPerusahaan->nama_paket, $proyek->pluck('nama_proyek')->toArray()) ? 'hidden' : '' }} bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none"
-                        {{ in_array($dataPerusahaan->nama_paket, $proyek->pluck('nama_proyek')->toArray()) ? '' : 'name=nama_paket' }}
-                        value="{{ $dataPerusahaan->nama_paket }}" placeholder="Ketik nama paket manual">
+                        <!-- Input manual -->
+                        <input id="inputPaket" type="text"
+                            class="{{ in_array($dataPerusahaan->nama_paket, $proyek->pluck('nama_proyek')->toArray()) ? 'hidden' : '' }} bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none"
+                            {{ in_array($dataPerusahaan->nama_paket, $proyek->pluck('nama_proyek')->toArray()) ? '' : 'name=nama_paket' }}
+                            value="{{ $dataPerusahaan->nama_paket }}" placeholder="Ketik nama paket manual">
 
-                    <!-- Toggle button -->
-                    <button type="button" id="togglePaket" class="ml-2 text-blue-500 underline cursor-pointer">
-                        {{ in_array($dataPerusahaan->nama_paket, $proyek->pluck('nama_proyek')->toArray()) ? 'Input manual' : 'Pilih dari daftar' }}
-                    </button>
+                        <!-- Toggle button -->
+                        <button type="button" id="togglePaket" class="cursor-pointer bg-blue-500 text-white rounded-lg w-[180px] py-2">
+                            {{ in_array($dataPerusahaan->nama_paket, $proyek->pluck('nama_proyek')->toArray()) ? 'Input manual' : 'Pilih dari daftar' }}
+                        </button>
+                    </div>
                 </div>
 
                 <div class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-y-1">
@@ -101,30 +103,35 @@
                 </div>
 
                 @foreach ($progres as $p)
-                    <div class="flex items-center gap-x-5 add-input-section max-[810px]:hidden">
-                        <label class="w-[200px]">Minggu</label>
-                        <div class="w-full flex items-center justify-between">
-                            <input type="text" value="{{ $p->minggu }}"
-                                class="bg-[#D9D9D9]/40 w-[40%] py-2 px-5 rounded-lg outline-none" readonly />
-                            <div class="flex items-center w-[50%]">
-                                <label class="w-[150px]">Persentase</label>
-                                <input type="number" value="{{ $p->persen }}"
+                    <div class="flex items-center gap-x-5 add-input-section">
+                        <label class="w-[200px]"></label>
+                        <div class="w-full flex items-center justify-between gap-x-4">
+                            <div class="flex flex-col gap-y-1">
+                                <label class="">Minggu</label>
+                                <input type="text" value="{{ $p->minggu }}"
+                                class="bg-[#D9D9D9]/40 w-[100px] py-2 px-5 rounded-lg outline-none" readonly />
+                            </div>
+                            <div class="flex flex-col gap-y-1">
+                                <label class="">Persentase</label>
+                                <div class="w-[120px] flex items-center">
+                                    <input type="number" value="{{ $p->persen }}"
                                     class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" readonly />
-                                <div class="px-2">%</div>
+                                    <div class="px-2">%</div>
+                                </div>
                             </div>
-                            <div class="flex items-center gap-x-5 max-[600px]:flex-col max-[600px]:items-start">
-                                <label for="keterangan_{{ $p->id }}" class="w-[200px]">Keterangan</label>
+                            <div class="flex flex-col gap-y-1 grow">
+                                <label for="keterangan_{{ $p->id }}" class="">Keterangan</label>
                                 <textarea name="keterangan[{{ $p->id }}]" id="keterangan_{{ $p->id }}"
-                                    class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" rows="3"
-                                    placeholder="Isi keterangan di sini">{{ $p->keterangan }}</textarea>
-                                <button type="button" class="ml-4 bg-[#3E98D0] text-amber-300 px-3 py-1 rounded-lg"
-                                    onclick="editProgres({{ $p->id }}, {{ $p->minggu }}, {{ $p->persen }}, {{ $p->keterangan }})">
-                                    Edit
-                                </button>
+                                    class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none" rows="1"
+                                    placeholder="Isi keterangan di sini" readonly>{{ $p->keterangan }}</textarea>
                             </div>
+                            <button type="button" class="bg-[#3E98D0] text-white px-4 py-2 rounded-lg cursor-pointer self-end"
+                                onclick="editProgres({{ $p->id }}, {{ $p->minggu }}, {{ $p->persen }}, {{ $p->keterangan }})">
+                                Edit
+                            </button>
                         </div>
                     </div>
-                    <div class="flex items-start flex-col w-full gap-y-5 add-input-section min-[810px]:hidden">
+                    {{-- <div class="flex items-start flex-col w-full gap-y-5 add-input-section min-[810px]:hidden">
                         <div
                             class="flex items-center gap-x-5 w-full max-[810px]:flex-col max-[810px]:items-start max-[810px]:gap-y-1">
                             <label for="" class="w-[200px]">Minggu</label>
@@ -147,7 +154,7 @@
                             onclick="editProgres({{ $p->id }}, {{ $p->minggu }}, {{ $p->persen }}, {{ $p->persen }})">
                             Edit
                         </button>
-                    </div>
+                    </div> --}}
                 @endforeach
 
                 <div class="flex items-center gap-x-5 min-[810px]:hidden">
@@ -169,11 +176,11 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-x-5">
-                    <div class="w-[200px] max-[810px]:hidden"></div>
+                    <div class="w-[200px]"></div>
                     <div class="w-full border-b border-[#BEBEBE]"></div>
                 </div>
                 <div class="flex items-center gap-x-5">
-                    <div class="w-[200px] max-[810px]:hidden"></div>
+                    <div class="w-[200px]"></div>
                     <div class="w-full flex flex-wrap gap-8">
                         <div class="flex items-center gap-x-3">
                             <label for="" class="flex flex-col text-sm">
@@ -211,7 +218,6 @@
                             <input type="checkbox" name="is_pengawas_admin" id=""
                                 class="w-[35px] h-[35px] bg-[#D9D9D9]/40 rounded-lg outline-none cursor-pointer"
                                 {{ $dataPerusahaan->is_pengawas_admin ? 'checked' : '' }} />
-                        </div>
                         </div>
                         <div class="flex items-center gap-x-3">
                             <label for="" class="text-sm">Dokumentasi</label>
@@ -254,19 +260,16 @@
                 html: `
                 <form action="{{ route('data-perusahaan.progres.store', $dataPerusahaan->id) }}" method="POST" id="form-tambah">
                     @csrf
-                    <div class="flex items-center">
-                        <div class="w-[280px]"></div>
-                        <h1 class="font-bold text-2xl mb-4 w-full text-left">Tambah Progres</h1>
-                    </div>
-                    <div class="flex items-center mb-4">
-                        <label for="minggu" class="w-[300px]">Minggu:</label>
+                    <h1 class="font-bold text-2xl mb-4 w-full text-left">Tambah Progres</h1>
+                    <div class="flex flex-col text-left mb-4 gap-y-1">
+                        <label for="minggu">Minggu:</label>
                         <input type="number" id="minggu" name="minggu" class="w-full outline-none bg-[#E9E9E9] rounded-lg px-4 py-2" required>
                     </div>
-                    <div class="flex items-center mb-4">
-                        <label for="persen" class="w-[300px]">Persentase %:</label>
+                    <div class="flex flex-col text-left mb-4 gap-y-1">
+                        <label for="persen">Persentase %:</label>
                         <input type="number" id="persen" name="persen" class="w-full outline-none bg-[#E9E9E9] rounded-lg px-4 py-2" required>
                     </div>
-                    <div class="flex items-center mb-4">
+                    <div class="flex flex-col text-left mb-4 gap-y-1">
                         <label>Keterangan:</label>
                         <textarea name="keterangan" rows="3"
                             class="block w-full outline-none bg-[#E9E9E9] rounded-lg px-4 py-2"

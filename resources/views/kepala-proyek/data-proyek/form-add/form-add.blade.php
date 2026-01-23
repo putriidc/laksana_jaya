@@ -13,22 +13,24 @@
                     <label for="nama_paket" class="w-[200px]">Nama Paket</label>
 
                     <!-- Select default -->
-                    <select id="selectPaket" name="nama_paket"
-                        class="bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none appearance-none cursor-pointer">
-                        <option selected disabled>-Pilih Paket-</option>
-                        @foreach ($proyek as $p)
-                            <option value="{{ $p->nama_proyek }}" data-pic="{{ $p->picRelation->nama ?? '' }}"
-                                data-nohp="{{ $p->picRelation->no_hp ?? '' }}">{{ $p->nama_proyek }}</option>
-                        @endforeach
-                    </select>
+                    <div class="w-full flex items-center gap-x-4">
+                        <select id="selectPaket" name="nama_paket"
+                            class="bg-[#D9D9D9]/40 py-2 px-5 w-full rounded-lg outline-none appearance-none cursor-pointer">
+                            <option selected disabled>-Pilih Paket-</option>
+                            @foreach ($proyek as $p)
+                                <option value="{{ $p->nama_proyek }}" data-pic="{{ $p->picRelation->nama ?? '' }}"
+                                    data-nohp="{{ $p->picRelation->no_hp ?? '' }}">{{ $p->nama_proyek }}</option>
+                            @endforeach
+                        </select>
 
-                    <input id="inputPaket" type="text"
-                        class="hidden bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none"
-                        placeholder="Ketik nama paket manual">
+                        <input id="inputPaket" type="text"
+                            class="hidden bg-[#D9D9D9]/40 w-full py-2 px-5 rounded-lg outline-none"
+                            placeholder="Ketik nama paket manual">
 
-                    <button type="button" id="togglePaket" class="ml-2 text-blue-500 underline cursor-pointer">
-                        Input manual
-                    </button>
+                        <button type="button" id="togglePaket" class="cursor-pointer bg-blue-500 text-white rounded-lg w-[180px] py-2">
+                            Input manual
+                        </button>
+                    </div>
 
                 </div>
 

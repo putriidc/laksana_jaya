@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Laporan Barang Masuk</title>
+    <title>Laporan Persetujuan Pinjaman Tukang</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -73,41 +73,40 @@
     <div class="logo-container">
         <img src="{{ public_path('assets/logo-font.png') }}" class="logo" style="width: 150px; height: 40px;">
     </div>
-    <h2 style="font-size: 20px; font-weight: bolder; margin-top: 20px; text-transform: uppercase;">LAPORAN Barang masuk</h2>
+    <h2 style="font-size: 20px; font-weight: bolder; margin-top: 20px; text-transform: uppercase;">Laporan Persetujuan Pinjaman Tukang</h2>
     <div style="margin-bottom: -5px;">Dicetak pada: {{ $tanggalCetak }} - {{ $jamCetak }}</div>
-
     <table>
         <thead>
             <tr>
-                <th>No</th>
-                <th>Tanggal</th>
-                <th>Keterangan</th>
-                <th>Jumlah</th>
+                <th>Tgl Pengajuan</th>
+                <th>Nama Tukang</th>
+                <th>Proyek</th>
+                <th>Kontrak</th>
+                <th>Status</th>
+                <th>Jumlah Pinjaman</th>
             </tr>
         </thead>
         <tbody>
-            @php
-                $no = 1;
-            @endphp
-            @foreach ($barangMasuks as $masuk)
+            @foreach ($pinjamans as $item)
                 <tr>
-                    <td>{{ $no++ }}</td>
-                    <td>{{ \Carbon\Carbon::parse($masuk->tanggal)->format('d/m/Y') }}</td>
-                    <td>{{ $masuk->keterangan }}</td>
-                    <td>{{ $masuk->qty }}</td>
+                    <td>{{ $item->tanggal }}</td>
+                    <td>{{ $item->kasbon->nama_tukang }}</td>
+                    <td>{{ $item->kasbon->nama_proyek }}</td>
+                    <td>{{ $item->kontrak }}</td>
+                    <td>{{ $item->ket_spv }}</td>
+                    <td>{{ 'RP. ' . number_format($item->bayar, 0, ',', '.') }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-
-   <div>
+    <div>
         <div class="footer-owner">
-            <p>Owner</p>
-            <p style="margin-top: 70px">Rian Purnama</p>
+            <p>Admin</p>
+            <p style="margin-top: 70px">Novi</p>
         </div>
         <div class="footer-admin">
-            <p>Admin Kuangan</p>
-            <p style="margin-top: 70px">Siska</p>
+            <p>Supervisor</p>
+            <p style="margin-top: 70px">Rudi</p>
         </div>
     </div>
 </body>

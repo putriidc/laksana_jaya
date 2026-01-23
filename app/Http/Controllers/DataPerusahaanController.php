@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\PiutangHutang;
 use App\Models\DataPerusahaan;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class DataPerusahaanController extends Controller
 {
@@ -121,6 +122,34 @@ class DataPerusahaanController extends Controller
         }
 
         return view('kepala-proyek.data-proyek.detail.detail', compact('dataPerusahaan', 'progres', 'totalProgress'));
+    }
+
+    public function print($id)
+    {
+        // Ambil data perusahaan berdasarkan id
+        $dataPerusahaan = DataPerusahaan::with('perusahaan')->findOrFail($id);
+
+        // Ambil semua progres yang terkait dengan kode_paket
+        $progres = Progres::where('kode_paket', $dataPerusahaan->kode_paket)
+            ->whereNull('deleted_at')
+            ->orderBy('minggu', 'asc')
+            ->get();
+
+        // Hitung total progres (maksimal 100%)
+        $totalProgress = $progres->sum('persen');
+        if ($totalProgress > 100) {
+            $totalProgress = 100;
+        }
+
+        $kproyek = Auth::user()->name ?? 'Rudi';
+        $role = Auth::user()->role ?? 'Supervisor';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('kepala-proyek.data-proyek.detail.print', compact('dataPerusahaan', 'progres', 'totalProgress', 'kproyek', 'role', 'tanggalCetak', 'jamCetak'))
+            ->setPaper('A4', 'portrait');
+
+        return $pdf->stream('laporan-progress-proyek.pdf');
     }
 
 

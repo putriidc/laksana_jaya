@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Laporan Barang Masuk</title>
+    <title>Laporan Proyek Pengawas - {{ $perusahaan->nama_perusahaan }}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -73,34 +73,40 @@
     <div class="logo-container">
         <img src="{{ public_path('assets/logo-font.png') }}" class="logo" style="width: 150px; height: 40px;">
     </div>
-    <h2 style="font-size: 20px; font-weight: bolder; margin-top: 20px; text-transform: uppercase;">LAPORAN Barang masuk</h2>
+    <h2 style="font-size: 20px; font-weight: bolder; margin-top: 20px; text-transform: uppercase;">LAPORAN PROYEK PENGAWAS - {{ $perusahaan->nama_perusahaan }}</h2>
     <div style="margin-bottom: -5px;">Dicetak pada: {{ $tanggalCetak }} - {{ $jamCetak }}</div>
-
     <table>
         <thead>
             <tr>
                 <th>No</th>
-                <th>Tanggal</th>
-                <th>Keterangan</th>
-                <th>Jumlah</th>
+                <th>Nama Paket</th>
+                <th>PIC</th>
+                <th>No Hp</th>
+                <th>MC 0</th>
+                <th>Korlap</th>
+                <th>Kontraktor</th>
+                <th>Total Progress</th>
             </tr>
         </thead>
         <tbody>
             @php
-                $no = 1;
+            $no = 1;
             @endphp
-            @foreach ($barangMasuks as $masuk)
+            @foreach ($data as $item)
                 <tr>
                     <td>{{ $no++ }}</td>
-                    <td>{{ \Carbon\Carbon::parse($masuk->tanggal)->format('d/m/Y') }}</td>
-                    <td>{{ $masuk->keterangan }}</td>
-                    <td>{{ $masuk->qty }}</td>
+                    <td class="py-2">{{ $item->nama_paket ?? '-' }}</td>
+                    <td class="py-2">{{ $item->pic ?? '-' }}</td>
+                    <td class="py-2">{{ $item->no_hp ?? '-' }}</td>
+                    <td class="py-2">{{ $item->mc0 ?? '-' }}</td>
+                    <td class="py-2">{{ $item->korlap ?? '-' }}</td>
+                    <td class="py-2">{{ $item->kontraktor ?? '-' }}</td>
+                    <td class="py-2">{{ $progressTotals[$item->id] ?? 0 }}%</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-
-   <div>
+    <div>
         <div class="footer-owner">
             <p>Owner</p>
             <p style="margin-top: 70px">Rian Purnama</p>

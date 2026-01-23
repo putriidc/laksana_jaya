@@ -7,6 +7,8 @@ use App\Models\Perusahaan;
 use Illuminate\Http\Request;
 use App\Models\DataPerusahaan;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 
 class PerusahaanController extends Controller
 {
@@ -58,6 +60,31 @@ class PerusahaanController extends Controller
         }
 
         return view('kepala-proyek.data-proyek.index', compact('perusahaan', 'data', 'progressTotals'));
+    }
+    
+    public function print($id)
+    {
+        $perusahaan = Perusahaan::findOrFail($id);
+        $data = DataPerusahaan::where('kode_perusahaan', $perusahaan->kode_perusahaan)->whereNull('deleted_at')->get();
+        // Hitung progres per paket
+        $progressTotals = [];
+        foreach ($data as $d) {
+            $progres = Progres::where('kode_paket', $d->kode_paket)
+                ->whereNull('deleted_at')
+                ->get();
+
+            $progressTotals[$d->id] = min($progres->sum('persen'), 100);
+        }
+
+        $kproyek = Auth::user()->name ?? 'Rudi';
+        $role = Auth::user()->role ?? 'Supervisor';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('kepala-proyek.data-proyek.print', compact('perusahaan', 'data', 'progressTotals', 'kproyek', 'role', 'tanggalCetak', 'jamCetak'))
+            ->setPaper('A4', 'portrait');
+
+        return $pdf->stream('data-proyek.pdf');
     }
 
     public function edit($id)

@@ -48,7 +48,15 @@
             background-color: rgba(240, 240, 240, 0.95);
         }
 
-        .footer {
+        .footer-owner {
+            margin-top: 40px;
+            font-size: 11px;
+            width: 100px;
+            /* atau sesuai lebar yang kamu mau */
+            text-align: center;
+            float: left;
+        }
+        .footer-admin {
             margin-top: 40px;
             font-size: 11px;
             width: 100px;
@@ -63,14 +71,17 @@
 
 <body>
     <div class="logo-container">
-        <img src="{{ public_path('assets/ar4anSmallLogo.png') }}" class="logo">
+        <img src="{{ public_path('assets/logo-font.png') }}" class="logo" style="width: 150px; height: 40px;">
     </div>
-    <h2>LAPORAN BARANG RETUR <br> {{ $barang->nama_barang }}<br>AR4N GROUP</h2>
-
+    <h2 style="font-size: 20px; font-weight: bolder; margin-top: 20px; text-transform: uppercase;">LAPORAN Barang return</h2>
+    <div style="margin-bottom: -5px;">Dicetak pada: {{ $tanggalCetak }} - {{ $jamCetak }}</div>
     <table>
         <thead>
             <tr>
+                <th>No</th>
                 <th>Tanggal</th>
+                <th>Proyek</th>
+                <th>PIC</th>
                 <th>Keterangan</th>
                 <th>Jumlah</th>
             </tr>
@@ -78,7 +89,18 @@
         <tbody>
             @foreach ($barangReturs as $masuk)
                 <tr>
+                    <td>{{ $no++ }}</td>
                     <td>{{ \Carbon\Carbon::parse($masuk->tanggal)->format('d/m/Y') }}</td>
+                    @php 
+                        $proyekCocok = $proyeks->where('kode_akun', $masuk->kode_akun)->first(); 
+                    @endphp
+                    @if ($proyekCocok)
+                        <td class="py-2">{{ $proyekCocok->nama_proyek }}</td>
+                        <td class="py-2">{{ $proyekCocok->pic }}</td>
+                    @else
+                        <td class="py-2 text-red-500">Proyek Tidak Ditemukan</td>
+                        <td class="py-2">-</td>
+                    @endif
                     <td>{{ $masuk->keterangan }}</td>
                     <td>{{ $masuk->qty }}</td>
                 </tr>
@@ -86,9 +108,15 @@
         </tbody>
     </table>
 
-    <div class="footer">
-        <p>Dicetak oleh,<br>{{ $role }} - {{ $admin }}</p>
-        <p style="margin-top: 70px">{{ \Carbon\Carbon::parse($tanggalCetak)->translatedFormat('d F Y') }}</p>
+    <div>
+        <div class="footer-owner">
+            <p>Owner</p>
+            <p style="margin-top: 70px">Rian Purnama</p>
+        </div>
+        <div class="footer-admin">
+            <p>Admin Kuangan</p>
+            <p style="margin-top: 70px">Siska</p>
+        </div>
     </div>
 </body>
 
