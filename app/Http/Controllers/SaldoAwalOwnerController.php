@@ -78,7 +78,7 @@ class SaldoAwalOwnerController extends Controller
                 'kode_proyek'   => '-',
                 'debit'         => $nominal,
                 'kredit'        => 0,
-                'created_by'    => Auth::check() ? Auth::user()->id : null,
+                'created_by'    => 'owner',
             ]);
             JurnalUmum::create([
                 'kode_jurnal'   => $kodeJurnal,
@@ -91,7 +91,7 @@ class SaldoAwalOwnerController extends Controller
                 'kode_proyek'   => '-',
                 'debit'         => $nominal,
                 'kredit'        => 0,
-                'created_by'    => Auth::check() ? Auth::user()->id : null,
+                'created_by'    => 'owner',
             ]);
 
         return redirect()->route('saldo.index')->with('success', 'Saldo awal berhasil disimpan');

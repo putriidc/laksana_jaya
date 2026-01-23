@@ -15,7 +15,10 @@ class JurnalOwnerController extends Controller
 {
     public function index(Request $request)
     {
-        $query = JurnalUmum::active()->where('created_by', 'owner');
+        $query = JurnalUmum::active()
+            ->where('created_by', 'owner')
+            ->where('keterangan', 'not like', 'Saldo Awal%')
+            ->where('keterangan', 'not like', 'Tambah saldo Modal dari%');
 
         // Cek apakah user isi tanggal
         if ($request->filled('start') && $request->filled('end')) {
@@ -207,7 +210,7 @@ class JurnalOwnerController extends Controller
 
             return response()->json(['success' => true]);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Gagal simpan transfer: '.$e->getMessage()], 400);
+            return response()->json(['error' => 'Gagal simpan transfer: ' . $e->getMessage()], 400);
         }
     }
 
@@ -510,7 +513,7 @@ class JurnalOwnerController extends Controller
 
             return response()->json(['success' => true]);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Gagal simpan transfer: '.$e->getMessage()], 400);
+            return response()->json(['error' => 'Gagal simpan transfer: ' . $e->getMessage()], 400);
         }
     }
 }
