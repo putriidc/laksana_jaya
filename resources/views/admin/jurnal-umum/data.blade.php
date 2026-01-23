@@ -34,6 +34,7 @@
                     <button class="cursor-pointer">Tambah Data +</button>
                 </a> --}}
                 <div class="flex items-center gap-x-2">
+                    @if (Auth::user()->role != "Admin 1")
                     <button onclick="transaksiMasuk()" data-url="{{ route('jurnalUmums.storeDebit') }}"
                         data-token="{{ csrf_token() }}"
                         class="flex items-center gap-x-3 border-2 border-[#9A9A9A] px-4 py-2 rounded-lg cursor-pointer">
@@ -54,6 +55,7 @@
                         <img src="https://ar4n-group.com/public/assets/money-send.png" alt="card receive icon"
                             class="w-[20px]">
                     </button>
+                    @endif
                 </div>
                 <form action="{{ route('jurnalUmums.index') }}" method="GET" class="flex items-center gap-x-2">
                     <input type="text" name="start" data-flatpickr placeholder="Tgl Mulai"
