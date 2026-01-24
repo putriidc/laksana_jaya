@@ -175,7 +175,7 @@
                     <tbody>
                         @foreach ($jurnals as $jurnal)
                             <tr class="bg-[#E9E9E9] border-b-[1px] border-[#CCCCCC]">
-                                @if ($jurnal->tanggal == $today && $jurnal->detail_order > 2)
+                                @if ($jurnal->tanggal == $today)
                                     <td class="py-2">
                                         <input type="checkbox" class="data-checkbox" value="{{ $jurnal->id }}"
                                             onchange="updateBulkButton()">
