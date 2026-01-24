@@ -89,11 +89,11 @@
         <tbody>
             @foreach ($pinjamanContents as $item)
                 <tr>
-                    <td>{{ $item->jenis === 'pinjam' ? $item->tanggal : '-' }}</td>
+                    <td>{{ $item->tanggal }}</td>
                     <td>{{ $item->kontrak }}</td>
                     <td>{{ $item->kontrakPinjam->jangka_waktu }}</td>
                     <td>{{ 'Rp. ' . number_format($item->kontrakPinjam->angsuran, 0, ',', '.') }}</td>
-                    <td>{{ $item->jenis === 'pinjam' ? 'Rp. ' . number_format($item->bayar, 0, ',', '.') : 'Rp. 0' }}
+                    <td>{{'Rp. ' . number_format($item->bayar, 0, ',', '.')}}
                     </td>
                 </tr>
             @endforeach
