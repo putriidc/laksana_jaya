@@ -165,7 +165,6 @@
                             </button>
                         </a>
                     @endif
-                    @if (Auth::user()->role != "Admin 2")
                     <a
                         href="{{ route('pinjamanTukangs.index') }}"
                         class="cursor-pointer"
@@ -183,7 +182,6 @@
                             <span class="max-[1300px]:hidden">Pinjaman Tukang</span>
                         </button>
                     </a>
-                    @endif
                     {{-- <a
                         href="{{ route('eaf.index') }}"
                         class="cursor-pointer"

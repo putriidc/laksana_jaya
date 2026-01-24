@@ -121,25 +121,63 @@ class JurnalUmumController extends Controller
 
         return view('admin.jurnal-umum.data', compact('jurnals', 'today', 'totalDebit', 'totalKredit', 'status', 'akun', 'daftarProyek', 'daftarAkun', 'kredit', 'bank', 'bankTo', 'akunDebit', 'akunKredit'));
     }
-
-    public function print(Request $request)
+    private function buildJurnalQuery(Request $request)
     {
         $query = JurnalUmum::active();
 
+        // filter tanggal
         if ($request->filled('start') && $request->filled('end')) {
             $start = Carbon::parse($request->start)->startOfDay();
-            $end = Carbon::parse($request->end)->endOfDay();
+            $end   = Carbon::parse($request->end)->endOfDay();
             $query->whereBetween('tanggal', [$start, $end]);
         }
 
-        $jurnals = $query->orderBy('tanggal', 'desc')->get();
-        $admin = Auth::user()->name ?? 'Administrator';
-        $role = Auth::user()->role ?? 'admin';
-        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
-        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+        // filter proyek
+        if ($request->filled('filter_proyek')) {
+            $query->whereIn('nama_proyek', $request->filter_proyek);
+        }
 
-        $pdf = Pdf::loadView('admin.jurnal-umum.print', compact('jurnals', 'admin', 'role', 'tanggalCetak', 'jamCetak'))
-            ->setPaper('A4', 'portrait');
+        // filter akun
+        if ($request->filled('filter_akun')) {
+            $query->whereIn('nama_perkiraan', $request->filter_akun);
+        }
+
+        // excluded accounts
+        $excludedAccounts = Asset::active()
+            ->whereIn('akun_header', ['asset_tetap', 'ekuitas', 'pendapatan'])
+            ->orWhere(function ($q) {
+                $q->where('akun_header', 'kewajiban')
+                    ->where('kode_akun', '!=', '211');
+            })
+            ->whereNotIn('kode_akun', ['450', '451'])
+            ->pluck('kode_akun');
+
+        $query->whereNotIn('nama_perkiraan', $excludedAccounts);
+
+        // exclude owner
+        $query->where('created_by', '!=', 'owner');
+
+        return $query;
+    }
+
+
+    public function print(Request $request)
+    {
+        $query = $this->buildJurnalQuery($request);
+        $jurnals = $query->orderBy('id', 'desc')->get();
+
+        $admin        = Auth::user()->name ?? 'Administrator';
+        $role         = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak     = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('admin.jurnal-umum.print', compact(
+            'jurnals',
+            'admin',
+            'role',
+            'tanggalCetak',
+            'jamCetak'
+        ))->setPaper('A4', 'portrait');
 
         return $pdf->stream('jurnal-umum.pdf');
     }
