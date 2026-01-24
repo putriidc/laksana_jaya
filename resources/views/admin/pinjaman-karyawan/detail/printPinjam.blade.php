@@ -87,16 +87,14 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($pinjamanContents as $item)
-                <tr>
-                    <td>{{ $item->tanggal }}</td>
-                    <td>{{ $item->kontrak }}</td>
-                    <td>{{ $item->kontrakPinjam->jangka_waktu }}</td>
-                    <td>{{ 'Rp. ' . number_format($item->kontrakPinjam->angsuran, 0, ',', '.') }}</td>
-                    <td>{{'Rp. ' . number_format($item->bayar, 0, ',', '.')}}
-                    </td>
-                </tr>
-            @endforeach
+            <tr>
+                <td>{{ $pinjamanContents->jenis === 'pinjam' ? $pinjamanContents->tanggal : '-' }}</td>
+                <td>{{ $pinjamanContents->kontrak }}</td>
+                <td>{{ $pinjamanContents->kontrakPinjam->jangka_waktu }}</td>
+                <td>{{ 'Rp. ' . number_format($pinjamanContents->kontrakPinjam->angsuran, 0, ',', '.') }}</td>
+                <td>{{ $pinjamanContents->jenis === 'pinjam' ? 'Rp. ' . number_format($pinjamanContents->bayar, 0, ',', '.') : 'Rp. 0' }}
+                </td>
+            </tr>
         </tbody>
     </table>
 
