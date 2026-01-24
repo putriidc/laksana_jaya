@@ -20,8 +20,10 @@ class LaporanHarianOwnerController extends Controller
         $today = Carbon::now('Asia/Jakarta')->toDateString();
 
         $cashIn = JurnalUmum::whereDate('tanggal', $today)
-            ->where('created_by', 'owner')
             ->where('debit', '!=', 0)
+            ->where('created_by', 'owner')
+            ->where('keterangan', 'not like', 'Saldo Awal%')
+            ->where('keterangan', 'not like', 'Tambah saldo Modal dari%')
             ->whereNull('deleted_at')
             ->orderBy('tanggal', 'desc')
             ->get();
@@ -29,6 +31,8 @@ class LaporanHarianOwnerController extends Controller
         // Cash In Global
         $cashInGL = JurnalUmum::where('debit', '!=', 0)
             ->whereNull('deleted_at')
+            ->where('keterangan', 'not like', 'Saldo Awal%')
+            ->where('keterangan', 'not like', 'Tambah saldo Modal dari%')
             ->where('created_by', 'owner')
 
             ->when($request->start_in && $request->end_in, function ($q) use ($request) {
@@ -39,6 +43,8 @@ class LaporanHarianOwnerController extends Controller
 
         $cashOut = JurnalUmum::whereDate('tanggal', $today)
             ->where('kredit', '!=', 0)
+            ->where('keterangan', 'not like', 'Saldo Awal%')
+            ->where('keterangan', 'not like', 'Tambah saldo Modal dari%')
             ->where('created_by', 'owner')
             ->whereNull('deleted_at')
             ->orderBy('tanggal', 'desc')
@@ -47,6 +53,8 @@ class LaporanHarianOwnerController extends Controller
         // Cash Out Global
         $cashOutGL = JurnalUmum::where('kredit', '!=', 0)
             ->whereNull('deleted_at')
+            ->where('keterangan', 'not like', 'Saldo Awal%')
+            ->where('keterangan', 'not like', 'Tambah saldo Modal dari%')
             ->where('created_by', 'owner')
             ->when($request->start_out && $request->end_out, function ($q) use ($request) {
                 $q->whereBetween('tanggal', [$request->start_out, $request->end_out]);
@@ -68,6 +76,9 @@ class LaporanHarianOwnerController extends Controller
 
         $cashIn = JurnalUmum::whereDate('tanggal', $today)
             ->where('debit', '!=', 0)
+            ->where('created_by', 'owner')
+            ->where('keterangan', 'not like', 'Saldo Awal%')
+            ->where('keterangan', 'not like', 'Tambah saldo Modal dari%')
             ->whereNull('deleted_at')
             ->orderBy('tanggal', 'desc')
             ->get();
@@ -96,6 +107,9 @@ class LaporanHarianOwnerController extends Controller
         $cashOut = JurnalUmum::whereDate('tanggal', $today)
             ->where('kredit', '!=', 0)
             ->whereNull('deleted_at')
+            ->where('created_by', 'owner')
+            ->where('keterangan', 'not like', 'Saldo Awal%')
+            ->where('keterangan', 'not like', 'Tambah saldo Modal dari%')
             ->orderBy('tanggal', 'desc')
             ->get();
 
@@ -123,6 +137,9 @@ class LaporanHarianOwnerController extends Controller
 
         $cashInGL = JurnalUmum::where('debit', '!=', 0)
             ->whereNull('deleted_at')
+            ->where('created_by', 'owner')
+            ->where('keterangan', 'not like', 'Saldo Awal%')
+            ->where('keterangan', 'not like', 'Tambah saldo Modal dari%')
             ->when($start && $end, fn($q) => $q->whereBetween('tanggal', [$start, $end]))
             ->orderBy('tanggal', 'desc')
             ->get();
@@ -152,6 +169,9 @@ class LaporanHarianOwnerController extends Controller
 
         $cashOutGL = JurnalUmum::where('kredit', '!=', 0)
             ->whereNull('deleted_at')
+            ->where('created_by', 'owner')
+            ->where('keterangan', 'not like', 'Saldo Awal%')
+            ->where('keterangan', 'not like', 'Tambah saldo Modal dari%')
             ->when($start && $end, fn($q) => $q->whereBetween('tanggal', [$start, $end]))
             ->orderBy('tanggal', 'desc')
             ->get();

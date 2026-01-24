@@ -77,6 +77,8 @@ class LaporanHarianController extends Controller
         $excludedAccounts = Asset::active()->whereIn('akun_header', ['asset_tetap', 'kewajiban', 'ekuitas', 'pendapatan'])->pluck('nama_akun');
         $cashIn = JurnalUmum::whereDate('tanggal', $today)
             ->where('kredit', '!=', 0)
+            ->where('created_by',  '!=', 'owner')
+            ->where('created_by', Auth::user()->id)
             ->whereNull('deleted_at')
             ->whereNotIn('nama_perkiraan', $excludedAccounts)
 
@@ -106,6 +108,8 @@ class LaporanHarianController extends Controller
         $excludedAccounts = Asset::active()->whereIn('akun_header', ['asset_tetap', 'kewajiban', 'ekuitas', 'pendapatan'])->pluck('nama_akun');
         $cashOut = JurnalUmum::whereDate('tanggal', $today)
             ->where('debit', '!=', 0)
+            ->where('created_by',  '!=', 'owner')
+            ->where('created_by', Auth::user()->id)
             ->whereNull('deleted_at')
             ->whereNotIn('nama_perkiraan', $excludedAccounts)
 
@@ -136,6 +140,8 @@ class LaporanHarianController extends Controller
         $excludedAccounts = Asset::active()->whereIn('akun_header', ['asset_tetap', 'kewajiban', 'ekuitas', 'pendapatan'])->pluck('nama_akun');
         $cashInGL = JurnalUmum::where('kredit', '!=', 0)
             ->whereNull('deleted_at')
+            ->where('created_by',  '!=', 'owner')
+            ->where('created_by', Auth::user()->id)
             ->whereNotIn('nama_perkiraan', $excludedAccounts)
 
             ->when($start && $end, fn($q) => $q->whereBetween('tanggal', [$start, $end]))
@@ -167,6 +173,8 @@ class LaporanHarianController extends Controller
         $excludedAccounts = Asset::active()->whereIn('akun_header', ['asset_tetap', 'kewajiban', 'ekuitas', 'pendapatan'])->pluck('nama_akun');
         $cashOutGL = JurnalUmum::where('debit', '!=', 0)
             ->whereNull('deleted_at')
+            ->where('created_by',  '!=', 'owner')
+            ->where('created_by', Auth::user()->id)
             ->whereNotIn('nama_perkiraan', $excludedAccounts)
 
             ->when($start && $end, fn($q) => $q->whereBetween('tanggal', [$start, $end]))

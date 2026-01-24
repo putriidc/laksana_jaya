@@ -137,7 +137,7 @@ class AccOwnerController extends Controller
                 'kode_proyek'   => $proyek ? $proyek->kode_akun : null,
                 'debit'         => $kasbonContent->bayar,
                 'kredit'        => 0,
-                'created_by'    => Auth::check() ? Auth::user()->id : null,
+                'created_by'    => $kasbonContent->created_by,
             ]);
             JurnalUmum::create([
                 'id_content'   => $kasbonContent->id, // generate kode unik
@@ -150,7 +150,7 @@ class AccOwnerController extends Controller
                 'kode_proyek'   => $proyek ? $proyek->kode_akun : null,
                 'debit'         => 0,
                 'kredit'        => $kasbonContent->bayar,
-                'created_by'    => Auth::check() ? Auth::user()->id : null,
+                'created_by'    => $kasbonContent->created_by,
             ]);
         }
 
@@ -244,7 +244,7 @@ class AccOwnerController extends Controller
             'kode_proyek'   =>  '-',
             'debit'         => $pinjamContent->bayar,
             'kredit'        => 0,
-            'created_by'    => Auth::check() ? Auth::user()->id : null,
+            'created_by'    => $pinjamContent->created_by,
         ]);
 
         JurnalUmum::create([
@@ -258,7 +258,7 @@ class AccOwnerController extends Controller
                 'kode_proyek'   => '-',
                 'debit'         => 0,
                 'kredit'        => $pinjamContent->bayar,
-                'created_by'    => Auth::check() ? Auth::user()->id : null,
+                'created_by'    => $pinjamContent->created_by,
             ]);
 
 
@@ -350,7 +350,7 @@ class AccOwnerController extends Controller
             'kode_proyek'   =>  '-',
             'debit'         => $kasbonContent->bayar,
             'kredit'        => 0,
-            'created_by'    => Auth::check() ? Auth::user()->id : null,
+            'created_by'    => $kasbonContent->created_by,
         ]);
         JurnalUmum::create([
                 'id_content'   => $kasbonContent->id, // generate kode unik
@@ -363,7 +363,7 @@ class AccOwnerController extends Controller
                 'kode_proyek'   => '-',
                 'debit'         => 0,
                 'kredit'        => $kasbonContent->bayar,
-                'created_by'    => Auth::check() ? Auth::user()->id : null,
+                'created_by'    => $kasbonContent->created_by,
             ]);
 
 
