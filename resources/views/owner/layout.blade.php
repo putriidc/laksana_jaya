@@ -313,14 +313,44 @@
                     </a>
                     <a href="/owner/master-data" class="cursor-pointer">
                         <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1300px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
+                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >
                             <img
                                 src="{{ asset('assets/navbar/devices.png') }}"
                                 alt="devices icon"
-                                class="max-[1300px]:scale-200"
+                                class="max-[1200px]:scale-200"
                             />
-                            <span class="max-[1300px]:hidden">Master Data</span>
+                            <span class="max-[1200px]:hidden">Master Data</span>
+                        </button>
+                    </a>
+                    <a href="{{ route('barangsOwner.index') }}" class="cursor-pointer">
+                        <button
+                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"> {{-- Bagian yang di responsive --}}
+                                <img
+                                    src="{{
+                                        asset(
+                                            'assets/navbar-kepala-gudang/3d-cube-scan.png'
+                                        )
+                                    }}"
+                                    alt="cube scan icon"
+                                    class="max-[1200px]:scale-200"
+                                />
+                                <span class="max-[1200px]:hidden">Data Barang</span>
+                        </button>
+                    </a>
+                    <a href="{{ route('alatsOwner.index') }}" class="cursor-pointer">
+                        <button
+                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"> {{-- Bagian yang di responsive --}}
+                                <img
+                                    src="{{
+                                        asset(
+                                            'assets/navbar-kepala-gudang/3d-cube-scan.png'
+                                        )
+                                    }}"
+                                    alt="cube scan icon"
+                                    class="max-[1200px]:scale-200"
+                                />
+                                <span class="max-[1200px]:hidden">Data Alat</span>
                         </button>
                     </a>
                     <a
@@ -779,6 +809,10 @@
                         item.children[0].src = "{{ asset('assets/navbar-owner/document-click.png') }}";
                     } else if (index == 13) {
                         item.children[0].src = "{{ asset('assets/navbar/devices-click.png') }}";
+                    } else if (index == 14) {
+                        item.children[0].src = "{{ asset('assets/navbar-kepala-gudang/3d-cube-scan-click.png') }}";
+                    } else if (index == 15) {
+                        item.children[0].src = "{{ asset('assets/navbar-kepala-gudang/3d-cube-scan-click.png') }}";
                     }
             } else {
                 item.classList.remove(
