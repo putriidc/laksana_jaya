@@ -1,9 +1,9 @@
-@extends('kepala-gudang.layout')
+@extends('admin.layout')
 @section('content')
     <div class="flex flex-col items-center">
         <h1 class="text-2xl font-bold mb-6 w-full">Edit Data Alat</h1>
         <div class="shadow-[0px_0px_15px_rgba(0,0,0,0.25)] w-full p-10 rounded-lg bg-white">
-            <form enctype="multipart/form-data" method="POST" action="{{ route('alats.update', $alat->id) }}"
+            <form enctype="multipart/form-data" method="POST" action="{{ route('alatsAdmin.update', $alat->id) }}"
                 class="flex flex-col gap-y-4">
                 @csrf
                 @method('PUT')

@@ -14,7 +14,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-class BarangOwnerController extends Controller
+class BarangAdminController extends Controller
 {
     public function index(Request $request)
     {
@@ -94,7 +94,7 @@ class BarangOwnerController extends Controller
             'created_by'  => Auth::check() ? Auth::user()->id : null,
         ]);
 
-        return redirect()->route('barangs.index')->with('success', 'Barang berhasil ditambahkan');
+        return redirect()->route('barangsAdmin.index')->with('success', 'Barang berhasil ditambahkan');
     }
 
     public function show(Request $request, $id)
@@ -161,8 +161,9 @@ class BarangOwnerController extends Controller
         $role = Auth::user()->role ?? 'admin';
         $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
         $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+        $proyeks = Proyek::whereNull('deleted_at')->get();
 
-        $pdf = Pdf::loadView('admin.detail-barang.printIn', compact('barang', 'jamCetak', 'barangMasuks', 'admin', 'role', 'tanggalCetak'))
+        $pdf = Pdf::loadView('admin.detail-barang.printIn', compact('barang', 'proyeks', 'jamCetak', 'barangMasuks', 'admin', 'role', 'tanggalCetak'))
             ->setPaper('A4', 'portrait');
 
         return $pdf->stream("BarangMasuk_{$barang->nama_barang}.pdf");
@@ -185,8 +186,9 @@ class BarangOwnerController extends Controller
         $role = Auth::user()->role ?? 'admin';
         $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
         $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+        $proyeks = Proyek::whereNull('deleted_at')->get();
 
-        $pdf = Pdf::loadView('admin.detail-barang.printOut', compact('barang', 'jamCetak', 'barangKeluars', 'admin', 'role', 'tanggalCetak'))
+        $pdf = Pdf::loadView('admin.detail-barang.printOut', compact('barang', 'proyeks', 'jamCetak', 'barangKeluars', 'admin', 'role', 'tanggalCetak'))
             ->setPaper('A4', 'portrait');
 
         return $pdf->stream("BarangKeluar_{$barang->nama_barang}.pdf");
@@ -209,8 +211,9 @@ class BarangOwnerController extends Controller
         $role = Auth::user()->role ?? 'admin';
         $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
         $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+        $proyeks = Proyek::whereNull('deleted_at')->get();
 
-        $pdf = Pdf::loadView('admin.detail-barang.printRtr', compact('barang', 'jamCetak', 'barangReturs', 'admin', 'role', 'tanggalCetak'))
+        $pdf = Pdf::loadView('admin.detail-barang.printRtr', compact('barang', 'proyeks', 'jamCetak', 'barangReturs', 'admin', 'role', 'tanggalCetak'))
             ->setPaper('A4', 'portrait');
 
         return $pdf->stream("BarangRetur_{$barang->nama_barang}.pdf");
@@ -255,7 +258,7 @@ class BarangOwnerController extends Controller
             'foto'        => $fotoPath,
         ]);
 
-        return redirect()->route('barangs.index')->with('success', 'Barang berhasil diupdate');
+        return redirect()->route('barangsAdmin.index')->with('success', 'Barang berhasil diupdate');
     }
 
     public function destroy($id)

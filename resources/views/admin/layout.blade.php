@@ -233,9 +233,9 @@
                             <span class="max-[1300px]:hidden">Buku Besar</span>
                         </button>
                     </a>
-                    <a href="{{ route('barangs.index') }}" class="cursor-pointer">
+                    <a href="{{ route('barangsAdmin.index') }}" class="cursor-pointer">
                         <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"> {{-- Bagian yang di responsive --}}
+                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1300px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"> {{-- Bagian yang di responsive --}}
                                 <img
                                     src="{{
                                         asset(
@@ -243,14 +243,14 @@
                                         )
                                     }}"
                                     alt="cube scan icon"
-                                    class="max-[1200px]:scale-200"
+                                    class="max-[1300px]:scale-200"
                                 />
-                                <span class="max-[1200px]:hidden">Data Barang</span>
+                                <span class="max-[1300px]:hidden">Data Barang</span>
                         </button>
                     </a>
-                    <a href="{{ route('alats.index') }}" class="cursor-pointer">
+                    <a href="{{ route('alatsAdmin.index') }}" class="cursor-pointer">
                         <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"> {{-- Bagian yang di responsive --}}
+                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1300px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"> {{-- Bagian yang di responsive --}}
                                 <img
                                     src="{{
                                         asset(
@@ -258,9 +258,9 @@
                                         )
                                     }}"
                                     alt="cube scan icon"
-                                    class="max-[1200px]:scale-200"
+                                    class="max-[1300px]:scale-200"
                                 />
-                                <span class="max-[1200px]:hidden">Data Alat</span>
+                                <span class="max-[1300px]:hidden">Data Alat</span>
                         </button>
                     </a>
                     @if (Auth::user()->role != "Admin 1")

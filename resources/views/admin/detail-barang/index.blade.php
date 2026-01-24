@@ -1,9 +1,9 @@
-@extends('kepala-gudang.layout')
+@extends('admin.layout')
 @section('content')
     <div>
         <div class="flex items-center justify-between mb-10">
             <h1 class="font-bold text-2xl">Detail Data Barang</h1>
-            <a href="{{ route('barangs.edit', $barang->id) }}" class="border border-gray-600 rounded-lg py-2 px-4">Edit Barang</a>
+            <a href="{{ route('barangsAdmin.edit', $barang->id) }}" class="border border-gray-600 rounded-lg py-2 px-4">Edit Barang</a>
         </div>
         <div class="flex flex-col gap-y-7 pb-14 mb-8 border-b-2 border-[#B6B6B6]">
             <div class="flex mb-5 max-[900px]:mb-0 max-[900px]:flex-col max-[900px]:items-center">
@@ -58,18 +58,18 @@
             </div>
         </div>
         <div class="flex gap-x-4 mb-10 max-[600px]:flex-wrap max-[600px]:gap-y-2 max-[600px]:gap-x-2">
-            <a href="{{ route('barang-masuk.create.for-barang', $barang->kode_barang) }}"
+            <a href="{{ route('barang-masuk-admin.create.for-barang', $barang->kode_barang) }}"
                 class="block bg-green-400 text-white rounded-lg w-fit py-2 px-5">Barang Masuk +</a>
-            <a href="{{ route('barang-keluar.create.for-barang', $barang->kode_barang) }}"
+            <a href="{{ route('barang-keluar-admin.create.for-barang', $barang->kode_barang) }}"
                 class="block bg-green-400 text-white rounded-lg w-fit py-2 px-5">Barang Keluar -</a>
-            <a href="{{ route('barang-retur.create.for-barang', $barang->kode_barang) }}"
+            <a href="{{ route('barang-retur-admin.create.for-barang', $barang->kode_barang) }}"
                 class="bg-green-400 text-white rounded-lg w-fit py-2 px-5 flex items-center gap-x-2">Barang Return
                 <img src="{{ asset('assets/rotate-left.png') }}" alt="rotate icon" class="w-[18px] h-[18px]"></a>
         </div>
         <div class="border-b-2 border-[#B6B6B6] pb-8 mb-10">
             <h1 class="font-bold text-2xl mb-6">Data Barang Masuk</h1>
             {{-- Barang Masuk --}}
-            <form method="GET" action="{{ route('barangs.show', $barang->id) }}" class="flex gap-x-2 mb-4 max-[600px]:flex-wrap max-[600px]:gap-y-2">
+            <form method="GET" action="{{ route('barangsAdmin.show', $barang->id) }}" class="flex gap-x-2 mb-4 max-[600px]:flex-wrap max-[600px]:gap-y-2">
                 <input type="text" data-flatpickr placeholder="Pilih tanggal awal" name="start_masuk" value="{{ request('start_masuk') }}"
                     class="border-2 border-[#9A9A9A] rounded-lg px-3 py-2">
                 <input type="text" data-flatpickr placeholder="Pilih tanggal akhir" name="end_masuk" value="{{ request('end_masuk') }}"
@@ -78,7 +78,7 @@
                     <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" />
                 </button>
                 {{-- Print Barang Masuk --}}
-                <a href="{{ route('barangs.printMasuk', ['id' => $barang->id, 'start_masuk' => request('start_masuk'), 'end_masuk' => request('end_masuk')]) }}"
+                <a href="{{ route('barangsAdmin.printMasuk', ['id' => $barang->id, 'start_masuk' => request('start_masuk'), 'end_masuk' => request('end_masuk')]) }}"
                     target="_blank"
                     class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer max-[600px]:hidden">
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
@@ -88,7 +88,7 @@
                         <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" />
                     </button>
                     {{-- Print Barang Masuk --}}
-                    <a href="{{ route('barangs.printMasuk', ['id' => $barang->id, 'start_masuk' => request('start_masuk'), 'end_masuk' => request('end_masuk')]) }}"
+                    <a href="{{ route('barangsAdmin.printMasuk', ['id' => $barang->id, 'start_masuk' => request('start_masuk'), 'end_masuk' => request('end_masuk')]) }}"
                         target="_blank"
                         class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
                         <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
@@ -98,11 +98,11 @@
             <div class="rounded-lg shadow-[1px_1px_10px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[900px]:overflow-x-scroll">
                 <table class="table-fixed text-center text-sm w-full max-[900px]:w-[900px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
-                        <th class="py-2 w-[20%] pl-36 max-[1100px]:pl-0">No</th>
+                        <th class="py-2 w-[20%] max-[1100px]:pl-0">No</th>
                         <th class="py-2 w-[20%]">Tgl Masuk</th>
                         <th class="py-2 w-[20%]">Qty</th>
                         <th class="py-2 w-[20%]">Keterangan</th>
-                        <th class="py-2 w-[25%] pr-36 max-[1100px]:pr-0">Action</th>
+                        <th class="py-2 w-[25%] max-[1100px]:pr-0">Action</th>
                     </thead>
                     <tbody>
                         @php
@@ -110,21 +110,21 @@
                         @endphp
                         @foreach ($barangMasuks as $item)
                             <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
-                                <td class="py-2 pl-36 max-[1100px]:pl-0">{{ $nomasuk++ }}</td>
+                                <td class="py-2 max-[1100px]:pl-0">{{ $nomasuk++ }}</td>
                                 <td class="py-2">{{ $item->tanggal }}</td>
                                 <td class="py-2">{{ $item->qty }}</td>
                                 <td class="py-2">{{ $item->keterangan }}</td>
-                                <td class="py-2 pr-36 max-[1100px]:pr-0">
+                                <td class="py-2 max-[1100px]:pr-0">
                                     <div class="flex justify-center items-center gap-x-2 ">
                                         {{-- Tombol Edit --}}
-                                        <a href="{{ route('barang-masuk.edit', $item->id) }}"
+                                        <a href="{{ route('barang-masuk-admin.edit', $item->id) }}"
                                             class="btn btn-sm btn-primary">
                                             <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
                                                 class="w-[22px] cursor-pointer">
                                         </a>
                                         <span class="border-black border-l-[1px] h-[22px]"></span>
                                         {{-- Tombol Delete --}}
-                                        <form action="{{ route('barang-masuk.destroy', $item->id) }}" method="POST"
+                                        <form action="{{ route('barang-masuk-admin.destroy', $item->id) }}" method="POST"
                                             class="h-[22px]">
                                             @csrf
                                             @method('DELETE')
@@ -144,7 +144,7 @@
         <div class="border-b-2 border-[#B6B6B6] pb-8 mb-10">
             <h1 class="font-bold text-2xl mb-6">Data Barang Keluar</h1>
             {{-- Barang Keluar --}}
-            <form method="GET" action="{{ route('barangs.show', $barang->id) }}" class="flex gap-x-2 mb-4 max-[600px]:flex-wrap max-[600px]:gap-y-2">
+            <form method="GET" action="{{ route('barangsAdmin.show', $barang->id) }}" class="flex gap-x-2 mb-4 max-[600px]:flex-wrap max-[600px]:gap-y-2">
                 <input type="text" data-flatpickr placeholder="Pilih tanggal awal" name="start_keluar" value="{{ request('start_keluar') }}"
                     class="border-2 border-[#9A9A9A] rounded-lg px-3 py-2">
                 <input type="text" data-flatpickr placeholder="Pilih tanggal akhir" name="end_keluar" value="{{ request('end_keluar') }}"
@@ -153,7 +153,7 @@
                     <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" />
                 </button>
                 {{-- Print Barang Keluar --}}
-                <a href="{{ route('barangs.printKeluar', ['id' => $barang->id, 'start_keluar' => request('start_keluar'), 'end_keluar' => request('end_keluar')]) }}"
+                <a href="{{ route('barangsAdmin.printKeluar', ['id' => $barang->id, 'start_keluar' => request('start_keluar'), 'end_keluar' => request('end_keluar')]) }}"
                     target="_blank"
                     class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer max-[600px]:hidden">
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
@@ -163,7 +163,7 @@
                         <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" />
                     </button>
                     {{-- Print Barang Keluar --}}
-                    <a href="{{ route('barangs.printKeluar', ['id' => $barang->id, 'start_keluar' => request('start_keluar'), 'end_keluar' => request('end_keluar')]) }}"
+                    <a href="{{ route('barangsAdmin.printKeluar', ['id' => $barang->id, 'start_keluar' => request('start_keluar'), 'end_keluar' => request('end_keluar')]) }}"
                         target="_blank"
                         class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
                         <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
@@ -206,14 +206,14 @@
                                 <td class="py-2">
                                     <div class="flex justify-center items-center gap-x-2 ">
                                         {{-- Tombol Edit --}}
-                                        <a href="{{ route('barang-keluar.edit', $item->id) }}"
+                                        <a href="{{ route('barang-keluar-admin.edit', $item->id) }}"
                                             class="btn btn-sm btn-primary">
                                             <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
                                                 class="w-[22px] cursor-pointer">
                                         </a>
                                         <span class="border-black border-l-[1px] h-[22px]"></span>
                                         {{-- Tombol Delete --}}
-                                        <form action="{{ route('barang-keluar.destroy', $item->id) }}" method="POST"
+                                        <form action="{{ route('barang-keluar-admin.destroy', $item->id) }}" method="POST"
                                             class="h-[22px]">
                                             @csrf
                                             @method('DELETE')
@@ -233,7 +233,7 @@
         <div class="border-b-2 border-[#B6B6B6] pb-8 mb-10">
             <h1 class="font-bold text-2xl mb-6">Data Barang Return</h1>
             {{-- Barang Retur --}}
-            <form method="GET" action="{{ route('barangs.show', $barang->id) }}" class="flex gap-x-2 mb-4 max-[600px]:flex-wrap max-[600px]:gap-y-2">
+            <form method="GET" action="{{ route('barangsAdmin.show', $barang->id) }}" class="flex gap-x-2 mb-4 max-[600px]:flex-wrap max-[600px]:gap-y-2">
                 <input type="text" data-flatpickr placeholder="Pilih tanggal awal" name="start_retur" value="{{ request('start_retur') }}"
                     class="border-2 border-[#9A9A9A] rounded-lg px-3 py-2">
                 <input type="text" data-flatpickr placeholder="Pilih tanggal akhir" name="end_retur" value="{{ request('end_retur') }}"
@@ -242,7 +242,7 @@
                     <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" />
                 </button>
                 {{-- Print Barang Retur --}}
-                <a href="{{ route('barangs.printRetur', ['id' => $barang->id, 'start_retur' => request('start_retur'), 'end_retur' => request('end_retur')]) }}"
+                <a href="{{ route('barangsAdmin.printRetur', ['id' => $barang->id, 'start_retur' => request('start_retur'), 'end_retur' => request('end_retur')]) }}"
                     target="_blank"
                     class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer max-[600px]:hidden">
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
@@ -252,7 +252,7 @@
                         <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" />
                     </button>
                     {{-- Print Barang Retur --}}
-                    <a href="{{ route('barangs.printRetur', ['id' => $barang->id, 'start_retur' => request('start_retur'), 'end_retur' => request('end_retur')]) }}"
+                    <a href="{{ route('barangsAdmin.printRetur', ['id' => $barang->id, 'start_retur' => request('start_retur'), 'end_retur' => request('end_retur')]) }}"
                         target="_blank"
                         class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
                         <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
@@ -295,14 +295,14 @@
                                 <td class="py-2">
                                     <div class="flex justify-center items-center gap-x-2 ">
                                         {{-- Tombol Edit --}}
-                                        <a href="{{ route('barang-retur.edit', $item->id) }}"
+                                        <a href="{{ route('barang-retur-admin.edit', $item->id) }}"
                                             class="btn btn-sm btn-primary">
                                             <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
                                                 class="w-[22px] cursor-pointer">
                                         </a>
                                         <span class="border-black border-l-[1px] h-[22px]"></span>
                                         {{-- Tombol Delete --}}
-                                        <form action="{{ route('barang-retur.destroy', $item->id) }}" method="POST"
+                                        <form action="{{ route('barang-retur-admin.destroy', $item->id) }}" method="POST"
                                             class="h-[22px]">
                                             @csrf
                                             @method('DELETE')

@@ -1,10 +1,10 @@
-@extends('kepala-gudang.layout') @section('content')
+@extends('admin.layout') @section('content')
     <div>
         <h1 class="font-bold text-2xl mb-4">Data Barang</h1>
         <div class="flex justify-between items-center mb-6 max-[600px]:flex-col max-[600px]:gap-y-2 max-[600px]:items-start">
-            <a href="{{ route('barangs.create') }}" class="block px-4 py-2 border-2 border-[#9A9A9A] rounded-lg">Input Barang
+            <a href="{{ route('barangsAdmin.create') }}" class="block px-4 py-2 border-2 border-[#9A9A9A] rounded-lg">Input Barang
                 +</a>
-            <form method="GET" action="{{ route('barangs.index') }}" class="flex items-center gap-x-2" id="myForm">
+            <form method="GET" action="{{ route('barangsAdmin.index') }}" class="flex items-center gap-x-2" id="myForm">
                 <input type="text" name="q"
                     class="w-[200px] appearance-none border-[#9A9A9A] border-2 outline-none rounded-lg py-[8px] px-[10px] bg-white cursor-pointer"
                     placeholder="Cari Nama/Kategori" value="{{ request('q') }}">
@@ -12,7 +12,7 @@
                     class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
                     <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" class="w-[20px]">
                 </button>
-                <a target="_blank" href="{{ route('barang.print') }}" class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
+                <a target="_blank" href="{{ route('barang-admin.print') }}" class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
                 </a>
             </form>
@@ -29,7 +29,7 @@
                         <h1 class="font-bold">{{ $item->nama_barang }}</h1>
                         <p class="text-xs w-full truncate">{{ $item->spesifikasi }}</p>
                     </div>
-                    <a href="{{ route('barangs.show', $item->id) }}"
+                    <a href="{{ route('barangsAdmin.show', $item->id) }}"
                         class="bg-white shadow-[0px_0px_5px_rgba(0,0,0,0.25)] px-[5px] h-full flex items-center rounded-lg">
                         <img src="{{ asset('assets/dashboard-kepala-gudang/arrow-right.png') }}" alt="arrow icon"
                             class="w-[30px]">

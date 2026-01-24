@@ -1,9 +1,9 @@
-@extends('kepala-gudang.layout')
+@extends('admin.layout')
 @section('content')
     <div class="flex flex-col items-center">
         <h1 class="text-2xl font-bold mb-6 w-full">Edit Stok Masuk</h1>
         <div class="shadow-[0px_0px_15px_rgba(0,0,0,0.25)] w-full p-10 rounded-lg bg-white">
-            <form method="POST" action="{{ route('alat-beli.update', $alatMasuk->id) }}" class="flex flex-col gap-y-4">
+            <form method="POST" action="{{ route('alat-beli-admin.update', $alatMasuk->id) }}" class="flex flex-col gap-y-4">
                 @csrf
                 @method('PUT')
 

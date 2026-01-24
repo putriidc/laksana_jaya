@@ -2,7 +2,7 @@
     <div class="flex flex-col items-center">
         <h1 class="text-2xl font-bold mb-6 w-full">Input Data Barang</h1>
         <div class="shadow-[0px_0px_15px_rgba(0,0,0,0.25)] w-full p-10 rounded-lg bg-white">
-            <form enctype="multipart/form-data" method="POST" action="{{ route('barangs.store') }}"
+            <form enctype="multipart/form-data" method="POST" action="{{ route('barangsAdmin.store') }}"
                 class="flex flex-col gap-y-4">
                 @csrf
                 <div class="flex items-center max-[650px]:flex-col max-[650px]:gap-y-2 max-[650px]:items-start">

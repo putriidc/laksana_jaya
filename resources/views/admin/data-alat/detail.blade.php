@@ -1,9 +1,9 @@
-@extends('kepala-gudang.layout')
+@extends('admin.layout')
 @section('content')
     <div>
         <div class="flex items-center justify-between mb-10">
             <h1 class="font-bold text-2xl">Detail Data Alat</h1>
-            <a href="{{ route('alats.edit', $alat->id) }}" class="border border-gray-600 rounded-lg py-2 px-4">Edit Alat</a>
+            <a href="{{ route('alatsAdmin.edit', $alat->id) }}" class="border border-gray-600 rounded-lg py-2 px-4">Edit Alat</a>
         </div>
         <div class="flex flex-col gap-y-7 pb-14 mb-8 border-b-2 border-[#B6B6B6]">
             <div class="flex mb-5 max-[900px]:mb-0 max-[900px]:flex-col max-[900px]:items-center">
@@ -60,22 +60,22 @@
         </div>
         <div class="flex justify-between items-center mb-10 max-[600px]:flex-wrap max-[600px]:gap-y-2 max-[600px]:gap-x-2">
             <div class="flex items-center gap-x-2">
-                <a href="{{ route('alat-beli.create.for-alat', $alat->kode_alat) }}"
+                <a href="{{ route('alat-beli-admin.create.for-alat', $alat->kode_alat) }}"
                     class="block text-white bg-green-400 rounded-lg w-fit py-2 px-5">Alat Masuk</a>
-                <a href="{{ route('alat-hapus.create.for-alat', $alat->kode_alat) }}"
+                <a href="{{ route('alat-hapus-admin.create.for-alat', $alat->kode_alat) }}"
                     class="block text-white bg-green-400 rounded-lg w-fit py-2 px-5">Alat Keluar(hilang/rusak)</a>
             </div>
            <div class="flex items-center gap-x-2">
-                <a href="{{ route('alat-pinjam.create.for-alat', $alat->kode_alat) }}"
+                <a href="{{ route('alat-pinjam-admin.create.for-alat', $alat->kode_alat) }}"
                     class="block text-white bg-blue-400 rounded-lg w-fit py-2 px-5">Diambil Alat</a>
-                <a href="{{ route('alat-kembalikan.create.for-alat', $alat->kode_alat) }}"
+                <a href="{{ route('alat-kembalikan-admin.create.for-alat', $alat->kode_alat) }}"
                     class="text-white bg-blue-400 rounded-lg w-fit py-2 px-5 flex items-center gap-x-2">Dikembalikan Alat</a>
            </div>
         </div>
         <div class="border-b-2 border-[#B6B6B6] pb-8 mb-10">
-            <h1 class="font-bold text-2xl mb-6">Data Stok Masuk</h1>
+            <h1 class="font-bold text-2xl mb-6">Data Alat Masuk</h1>
             {{-- Barang Masuk --}}
-            <form method="GET" action="{{ route('alats.show', $alat->id) }}" class="flex gap-x-2 mb-4 max-[600px]:flex-wrap max-[600px]:gap-y-2">
+            <form method="GET" action="{{ route('alatsAdmin.show', $alat->id) }}" class="flex gap-x-2 mb-4 max-[600px]:flex-wrap max-[600px]:gap-y-2">
                 <input type="text" data-flatpickr placeholder="Pilih tanggal awal" name="start_dibeli" value="{{ request('start_dibeli') }}"
                     class="border-2 border-[#9A9A9A] rounded-lg px-3 py-2">
                 <input type="text" data-flatpickr placeholder="Pilih tanggal akhir" name="end_dibeli" value="{{ request('end_dibeli') }}"
@@ -84,7 +84,7 @@
                     <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" />
                 </button>
                 {{-- Print Barang Masuk --}}
-                <a href="{{ route('alats.printDibeli', ['id' => $alat->id, 'start_dibeli' => request('start_dibeli'), 'end_dibeli' => request('end_dibeli')]) }}"
+                <a href="{{ route('alatsAdmin.printDibeli', ['id' => $alat->id, 'start_dibeli' => request('start_dibeli'), 'end_dibeli' => request('end_dibeli')]) }}"
                     target="_blank"
                     class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer max-[600px]:hidden">
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
@@ -94,7 +94,7 @@
                         <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" />
                     </button>
                     {{-- Print Barang Masuk --}}
-                    <a href="{{ route('alats.printDibeli', ['id' => $alat->id, 'start_dibeli' => request('start_dibeli'), 'end_dibeli' => request('end_dibeli')]) }}"
+                    <a href="{{ route('alatsAdmin.printDibeli', ['id' => $alat->id, 'start_dibeli' => request('start_dibeli'), 'end_dibeli' => request('end_dibeli')]) }}"
                         target="_blank"
                         class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
                         <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
@@ -123,14 +123,14 @@
                                 <td class="py-2">
                                     <div class="flex justify-center items-center gap-x-2 ">
                                         {{-- Tombol Edit --}}
-                                        <a href="{{ route('alat-beli.edit', $item->id) }}"
+                                        <a href="{{ route('alat-beli-admin.edit', $item->id) }}"
                                             class="btn btn-sm btn-primary">
                                             <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
                                                 class="w-[22px] cursor-pointer">
                                         </a>
                                         <span class="border-black border-l-[1px] h-[22px]"></span>
                                         {{-- Tombol Delete --}}
-                                        <form action="{{ route('alat-beli.destroy', $item->id) }}" method="POST"
+                                        <form action="{{ route('alat-beli-admin.destroy', $item->id) }}" method="POST"
                                             class="h-[22px]">
                                             @csrf
                                             @method('DELETE')
@@ -148,9 +148,9 @@
             </div>
         </div>
         <div class="border-b-2 border-[#B6B6B6] pb-8 mb-10">
-            <h1 class="font-bold text-2xl mb-6">Data Stok Keluar</h1>
+            <h1 class="font-bold text-2xl mb-6">Data Alat Keluar</h1>
             {{-- Barang Masuk --}}
-            <form method="GET" action="{{ route('alats.show', $alat->id) }}" class="flex gap-x-2 mb-4 max-[600px]:flex-wrap max-[600px]:gap-y-2">
+            <form method="GET" action="{{ route('alatsAdmin.show', $alat->id) }}" class="flex gap-x-2 mb-4 max-[600px]:flex-wrap max-[600px]:gap-y-2">
                 <input type="text" data-flatpickr placeholder="Pilih tanggal awal" name="start_dihapus" value="{{ request('start_dihapus') }}"
                     class="border-2 border-[#9A9A9A] rounded-lg px-3 py-2">
                 <input type="text" data-flatpickr placeholder="Pilih tanggal akhir" name="end_dihapus" value="{{ request('end_dihapus') }}"
@@ -159,7 +159,7 @@
                     <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" />
                 </button>
                 {{-- Print Barang Masuk --}}
-                <a href="{{ route('alats.printDihapus', ['id' => $alat->id, 'start_dihapus' => request('start_dihapus'), 'end_dihapus' => request('end_dihapus')]) }}"
+                <a href="{{ route('alatsAdmin.printDihapus', ['id' => $alat->id, 'start_dihapus' => request('start_dihapus'), 'end_dihapus' => request('end_dihapus')]) }}"
                     target="_blank"
                     class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer max-[600px]:hidden">
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
@@ -169,7 +169,7 @@
                         <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" />
                     </button>
                     {{-- Print Barang Masuk --}}
-                    <a href="{{ route('alats.printDihapus', ['id' => $alat->id, 'start_dihapus' => request('start_dihapus'), 'end_dihapus' => request('end_dihapus')]) }}"
+                    <a href="{{ route('alatsAdmin.printDihapus', ['id' => $alat->id, 'start_dihapus' => request('start_dihapus'), 'end_dihapus' => request('end_dihapus')]) }}"
                         target="_blank"
                         class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
                         <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
@@ -198,14 +198,14 @@
                                 <td class="py-2">
                                     <div class="flex justify-center items-center gap-x-2 ">
                                         {{-- Tombol Edit --}}
-                                        <a href="{{ route('alat-hapus.edit', $item->id) }}"
+                                        <a href="{{ route('alat-hapus-admin.edit', $item->id) }}"
                                             class="btn btn-sm btn-primary">
                                             <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
                                                 class="w-[22px] cursor-pointer">
                                         </a>
                                         <span class="border-black border-l-[1px] h-[22px]"></span>
                                         {{-- Tombol Delete --}}
-                                        <form action="{{ route('alat-hapus.destroy', $item->id) }}" method="POST"
+                                        <form action="{{ route('alat-hapus-admin.destroy', $item->id) }}" method="POST"
                                             class="h-[22px]">
                                             @csrf
                                             @method('DELETE')
@@ -225,7 +225,7 @@
         <div class="border-b-2 border-[#B6B6B6] pb-8 mb-10">
             <h1 class="font-bold text-2xl mb-6">Data Diambil Alat</h1>
             {{-- Barang Keluar --}}
-            <form method="GET" action="{{ route('alats.show', $alat->id) }}" class="flex gap-x-2 mb-4 max-[600px]:flex-wrap max-[600px]:gap-y-2">
+            <form method="GET" action="{{ route('alatsAdmin.show', $alat->id) }}" class="flex gap-x-2 mb-4 max-[600px]:flex-wrap max-[600px]:gap-y-2">
                 <input type="text" data-flatpickr placeholder="Pilih tanggal awal" name="start_dipinjam" value="{{ request('start_dipinjam') }}"
                     class="border-2 border-[#9A9A9A] rounded-lg px-3 py-2">
                 <input type="text" data-flatpickr placeholder="Pilih tanggal akhir" name="end_dipinjam" value="{{ request('end_dipinjam') }}"
@@ -234,7 +234,7 @@
                     <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" />
                 </button>
                 {{-- Print Barang Keluar --}}
-                <a href="{{ route('alats.printDipinjam', ['id' => $alat->id, 'start_dipinjam' => request('start_dipinjam'), 'end_dipinjam' => request('end_dipinjam')]) }}"
+                <a href="{{ route('alatsAdmin.printDipinjam', ['id' => $alat->id, 'start_dipinjam' => request('start_dipinjam'), 'end_dipinjam' => request('end_dipinjam')]) }}"
                     target="_blank"
                     class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer max-[600px]:hidden">
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
@@ -244,7 +244,7 @@
                         <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" />
                     </button>
                     {{-- Print Barang Keluar --}}
-                    <a href="{{ route('alats.printDipinjam', ['id' => $alat->id, 'start_dipinjam' => request('start_dipinjam'), 'end_dipinjam' => request('end_dipinjam')]) }}"
+                    <a href="{{ route('alatsAdmin.printDipinjam', ['id' => $alat->id, 'start_dipinjam' => request('start_dipinjam'), 'end_dipinjam' => request('end_dipinjam')]) }}"
                         target="_blank"
                         class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
                         <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
@@ -287,14 +287,14 @@
                                 <td class="py-2">
                                     <div class="flex justify-center items-center gap-x-2 ">
                                         {{-- Tombol Edit --}}
-                                        <a href="{{ route('alat-pinjam.edit', $item->id) }}"
+                                        <a href="{{ route('alat-pinjam-admin.edit', $item->id) }}"
                                             class="btn btn-sm btn-primary">
                                             <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
                                                 class="w-[22px] cursor-pointer">
                                         </a>
                                         <span class="border-black border-l-[1px] h-[22px]"></span>
                                         {{-- Tombol Delete --}}
-                                        <form action="{{ route('alat-pinjam.destroy', $item->id) }}" method="POST"
+                                        <form action="{{ route('alat-pinjam-admin.destroy', $item->id) }}" method="POST"
                                             class="h-[22px]">
                                             @csrf
                                             @method('DELETE')
@@ -314,7 +314,7 @@
         <div class="border-b-2 border-[#B6B6B6] pb-8 mb-10">
             <h1 class="font-bold text-2xl mb-6">Data Pengembalian</h1>
             {{-- Barang Retur --}}
-            <form method="GET" action="{{ route('alats.show', $alat->id) }}" class="flex gap-x-2 mb-4 max-[600px]:flex-wrap max-[600px]:gap-y-2">
+            <form method="GET" action="{{ route('alatsAdmin.show', $alat->id) }}" class="flex gap-x-2 mb-4 max-[600px]:flex-wrap max-[600px]:gap-y-2">
                 <input type="text" data-flatpickr placeholder="Pilih tanggal awal" name="start_dikembalikan" value="{{ request('start_dikembalikan') }}"
                     class="border-2 border-[#9A9A9A] rounded-lg px-3 py-2">
                 <input type="text" data-flatpickr placeholder="Pilih tanggal akhir" name="end_dikembalikan" value="{{ request('end_dikembalikan') }}"
@@ -323,7 +323,7 @@
                     <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" />
                 </button>
                 {{-- Print Barang Retur --}}
-                <a href="{{ route('alats.printDikembalikan', ['id' => $alat->id, 'start_dikembalikan' => request('start_dikembalikan'), 'end_dikembalikan' => request('end_dikembalikan')]) }}"
+                <a href="{{ route('alatsAdmin.printDikembalikan', ['id' => $alat->id, 'start_dikembalikan' => request('start_dikembalikan'), 'end_dikembalikan' => request('end_dikembalikan')]) }}"
                     target="_blank"
                     class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer max-[600px]:hidden">
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
@@ -333,7 +333,7 @@
                         <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" />
                     </button>
                     {{-- Print Barang Retur --}}
-                    <a href="{{ route('alats.printDikembalikan', ['id' => $alat->id, 'start_dikembalikan' => request('start_dikembalikan'), 'end_dikembalikan' => request('end_dikembalikan')]) }}"
+                    <a href="{{ route('alatsAdmin.printDikembalikan', ['id' => $alat->id, 'start_dikembalikan' => request('start_dikembalikan'), 'end_dikembalikan' => request('end_dikembalikan')]) }}"
                         target="_blank"
                         class="border-[#9A9A9A] border-2 rounded-lg py-[10px] px-[10px] bg-white cursor-pointer">
                         <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[20px]">
@@ -376,14 +376,14 @@
                                 <td class="py-2">
                                     <div class="flex justify-center items-center gap-x-2 ">
                                         {{-- Tombol Edit --}}
-                                        <a href="{{ route('alat-kembalikan.edit', $item->id) }}"
+                                        <a href="{{ route('alat-kembalikan-admin.edit', $item->id) }}"
                                             class="btn btn-sm btn-primary">
                                             <img src="{{ asset('assets/more-circle.png') }}" alt="edit icon"
                                                 class="w-[22px] cursor-pointer">
                                         </a>
                                         <span class="border-black border-l-[1px] h-[22px]"></span>
                                         {{-- Tombol Delete --}}
-                                        <form action="{{ route('alat-kembalikan.destroy', $item->id) }}" method="POST"
+                                        <form action="{{ route('alat-kembalikan-admin.destroy', $item->id) }}" method="POST"
                                             class="h-[22px]">
                                             @csrf
                                             @method('DELETE')
