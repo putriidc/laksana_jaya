@@ -45,6 +45,6 @@ class PinjamanContent extends Model
     }
     public function kontrakPinjam()
     {
-        return $this->hasMany(KontrakPinjam::class, 'id_pinjaman_content', 'id');
+        return $this->hasOne(KontrakPinjam::class, 'id_pinjaman_content', 'id');
     }
 }
