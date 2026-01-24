@@ -197,7 +197,7 @@
                                             @php
                                                 $detail = $jurnal->detailEaf;
                                             @endphp
-                                            @if ($jurnal->tanggal == $today && $jurnal->detail_order > 2)
+                                            @if ($jurnal->tanggal == $today)
                                                 <button
                                                     onclick="editLaporanKeuangan({{ $jurnal->id }},
                                                 '{{ $jurnal->tanggal }}',
