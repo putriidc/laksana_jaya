@@ -311,6 +311,18 @@
                             >
                         </button>
                     </a>
+                    <a href="/owner/master-data" class="cursor-pointer">
+                        <button
+                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1300px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
+                        >
+                            <img
+                                src="{{ asset('assets/navbar/devices.png') }}"
+                                alt="devices icon"
+                                class="max-[1300px]:scale-200"
+                            />
+                            <span class="max-[1300px]:hidden">Master Data</span>
+                        </button>
+                    </a>
                     <a
                         href="#"
                         onclick="triggerCheckbox(event)"
@@ -765,6 +777,8 @@
                         item.children[0].src = "{{ asset('assets/navbar-owner/coin-click.png') }}";
                     } else if (index == 12) {
                         item.children[0].src = "{{ asset('assets/navbar-owner/document-click.png') }}";
+                    } else if (index == 13) {
+                        item.children[0].src = "{{ asset('assets/navbar/devices-click.png') }}";
                     }
             } else {
                 item.classList.remove(

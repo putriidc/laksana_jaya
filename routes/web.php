@@ -13,6 +13,7 @@ use App\Http\Controllers\AccEafSpvController;
 use App\Http\Controllers\SampinganController;
 use App\Http\Controllers\JurnalUmumController;
 use App\Http\Controllers\MasterDataController;
+use App\Http\Controllers\MasterDataOwnerController;
 use App\Http\Controllers\PerusahaanController;
 use App\Http\Controllers\AccEafOwnerController;
 use App\Http\Controllers\BarangMasukController;
@@ -25,6 +26,7 @@ use App\Http\Controllers\AlatDibeliController;
 use App\Http\Controllers\AlatDihapusController;
 use App\Http\Controllers\AlatDikembalikanController;
 use App\Http\Controllers\AlatDipinjamController;
+use App\Http\Controllers\AssetOwnerController;
 use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\KasbonContentController;
 use App\Http\Controllers\LaporanHarianController;
@@ -39,11 +41,14 @@ use App\Http\Controllers\BukuBesarController;
 use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\DashboardOwnerController;
 use App\Http\Controllers\HutangVendorController;
+use App\Http\Controllers\KaryawanOwnerController;
 use App\Http\Controllers\NeracaOwnerController;
 use App\Http\Controllers\NotaLangsungController;
 use App\Http\Controllers\ProgresOwnerController;
+use App\Http\Controllers\ProyekMdOwnerController;
 use App\Http\Controllers\SaldoAwalOwnerController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\SupplierOwnerController;
 use App\Http\Controllers\UserController;
 use App\Models\AlatDibeli;
 use App\Models\AlatDipinjam;
@@ -496,6 +501,13 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('role:Owner')->group(function () {
         // owner
+        // master data
+        Route::get('/owner/master-data', [MasterDataOwnerController::class, 'index'])->name('master-data-owner.index');
+        Route::resource('akunOwner', AssetOwnerController::class);
+        Route::resource('karyawanOwner', KaryawanOwnerController::class);
+        Route::resource('proyekMdOwner', ProyekMdOwnerController::class);
+        Route::resource('supplierOwner', SupplierOwnerController::class);
+        // master data
         // dashboard
         Route::get('/owner-dashboard', [DashboardOwnerController::class, 'index'])->name('owner-dashboard', DashboardOwnerController::class);
         Route::resource('labarugi', LabaRugiController::class);
