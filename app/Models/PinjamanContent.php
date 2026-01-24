@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -40,6 +41,10 @@ class PinjamanContent extends Model
     public function kas()
     {
         return $this->belongsTo(Asset::class, 'kode_kas', 'kode_akun')
-                    ->whereNull('deleted_at');
+            ->whereNull('deleted_at');
+    }
+    public function kontrakPinjam()
+    {
+        return $this->hasMany(KontrakPinjam::class, 'id_pinjaman_content', 'id');
     }
 }

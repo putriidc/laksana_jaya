@@ -111,6 +111,8 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('pinjamanKaryawans', PinjamanKaryawanController::class);
         Route::get('pinjamanKaryawan/print', [PinjamanKaryawanController::class, 'print'])->name('pinjamanKaryawan.print');
+        Route::get('pinjamanContents/{id}/print', [PinjamanContentController::class, 'printPinjam'])
+            ->name('pinjamanContents.printPinjam');
         Route::resource('pinjamanContents', PinjamanContentController::class);
         Route::get('pinjamanContents/pinjam/{id}', [PinjamanContentController::class, 'pinjam'])
             ->name('pinjamanContents.pinjam');
@@ -347,6 +349,8 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('pinjamanKaryawans', PinjamanKaryawanController::class);
         Route::get('pinjamanKaryawan/print', [PinjamanKaryawanController::class, 'print'])->name('pinjamanKaryawan.print');
+        Route::get('pinjamanContents/{id}/print', [PinjamanContentController::class, 'printPinjam'])
+            ->name('pinjamanContents.printPinjam');
         Route::resource('pinjamanContents', PinjamanContentController::class);
         Route::get('pinjamanContents/pinjam/{id}', [PinjamanContentController::class, 'pinjam'])
             ->name('pinjamanContents.pinjam');

@@ -7,6 +7,7 @@ use App\Models\Asset;
 use App\Models\JurnalUmum;
 use Illuminate\Http\Request;
 use App\Models\KasbonContent;
+use App\Models\KontrakPinjam;
 use App\Models\PinjamanContent;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\PinjamanKaryawan;
@@ -50,6 +51,32 @@ class PinjamanContentController extends Controller
 
         return $pdf->stream('detail-pinjaman-karyawan.pdf');
     }
+    public function printPinjam($id)
+    {
+
+        $pinjamanContents = PinjamanContent::active()->findOrFail($id);
+
+        // Ambil semua transaksi pinjaman dan kasbon berdasarkan kode_karyawan
+        $pinjaman = PinjamanKaryawan::with('karyawan')->where('kode_karyawan', $pinjamanContents->kode_karyawan)
+            ->active()->first();
+
+        $admin        = Auth::user()->name ?? 'Administrator';
+        $role         = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak     = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('admin.pinjaman-karyawan.detail.printPinjam', compact(
+            'pinjaman',
+            'pinjamanContents',
+            'kasbonContents',
+            'admin',
+            'role',
+            'tanggalCetak',
+            'jamCetak'
+        ))->setPaper('A4', 'portrait');
+
+        return $pdf->stream('detail-kontrak-pinjaman-'. $pinjaman->karyawan->nama . '.pdf');
+    }
 
     public function create()
     {
@@ -59,7 +86,7 @@ class PinjamanContentController extends Controller
     {
         $today = Carbon::now('Asia/Jakarta')->toDateString();
         $pinjaman = PinjamanKaryawan::with('karyawan')->active()->findOrFail($id);
-         if (Auth::user()->role === 'Admin 1') {
+        if (Auth::user()->role === 'Admin 1') {
             $allowedAccounts = ['Kas Besar', 'Kas Bank BCA', 'Kas Flip', 'OVO'];
 
             $bank = Asset::Active()
@@ -79,7 +106,7 @@ class PinjamanContentController extends Controller
     {
         $today = Carbon::now('Asia/Jakarta')->toDateString();
         $pinjaman = PinjamanKaryawan::with('karyawan')->active()->findOrFail($id);
-         if (Auth::user()->role === 'Admin 1') {
+        if (Auth::user()->role === 'Admin 1') {
             $allowedAccounts = ['Kas Besar', 'Kas Bank BCA', 'Kas Flip', 'OVO'];
 
             $bank = Asset::Active()
@@ -102,6 +129,8 @@ class PinjamanContentController extends Controller
             'kode_karyawan' => 'required',
             'tanggal'       => 'required|date',
             'kontrak'       => 'nullable|string',
+            'jangka_waktu'       => 'nullable|string',
+            'angsuran'       => 'nullable',
             'bayar'         => 'required|numeric|min:0',
             'kode_kas'       => 'required',
         ]);
@@ -118,7 +147,7 @@ class PinjamanContentController extends Controller
         // ]);
 
         // Simpan PinjamanContent
-        PinjamanContent::create([
+        $pinjam = PinjamanContent::create([
             'kode_karyawan' => $pinjamanKaryawan->kode_karyawan,
             'kode_kas'     => $request->kode_kas,
             'kontrak'       => $request->kontrak,
@@ -127,6 +156,13 @@ class PinjamanContentController extends Controller
             'bayar'         => $request->bayar,
             'sisa'          => 0,
             'menunggu'      => true,
+            'created_by'    => Auth::id(),
+        ]);
+
+        KontrakPinjam::create([
+            'id_pinjaman_content' => $pinjam->id,
+            'jangka_waktu'     => $request->jangka_waktu,
+            'angsuran'     => $request->angsuran,
             'created_by'    => Auth::id(),
         ]);
 

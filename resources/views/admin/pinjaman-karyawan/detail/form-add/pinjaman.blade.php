@@ -21,6 +21,14 @@
                     </select>
             </div>
             <div class="flex items-center">
+                <label for="" class="w-[180px] font-medium">Jangka Waktu (Bulan)</label>
+                <input type="text" name="jangka_waktu" id="" class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2" >
+            </div>
+            <div class="flex items-center">
+                <label for="" class="w-[180px] font-medium">Angsuran Per Bulan</label>
+                <input type="text" name="angsuran" id="" class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2" >
+            </div>
+            <div class="flex items-center">
                 <label for="" class="w-[180px] font-medium">Kontrak</label>
                 <input type="text" name="kontrak" id="" class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2" >
             </div>

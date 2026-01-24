@@ -86,16 +86,21 @@
                                 <td class="flex justify-center items-center gap-x-2 py-2">
                                     @if ($item->tanggal == $today)
                                         @if ($item->jenis === 'pinjam')
-                                            {{ 'No ' }}
+                                            <a target="_blank" href="{{ route('pinjamanContents.printPinjam', $item->id) }}"
+                                                class="btn btn-sm btn-primary">
+                                                <img src="{{ asset('assets/printer-oren.png') }}" alt="printer icon"
+                                                    class="w-[22px] cursor-pointer">
+                                            </a>
                                         @else
                                             <a href="{{ route('pinjamanContents.editBayar', $item->id) }}" class="">
                                                 <img src="{{ asset('assets/more-circle.png') }}" alt="more circle icon"
                                                     class="w-[20px] cursor-pointer">
                                             </a>
+                                            <span class="border-black border-l-[1px] h-[22px]"></span>
                                         @endif
-                                        <span class="border-black border-l-[1px] h-[22px]"></span>
+
                                         @if ($item->jenis === 'pinjam')
-                                            {{ 'Edit' }}
+                                            {{ '' }}
                                         @else
                                             <form action="{{ route('pinjamanContents.destroyBayar', $item->id) }}"
                                                 method="POST" class="h-[22px]">
