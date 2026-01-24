@@ -185,7 +185,7 @@ class NotaLangsungController extends Controller
     {
         $detail = NotaLangsung::findOrFail($id);
 
-        $detail->update(['deleted_at' => Carbon::now('Asia/Jakarta')]);
+        $detail->delete();
 
         return redirect()->route('notaLangsung.index')
             ->with('success', 'Nota Langsung berhasil dihapus');
