@@ -68,7 +68,6 @@ class PinjamanContentController extends Controller
         $pdf = Pdf::loadView('admin.pinjaman-karyawan.detail.printPinjam', compact(
             'pinjaman',
             'pinjamanContents',
-            'kasbonContents',
             'admin',
             'role',
             'tanggalCetak',
