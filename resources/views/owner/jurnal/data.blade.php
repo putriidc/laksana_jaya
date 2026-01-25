@@ -216,11 +216,6 @@
                     </tbody>
                 </table>
             </div>
-            <div class="mt-2">
-                <button ype="button" onclick="bulkDelete()" id="btn-bulk-delete"
-                    class="border border-[#FF4B45] rounded-lg p-2 text-[#FF4B45] cursor-pointer">Hapus <span
-                        id="count-selected">0</span> Data</button>
-            </div>
         </section>
         <script>
             function editLaporanKeuangan(id, tanggal, keterangan, kode_perkiraan, nama_perkiraan, debit, kredit, updateUrl) {

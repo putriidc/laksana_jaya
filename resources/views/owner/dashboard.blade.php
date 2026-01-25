@@ -39,7 +39,7 @@
 
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
             <h3 class="font-bold text-gray-800 mb-6">Trend Saldo Kas (7 Hari Terakhir)</h3>
-            <div class="relative h-[250px]">
+            <div class="relative h-[350px]">
                 <canvas id="chartTrendKas"></canvas>
             </div>
         </div>
