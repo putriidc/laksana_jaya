@@ -99,83 +99,6 @@
                             <span class="max-[1200px]:hidden">Dashboard</span>
                         </button>
                     </a>
-                    <a
-                        href="{{ route('accowner.index') }}"
-                        class="cursor-pointer"
-                    >
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            {{-- Bagian yang di responsive --}}
-                            <img
-                                src="{{
-                                    asset('assets/navbar/devices.png')
-                                }}"
-                                alt="home icon"
-                                class="max-[1200px]:scale-200"
-                            />
-                            <span class="max-[1200px]:hidden"
-                                >Pinjaman Karyawan</span
-                            >
-                        </button>
-                    </a>
-                    <a
-                        href="{{ route('accowner.indexTukang') }}"
-                        class="cursor-pointer"
-                    >
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            {{-- Bagian yang di responsive --}}
-                            <img
-                                src="{{
-                                    asset('assets/navbar/devices.png')
-                                }}"
-                                alt="home icon"
-                                class="max-[1200px]:scale-200"
-                            />
-                            <span class="max-[1200px]:hidden">Kasbon Tukang</span>
-                        </button>
-                    </a>
-                    <a href="{{ route('labarugi.index') }}" class="cursor-pointer">
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{ asset('assets/navbar-owner/document.png') }}"
-                                alt="devices icon"
-                                class="max-[1200px]:scale-200"
-                            />
-                            <span class="max-[1200px]:hidden">Laba Rugi</span>
-                        </button>
-                    </a>
-
-                    <a href="/bukubesar_owner/1231" class="cursor-pointer">
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{ asset('assets/navbar-owner/book2.png') }}"
-                                alt="devices icon"
-                                class="max-[1200px]:scale-200"
-                            />
-                            <span class="max-[1200px]:hidden">Buku Besar</span>
-                        </button>
-                    </a>
-
-                    <a href="{{ route('neracaOwner.index') }}" class="cursor-pointer">
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{ asset('assets/navbar-owner/diagram.png') }}"
-                                alt="devices icon"
-                                class="max-[1200px]:scale-200"
-                            />
-                            <span class="max-[1200px]:hidden">Neraca</span>
-                        </button>
-                    </a>
-
                     {{--
                     <a href="/progress" class="cursor-pointer">
                         <button
@@ -189,187 +112,390 @@
                         </button>
                     </a>
                     --}}
-
                     <a
-                        href="{{ route('proyekOwner.indexResume') }}"
+                        href="#"
+                        onclick="triggerCheckbox6(event)"
                         class="cursor-pointer"
                     >
                         <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
+                            class="bg-white text-[#353132] flex items-center gap-x-5 max-[1200px]:w-[50px] w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
                         >
                             <img
-                                src="{{ asset('assets/navbar-owner/presention-chart.png') }}"
+                                src="{{ asset('assets/navbar-owner/buildings.png') }}"
                                 alt="devices icon"
                                 class="max-[1200px]:scale-200"
                             />
-                            <span class="max-[1200px]:hidden"
-                                >Resume Proyek</span
+                            <span class="max-[1200px]:hidden">Keuangan</span>
+                            <img
+                                src="{{ asset('assets/arrow-down.png') }}"
+                                alt=""
+                                class="ml-auto transition-all duration-300 ease-in-out max-[1200px]:hidden"
+                                id="arrowDataProyek6"
+                            />
+                        </button>
+                    </a>
+                    <input
+                        type="checkbox"
+                        name=""
+                        id="triggerMe6"
+                        class="hidden"
+                    />
+                    <div
+                        class="hidden flex-col items-center gap-y-3"
+                        id="dropdownDataProyek6"
+                    >
+                        <a
+                            href="{{ route('jurnalOwner.index') }}"
+                            class="cursor-pointer"
+                        >
+                            <button
+                                class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
                             >
-                        </button>
-                    </a>
-
-                    <a
-                        href="{{ route('proyekOwner.indexManage') }}"
-                        class="cursor-pointer"
-                    >
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{ asset('assets/navbar-owner/menu-board.png') }}"
-                                alt="devices icon"
-                                class="max-[1200px]:scale-200"
-                            />
-                            <span class="max-[1200px]:hidden"
-                                >Data Management</span
-                            >
-                        </button>
-                    </a>
-
-                    <a
-                        href="{{ route('jurnalOwner.index') }}"
-                        class="cursor-pointer"
-                    >
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{ asset('assets/navbar-owner/book2.png') }}"
-                                alt="devices icon"
-                                class="max-[1200px]:scale-200"
-                            />
-                            <span class="max-[1200px]:hidden">Jurnal</span>
-                        </button>
-                    </a>
-
-                    <a
-                        href="{{ route('laporanHarianOwner.index') }}"
-                        class="cursor-pointer"
-                    >
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{ asset('assets/navbar-owner/book2.png') }}"
-                                alt="devices icon"
-                                class="max-[1200px]:scale-200"
-                            />
-                            <span class="max-[1200px]:hidden"
-                                >Laporan Harian</span
-                            >
-                        </button>
-                    </a>
-
-                    <a
-                        href="{{ route('AccEafOwner.index') }}"
-                        class="cursor-pointer"
-                    >
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{ asset('assets/navbar-owner/book2.png') }}"
-                                alt="devices icon"
-                                class="max-[1200px]:scale-200"
-                            />
-                            <span class="max-[1200px]:hidden"
-                                >Pengajuan EAF</span
-                            >
-                        </button>
-                    </a>
-                    <a
-                        href="{{ route('saldo.index') }}"
-                        class="cursor-pointer"
-                    >
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{ asset('assets/navbar-owner/coin.png') }}"
-                                alt="devices icon"
-                                class="max-[1200px]:scale-200"
-                            />
-                            <span class="max-[1200px]:hidden"
-                                >Saldo Awal</span
-                            >
-                        </button>
-                    </a>
-                    <a
-                        href="{{ route('users.index') }}"
-                        class="cursor-pointer"
-                    >
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{ asset('assets/navbar-owner/document.png') }}"
-                                alt="devices icon"
-                                class="max-[1200px]:scale-200"
-                            />
-                            <span class="max-[1200px]:hidden"
-                                >User Management</span
-                            >
-                        </button>
-                    </a>
-                    <a href="/owner/master-data" class="cursor-pointer">
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
-                        >
-                            <img
-                                src="{{ asset('assets/navbar/devices.png') }}"
-                                alt="devices icon"
-                                class="max-[1200px]:scale-200"
-                            />
-                            <span class="max-[1200px]:hidden">Master Data</span>
-                        </button>
-                    </a>
-                    <a href="{{ route('barangsOwner.index') }}" class="cursor-pointer">
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"> {{-- Bagian yang di responsive --}}
                                 <img
-                                    src="{{
-                                        asset(
-                                            'assets/navbar-kepala-gudang/3d-cube-scan.png'
-                                        )
-                                    }}"
-                                    alt="cube scan icon"
+                                    src="{{ asset('assets/navbar-owner/book2.png') }}"
+                                    alt="devices icon"
                                     class="max-[1200px]:scale-200"
                                 />
-                                <span class="max-[1200px]:hidden">Data Barang</span>
-                        </button>
-                    </a>
-                    <a href="{{ route('alatsOwner.index') }}" class="cursor-pointer">
-                        <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"> {{-- Bagian yang di responsive --}}
+                                <span class="max-[1200px]:hidden">Jurnal</span>
+                            </button>
+                        </a>
+                        <a
+                            href="{{ route('accowner.index') }}"
+                            class="cursor-pointer"
+                        >
+                            <button
+                                class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
+                            >
+                                {{-- Bagian yang di responsive --}}
                                 <img
                                     src="{{
-                                        asset(
-                                            'assets/navbar-kepala-gudang/3d-cube-scan.png'
-                                        )
+                                        asset('assets/navbar/devices.png')
                                     }}"
-                                    alt="cube scan icon"
+                                    alt="home icon"
                                     class="max-[1200px]:scale-200"
                                 />
-                                <span class="max-[1200px]:hidden">Data Alat</span>
-                        </button>
-                    </a>
+                                <span class="max-[1200px]:hidden"
+                                    >Pinjaman Karyawan</span
+                                >
+                            </button>
+                        </a>
+                        <a
+                            href="{{ route('accowner.indexTukang') }}"
+                            class="cursor-pointer"
+                        >
+                            <button
+                                class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
+                            >
+                                {{-- Bagian yang di responsive --}}
+                                <img
+                                    src="{{
+                                        asset('assets/navbar/devices.png')
+                                    }}"
+                                    alt="home icon"
+                                    class="max-[1200px]:scale-200"
+                                />
+                                <span class="max-[1200px]:hidden">Kasbon Tukang</span>
+                            </button>
+                        </a>
+                        <a
+                            href="{{ route('saldo.index') }}"
+                            class="cursor-pointer"
+                        >
+                            <button
+                                class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
+                            >
+                                <img
+                                    src="{{ asset('assets/navbar-owner/coin.png') }}"
+                                    alt="devices icon"
+                                    class="max-[1200px]:scale-200"
+                                />
+                                <span class="max-[1200px]:hidden"
+                                    >Saldo Awal</span
+                                >
+                            </button>
+                        </a>
+                        <a
+                            href="{{ route('AccEafOwner.index') }}"
+                            class="cursor-pointer"
+                        >
+                            <button
+                                class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
+                            >
+                                <img
+                                    src="{{ asset('assets/navbar-owner/book2.png') }}"
+                                    alt="devices icon"
+                                    class="max-[1200px]:scale-200"
+                                />
+                                <span class="max-[1200px]:hidden"
+                                    >Pengajuan EAF</span
+                                >
+                            </button>
+                        </a>
+                    </div>
                     <a
-                        href="{{ route('sampingansOwner.index') }}"
+                        href="#"
+                        onclick="triggerCheckbox5(event)"
                         class="cursor-pointer"
                     >
                         <button
-                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
+                            class="bg-white text-[#353132] flex items-center gap-x-5 max-[1200px]:w-[50px] w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
                         >
                             <img
-                                src="{{
-                                    asset('assets/navbar/home-hashtag.png')
-                                }}"
-                                alt="home hashtag icon"
+                                src="{{ asset('assets/navbar-owner/buildings.png') }}"
+                                alt="devices icon"
                                 class="max-[1200px]:scale-200"
                             />
-                            <span class="max-[1200px]:hidden">Freelance</span>
+                            <span class="max-[1200px]:hidden">Manajemen Proyek</span>
+                            <img
+                                src="{{ asset('assets/arrow-down.png') }}"
+                                alt=""
+                                class="ml-auto transition-all duration-300 ease-in-out max-[1200px]:hidden"
+                                id="arrowDataProyek5"
+                            />
                         </button>
                     </a>
+                    <input
+                        type="checkbox"
+                        name=""
+                        id="triggerMe5"
+                        class="hidden"
+                    />
+                    <div
+                        class="hidden flex-col items-center gap-y-3"
+                        id="dropdownDataProyek5"
+                    >
+                        <a
+                            href="{{ route('laporanHarianOwner.index') }}"
+                            class="cursor-pointer"
+                        >
+                            <button
+                                class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
+                            >
+                                <img
+                                    src="{{ asset('assets/navbar-owner/book2.png') }}"
+                                    alt="devices icon"
+                                    class="max-[1200px]:scale-200"
+                                />
+                                <span class="max-[1200px]:hidden"
+                                    >Laporan Harian</span
+                                >
+                            </button>
+                        </a>
+                        <a
+                            href="{{ route('sampingansOwner.index') }}"
+                            class="cursor-pointer"
+                        >
+                            <button
+                                class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
+                            >
+                                <img
+                                    src="{{
+                                        asset('assets/navbar/home-hashtag.png')
+                                    }}"
+                                    alt="home hashtag icon"
+                                    class="max-[1200px]:scale-200"
+                                />
+                                <span class="max-[1200px]:hidden">Freelance</span>
+                            </button>
+                        </a>
+                        <a
+                            href="{{ route('proyekOwner.indexManage') }}"
+                            class="cursor-pointer"
+                        >
+                            <button
+                                class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
+                            >
+                                <img
+                                    src="{{ asset('assets/navbar-owner/menu-board.png') }}"
+                                    alt="devices icon"
+                                    class="max-[1200px]:scale-200"
+                                />
+                                <span class="max-[1200px]:hidden"
+                                    >Data Management</span
+                                >
+                            </button>
+                        </a>
+                    </div>
+                    <a
+                        href="#"
+                        onclick="triggerCheckbox4(event)"
+                        class="cursor-pointer"
+                    >
+                        <button
+                            class="bg-white text-[#353132] flex items-center gap-x-5 max-[1200px]:w-[50px] w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
+                        >
+                            <img
+                                src="{{ asset('assets/navbar-owner/buildings.png') }}"
+                                alt="devices icon"
+                                class="max-[1200px]:scale-200"
+                            />
+                            <span class="max-[1200px]:hidden">Laporan Dan Analisis</span>
+                            <img
+                                src="{{ asset('assets/arrow-down.png') }}"
+                                alt=""
+                                class="ml-auto transition-all duration-300 ease-in-out max-[1200px]:hidden"
+                                id="arrowDataProyek4"
+                            />
+                        </button>
+                    </a>
+                    <input
+                        type="checkbox"
+                        name=""
+                        id="triggerMe4"
+                        class="hidden"
+                    />
+                    <div
+                        class="hidden flex-col items-center gap-y-3"
+                        id="dropdownDataProyek4"
+                    >
+                        <a href="{{ route('labarugi.index') }}" class="cursor-pointer">
+                            <button
+                                class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
+                            >
+                                <img
+                                    src="{{ asset('assets/navbar-owner/document.png') }}"
+                                    alt="devices icon"
+                                    class="max-[1200px]:scale-200"
+                                />
+                                <span class="max-[1200px]:hidden">Laba Rugi</span>
+                            </button>
+                        </a>
+                        <a href="/bukubesar_owner/1231" class="cursor-pointer">
+                            <button
+                                class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
+                            >
+                                <img
+                                    src="{{ asset('assets/navbar-owner/book2.png') }}"
+                                    alt="devices icon"
+                                    class="max-[1200px]:scale-200"
+                                />
+                                <span class="max-[1200px]:hidden">Buku Besar</span>
+                            </button>
+                        </a>
+
+                        <a href="{{ route('neracaOwner.index') }}" class="cursor-pointer">
+                            <button
+                                class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
+                            >
+                                <img
+                                    src="{{ asset('assets/navbar-owner/diagram.png') }}"
+                                    alt="devices icon"
+                                    class="max-[1200px]:scale-200"
+                                />
+                                <span class="max-[1200px]:hidden">Neraca</span>
+                            </button>
+                        </a>
+
+                        <a
+                            href="{{ route('proyekOwner.indexResume') }}"
+                            class="cursor-pointer"
+                        >
+                            <button
+                                class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
+                            >
+                                <img
+                                    src="{{ asset('assets/navbar-owner/presention-chart.png') }}"
+                                    alt="devices icon"
+                                    class="max-[1200px]:scale-200"
+                                />
+                                <span class="max-[1200px]:hidden"
+                                    >Resume Proyek</span
+                                >
+                            </button>
+                        </a>
+                    </div>
+                    <a
+                        href="#"
+                        onclick="triggerCheckbox3(event)"
+                        class="cursor-pointer"
+                    >
+                        <button
+                            class="bg-white text-[#353132] flex items-center gap-x-5 max-[1200px]:w-[50px] w-[250px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
+                        >
+                            <img
+                                src="{{ asset('assets/navbar-owner/buildings.png') }}"
+                                alt="devices icon"
+                                class="max-[1200px]:scale-200"
+                            />
+                            <span class="max-[1200px]:hidden">Master Data & Sistem</span>
+                            <img
+                                src="{{ asset('assets/arrow-down.png') }}"
+                                alt=""
+                                class="ml-auto transition-all duration-300 ease-in-out max-[1200px]:hidden"
+                                id="arrowDataProyek3"
+                            />
+                        </button>
+                    </a>
+                    <input
+                        type="checkbox"
+                        name=""
+                        id="triggerMe3"
+                        class="hidden"
+                    />
+                    <div
+                        class="hidden flex-col items-center gap-y-3"
+                        id="dropdownDataProyek3"
+                    >
+                        <a href="/owner/master-data" class="cursor-pointer">
+                            <button
+                                class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
+                            >
+                                <img
+                                    src="{{ asset('assets/navbar/devices.png') }}"
+                                    alt="devices icon"
+                                    class="max-[1200px]:scale-200"
+                                />
+                                <span class="max-[1200px]:hidden">Master Data</span>
+                            </button>
+                        </a>
+                        <a href="{{ route('barangsOwner.index') }}" class="cursor-pointer">
+                            <button
+                                class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"> {{-- Bagian yang di responsive --}}
+                                    <img
+                                        src="{{
+                                            asset(
+                                                'assets/navbar-kepala-gudang/3d-cube-scan.png'
+                                            )
+                                        }}"
+                                        alt="cube scan icon"
+                                        class="max-[1200px]:scale-200"
+                                    />
+                                    <span class="max-[1200px]:hidden">Data Barang</span>
+                            </button>
+                        </a>
+                        <a href="{{ route('alatsOwner.index') }}" class="cursor-pointer">
+                            <button
+                                class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"> {{-- Bagian yang di responsive --}}
+                                    <img
+                                        src="{{
+                                            asset(
+                                                'assets/navbar-kepala-gudang/3d-cube-scan.png'
+                                            )
+                                        }}"
+                                        alt="cube scan icon"
+                                        class="max-[1200px]:scale-200"
+                                    />
+                                    <span class="max-[1200px]:hidden">Data Alat</span>
+                            </button>
+                        </a>
+                        <a
+                            href="{{ route('users.index') }}"
+                            class="cursor-pointer"
+                        >
+                            <button
+                                class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1200px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
+                            >
+                                <img
+                                    src="{{ asset('assets/navbar-owner/document.png') }}"
+                                    alt="devices icon"
+                                    class="max-[1200px]:scale-200"
+                                />
+                                <span class="max-[1200px]:hidden"
+                                    >User Management</span
+                                >
+                            </button>
+                        </a>
+                    </div>
                     <a
                         href="#"
                         onclick="triggerCheckbox(event)"
@@ -387,7 +513,7 @@
                             <img
                                 src="{{ asset('assets/arrow-down.png') }}"
                                 alt=""
-                                class="ml-8 transition-all duration-300 ease-in-out max-[1200px]:hidden"
+                                class="ml-auto transition-all duration-300 ease-in-out max-[1200px]:hidden"
                                 id="arrowDataProyek"
                             />
                         </button>
@@ -472,7 +598,7 @@
                             <img
                                 src="{{ asset('assets/arrow-down.png') }}"
                                 alt=""
-                                class="ml-8 transition-all duration-300 ease-in-out max-[1200px]:hidden"
+                                class="ml-auto transition-all duration-300 ease-in-out max-[1200px]:hidden"
                                 id="arrowDataProyek2"
                             />
                         </button>
@@ -627,10 +753,30 @@
             const dropdownDataProyek2 = document.getElementById(
                 "dropdownDataProyek2"
             );
+            const dropdownDataProyek3 = document.getElementById(
+                "dropdownDataProyek3"
+            );
+            const dropdownDataProyek4 = document.getElementById(
+                "dropdownDataProyek4"
+            );
+            const dropdownDataProyek5 = document.getElementById(
+                "dropdownDataProyek5"
+            );
+            const dropdownDataProyek6 = document.getElementById(
+                "dropdownDataProyek6"
+            );
             const childDropdown = dropdownDataProyek.querySelectorAll("a, button");
             const childDropdown2 = dropdownDataProyek2.querySelectorAll("a, button");
+            const childDropdown3 = dropdownDataProyek3.querySelectorAll("a, button");
+            const childDropdown4 = dropdownDataProyek4.querySelectorAll("a, button");
+            const childDropdown5 = dropdownDataProyek5.querySelectorAll("a, button");
+            const childDropdown6 = dropdownDataProyek6.querySelectorAll("a, button");
             const arrow = document.getElementById("arrowDataProyek");
             const arrow2 = document.getElementById("arrowDataProyek2");
+            const arrow3 = document.getElementById("arrowDataProyek3");
+            const arrow4 = document.getElementById("arrowDataProyek4");
+            const arrow5 = document.getElementById("arrowDataProyek5");
+            const arrow6 = document.getElementById("arrowDataProyek6");
             buttonView.addEventListener("click", () => {
                 buttonView.classList.toggle("left-10");
                 buttonView.classList.toggle("left-[267px]");
@@ -641,6 +787,14 @@
                 logoFull.classList.toggle("max-[1200px]:hidden");
                 justLogo.classList.toggle("max-[1200px]:hidden");
                 sideNavbarContent.classList.toggle("max-[1200px]:items-center");
+                arrow6.classList.toggle("max-[1200px]:hidden");
+                arrow6.classList.toggle("max-[1200px]:scale-200");
+                arrow5.classList.toggle("max-[1200px]:hidden");
+                arrow5.classList.toggle("max-[1200px]:scale-200");
+                arrow4.classList.toggle("max-[1200px]:hidden");
+                arrow4.classList.toggle("max-[1200px]:scale-200");
+                arrow3.classList.toggle("max-[1200px]:hidden");
+                arrow3.classList.toggle("max-[1200px]:scale-200");
                 arrow2.classList.toggle("max-[1200px]:hidden");
                 arrow2.classList.toggle("max-[1200px]:scale-200");
                 arrow.classList.toggle("max-[1200px]:hidden");
@@ -657,6 +811,18 @@
                 spanChild.forEach((item, index) => {
                     item.classList.toggle("max-[1200px]:hidden");
                 });
+                childDropdown6.forEach((item, index) => {
+                    item.classList.toggle("max-[1200px]:ml-[-67px]");
+                });
+                childDropdown5.forEach((item, index) => {
+                    item.classList.toggle("max-[1200px]:ml-[-67px]");
+                });
+                childDropdown4.forEach((item, index) => {
+                    item.classList.toggle("max-[1200px]:ml-[-67px]");
+                });
+                childDropdown3.forEach((item, index) => {
+                    item.classList.toggle("max-[1200px]:ml-[-67px]");
+                });
                 childDropdown2.forEach((item, index) => {
                     item.classList.toggle("max-[1200px]:ml-[-67px]");
                 });
@@ -672,6 +838,22 @@
                 logoFull.classList.toggle("max-[1200px]:hidden");
                 justLogo.classList.toggle("max-[1200px]:hidden");
                 sideNavbarContent.classList.toggle("max-[1200px]:items-center");
+                arrow6.classList.toggle("max-[1200px]:hidden");
+                arrow6.classList.toggle("max-[1200px]:scale-200");
+                arrow6.classList.toggle("max-[1200px]:ml-8");
+                arrow6.classList.toggle("max-[550px]:ml-auto");
+                arrow5.classList.toggle("max-[1200px]:hidden");
+                arrow5.classList.toggle("max-[1200px]:scale-200");
+                arrow5.classList.toggle("max-[1200px]:ml-8");
+                arrow5.classList.toggle("max-[550px]:ml-auto");
+                arrow4.classList.toggle("max-[1200px]:hidden");
+                arrow4.classList.toggle("max-[1200px]:scale-200");
+                arrow4.classList.toggle("max-[1200px]:ml-8");
+                arrow4.classList.toggle("max-[550px]:ml-auto");
+                arrow3.classList.toggle("max-[1200px]:hidden");
+                arrow3.classList.toggle("max-[1200px]:scale-200");
+                arrow3.classList.toggle("max-[1200px]:ml-8");
+                arrow3.classList.toggle("max-[550px]:ml-auto");
                 arrow2.classList.toggle("max-[1200px]:hidden");
                 arrow2.classList.toggle("max-[1200px]:scale-200");
                 arrow2.classList.toggle("max-[1200px]:ml-8");
@@ -695,6 +877,22 @@
                     item.classList.toggle("max-[550px]:ml-0");
                 });
                 childDropdown2.forEach((item, index) => {
+                    item.classList.toggle("max-[1200px]:ml-[-67px]");
+                    item.classList.toggle("max-[550px]:ml-0");
+                });
+                childDropdown3.forEach((item, index) => {
+                    item.classList.toggle("max-[1200px]:ml-[-67px]");
+                    item.classList.toggle("max-[550px]:ml-0");
+                });
+                childDropdown4.forEach((item, index) => {
+                    item.classList.toggle("max-[1200px]:ml-[-67px]");
+                    item.classList.toggle("max-[550px]:ml-0");
+                });
+                childDropdown5.forEach((item, index) => {
+                    item.classList.toggle("max-[1200px]:ml-[-67px]");
+                    item.classList.toggle("max-[550px]:ml-0");
+                });
+                childDropdown6.forEach((item, index) => {
                     item.classList.toggle("max-[1200px]:ml-[-67px]");
                     item.classList.toggle("max-[550px]:ml-0");
                 });
@@ -707,6 +905,22 @@
                 logoFull.classList.toggle("max-[1200px]:hidden");
                 justLogo.classList.toggle("max-[1200px]:hidden");
                 sideNavbarContent.classList.toggle("max-[1200px]:items-center");
+                arrow6.classList.toggle("max-[1200px]:hidden");
+                arrow6.classList.toggle("max-[1200px]:scale-200");
+                arrow6.classList.toggle("max-[1200px]:ml-8");
+                arrow6.classList.toggle("max-[550px]:ml-auto");
+                arrow5.classList.toggle("max-[1200px]:hidden");
+                arrow5.classList.toggle("max-[1200px]:scale-200");
+                arrow5.classList.toggle("max-[1200px]:ml-8");
+                arrow5.classList.toggle("max-[550px]:ml-auto");
+                arrow4.classList.toggle("max-[1200px]:hidden");
+                arrow4.classList.toggle("max-[1200px]:scale-200");
+                arrow4.classList.toggle("max-[1200px]:ml-8");
+                arrow4.classList.toggle("max-[550px]:ml-auto");
+                arrow3.classList.toggle("max-[1200px]:hidden");
+                arrow3.classList.toggle("max-[1200px]:scale-200");
+                arrow3.classList.toggle("max-[1200px]:ml-8");
+                arrow3.classList.toggle("max-[550px]:ml-auto");
                 arrow2.classList.toggle("max-[1200px]:hidden");
                 arrow2.classList.toggle("max-[1200px]:scale-200");
                 arrow2.classList.toggle("max-[1200px]:ml-8");
@@ -730,6 +944,22 @@
                     item.classList.toggle("max-[550px]:ml-0");
                 });
                 childDropdown2.forEach((item, index) => {
+                    item.classList.toggle("max-[1200px]:ml-[-67px]");
+                    item.classList.toggle("max-[550px]:ml-0");
+                });
+                childDropdown3.forEach((item, index) => {
+                    item.classList.toggle("max-[1200px]:ml-[-67px]");
+                    item.classList.toggle("max-[550px]:ml-0");
+                });
+                childDropdown4.forEach((item, index) => {
+                    item.classList.toggle("max-[1200px]:ml-[-67px]");
+                    item.classList.toggle("max-[550px]:ml-0");
+                });
+                childDropdown5.forEach((item, index) => {
+                    item.classList.toggle("max-[1200px]:ml-[-67px]");
+                    item.classList.toggle("max-[550px]:ml-0");
+                });
+                childDropdown6.forEach((item, index) => {
                     item.classList.toggle("max-[1200px]:ml-[-67px]");
                     item.classList.toggle("max-[550px]:ml-0");
                 });
@@ -783,6 +1013,82 @@
                 dropdownDataProyek2.classList.add('hidden');
                 dropdownDataProyek2.classList.remove('flex');
                 arrow2.classList.remove('-rotate-90');
+            }
+        }
+
+        function triggerCheckbox3(event) {
+            event.preventDefault(); // Mencegah scroll ke atas karena href="#"
+
+            const checkbox = document.getElementById("triggerMe3");
+            console.log('test_2')
+
+            // Cara 1: Meniru klik manusia (akan memicu event listener 'change' jika ada)
+            checkbox.click();
+            if (checkbox.checked) {
+                dropdownDataProyek3.classList.remove('hidden');
+                dropdownDataProyek3.classList.add('flex');
+                arrow3.classList.add('-rotate-90');
+            } else {
+                dropdownDataProyek3.classList.add('hidden');
+                dropdownDataProyek3.classList.remove('flex');
+                arrow3.classList.remove('-rotate-90');
+            }
+        }
+
+        function triggerCheckbox4(event) {
+            event.preventDefault(); // Mencegah scroll ke atas karena href="#"
+
+            const checkbox = document.getElementById("triggerMe4");
+            console.log('test_2')
+
+            // Cara 1: Meniru klik manusia (akan memicu event listener 'change' jika ada)
+            checkbox.click();
+            if (checkbox.checked) {
+                dropdownDataProyek4.classList.remove('hidden');
+                dropdownDataProyek4.classList.add('flex');
+                arrow4.classList.add('-rotate-90');
+            } else {
+                dropdownDataProyek4.classList.add('hidden');
+                dropdownDataProyek4.classList.remove('flex');
+                arrow4.classList.remove('-rotate-90');
+            }
+        }
+
+        function triggerCheckbox5(event) {
+            event.preventDefault(); // Mencegah scroll ke atas karena href="#"
+
+            const checkbox = document.getElementById("triggerMe5");
+            console.log('test_2')
+
+            // Cara 1: Meniru klik manusia (akan memicu event listener 'change' jika ada)
+            checkbox.click();
+            if (checkbox.checked) {
+                dropdownDataProyek5.classList.remove('hidden');
+                dropdownDataProyek5.classList.add('flex');
+                arrow5.classList.add('-rotate-90');
+            } else {
+                dropdownDataProyek5.classList.add('hidden');
+                dropdownDataProyek5.classList.remove('flex');
+                arrow5.classList.remove('-rotate-90');
+            }
+        }
+
+        function triggerCheckbox6(event) {
+            event.preventDefault(); // Mencegah scroll ke atas karena href="#"
+
+            const checkbox = document.getElementById("triggerMe6");
+            console.log('test_2')
+
+            // Cara 1: Meniru klik manusia (akan memicu event listener 'change' jika ada)
+            checkbox.click();
+            if (checkbox.checked) {
+                dropdownDataProyek6.classList.remove('hidden');
+                dropdownDataProyek6.classList.add('flex');
+                arrow6.classList.add('-rotate-90');
+            } else {
+                dropdownDataProyek6.classList.add('hidden');
+                dropdownDataProyek6.classList.remove('flex');
+                arrow6.classList.remove('-rotate-90');
             }
         }
 
