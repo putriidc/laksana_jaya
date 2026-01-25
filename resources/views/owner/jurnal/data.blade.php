@@ -1023,145 +1023,140 @@
         </script>
         <script>
             function transaksiJurnal() {
-                // buat form modal dengan sweetalert2
                 Swal.fire({
                     html: `
                     <form action="{{ route('jurnalOwner.storeTrans') }}" method="POST" class="flex flex-col text-left" id="myForm">
                         @csrf
-                        <h1 class="font-bold text-2xl mb-4">Jurnal Transaksi</h1>
-                        <div class="flex items-center mt-4">
-                            <label for="tanggal" class="font-medium w-[150px]">Dari Akun / Kredit</label>
-                            <div class="flex items-center w-full justify-between">
-                                <select name="from" id="From" class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none" required>
-                                        @foreach ($akun as $item)
-                                        <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
-                                        @endforeach
+                        <h1 class="font-bold text-2xl mb-4 text-gray-800">Jurnal Transaksi</h1>
+                        
+                        <div class="flex flex-wrap md:flex-nowrap gap-4 mt-4">
+                            <div class="flex flex-col w-full md:w-1/2">
+                                <label class="font-medium mb-1">Dari Akun / Kredit</label>
+                                <select name="from" id="From" class="ts-control-custom" required>
+                                    <option value="" selected disabled>Cari akun...</option>
+                                    @foreach ($akun as $item)
+                                    <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
+                                    @endforeach
                                 </select>
-                                <div class="flex items-center w-[350px]">
-                                    <label for="kode_akun" class="font-medium w-[35%]">Ke Akun / Debit</label>
-                                    <select name="to" id="To" class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none" required>
-                                        @foreach ($akun as $item)
-                                        <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                            </div>
+                            <div class="flex flex-col w-full md:w-1/2">
+                                <label class="font-medium mb-1">Ke Akun / Debit</label>
+                                <select name="to" id="To" class="ts-control-custom" required>
+                                    <option value="" selected disabled>Cari akun...</option>
+                                    @foreach ($akun as $item)
+                                    <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
-                        <div class="flex items-center mt-4">
-                            <label for="keterangan" class="font-medium w-[150px]">Tgl Transaksi</label>
-                            <div class="flex items-center w-full justify-between">
-                                <input value="{{ $today }}" type="date" name="tanggal" id="tanggal" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none" readonly>
-                                <div class="flex items-center w-[350px]">
-                                    <label for="nominal" class="font-medium w-[35%]">Nominal</label>
-                                    <input type="text" name="nominal" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2 rupiah-format">
-                                </div>
+
+                        <div class="flex flex-wrap md:flex-nowrap gap-4 mt-4">
+                            <div class="flex flex-col w-full md:w-1/2">
+                                <label class="font-medium mb-1 text-sm text-gray-600">Tgl Transaksi</label>
+                                <input value="{{ $today }}" type="date" name="tanggal" id="tanggal" required 
+                                    class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-full outline-none" readonly>
+                            </div>
+                            <div class="flex flex-col w-full md:w-1/2">
+                                <label class="font-medium mb-1 text-sm text-gray-600">Nominal</label>
+                                <input type="text" name="nominal" id="nominal" required placeholder="Rp 0"
+                                    class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-full outline-none rupiah-format">
                             </div>
                         </div>
-                        <div class="flex items-center mt-4">
-                            <label for="kas/bank" class="font-medium w-[125px]">keretangan</label>
-                            <textarea name="keterangan" id="keterangan" required class="bg-[#D9D9D9]/40 rounded-lg h-[100px] px-4 py-2 w-full outline-none resize-none"></textarea>
+
+                        <div class="flex flex-col mt-4">
+                            <label class="font-medium mb-1 text-sm text-gray-600">Keterangan</label>
+                            <textarea name="keterangan" id="keterangan" required placeholder="Masukkan catatan transaksi..."
+                                class="bg-[#D9D9D9]/40 rounded-lg h-[100px] px-4 py-2 w-full outline-none resize-none"></textarea>
                         </div>
-                        <div class="flex items-center mt-6 gap-x-4">
-                            <div class="w-[110px]"></div>
-                            <button type="submit" class="border-[#3E98D0] border text-[#3E98D0] py-1 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
-                                <span class="">Simpan Data</span>
-                                <img src="https://ar4n-group.com/public/assets/plus-circle-blue.png" alt="arrow right blue icon" class="w-[30px]">
+
+                        <div class="flex flex-wrap items-center mt-6 gap-3">
+                            <button type="submit" class="bg-[#3E98D0] text-white py-2 px-6 rounded-lg cursor-pointer flex items-center justify-center gap-x-2 font-semibold order-1 md:order-2">
+                                <span>Simpan Data</span>
+                                <img src="https://ar4n-group.com/public/assets/plus-circle-blue.png" class="w-[25px] brightness-0 invert">
                             </button>
-                            <button type="button" onclick="Swal.close()" class="border-[#DD4049] border text-[#DD4049] py-2 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
-                                <span class="">Batal</span>
-                                <img src="https://ar4n-group.com/public/assets/close-circle-red.png" alt="arrow right blue icon" class="w-[22px]">
+
+                            <button type="button" id="btnCetakJurnal" class="hidden border-orange-400 border text-orange-400 py-2 px-6 rounded-lg cursor-pointer font-semibold order-2 md:order-3 flex items-center justify-center gap-x-2">
+                                <span>Cetak</span>
+                                <img src="{{ asset('assets/printer-oren.png') }}" class="w-5">
+                            </button>
+
+                            <button type="button" onclick="Swal.close()" class="border-[#DD4049] border text-[#DD4049] py-2 px-6 rounded-lg cursor-pointer flex items-center justify-center gap-x-2 font-semibold order-3 md:order-1">
+                                <span>Batal</span>
+                                <img src="https://ar4n-group.com/public/assets/close-circle-red.png" class="w-[20px]">
                             </button>
                         </div>
                     </form>
                     `,
-                    width: '800px',
-                    showCancelButton: false,
-                    showCloseButton: false,
+                    width: window.innerWidth < 768 ? '95%' : '800px',
                     showConfirmButton: false,
                     didOpen: () => {
-                        new TomSelect('#From', {
-                            placeholder: 'Cari akun...',
-                            create: false,
-                            maxItems: 1,
-                            hideSelected: true,
-
-                        });new TomSelect('#To', {
-                            placeholder: 'Cari akun...',
-                            create: false,
-                            maxItems: 1,
-                            hideSelected: true,
-
-                        });
-                        const rupiahFormat = document.querySelectorAll('.rupiah-format');
-                        rupiahFormat.forEach(input => {
-                            input.addEventListener('input', function() {
-                                console.log('test')
-                                // hapus karakter yang bukan angka atau koma
-                                let value = this.value.replace(/[^,\d]/g, "").toString();
-                                // pisahkan antara angka dan koma
-                                let split = value.split(",");
-                                // format angka menjadi rupiah
-                                let sisa = split[0].length % 3;
-                                // ambil angka yang tidak termasuk dalam kelipatan 3
-                                let rupiah = split[0].substr(0, sisa);
-                                // ambil angka yang termasuk dalam kelipatan 3
-                                let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-
-                                // tambahkan titik sebagai pemisah ribuan
-                                if (ribuan) {
-                                    let separator = sisa ? "." : "";
-                                    rupiah += separator + ribuan.join(".");
-                                }
-
-                                // tambahkan kembali koma dan angka di belakangnya jika ada
-                                rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
-                                // tampilkan hasil format rupiah pada input
-                                this.value = rupiah ? "Rp. " + rupiah : "";
-                            });
-                        });
-                        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
                         const form = document.getElementById('myForm');
-                        if (form) {
-                            form.addEventListener('submit', function(e) {
-                                e.preventDefault(); // cegah submit default
+                        const btnCetak = document.getElementById('btnCetakJurnal');
+                        const inputNominal = document.getElementById('nominal');
+                        const inputKet = document.getElementById('keterangan');
 
-                                // bersihkan input rupiah
-                                const rupiahInputs = document.querySelectorAll('.rupiah-format');
-                                rupiahInputs.forEach(input => {
-                                    let value = input.value;
-                                    let cleanValue = parseInt(value.replace(/[^,\d]/g, ""));
-                                    input.value = cleanValue;
-                                });
+                        // 1. Inisialisasi TomSelect
+                        const tsFrom = new TomSelect('#From', { placeholder: 'Cari akun...', maxItems: 1 });
+                        const tsTo = new TomSelect('#To', { placeholder: 'Cari akun...', maxItems: 1 });
 
-                                // kirim pakai fetch
-                                const formData = new FormData(form);
+                        // 2. Fungsi Validasi Tombol Cetak
+                        const updateCetakVisibility = () => {
+                            const isFilled = tsFrom.getValue() && tsTo.getValue() && inputNominal.value && inputKet.value;
+                            isFilled ? btnCetak.classList.remove('hidden') : btnCetak.classList.add('hidden');
+                        };
 
-                                fetch(form.action, {
-                                        method: "POST",
-                                        headers: {
-                                            "X-CSRF-TOKEN": token,
-                                            "X-Requested-With": "XMLHttpRequest"
-                                        },
-                                        body: formData
-                                    })
-                                    .then(res => res.json())
-                                    .then(res => {
-                                        if (res.error) {
-                                            Swal.fire("Error", res.error, "error");
-                                        } else {
-                                            Swal.fire("Sukses", "Transfer kas/bank berhasil dicatat",
-                                                "success").then(() => {
-                                                location.reload();
-                                            });
-                                        }
-                                    })
-                                    .catch(err => {
-                                        Swal.fire("Error", "Terjadi kesalahan: " + err.message,
-                                            "error");
-                                    });
-                            });
-                        }
+                        // Listener untuk validasi
+                        tsFrom.on('change', updateCetakVisibility);
+                        tsTo.on('change', updateCetakVisibility);
+                        inputNominal.addEventListener('input', updateCetakVisibility);
+                        inputKet.addEventListener('input', updateCetakVisibility);
 
+                        // 3. Logika Format Rupiah
+                        inputNominal.addEventListener('input', function() {
+                            let value = this.value.replace(/[^0-9]/g, "");
+                            this.value = value ? "Rp. " + parseInt(value).toLocaleString('id-ID') : "";
+                        });
+
+                        // 4. Logika Tombol Cetak (Ambil Label)
+                        btnCetak.addEventListener('click', function() {
+                            const labelFrom = tsFrom.options[tsFrom.getValue()].text;
+                            const labelTo = tsTo.options[tsTo.getValue()].text;
+                            const cleanNominal = inputNominal.value.replace(/[^0-9]/g, "");
+                            
+                            const url = `/printMutasiDetailOwner?from=${encodeURIComponent(labelFrom)}&to=${encodeURIComponent(labelTo)}&keterangan=${encodeURIComponent(inputKet.value)}&nominal=${cleanNominal}`;
+                            window.open(url, '_blank');
+                        });
+
+                        // 5. Logika Submit (Perbaikan Layar Hitam & Nominal Kosong)
+                        form.addEventListener('submit', function(e) {
+                            e.preventDefault();
+                            
+                            // Ambil data asli sebelum diubah-ubah
+                            const formData = new FormData(form);
+                            
+                            // Ambil nilai nominal asli (angka saja)
+                            const rawNominal = inputNominal.value.replace(/[^0-9]/g, "");
+                            formData.set('nominal', rawNominal); // Timpa nominal format dengan angka murni
+
+                            fetch(form.action, {
+                                method: "POST",
+                                headers: {
+                                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                                    "X-Requested-With": "XMLHttpRequest"
+                                },
+                                body: formData
+                            })
+                            .then(res => res.json())
+                            .then(res => {
+                                if (res.error) {
+                                    Swal.fire("Error", res.error, "error");
+                                } else {
+                                    Swal.fire("Sukses", "Data berhasil disimpan", "success")
+                                        .then(() => location.reload());
+                                }
+                            })
+                            .catch(err => Swal.fire("Error", "Gagal mengirim data", "error"));
+                        });
                     }
                 });
             }

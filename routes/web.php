@@ -670,7 +670,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('AccEafOwner', AccEafOwnerController::class);
         Route::post('/AcceafO/{id}/decline', [AccEafOwnerController::class, 'decline'])
             ->name('AcceafO.decline');
-
+        
+         Route::get('printMutasiDetailOwner', [JurnalOwnerController::class, 'printMutasiDetail'])->name('jurnalMutasiDetailOwner.print');
         Route::get('print-jurnalOnwner', [JurnalOwnerController::class, 'print'])->name('jurnalOwner.print');
         Route::resource('jurnalOwner', JurnalOwnerController::class)->except(['show']);
         Route::post('jurnalOwner/storeCashIn', [JurnalOwnerController::class, 'storeCashIn'])

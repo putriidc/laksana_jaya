@@ -138,6 +138,32 @@ class JurnalOwnerController extends Controller
         return $pdf->stream('jurnal-umum.pdf');
     }
 
+    public function printMutasiDetail(Request $request)
+    {
+        $kasFrom = $request->from;
+        $kasTo = $request->to;
+        $ket = $request->keterangan;
+        $nominal = $request->nominal;
+
+        $admin        = Auth::user()->name ?? 'Administrator';
+        $role         = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak     = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('owner.jurnal.printDetail', compact(
+            'kasFrom',
+            'kasTo',
+            'ket',
+            'nominal',
+            'admin',
+            'role',
+            'tanggalCetak',
+            'jamCetak'
+        ))->setPaper('A4', 'portrait');
+
+        return $pdf->stream('Mutasi Kas.pdf');
+    }
+
 
 
     public function storeBank(Request $request)
