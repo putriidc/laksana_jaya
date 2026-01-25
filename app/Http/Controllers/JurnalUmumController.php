@@ -182,6 +182,58 @@ class JurnalUmumController extends Controller
         return $pdf->stream('jurnal-umum.pdf');
     }
 
+    public function printDetail(Request $request)
+    {
+        $nama = $request->nama;
+        $ket = $request->keterangan;
+        $nominal = $request->nominal;
+        $transaksi = $request->transaksi;
+
+        $admin        = Auth::user()->name ?? 'Administrator';
+        $role         = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak     = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('admin.jurnal-umum.printDetail', compact(
+            'nama',
+            'ket',
+            'nominal',
+            'transaksi',
+            'admin',
+            'role',
+            'tanggalCetak',
+            'jamCetak'
+        ))->setPaper('A4', 'portrait');
+
+        return $pdf->stream($transaksi . '.pdf');
+    }
+
+    public function printMutasiDetail(Request $request)
+    {
+        $kasFrom = $request->from;
+        $kasTo = $request->to;
+        $ket = $request->keterangan;
+        $nominal = $request->nominal;
+
+        $admin        = Auth::user()->name ?? 'Administrator';
+        $role         = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak     = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('admin.jurnal-umum.printMutasiDetail', compact(
+            'kasFrom',
+            'kasTo',
+            'ket',
+            'nominal',
+            'admin',
+            'role',
+            'tanggalCetak',
+            'jamCetak'
+        ))->setPaper('A4', 'portrait');
+
+        return $pdf->stream('Mutasi Kas.pdf');
+    }
+
 
     public function create()
     {

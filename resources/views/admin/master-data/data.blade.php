@@ -27,11 +27,11 @@
                         </div>
                         <div class="absolute w-[200px] bg-white border-2 border-[#9A9A9A] shadow-lg top-12 rounded-lg hidden"
                             id="dropdown-menu">
-                            <a href="{{ route('akun.create') }}" class="py-2 px-4 block hover:bg-[#E9E9E9]">
+                            {{-- <a href="{{ route('akun.create') }}" class="py-2 px-4 block hover:bg-[#E9E9E9]">
                                 <p class="truncate">
                                     COA Akun
                                 </p>
-                            </a>
+                            </a> --}}
                             {{-- <a href="{{ route('piutangHutang.create') }}" class="py-2 px-4 block hover:bg-[#E9E9E9]">
                                 <p class="truncate">
                                     Piutang & Hutang Usaha

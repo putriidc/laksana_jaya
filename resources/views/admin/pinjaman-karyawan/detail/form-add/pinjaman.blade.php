@@ -26,7 +26,7 @@
             </div>
             <div class="flex items-center">
                 <label for="" class="w-[180px] font-medium">Angsuran Per Bulan</label>
-                <input type="text" name="angsuran" id="" class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2" >
+                <input type="text" name="angsuran" id="" class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2 rupiah-format" >
             </div>
             <div class="flex items-center">
                 <label for="" class="w-[180px] font-medium">Kontrak</label>

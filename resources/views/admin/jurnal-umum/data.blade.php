@@ -522,20 +522,36 @@
                     return;
                 }
 
-                tbody.innerHTML = transaksiDebet.map((d, i) => `
-        <tr>
-            <td>${i + 1}</td>
-            <td>${d.nama_akun}</td>
-            <td>${d.keterangan}</td>
-            <td>Rp ${d.nominal.toLocaleString()}</td>
-            <td>
-                <button type="button" onclick="removeDebet(${i})"
-                    class="bg-red-500 text-white px-2 py-1 rounded">
-                    Hapus
-                </button>
-            </td>
-        </tr>
-    `).join('');
+                tbody.innerHTML = transaksiDebet.map((d, i) => {
+                    // 1. Buat URL mentah dengan kata kunci unik sebagai placeholder
+                    let rawUrl = "{{ route('jurnalDetail.print', ['nama' => 'PLACEHOLDER_NAMA', 'keterangan' => 'PLACEHOLDER_KET', 'nominal' => 'PLACEHOLDER_NOM', 'transaksi' => 'Bukti Pemasukan']) }}";
+
+                    // 2. Ganti placeholder tersebut dengan data asli dari JavaScript
+                    // Gunakan decodeHTMLEntities jika perlu, tapi replace standar biasanya cukup
+                    let finalUrl = rawUrl
+                        .replace('PLACEHOLDER_NAMA', encodeURIComponent(d.nama_akun))
+                        .replace('PLACEHOLDER_KET', encodeURIComponent(d.keterangan))
+                        .replace('PLACEHOLDER_NOM', d.nominal);
+
+                    return `
+                        <tr>
+                            <td>${i + 1}</td>
+                            <td>${d.nama_akun}</td>
+                            <td>${d.keterangan}</td>
+                            <td>Rp ${d.nominal.toLocaleString('id-ID')}</td>
+                            <td>
+                                <div class="flex items-center justify-center gap-x-2">
+                                    <button type="button" onclick="removeDebet(${i})"
+                                        class="text-red-500 text-xl cursor-pointer">
+                                        X
+                                    </button>
+                                    <a target="_blank" href="${finalUrl}" class="text-blue-500 text-xl">
+                                        <img src="{{ asset('assets/printer-oren.png') }}" />
+                                    </a>    
+                                </div>
+                            </td>
+                        </tr>`;
+                }).join(''); // Jangan lupa .join('') agar tidak ada koma di antara baris tabel
             }
 
             function removeDebet(index) {
@@ -762,20 +778,35 @@
                     return;
                 }
 
-                tbody.innerHTML = transaksiKredit.map((d, i) => `
-        <tr>
-            <td>${i + 1}</td>
-            <td>${d.nama_akun}</td>
-            <td>${d.keterangan}</td>
-            <td>Rp ${d.nominal.toLocaleString()}</td>
-            <td>
-                <button type="button" onclick="removeKredit(${i})"
-                    class="bg-red-500 text-white px-2 py-1 rounded">
-                    Hapus
-                </button>
-            </td>
-        </tr>
-    `).join('');
+                tbody.innerHTML = transaksiKredit.map((d, i) => {
+                    // 1. Siapkan URL Template dari Laravel
+                    let rawUrl = "{{ route('jurnalDetail.print', ['nama' => 'PLACEHOLDER_NAMA', 'keterangan' => 'PLACEHOLDER_KET', 'nominal' => 'PLACEHOLDER_NOM', 'transaksi' => 'Bukti Pengeluaran']) }}";
+
+                    // 2. Masukkan data JavaScript ke dalam URL
+                    let finalUrl = rawUrl
+                        .replace('PLACEHOLDER_NAMA', encodeURIComponent(d.nama_akun))
+                        .replace('PLACEHOLDER_KET', encodeURIComponent(d.keterangan))
+                        .replace('PLACEHOLDER_NOM', d.nominal);
+
+                    return `
+                    <tr>
+                        <td>${i + 1}</td>
+                        <td>${d.nama_akun}</td>
+                        <td>${d.keterangan}</td>
+                        <td>Rp ${d.nominal.toLocaleString('id-ID')}</td>
+                        <td>
+                            <div class="flex items-center justify-center gap-x-2">
+                                <button type="button" onclick="removeKredit(${i})"
+                                    class="text-red-500 text-xl cursor-pointer">
+                                        X
+                                </button>
+                                <a target="_blank" href="${finalUrl}" class="text-blue-500 text-xl">
+                                    <img src="{{ asset('assets/printer-oren.png') }}" alt="Print" />
+                                </a>
+                            </div>
+                        </td>
+                    </tr>`;
+                }).join('');
             }
 
             function removeKredit(index) {
@@ -904,6 +935,10 @@
                                 <span class="">Batal</span>
                                 <img src="https://ar4n-group.com/public/assets/close-circle-red.png" alt="arrow right blue icon" class="w-[22px]">
                             </button>
+                            <button type="button" id="btnCetakOtomatis" class="hidden border-orange-500 border text-orange-500 py-2 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
+                                <span>Cetak</span>
+                                <img src="{{ asset('assets/printer-oren.png') }}" class="w-[25px]">
+                            </button>
                         </div>
                     </form>
                     `,
@@ -981,6 +1016,49 @@
                                     });
                             });
                         }
+
+                        const btnCetak = document.getElementById('btnCetakOtomatis');
+                        const inputs = form.querySelectorAll('input[required], select[required]');
+
+                        // Fungsi cek apakah semua field terisi
+                        const checkInputs = () => {
+                            let allFilled = true;
+                            inputs.forEach(input => {
+                                if (!input.value || input.value === "-Pilih kas/bank-") {
+                                    allFilled = false;
+                                }
+                            });
+
+                            if (allFilled) {
+                                btnCetak.classList.remove('hidden');
+                            } else {
+                                btnCetak.classList.add('hidden');
+                            }
+                        };
+
+                        // Pasang listener ke semua input
+                        inputs.forEach(input => {
+                            input.addEventListener('input', checkInputs);
+                            input.addEventListener('change', checkInputs);
+                        });
+
+                        // Logika Klik Tombol Cetak
+                        btnCetak.addEventListener('click', function() {
+                            const from = form.querySelector('select[name="from"] option:checked').text;
+                            const to = form.querySelector('select[name="to"] option:checked').text;
+                            const ket = form.querySelector('input[name="keterangan"]').value;
+                            const nom = form.querySelector('input[name="nominal"]').value.replace(/[^0-9]/g, '');
+
+                            // Buat URL Print (Gunakan logic placeholder seperti sebelumnya)
+                            let rawUrl = "/printMutasiDetail?from=PLACE_F&to=PLACE_T&keterangan=PLACE_K&nominal=PLACE_M";
+                            let finalUrl = rawUrl
+                                .replace('PLACE_T', encodeURIComponent(to))
+                                .replace('PLACE_F', encodeURIComponent(from))
+                                .replace('PLACE_K', encodeURIComponent(ket))
+                                .replace('PLACE_M', nom);
+
+                            window.open(finalUrl, '_blank');
+                        });
 
                     }
                 });

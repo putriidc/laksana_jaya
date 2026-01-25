@@ -395,7 +395,9 @@ Route::middleware('auth')->group(function () {
             ->name('barang-retur-admin.create.for-barang');
         // transaksi barang
         // data alat dan barang
-
+        
+        Route::get('printDetail', [JurnalUmumController::class, 'printDetail'])->name('jurnalDetail.print');
+        Route::get('printMutasiDetail', [JurnalUmumController::class, 'printMutasiDetail'])->name('jurnalMutasiDetail.print');
         Route::get('jurnalUmums/print', [JurnalUmumController::class, 'print'])->name('jurnalUmums.print');
         Route::resource('jurnalUmums', JurnalUmumController::class)->except(['show']);
         Route::post('jurnalUmums/storeCashIn', [JurnalUmumController::class, 'storeCashIn'])

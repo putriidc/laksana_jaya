@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Pinjaman Karyawan</title>
+    <title>Mutasi Antar Kas</title>
     <style>
         @page { margin: 0.5cm; }
         body {
@@ -14,7 +14,7 @@
             width: 100vw;
             padding-left: 20px;
             padding-right: 20px;
-            margin-bottom: 40px;
+            margin-bottom: 10px;
         }
         .header { text-align: center; margin-bottom: 20px; margin-top: 20px; }
         .logo { width: 140px; margin-bottom: 10px; }
@@ -86,7 +86,6 @@
             width: 90%;
             border-collapse: separate;
             border-spacing: 0;
-            margin-top: 10px;
             box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
             border-radius: 6px;
             overflow: hidden;
@@ -109,53 +108,29 @@
 
     <div class="header">
         <img src="{{ public_path('assets/logo-font.png') }}" class="logo">
-        <h2 style="margin-top: 10px; text-transform: uppercase">pinjaman karyawan</h2>
-    </div>
-    <div style="padding-left: 20px; margin-bottom: 5px;">
-        Dicetak pada: {{ $tanggalCetak }} - {{ $jamCetak }}
+        <h2 style="margin-top: 10px; text-transform: uppercase">Mutasi Antar Kas</h2>
     </div>
     <div class="container">
         <table>
             <tr>
-                <td class="label">Nama</td>
-                <td><div class="input-mock">{{ $pinjaman->karyawan->nama }}</div></td>
+                <td class="label">Tanggal</td>
+                <td><div class="input-mock">{{ $tanggalCetak }}</div></td>
             </tr>
             <tr>
-                <td class="label">Alamat Rumah</td>
-                <td><div class="input-mock">{{ $pinjaman->karyawan->alamat }}</div></td>
+                <td class="label">Dari Kas/Bank</td>
+                <td><div class="input-mock">{{ $kasFrom }}</div></td>
             </tr>
             <tr>
-                <td class="label">No Telp</td>
-                <td><div class="input-mock">{{ $pinjaman->karyawan->no_hp }}</div></td>
+                <td class="label">Ke Kas/Bank</td>
+                <td><div class="input-mock">{{ $kasTo }}</div></td>
             </tr>
             <tr>
-                <td class="label">Email</td>
-                <td><div class="input-mock">{{ $pinjaman->karyawan->email }}</div></td>
+                <td class="label">Keterangan</td>
+                <td><div class="input-mock">{{ $ket }}</div></td>
             </tr>
             <tr>
-                <td colspan="2" style="padding-top: 10px; padding-bottom: 10px;">
-                    <span>Dengan ini menyatakan bahwa saya {{ $pinjaman->karyawan->nama }} telah melakukan permohonan pinjaman dengan data sebagai berikut:</span>
-                </td>
-            </tr>
-            <tr>
-                <td class="label">Tanggal Pinjaman</td>
-                <td><div class="input-mock">{{ \Carbon\Carbon::parse($pinjamanContents->jenis === 'pinjam' ? $pinjamanContents->tanggal : '-')->format('d F Y') }}</div></td>
-            </tr>
-            <tr>
-                <td class="label">Kontrak</td>
-                <td><div class="input-mock">{{ $pinjamanContents->kontrak }}</div></td>
-            </tr>
-            <tr>
-                <td class="label">Jangka Waktu(Bulan)</td>
-                <td><div class="input-mock">{{ $pinjamanContents->kontrakPinjam->jangka_waktu }} Bulan</div></td>
-            </tr>
-            <tr>
-                <td class="label">Angsuran Perbulan</td>
-                <td><div class="input-mock">{{ 'Rp. ' . number_format($pinjamanContents->kontrakPinjam->angsuran, 0, ',', '.') }}</div></td>
-            </tr>
-            <tr>
-                <td class="label">Jumlah Pinjaman</td>
-                <td><div class="input-mock">{{ $pinjamanContents->jenis === 'pinjam' ? 'Rp. ' . number_format($pinjamanContents->bayar, 0, ',', '.') : 'Rp. 0' }}</div></td>
+                <td class="label">Nominal</td>
+                <td><div class="input-mock">{{ 'Rp. ' . number_format($nominal, 0, ',', '.') }}</div></td>
             </tr>
         </table>
     </div>
@@ -165,7 +140,7 @@
             <tr>
                 <th class="ttd-th">Owner</th>
                 <th class="ttd-th">Admin Keuangan</th>
-                <th class="ttd-th">Peminjam</th>
+                <th class="ttd-th">Penerima</th>
             </tr>
         </thead>
         <tbody>
@@ -180,7 +155,7 @@
                     </td>
                     <td class="ttd" style="vertical-align: bottom; height: 80px;">
                         <div style="width: 100px;"></div>
-                        <span>{{ $pinjaman->karyawan->nama }}</span>
+                        <span>(.............................)</span>
                     </td>
                 </tr>
         </tbody>
