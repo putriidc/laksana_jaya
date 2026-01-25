@@ -180,7 +180,7 @@
                             ${(!item.is_generate && item.tgl_bayar === null) ? `
                                 <div onclick="Swal.close(); bayarHutang(${JSON.stringify(item).replace(/"/g, '&quot;')}, ${JSON.stringify(bank).replace(/"/g, '&quot;')})"
                                     class="flex flex-col items-center p-4 border rounded-xl hover:bg-green-50 cursor-pointer transition">
-                                    <img src="/assets/pay.jpg" class="w-8 h-8 mb-2 object-contain">
+                                    <img src="{{ asset('assets/pay.jpg') }}" class="w-8 h-8 mb-2 object-contain">
                                     <span class="text-xs font-bold text-gray-700">BAYAR</span>
                                 </div>
                             ` : ''}
