@@ -187,19 +187,19 @@
 
                             <div onclick="Swal.close(); editData(${JSON.stringify(item).replace(/"/g, '&quot;')})"
                                 class="flex flex-col items-center p-4 border rounded-xl hover:bg-blue-50 cursor-pointer transition">
-                                <img src="/assets/edit-icon.png" class="w-8 h-8 mb-2 object-contain">
+                                <img src=" {{ asset('assets/edit-icon.png') }}" class="w-8 h-8 mb-2 object-contain">
                                 <span class="text-xs font-bold text-gray-700">EDIT</span>
                             </div>
 
                             <div onclick="Swal.close(); detailData(${JSON.stringify(item).replace(/"/g, '&quot;')})"
                                 class="flex flex-col items-center p-4 border rounded-xl hover:bg-purple-50 cursor-pointer transition">
-                                <img src="/assets/more-circle.png" class="w-8 h-8 mb-2 object-contain">
+                                <img src="{{ asset('assets/more-circle.png') }}" class="w-8 h-8 mb-2 object-contain">
                                 <span class="text-xs font-bold text-gray-700">DETAIL</span>
                             </div>
 
                             <div onclick="confirmDelete('${item.id}')"
                                 class="flex flex-col items-center p-4 border rounded-xl hover:bg-red-50 cursor-pointer transition">
-                                <img src="/assets/close-circle.png" class="w-8 h-8 mb-2 object-contain">
+                                <img src="{{ asset('assets/close-circle.png') }}" class="w-8 h-8 mb-2 object-contain">
                                 <span class="text-xs font-bold text-red-600">HAPUS</span>
                             </div>
                         </div>
