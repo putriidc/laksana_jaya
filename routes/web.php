@@ -65,6 +65,7 @@ use App\Http\Controllers\NotaLangsungController;
 use App\Http\Controllers\ProgresOwnerController;
 use App\Http\Controllers\ProyekMdOwnerController;
 use App\Http\Controllers\SaldoAwalOwnerController;
+use App\Http\Controllers\SampinganOwnerController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\SupplierOwnerController;
 use App\Http\Controllers\UserController;
@@ -569,6 +570,10 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('role:Owner')->group(function () {
         // owner
+        // Freelance
+        Route::resource('sampingansOwner', SampinganOwnerController::class);
+        Route::get('freelance-owner/print', [SampinganOwnerController::class, 'print'])->name('freelance-owner.print');
+        // Freelance
         // data alat dan barang
          Route::get('barangsOwner/{id}/printMasuk', [BarangOwnerController::class, 'printMasuk'])
             ->name('barangsOwner.printMasuk');
