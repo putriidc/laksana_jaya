@@ -10,6 +10,7 @@
                             <th class="py-2 w-[15%]">Nama Tukang</th>
                             <th class="py-2 w-[15%]">Proyek</th>
                             <th class="py-2 w-[15%]">Kontrak</th>
+                            <th class="py-2 w-[10%]">Sumber Kas</th>
                             <th class="py-2 w-[20%]">Jumlah Pinjaman</th>
                             <th class="py-2 w-[10%]">Action</th>
                         </thead>
@@ -23,6 +24,7 @@
                                     <td class="py-2">{{ $item->kasbon->nama_tukang }}</td>
                                     <td class="py-2">{{ $item->kasbon->nama_proyek }}</td>
                                     <td class="py-2">{{ $item->kontrak }}</td>
+                                    <td class="py-2">{{ $item->kas->nama_akun ?? 'Tidak Ada Kas Bank' }}</td>
                                     <td class="py-2">{{ 'RP. ' . number_format($item->bayar, 0, ',', '.') }}</td>
                                     <td class="py-2 flex justify-center items-center">
                                         <form action="{{ route('accspv.store') }}" method="POST">
@@ -57,6 +59,7 @@
                             <th class="py-2 w-[15%]">Nama Tukang</th>
                             <th class="py-2 w-[15%]">Proyek</th>
                             <th class="py-2 w-[15%]">Kontrak</th>
+                            <th class="py-2 w-[10%]">Sumber Kas</th>
                             <th class="py-2 w-[15%]">Status</th>
                             <th class="py-2 w-[20%]">Jumlah Pinjaman</th>
                             <th class="py-2 w-[10%]">Action</th>
@@ -71,6 +74,7 @@
                                     <td class="py-2">{{ $item->kasbon->nama_tukang }}</td>
                                     <td class="py-2">{{ $item->kasbon->nama_proyek }}</td>
                                     <td class="py-2">{{ $item->kontrak }}</td>
+                                    <td class="py-2">{{ $item->kas->nama_akun ?? 'Tidak Ada Kas Bank' }}</td>
                                     <td class="py-2">{{ $item->ket_spv }}</td>
                                     <td class="py-2">{{ 'RP. ' . number_format($item->bayar, 0, ',', '.') }}</td>
                                     <td class="py-2 flex justify-center items-center gap-x-2">

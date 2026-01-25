@@ -10,6 +10,7 @@
                                 <th class="py-2 w-[10%]">Tgl Pengajuan</th>
                                 <th class="py-2 w-[15%]">Nama Karyawan</th>
                                 <th class="py-2 w-[15%]">Kontrak</th>
+                                <th class="py-2 w-[10%]">Sumber Kas</th>
                                 <th class="py-2 w-[20%]">Jumlah Pinjaman</th>
                                 <th class="py-2 w-[10%]">Action</th>
                             </tr>
@@ -20,6 +21,7 @@
                                     <td class="py-2">{{ $item->tanggal }}</td>
                                     <td class="py-2">{{ $item->karyawanPinjaman->karyawan->nama }}</td>
                                     <td class="py-2">{{ $item->kontrak }}</td>
+                                    <td class="py-2">{{ $item->kas->nama_akun ?? 'Tidak Ada Kas Bank' }}</td>
                                     <td class="py-2">{{ 'Rp. ' . number_format($item->bayar, 0, ',', '.') }}</td>
                                     <td class="py-2 flex justify-center items-center gap-2">
                                         <form action="{{ route('accowner.storePinjam', $item->id) }}" method="POST">
@@ -48,6 +50,7 @@
                                 <th class="py-2 w-[10%]">Tgl Pengajuan</th>
                                 <th class="py-2 w-[15%]">Nama Karyawan</th>
                                 <th class="py-2 w-[15%]">Kontrak</th>
+                                <th class="py-2 w-[10%]">Sumber Kas</th>
                                 <th class="py-2 w-[20%]">Jumlah Pinjaman</th>
                                 <th class="py-2 w-[10%]">Action</th>
                             </tr>
@@ -58,6 +61,7 @@
                                     <td class="py-2">{{ $item->tanggal }}</td>
                                     <td class="py-2">{{ $item->karyawanKasbon->karyawan->nama }}</td>
                                     <td class="py-2">{{ $item->kontrak }}</td>
+                                    <td class="py-2">{{ $item->kas->nama_akun ?? 'Tidak Ada Kas Bank' }}</td>
                                     <td class="py-2">{{ 'Rp. ' . number_format($item->bayar, 0, ',', '.') }}</td>
                                     <td class="py-2 flex justify-center items-center gap-2">
                                         <form action="{{ route('accowner.storeKasbon', $item->id) }}" method="POST">
@@ -90,6 +94,7 @@
                             <th class="py-2 w-[10%]">Tgl Pengajuan</th>
                             <th class="py-2 w-[15%]">Nama Karyawan</th>
                             <th class="py-2 w-[15%]">Kontrak</th>
+                            <th class="py-2 w-[10%]">Sumber Kas</th>
                             <th class="py-2 w-[15%]">Ket Owner</th>
                             <th class="py-2 w-[20%]">Jumlah Pinjaman</th>
                             <th class="py-2 w-[10%]">Action</th>
@@ -100,6 +105,7 @@
                                     <td class="py-2">{{ $item->tanggal }}</td>
                                     <td class="py-2">{{ $item->karyawanPinjaman->karyawan->nama }}</td>
                                     <td class="py-2">{{ $item->kontrak }}</td>
+                                    <td class="py-2">{{ $item->kas->nama_akun ?? 'Tidak Ada Kas Bank' }}</td>
                                     <td class="py-2">{{ $item->ket_owner }}</td>
                                     <td class="py-2">{{ 'RP. ' . number_format($item->bayar, 0, ',', '.') }}</td>
                                     <td class="py-2 flex justify-center items-center gap-x-2">
@@ -135,6 +141,7 @@
                             <th class="py-2 w-[10%]">Tgl Pengajuan</th>
                             <th class="py-2 w-[15%]">Nama Karyawan</th>
                             <th class="py-2 w-[15%]">Kontrak</th>
+                            <th class="py-2 w-[10%]">Sumber Kas</th>
                             <th class="py-2 w-[15%]">Ket Owner</th>
                             <th class="py-2 w-[20%]">Jumlah Pinjaman</th>
                             <th class="py-2 w-[10%]">Action</th>
@@ -145,6 +152,7 @@
                                     <td class="py-2">{{ $item->tanggal }}</td>
                                     <td class="py-2">{{ $item->karyawanKasbon->karyawan->nama }}</td>
                                     <td class="py-2">{{ $item->kontrak }}</td>
+                                    <td class="py-2">{{ $item->kas->nama_akun ?? 'Tidak Ada Kas Bank' }}</td>
                                     <td class="py-2">{{ $item->ket_owner }}</td>
                                     <td class="py-2">{{ 'RP. ' . number_format($item->bayar, 0, ',', '.') }}</td>
                                     <td class="py-2 flex justify-center items-center gap-x-2">

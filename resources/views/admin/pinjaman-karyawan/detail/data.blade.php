@@ -42,6 +42,7 @@
                 <table class="table-auto text-center text-sm w-full">
                     <thead class="border-b-2 border-[#CCCCCC]">
                         <th class="py-2 w-[15%]">Kontrak</th>
+                        <th class="py-2 w-[10%]">Kas/Bank</th>
                         <th class="py-2 w-[10%]">Tgl Pinjaman</th>
                         <th class="py-2 w-[10%]">Tgl Cicilan</th>
                         <th class="py-2 w-[15%]">Jumlah Pinjaman</th>
@@ -54,6 +55,7 @@
                             <tr class="bg-[#E9E9E9] border-b-[1px] border-[#CCCCCC]">
 
                                 <td class="py-2">{{ $item->kontrak }}</td>
+                                <td class="py-2">{{ $item->kas->nama_akun ?? 'Tidak Ada Kas Bank' }}</td>
                                 <td class="py-2">
                                     @if ($item->jenis === 'pinjam')
                                         {{ $item->tanggal }}
@@ -151,6 +153,7 @@
         <table class="table-auto text-center text-sm w-full">
             <thead class="border-b-2 border-[#CCCCCC]">
                 <th class="py-2 w-[15%]">Kontrak</th>
+                <th class="py-2 w-[10%]">Kas/Bank</th>
                 <th class="py-2 w-[10%]">Tgl Pinjaman</th>
                 <th class="py-2 w-[10%]">Tgl Cicilan</th>
                 <th class="py-2 w-[15%]">Jumlah Pinjaman</th>
@@ -163,6 +166,7 @@
                     <tr class="bg-[#E9E9E9] border-b-[1px] border-[#CCCCCC]">
 
                         <td class="py-2">{{ $item->kontrak }}</td>
+                        <td class="py-2">{{ $item->kas->nama_akun ?? 'Tidak Ada Kas Bank' }}</td>
                         <td class="py-2">
                             @if ($item->jenis === 'pinjam')
                                 {{ $item->tanggal }}
