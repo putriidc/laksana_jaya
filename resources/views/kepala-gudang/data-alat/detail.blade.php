@@ -3,7 +3,16 @@
     <div>
         <div class="flex items-center justify-between mb-10">
             <h1 class="font-bold text-2xl">Detail Data Alat</h1>
-            <a href="{{ route('alats.edit', $alat->id) }}" class="border border-gray-600 rounded-lg py-2 px-4">Edit Alat</a>
+            <div class="flex items-center gap-x-2 justify-center">
+                <a href="{{ route('alats.edit', $alat->id) }}" class="border border-gray-600 rounded-lg py-2 px-4">Edit Alat</a>
+                <form action="{{ route('alats.destroy', $alat->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" onclick="return confirm('Yakin hapus data ini?')" class="border border-gray-600 rounded-lg py-2 px-4 cursor-pointer">
+                        Hapus Alat
+                    </button>
+                </form>
+            </div>
         </div>
         <div class="flex flex-col gap-y-7 pb-14 mb-8 border-b-2 border-[#B6B6B6]">
             <div class="flex mb-5 max-[900px]:mb-0 max-[900px]:flex-col max-[900px]:items-center">

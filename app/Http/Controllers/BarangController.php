@@ -71,9 +71,19 @@ class BarangController extends Controller
             'foto'        => 'nullable|image',
         ]);
 
-        // Generate kode_barang otomatis
-        $lastId = Barang::max('id') ?? 0;
-        $kodeBarang = 'KB-00' . ($lastId + 1);
+        // Ambil kode_barang terakhir, termasuk data yang sudah di soft delete
+        $lastBarang = Barang::withTrashed()->latest('id')->first();
+
+        if (!$lastBarang) {
+            $nomorUrut = 1;
+        } else {
+            // Mengambil angka dari string 'KB-001' -> menjadi 1
+            $lastKode = $lastBarang->kode_barang;
+            $nomorUrut = (int) substr($lastKode, 3) + 1;
+        }
+
+        // Str::padLeft digunakan agar format tetap 001, 002, dst (misal: KB-0010)
+        $kodeBarang = 'KB-' . str_pad($nomorUrut, 4, '0', STR_PAD_LEFT);
 
         // Upload foto jika ada
         $fotoPath = null;
