@@ -9,6 +9,7 @@
     @endif
     <h1 class="font-bold text-2xl mb-4">Dashboard</h1>
     <section class="flex flex-col gap-y-2">
+        @if (Auth::user()->role == "Admin 1" || Auth::user()->role == "Admin 2")
          <div class="w-full rounded-xl py-6 px-8 shadow-sm border border-gray-100">
             <h3 class="font-bold text-lg mb-5">Saldo Kas</h3>
            <section class="flex items-center flex-wrap gap-4">
@@ -25,6 +26,7 @@
                 @endforeach
            </section>
         </div>
+        @endif
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
             <h3 class="font-bold text-gray-800 mb-6">CashIn & CashOut</h3>
             <div class="h-[300px] w-full">
