@@ -532,7 +532,7 @@ class JurnalUmumController extends Controller
             // validasi dulu semua kredit
             foreach ($transaksi as $row) {
                 if (($row['kredit'] ?? 0) > 0) {
-                    $kodeBank = Asset::active()->where('akun_header', 'aset_lancar_bank')->where('kode_akun', $row['kode_akun'])->firts();
+                    $kodeBank = Asset::active()->where('akun_header', 'aset_lancar_bank')->where('kode_akun', $row['kode_akun'])->first();
                     // hitung saldo dari jurnal
                     $debit  = JurnalUmum::active()->where('kode_perkiraan', $kodeBank->kode_akun)->sum('debit');
                     $kredit = JurnalUmum::active()->where('kode_perkiraan', $kodeBank->kode_akun)->sum('kredit');
