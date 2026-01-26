@@ -365,7 +365,7 @@ Route::middleware('auth')->group(function () {
             ->name('alatsAdmin.printDipinjam');
         Route::get('alatsAdmin/{id}/printDikembalikan', [AlatAdminController::class, 'printDikembalikan'])
             ->name('alatsAdmin.printDikembalikan');
-        Route::resource('barangsAdmin', BarangAdminController::class);    
+        Route::resource('barangsAdmin', BarangAdminController::class);
          Route::get('print-alat-admin', [AlatAdminController::class, 'print'])->name('alat-admin.print');
         Route::resource('alatsAdmin', AlatAdminController::class);
         // Transaksi Alat
@@ -397,7 +397,7 @@ Route::middleware('auth')->group(function () {
             ->name('barang-retur-admin.create.for-barang');
         // transaksi barang
         // data alat dan barang
-        
+
         Route::get('printDetail', [JurnalUmumController::class, 'printDetail'])->name('jurnalDetail.print');
         Route::get('printMutasiDetail', [JurnalUmumController::class, 'printMutasiDetail'])->name('jurnalMutasiDetail.print');
         Route::get('jurnalUmums/print', [JurnalUmumController::class, 'print'])->name('jurnalUmums.print');
@@ -572,6 +572,9 @@ Route::middleware('auth')->group(function () {
         Route::resource('AccEafSpv', AccEafSpvController::class);
         Route::post('/Acceaf/{id}/decline', [AccEafSpvController::class, 'decline'])
             ->name('Acceaf.decline');
+        Route::post('/acc-eaf-spv/update-detail-biaya', [AccEafSpvController::class, 'updateDetailBiaya'])
+            ->name('AccEafSpv.updateDetailBiaya');
+
     });
 
     Route::middleware('role:Owner')->group(function () {
@@ -597,7 +600,7 @@ Route::middleware('auth')->group(function () {
             ->name('alatsOwner.printDipinjam');
         Route::get('alatsOwner/{id}/printDikembalikan', [AlatOwnerController::class, 'printDikembalikan'])
             ->name('alatsOwner.printDikembalikan');
-        Route::resource('barangsOwner', BarangOwnerController::class);    
+        Route::resource('barangsOwner', BarangOwnerController::class);
          Route::get('print-alat-owner', [AlatOwnerController::class, 'print'])->name('alat-owner.print');
         Route::resource('alatsOwner', AlatOwnerController::class);
         // Transaksi Alat
@@ -674,7 +677,9 @@ Route::middleware('auth')->group(function () {
         Route::resource('AccEafOwner', AccEafOwnerController::class);
         Route::post('/AcceafO/{id}/decline', [AccEafOwnerController::class, 'decline'])
             ->name('AcceafO.decline');
-        
+        Route::post('/acc-eaf-owner/update-detail-biaya', [AccEafOwnerController::class, 'updateDetailBiaya'])
+            ->name('AcceafO.updateDetailBiaya');
+
          Route::get('printMutasiDetailOwner', [JurnalOwnerController::class, 'printMutasiDetail'])->name('jurnalMutasiDetailOwner.print');
         Route::get('print-jurnalOnwner', [JurnalOwnerController::class, 'print'])->name('jurnalOwner.print');
         Route::resource('jurnalOwner', JurnalOwnerController::class)->except(['show']);

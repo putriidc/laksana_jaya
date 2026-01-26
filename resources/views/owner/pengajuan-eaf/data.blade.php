@@ -20,7 +20,6 @@
                                 $noacc = 1;
                             @endphp
                             @foreach ($eaf_needAcc as $item)
-
                                 <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
                                     <td class="py-2">{{ $noacc++ }}</td>
                                     <td class="py-2">{{ $item->tanggal }}</td>
@@ -29,7 +28,8 @@
                                     <td class="py-2">{{ $item->bank->nama_akun }}</td>
                                     <td class="py-2">{{ 'RP. ' . number_format($item->nominal, 0, ',', '.') }}</td>
                                     <td class="py-2">
-                                        <span data-detail="{{ $item->detail_biaya }}" onclick="detailBiaya(this)"
+                                        <span data-detail="{{ $item->detail_biaya }}" data-mode="edit"
+                                            data-id="{{ $item->id }}" onclick="detailBiaya(this)"
                                             class="hover:underline text-blue-400 cursor-pointer">
                                             Lihat Detail
                                         </span>
@@ -87,25 +87,28 @@
                                     <td class="py-2">{{ 'RP. ' . number_format($item->nominal, 0, ',', '.') }}</td>
                                     <td class="py-2">{{ $item->ket_owner }}</td>
                                     <td class="py-2">
-                                        <span data-detail="{{ $item->detail_biaya }}" onclick="detailBiaya(this)"
+                                        <span data-detail="{{ $item->detail_biaya }}" data-mode="view"
+                                            onclick="detailBiaya(this)"
                                             class="hover:underline text-blue-400 cursor-pointer">
                                             Lihat Detail
                                         </span>
                                     </td>
                                     <td class="py-2">
                                         <div class="flex justify-center gap-x-1 items-center">
-                                        {{-- Status spv --}}
-                                        @if ($item->acc_owner === 'accept')
-                                            <span class="bg-[#8CE987] px-4 py-2 rounded-lg cursor-pointer">Accept</span>
-                                        @elseif ($item->acc_owner === 'decline')
-                                            <span class="bg-[#e91111] px-4 py-2 rounded-lg cursor-pointer">Decline</span>
-                                        @else
-                                            <span class="bg-[#b6b6b6e6] px-4 py-2 rounded-lg cursor-pointer">Pending</span>
-                                        @endif
-                                    </div>
+                                            {{-- Status spv --}}
+                                            @if ($item->acc_owner === 'accept')
+                                                <span class="bg-[#8CE987] px-4 py-2 rounded-lg cursor-pointer">Accept</span>
+                                            @elseif ($item->acc_owner === 'decline')
+                                                <span
+                                                    class="bg-[#e91111] px-4 py-2 rounded-lg cursor-pointer">Decline</span>
+                                            @else
+                                                <span
+                                                    class="bg-[#b6b6b6e6] px-4 py-2 rounded-lg cursor-pointer">Pending</span>
+                                            @endif
+                                        </div>
                                     </td>
                                 </tr>
-                                @endforeach
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -159,18 +162,75 @@
             <script>
                 function detailBiaya(el) {
                     const detail = el.getAttribute('data-detail');
-                    Swal.fire({
-                        html: `
-                            <div class="flex flex-col gap-y-4 items-center">
-                                <h1 class="font-bold text-2xl text-center mb-5">Detail Biaya</h1>
-                                    <textarea readonly
-                                        class="w-full px-4 py-2 border rounded-lg bg-[#D9D9D9]/40"
-                                    rows="6">${detail}</textarea>
-                            </div>
-                        `,
-                        showCloseButton: true,
-                        showConfirmButton: false,
-                    })
+                    const mode = el.getAttribute('data-mode');
+                    const id = el.getAttribute('data-id'); // hanya ada di mode edit
+
+                    if (mode === 'edit') {
+                        // versi edit
+                        Swal.fire({
+                            html: `
+                <form id="formDetailBiaya" class="flex flex-col gap-y-4 items-center">
+                    <h1 class="font-bold text-2xl text-center mb-5">Edit Detail Biaya</h1>
+                    <textarea name="detail_biaya"
+                        class="w-full px-4 py-2 border rounded-lg bg-[#D9D9D9]/40"
+                        rows="6">${detail}</textarea>
+                    <input type="hidden" name="id_eaf" value="${id}">
+                    <div class="flex gap-x-4 mt-4">
+                        <button type="submit" class="bg-[#3E98D0] text-white px-4 py-2 rounded-lg">Simpan</button>
+                        <button type="button" onclick="Swal.close()" class="bg-[#DD4049] text-white px-4 py-2 rounded-lg">Batal</button>
+                    </div>
+                </form>
+            `,
+                            showCloseButton: false,
+                            showConfirmButton: false,
+                            didOpen: () => {
+                                const form = document.getElementById('formDetailBiaya');
+                                form.addEventListener('submit', function(e) {
+                                    e.preventDefault();
+                                    const formData = new FormData(form);
+                                    const token = document.querySelector('meta[name="csrf-token"]')
+                                        .getAttribute('content');
+
+                                    fetch("{{ route('AcceafO.updateDetailBiaya') }}", {
+                                            method: "POST",
+                                            headers: {
+                                                "X-CSRF-TOKEN": token,
+                                                "X-Requested-With": "XMLHttpRequest"
+                                            },
+                                            body: formData
+                                        })
+                                        .then(res => res.json())
+                                        .then(res => {
+                                            if (res.error) {
+                                                Swal.fire("Error", res.error, "error");
+                                            } else {
+                                                Swal.fire("Sukses", "Detail biaya berhasil diupdate",
+                                                        "success")
+                                                    .then(() => location.reload());
+                                            }
+                                        })
+                                        .catch(err => {
+                                            Swal.fire("Error", "Terjadi kesalahan: " + err.message,
+                                                "error");
+                                        });
+                                });
+                            }
+                        });
+                    } else {
+                        // versi view only
+                        Swal.fire({
+                            html: `
+                <div class="flex flex-col gap-y-4 items-center">
+                    <h1 class="font-bold text-2xl text-center mb-5">Detail Biaya</h1>
+                    <textarea readonly
+                        class="w-full px-4 py-2 border rounded-lg bg-[#D9D9D9]/40"
+                        rows="6">${detail}</textarea>
+                </div>
+            `,
+                            showCloseButton: true,
+                            showConfirmButton: false,
+                        });
+                    }
                 }
             </script>
         </div>

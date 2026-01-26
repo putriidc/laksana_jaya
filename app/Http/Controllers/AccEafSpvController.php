@@ -79,7 +79,7 @@ class AccEafSpvController extends Controller
                 EafDetail::create([
                     'kode_eaf'   => $eaf->kode_eaf,
                     'tanggal'    => $eaf->tanggal,
-                    'keterangan'    => 'keluar untuk '. $eaf->nama_proyek,
+                    'keterangan'    => 'keluar untuk ' . $eaf->nama_proyek,
                     'kode_akun'  => $kas->kode_akun,
                     'nama_akun'  => $kas->nama_akun,
                     'debit'      => 0,
@@ -91,7 +91,7 @@ class AccEafSpvController extends Controller
                 EafDetail::create([
                     'kode_eaf'   => $eaf->kode_eaf,
                     'tanggal'    => $eaf->tanggal,
-                    'keterangan'    => 'kas '. $eaf->nama_proyek,
+                    'keterangan'    => 'kas ' . $eaf->nama_proyek,
                     'kode_akun'  => $piutang->kode_akun,
                     'nama_akun'  => $piutang->nama_akun,
                     'debit'      => $eaf->nominal ?? 0,
@@ -102,7 +102,7 @@ class AccEafSpvController extends Controller
                 EafDetail::create([
                     'kode_eaf'   => $eaf->kode_eaf,
                     'tanggal'    => $eaf->tanggal,
-                    'keterangan'    => 'Closing '. $eaf-> nama_proyek,
+                    'keterangan'    => 'Closing ' . $eaf->nama_proyek,
                     'kode_akun'  => $piutang->kode_akun,
                     'nama_akun'  => $piutang->nama_akun,
                     'debit'      =>  0,
@@ -131,6 +131,20 @@ class AccEafSpvController extends Controller
             'message' => 'Pengajuan Eaf berhasil ditolak'
         ]);
     }
+    public function updateDetailBiaya(Request $request)
+    {
+        $request->validate([
+            'id_eaf' => 'required',
+            'detail_biaya' => 'required|string',
+        ]);
+
+        $eaf = Eaf::findOrFail($request->id_eaf);
+        $eaf->detail_biaya = $request->detail_biaya;
+        $eaf->save();
+
+        return response()->json(['success' => true]);
+    }
+
 
     /**
      * Display the specified resource.

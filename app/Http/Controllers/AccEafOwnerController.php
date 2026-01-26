@@ -153,6 +153,19 @@ class AccEafOwnerController extends Controller
             'message' => 'Pengajuan Eaf berhasil ditolak'
         ]);
     }
+    public function updateDetailBiaya(Request $request)
+    {
+        $request->validate([
+            'id_eaf' => 'required',
+            'detail_biaya' => 'required|string',
+        ]);
+
+        $eaf = Eaf::findOrFail($request->id_eaf);
+        $eaf->detail_biaya = $request->detail_biaya;
+        $eaf->save();
+
+        return response()->json(['success' => true]);
+    }
 
     /**
      * Display the specified resource.
