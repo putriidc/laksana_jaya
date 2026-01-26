@@ -28,8 +28,10 @@ class SaldoAwalOwnerController extends Controller
     {
         $bank = Asset::active()
             ->where('akun_header', 'asset_lancar_bank')
-            ->where('saldo_awal', null)
-            ->where('kode_akun', '!=', '123')
+            ->where(function ($q) {
+                $q->whereNull('saldo_awal')
+                    ->orWhere('kode_akun', '123');
+            })
             ->get();
         return view('owner.saldo_awal.index', compact('bank'));
     }
@@ -58,42 +60,42 @@ class SaldoAwalOwnerController extends Controller
             $modal->save();
         }
 
-            $lastId = JurnalUmum::max('id') ?? 0;
-            $nextId = $lastId + 1;
-            $kodeJurnal = 'J-' . str_pad($nextId, 3, '0', STR_PAD_LEFT);
+        $lastId = JurnalUmum::max('id') ?? 0;
+        $nextId = $lastId + 1;
+        $kodeJurnal = 'J-' . str_pad($nextId, 3, '0', STR_PAD_LEFT);
 
-            $tanggal    = Carbon::now('Asia/Jakarta');
-            $keterangan = 'Saldo Awal '. $asset->nama_akun;
-            $keteranganModal = 'Tambah saldo Modal dari '. $asset->nama_akun;
-            $nominal    = $request->nominal;
+        $tanggal    = Carbon::now('Asia/Jakarta');
+        $keterangan = 'Saldo Awal ' . $asset->nama_akun;
+        $keteranganModal = 'Tambah saldo Modal dari ' . $asset->nama_akun;
+        $nominal    = $request->nominal;
 
-            // baris 2: debit ke kas/bank tujuan
-            JurnalUmum::create([
-                'kode_jurnal'   => $kodeJurnal,
-                'detail_order' => 3,
-                'tanggal'       => $tanggal,
-                'kode_perkiraan' => $asset->kode_akun ?? '-',
-                'nama_perkiraan' => $asset->nama_akun ?? '-',
-                'keterangan'    => $keterangan,
-                'nama_proyek'   => '-',
-                'kode_proyek'   => '-',
-                'debit'         => $nominal,
-                'kredit'        => 0,
-                'created_by'    => 'owner',
-            ]);
-            JurnalUmum::create([
-                'kode_jurnal'   => $kodeJurnal,
-                'detail_order' => 3,
-                'tanggal'       => $tanggal,
-                'kode_perkiraan' => $assetModal->kode_akun ?? '-',
-                'nama_perkiraan' => $assetModal->nama_akun ?? '-',
-                'keterangan'    => $keteranganModal,
-                'nama_proyek'   => '-',
-                'kode_proyek'   => '-',
-                'debit'         => $nominal,
-                'kredit'        => 0,
-                'created_by'    => 'owner',
-            ]);
+        // baris 2: debit ke kas/bank tujuan
+        JurnalUmum::create([
+            'kode_jurnal'   => $kodeJurnal,
+            'detail_order' => 3,
+            'tanggal'       => $tanggal,
+            'kode_perkiraan' => $asset->kode_akun ?? '-',
+            'nama_perkiraan' => $asset->nama_akun ?? '-',
+            'keterangan'    => $keterangan,
+            'nama_proyek'   => '-',
+            'kode_proyek'   => '-',
+            'debit'         => $nominal,
+            'kredit'        => 0,
+            'created_by'    => 'owner',
+        ]);
+        JurnalUmum::create([
+            'kode_jurnal'   => $kodeJurnal,
+            'detail_order' => 3,
+            'tanggal'       => $tanggal,
+            'kode_perkiraan' => $assetModal->kode_akun ?? '-',
+            'nama_perkiraan' => $assetModal->nama_akun ?? '-',
+            'keterangan'    => $keteranganModal,
+            'nama_proyek'   => '-',
+            'kode_proyek'   => '-',
+            'debit'         => $nominal,
+            'kredit'        => 0,
+            'created_by'    => 'owner',
+        ]);
 
         return redirect()->route('saldo.index')->with('success', 'Saldo awal berhasil disimpan');
     }
