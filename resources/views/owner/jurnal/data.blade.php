@@ -88,6 +88,7 @@
                         <th class="w-[12%] py-2">
                             Tanggal
                         </th>
+                        <th class="w-[10%] py-2">Created By</th>
                         <th class="w-[22%] py-2">Keterangan</th>
                         <th class="w-[15%] py-2">
                             <div class="flex items-center justify-center">
@@ -178,6 +179,7 @@
                                 </td>
                                 <td class="py-2">{{ $jurnal->tanggal }}</td>
                                 <td class="py-2">{{ $jurnal->keterangan }}</td>
+                                <td class="py-2">{{ $jurnal->creator?->name ?? 'owner' }}</td>
                                 <td class="py-2">{{ $jurnal->nama_perkiraan }}</td>
                                 <td class="py-2">{{ $jurnal->kode_perkiraan }}</td>
                                 <td class="py-2">{{ $jurnal->nama_proyek }}</td>
@@ -1023,7 +1025,7 @@
                     <form action="{{ route('jurnalOwner.storeTrans') }}" method="POST" class="flex flex-col text-left" id="myForm">
                         @csrf
                         <h1 class="font-bold text-2xl mb-4 text-gray-800">Jurnal Transaksi</h1>
-                        
+
                         <div class="flex flex-wrap md:flex-nowrap gap-4 mt-4">
                             <div class="flex flex-col w-full md:w-1/2">
                                 <label class="font-medium mb-1">Dari Akun / Kredit</label>
@@ -1048,7 +1050,7 @@
                         <div class="flex flex-wrap md:flex-nowrap gap-4 mt-4">
                             <div class="flex flex-col w-full md:w-1/2">
                                 <label class="font-medium mb-1 text-sm text-gray-600">Tgl Transaksi</label>
-                                <input value="{{ $today }}" type="date" name="tanggal" id="tanggal" required 
+                                <input value="{{ $today }}" type="date" name="tanggal" id="tanggal" required
                                     class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-full outline-none" readonly>
                             </div>
                             <div class="flex flex-col w-full md:w-1/2">
@@ -1117,7 +1119,7 @@
                             const labelFrom = tsFrom.options[tsFrom.getValue()].text;
                             const labelTo = tsTo.options[tsTo.getValue()].text;
                             const cleanNominal = inputNominal.value.replace(/[^0-9]/g, "");
-                            
+
                             const url = `/printMutasiDetailOwner?from=${encodeURIComponent(labelFrom)}&to=${encodeURIComponent(labelTo)}&keterangan=${encodeURIComponent(inputKet.value)}&nominal=${cleanNominal}`;
                             window.open(url, '_blank');
                         });
@@ -1125,10 +1127,10 @@
                         // 5. Logika Submit (Perbaikan Layar Hitam & Nominal Kosong)
                         form.addEventListener('submit', function(e) {
                             e.preventDefault();
-                            
+
                             // Ambil data asli sebelum diubah-ubah
                             const formData = new FormData(form);
-                            
+
                             // Ambil nilai nominal asli (angka saja)
                             const rawNominal = inputNominal.value.replace(/[^0-9]/g, "");
                             formData.set('nominal', rawNominal); // Timpa nominal format dengan angka murni
