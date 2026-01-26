@@ -69,7 +69,10 @@ class DashboardAdminController extends Controller
             $cashOut[$item->hour] = $item->total;
         }
 
-        return view('admin.dashboard', compact('cashIn', 'cashOut', 'labels', 'karyawans', 'hutangVendors'));
+        // tampilkan nama kas dan isi saldo
+        $bank = Asset::active()->where('akun_header', 'asset_lancar_bank')->get();
+
+        return view('admin.dashboard', compact('bank', 'cashIn', 'cashOut', 'labels', 'karyawans', 'hutangVendors'));
     }
 
     /**
