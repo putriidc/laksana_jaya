@@ -29,6 +29,7 @@ class SaldoAwalOwnerController extends Controller
         $bank = Asset::active()
             ->where('akun_header', 'asset_lancar_bank')
             ->where('saldo_awal', null)
+            ->where('kode_akun', '!=', '123')
             ->get();
         return view('owner.saldo_awal.index', compact('bank'));
     }
