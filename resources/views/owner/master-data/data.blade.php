@@ -17,7 +17,7 @@
                         <option value="data-proyek">Data Proyek</option>
                         <option value="data-supplier">Data Supplier</option>
                     </select>
-                    <label for="dropdown-toggle"
+                    {{-- <label for="dropdown-toggle"
                         class="border-2 border-[#9A9A9A] rounded-xl select-none cursor-pointer w-[200px] z-[999] relative">
                         <div class="flex justify-between py-2 px-4 items-center">
                             <span>Tambah Data</span>
@@ -31,13 +31,13 @@
                                 <p class="truncate">
                                     COA Akun
                                 </p>
-                            </a>
+                            </a> --}}
                             {{-- <a href="{{ route('piutangHutang.create') }}" class="py-2 px-4 block hover:bg-[#E9E9E9]">
                                 <p class="truncate">
                                     Piutang & Hutang Usaha
                                 </p>
                             </a> --}}
-                            <a href="{{ route('karyawanOwner.create') }}" class="py-2 px-4 block hover:bg-[#E9E9E9]">
+                            {{-- <a href="{{ route('karyawanOwner.create') }}" class="py-2 px-4 block hover:bg-[#E9E9E9]">
                                 <p class="truncate">
                                     Karyawan
                                 </p>
@@ -53,7 +53,7 @@
                                 </p>
                             </a>
                         </div>
-                    </label>
+                    </label> --}}
                 </div>
                 <form id="searchForm" class="flex items-center gap-x-2">
                     <input type="text" id="searchInput" placeholder="Cari Data..."
@@ -66,7 +66,10 @@
             </div>
             <div class="h-[300px]" id="data-kosong"></div>
             <div class="flex-col pb-10 tabelMasterData hidden" id="data-asset">
-                <h1 class="text-[#C0C0C0] font-bold text-xl">COA Akun</h1>
+                <div class="flex items-center justify-between">
+                    <h1 class="text-[#C0C0C0] font-bold text-xl">COA Akun</h1>
+                    <a href="{{ route('akunOwner.create') }}" class="py-2 px-4 border border-gray-500 rounded-lg hover:bg-gray-500 hover:text-white">Tambah Data +</a>
+                </div>
                 <div
                     class="w-full flex flex-col justify-center py-8 gap-y-8 shadow-[1px_1px_5px_rgba(0,0,0,0.25)] rounded-lg mt-2 items-center">
                     <div class="flex flex-col w-[80%] gap-y-3">
@@ -401,7 +404,10 @@
                 </div>
             </div>
             <div class="flex-col pb-10 tabelMasterData hidden" id="data-karyawan">
-                <h1 class="text-[#C0C0C0] font-bold text-xl">Data Karyawan</h1>
+                <div class="flex items-center justify-between">
+                    <h1 class="text-[#C0C0C0] font-bold text-xl">Data Karyawan</h1>
+                    <a href="{{ route('karyawanOwner.create') }}" class="py-2 px-4 border border-gray-500 rounded-lg hover:bg-gray-500 hover:text-white">Tambah Data +</a>
+                </div>
                 <div class="w-full flex justify-center pt-2 pb-4 shadow-[1px_1px_5px_rgba(0,0,0,0.25)] rounded-lg mt-2">
                     <table class="table-fixed w-full text-center">
                         <thead class="border-b-2 border-[#CCCCCC]">
@@ -453,7 +459,10 @@
                 </div>
             </div>
             <div class="flex-col pb-10 tabelMasterData hidden" id="data-proyek">
-                <h1 class="text-[#C0C0C0] font-bold text-xl">Proyek</h1>
+                <div class="flex items-center justify-between">
+                    <h1 class="text-[#C0C0C0] font-bold text-xl">Proyek</h1>
+                    <a href="{{ route('proyekMdOwner.create') }}" class="py-2 px-4 border border-gray-500 rounded-lg hover:bg-gray-500 hover:text-white">Tambah Data +</a>
+                </div>
                 <div class="w-full flex justify-center pt-2 pb-4 shadow-[1px_1px_5px_rgba(0,0,0,0.25)] rounded-lg mt-2">
                     <table class="table-fixed w-[80%] text-center">
                         <thead class="border-b-2 border-[#CCCCCC]">
@@ -505,7 +514,10 @@
                 </div>
             </div>
             <div class="flex-col pb-10 tabelMasterData hidden" id="data-supplier">
-                <h1 class="text-[#C0C0C0] font-bold text-xl">Supplier</h1>
+                <div class="flex items-center justify-between">
+                    <h1 class="text-[#C0C0C0] font-bold text-xl">Supplier</h1>
+                    <a href="{{ route('supplierOwner.create') }}" class="py-2 px-4 border border-gray-500 rounded-lg hover:bg-gray-500 hover:text-white">Tambah Data +</a>
+                </div>
                 <div class="w-full flex justify-center pt-2 pb-4 shadow-[1px_1px_5px_rgba(0,0,0,0.25)] rounded-lg mt-2">
                     <table class="table-fixed w-[80%] text-center">
                         <thead class="border-b-2 border-[#CCCCCC]">
