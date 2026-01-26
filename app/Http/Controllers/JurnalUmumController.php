@@ -532,34 +532,23 @@ class JurnalUmumController extends Controller
             // validasi dulu semua kredit
             foreach ($transaksi as $row) {
                 if (($row['kredit'] ?? 0) > 0) {
+                    // hitung saldo dari jurnal
+                    $debit  = JurnalUmum::active()->where('kode_akun', $row['kode_akun'])->sum('debit');
+                    $kredit = JurnalUmum::active()->where('kode_akun', $row['kode_akun'])->sum('kredit');
+
                     $asset = Asset::where('kode_akun', $row['kode_akun'])->first();
-                    if ($asset && $asset->saldo < $row['kredit']) {
+                    $saldo = $debit - $kredit;
+
+                    if ($saldo < $row['kredit']) {
                         DB::rollBack();
                         return response()->json(['error' => "Saldo {$asset->nama_akun} tidak mencukupi"], 400);
                     }
-                    $modal = Asset::where('nama_akun', 'Modal')->first();
-                    if ($modal && $modal->saldo < $row['kredit']) {
-                        DB::rollBack();
-                        return response()->json(['error' => "Saldo Modal tidak mencukupi"], 400);
-                    }
+
                 }
             }
 
             // kalau lolos validasi, baru eksekusi update + create
             foreach ($transaksi as $row) {
-                $asset = Asset::where('kode_akun', $row['kode_akun'])->first();
-                if ($asset) {
-                    if (($row['kredit'] ?? 0) > 0) {
-                        $asset->saldo -= $row['kredit'];
-                    }
-                    $asset->save();
-                }
-
-                $modal = Asset::where('nama_akun', 'Modal')->first();
-                if ($modal && ($row['kredit'] ?? 0) > 0) {
-                    $modal->saldo -= $row['kredit'];
-                    $modal->save();
-                }
 
                 JurnalUmum::create([
                     'kode_jurnal'   => $kodeJurnal,
