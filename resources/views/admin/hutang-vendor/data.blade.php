@@ -269,13 +269,34 @@
             </div>
 
             <div class="flex items-center w-full justify-end gap-x-2 mt-4">
-                ${ item.is_generate ? ` <button type="button" onclick="Swal.close()" class="flex items-center gap-x-2 py-2 px-4 rounded-lg border border-[#DD4049]"> <span class="text-[#DD4049]">Batal</span> </button> ` : ` <button type="button" id="generateBtn" class="flex items-center gap-x-2 py-2 px-4 rounded-lg border border-[#45D03E]"> <span class="text-[#45D03E]">Generate</span> </button> <button type="button" onclick="Swal.close()" class="flex items-center gap-x-2 py-2 px-4 rounded-lg border border-[#DD4049]"> <span class="text-[#DD4049]">Batal</span> </button> ` }
+                ${ item.is_generate ? ` <button type="button" onclick="Swal.close()" class="flex items-center gap-x-2 py-2 px-4 rounded-lg border border-[#DD4049]"> <span class="text-[#DD4049]">Batal</span> </button> <button id="btnCetak" class="flex items-center gap-x-2 py-2 px-4 rounded-lg border border-gray-500"><span class="text-gray-500">Cetak Data</span></button>` : ` <button type="button" id="generateBtn" class="flex items-center gap-x-2 py-2 px-4 rounded-lg border border-[#45D03E]"> <span class="text-[#45D03E]">Generate</span> </button> <button id="btnCetak" class="flex items-center gap-x-2 py-2 px-4 rounded-lg border border-gray-500"><span class="text-gray-500">Cetak Data</span></button> <button type="button" onclick="Swal.close()" class="flex items-center gap-x-2 py-2 px-4 rounded-lg border border-[#DD4049]"> <span class="text-[#DD4049]">Batal</span> </button> ` }
             </div>
         </form>
         `,
                     width: '700px',
                     showConfirmButton: false,
                     didOpen: () => {
+                        // 1. Ambil elemen tombol cetak terlebih dahulu
+                        const btnCetak = document.getElementById('btnCetak');
+                        
+                        // Cek apakah tombol ada (karena jika is_generate true, tombol ini tidak muncul)
+                        if (btnCetak) {
+                            btnCetak.addEventListener('click', function() {
+                                let rawUrl = "/hutang_vendor/printDetail?tgl_hutang=PLACE_TH&supplier=PLACE_S&tgl_jatuh_tempo=PLACE_TJ&nominal=PLACE_N&proyek=PLACE_K&keterangan=PLACE_M&status=PLACE_F";
+                                
+                                // PERBAIKAN: Jangan ada titik koma (;) di antara baris .replace
+                                let finalUrl = rawUrl
+                                    .replace('PLACE_TH', encodeURIComponent(item.tgl_hutang))
+                                    .replace('PLACE_S',  encodeURIComponent(item.supplier?.nama ?? '-'))
+                                    .replace('PLACE_TJ', encodeURIComponent(item.tgl_jatuh_tempo))
+                                    .replace('PLACE_N',  encodeURIComponent(item.nominal))
+                                    .replace('PLACE_K',  encodeURIComponent(item.proyek?.nama_proyek ?? '-')) // titik koma dihapus
+                                    .replace('PLACE_M',  encodeURIComponent(item.keterangan ?? '-')) // titik koma dihapus
+                                    .replace('PLACE_F',  encodeURIComponent(item.tgl_bayar ? 'Sudah dibayar' : 'Belum dibayar'));
+                                
+                                window.open(finalUrl, '_blank');
+                            });
+                        }
                         document.getElementById('generateBtn').addEventListener('click', function() {
                             Swal.fire({
                                 title: 'Lanjutkan generate?',
@@ -315,6 +336,7 @@
                                         });
 
                                 }
+
                             });
                         });
                     }

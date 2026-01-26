@@ -154,6 +154,24 @@ class NotaLangsungController extends Controller
         return $pdf->stream('nota-langsung.pdf');
     }
 
+    public function printDetail(request $request)
+    {
+        $tanggal = $request->tanggal;
+        $proyek = $request->proyek;
+        $pic = $request->pic;
+        $nominal = $request->nominal;
+        $detailBiaya = $request->detail;
+        $admin = Auth::user()->name ?? 'Administrator';
+        $role = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('admin.nota-langsung.printDetail', compact('tanggal', 'proyek', 'pic', 'nominal', 'detailBiaya', 'admin', 'role', 'tanggalCetak', 'jamCetak'))
+            ->setPaper('A4', 'potrait');
+
+        return $pdf->stream('nota-langsung.pdf');
+    }
+
     /**
      * Display the specified resource.
      */

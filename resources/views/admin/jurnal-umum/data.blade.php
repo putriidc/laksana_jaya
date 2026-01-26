@@ -385,23 +385,9 @@
                     <form id="formKasBank" class="flex flex-col items-start gap-y-4">
                     <h1 class="font-bold text-2xl mb-4">Transaksi Jurnal Pendapatan</h1>
 
-                    <div class="flex flex-col w-full items-start gap-y-2">
-                        <label>Kas/Bank</label>
-                        <select id="kasBank" class="bg-gray-200 rounded-lg px-4 py-2 w-full appearance-none cursor-pointer">
-                            <option disabled selected>-Pilih Kas-</option>
-                            @foreach ($bank as $item)
-                            <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="flex flex-col w-full items-start gap-y-2 pb-5 border-b border-gray">
-                        <label>Keterangan</label>
-                        <input type="text" id="ketKasBank" class="bg-gray-200 rounded-lg px-4 py-2 w-full">
-                    </div>
-
+                    
                     <h2 class="font-bold text-xl">Tambah Rincian Debet</h2>
-                    <div class="flex flex-col w-full gap-y-3">
+                    <div class="flex flex-col w-full gap-y-3 pb-5 border-b border-gray">
                         <div class="flex flex-col items-start w-full gap-y-1">
                             <label>Nama Akun</label>
                             <select id="namaPerkiraan" class="bg-gray-200 rounded-lg px-4 py-2 w-full text-start">
@@ -410,7 +396,7 @@
                                     <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
                                 @endforeach
                             </select>
-                        </div>
+                            </div>
                         <div class="flex flex-col items-start w-full gap-y-1">
                              <label>Keterangan</label>
                             <input type="text" id="ketPerkiraan" placeholder="Keterangan" class="bg-gray-200 rounded-lg px-4 py-2 w-full">
@@ -422,6 +408,21 @@
                         <button type="button" onclick="addDebet()" class="bg-blue-500 text-white px-3 py-2 rounded w-fit cursor-pointer">Tambah Data +</button>
                     </div>
 
+                    <div class="flex flex-col w-full items-start gap-y-2">
+                        <label>Kas/Bank</label>
+                        <select id="kasBank" class="bg-gray-200 rounded-lg px-4 py-2 w-full appearance-none cursor-pointer">
+                            <option disabled selected>-Pilih Kas-</option>
+                            @foreach ($bank as $item)
+                            <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="flex flex-col w-full items-start gap-y-2">
+                        <label>Keterangan</label>
+                        <input type="text" id="ketKasBank" class="bg-gray-200 rounded-lg px-4 py-2 w-full">
+                    </div>
+                    
                     <table id="tableDebet" class="mt-4 w-full text-sm">
                         <thead>
                         <tr class="bg-gray-300">

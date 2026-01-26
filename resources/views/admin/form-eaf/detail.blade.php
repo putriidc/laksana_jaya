@@ -35,6 +35,12 @@
                             <img src="{{ asset('assets/card-send-greeen.png') }}" alt="card send icon"
                                 class="w-[20px] h-[20px]">
                         </button>
+                        <a target="_blank" href="{{ route('eaf-detail.print', $eaf->id) }}"
+                            class="flex items-center gap-x-2 border border-orange-400 px-4 py-2 rounded-lg cursor-pointer">
+                            <span class="text-orange-400">Cetak</span>
+                            <img src="{{ asset('assets/printer-oren.png') }}" alt="card send icon"
+                                class="w-[20px] h-[20px]">
+                        </a>
                     @endif
                 </div>
             </div>

@@ -42,6 +42,26 @@ class HutangVendorController extends Controller
 
         return $pdf->stream('hutang-vendor.pdf');
     }
+
+    public function printDetail(Request $request)
+    {
+        $tgl_hutang = $request->tgl_hutang;
+        $supplier = $request->supplier;
+        $tgl_jatuh_tempo = $request->tgl_jatuh_tempo;
+        $nominal = $request->nominal;
+        $proyek = $request->proyek;
+        $keterangan = $request->keterangan;
+        $status = $request->status;
+        $admin = Auth::user()->name ?? 'Administrator';
+        $role = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('admin.hutang-vendor.printDetail', compact('tgl_hutang', 'supplier', 'tgl_jatuh_tempo', 'nominal', 'proyek', 'keterangan', 'status', 'admin', 'role', 'tanggalCetak', 'jamCetak'))
+            ->setPaper('A4', 'potrait');
+
+        return $pdf->stream('detail-hutang-vendor.pdf');
+    }
     /**
      * Tampilkan form create hutang vendor.
      */

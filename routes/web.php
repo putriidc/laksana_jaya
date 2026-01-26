@@ -207,6 +207,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('supplier', SupplierController::class);
 
         Route::get('hutang_vendor/print', [HutangVendorController::class, 'print'])->name('hutang_vendor.print');
+        Route::get('hutang_vendor/printDetail', [HutangVendorController::class, 'printDetail'])->name('hutang_vendor_detail.print');
         Route::resource('hutang_vendor', HutangVendorController::class);
         Route::put('/hutang_vendor/{id}/bayar', [HutangVendorController::class, 'bayar'])->name('hutang-vendor.bayar');
         // ADMIN KEUANGAN
@@ -334,6 +335,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin-dashboard', [DashboardAdminController::class, 'index'])->name('admin-dashboard', DashboardAdminController::class);
 
         Route::get('print-nota-langsung', [NotaLangsungController::class, 'print'])->name('nota-langsung.print');
+        Route::get('print-nota-detail', [NotaLangsungController::class, 'printDetail'])->name('nota-detail.print');
         Route::resource('notaLangsung', NotaLangsungController::class);
         // ADMIN KEUANGAN
         Route::get('/admin/master-data', [MasterDataController::class, 'index'])->name('master-data.index');
@@ -484,6 +486,7 @@ Route::middleware('auth')->group(function () {
             ->name('buku-besar-admin.print');
 
         Route::get('print-eaf/{id}', [EafController::class, 'print'])->name('eaf.print');
+        Route::get('print-eaf-detail/{kode}', [EafController::class, 'printDetail'])->name('eaf-detail.print');
         Route::resource('eaf', EafController::class);
         Route::post('/eaf/{id}/detail', [EafController::class, 'storeDetail'])->name('eaf.storeDetail');
         Route::post('/eaf/{id}/generate', [EafController::class, 'generate'])->name('eaf.generate');
@@ -491,6 +494,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('supplier', SupplierController::class);
 
         Route::get('hutang_vendor/print', [HutangVendorController::class, 'print'])->name('hutang_vendor.print');
+        Route::get('hutang_vendor/printDetail', [HutangVendorController::class, 'printDetail'])->name('hutang_vendor_detail.print');
         Route::resource('hutang_vendor', HutangVendorController::class);
         Route::put('/hutang_vendor/{id}/bayar', [HutangVendorController::class, 'bayar'])->name('hutang-vendor.bayar');
         Route::post('/hutang_vendor/{id}/generate', [HutangVendorController::class, 'generate'])

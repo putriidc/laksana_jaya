@@ -43,8 +43,8 @@
                                     </span>
                                 </td>
                                 <td class="py-2">
-                                    @if ($today === $item->tanggal)
-                                        <div class="flex items-center justify-center gap-x-2">
+                                    <div class="flex items-center justify-center gap-x-2">
+                                            @if ($today === $item->tanggal)
                                             {{-- Tombol Delete --}}
                                             <form action="{{ route('notaLangsung.destroy', $item->id) }}" method="POST"
                                                 class="h-[22px]">
@@ -55,8 +55,12 @@
                                                         alt="delete icon" class="w-[22px] cursor-pointer">
                                                 </button>
                                             </form>
+                                            <span class="border border-gray-700 h-5"></span>
+                                            @endif
+                                            <a target="_blank" href="{{ route('nota-detail.print', ['tanggal' => $item->tanggal, 'pic' => $item->pic, 'nominal' => $item->nominal, 'detail' => $item->detail_biaya, 'proyek' => $item->nama_proyek, 'total' => $item->total]) }}">
+                                                <img src="{{ asset('assets/printer-oren.png') }}" alt="print icon">
+                                            </a>
                                         </div>
-                                    @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -68,7 +72,7 @@
             function formNotaLangsung() {
                 Swal.fire({
                     html: `
-                            <form action="{{ route('notaLangsung.store') }}" method="POST" class="flex flex-col gap-y-4">
+                            <form action="{{ route('notaLangsung.store') }}" method="POST" class="flex flex-col gap-y-4" id="myForm">
                                 @csrf
                                 <h1 class="font-bold text-2xl text-start mb-5">Form Nota Langsung</h1>
                                 <div class="flex items-center max-[550px]:flex-col max-[550px]:items-start">
@@ -147,6 +151,41 @@
                             const picValue = selectedOption.getAttribute('data-pic');
                             picInput.value = picValue ?? '';
                         });
+
+                        function formatRupiah(angka, prefix) {
+                            let number_string = angka.replace(/[^,\d]/g, "").toString(),
+                                split = number_string.split(","),
+                                sisa = split[0].length % 3,
+                                rupiah = split[0].substr(0, sisa),
+                                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+                            if (ribuan) {
+                                let separator = sisa ? "." : "";
+                                rupiah += separator + ribuan.join(".");
+                            }
+
+                            rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+                            return prefix == undefined ? rupiah : rupiah ? "Rp. " + rupiah : "";
+                        }
+
+                        // 2. Jalankan fungsi saat input diketik (Event Input)
+                        const rupiahInputs = document.querySelectorAll('.rupiah-format');
+                        rupiahInputs.forEach(input => {
+                            input.addEventListener('input', function(e) {
+                                this.value = formatRupiah(this.value, "Rp. ");
+                            });
+                        });
+
+                        // 4. Logika Submit (Tetap sama, membersihkan format)
+                        const form = document.getElementById('myForm');
+                        if (form) {
+                            form.addEventListener('submit', function(e) {
+                                document.querySelectorAll('.rupiah-format').forEach(input => {
+                                    let cleanValue = input.value.replace(/[^0-9]/g, ""); // Lebih aman hapus semua selain angka
+                                    input.value = cleanValue;
+                                });
+                            });
+                        }
                     }
                 })
             }

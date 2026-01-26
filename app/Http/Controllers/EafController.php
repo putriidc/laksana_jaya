@@ -149,6 +149,52 @@ class EafController extends Controller
         return view('admin.form-eaf.detail', compact('eaf', 'today', 'akun', 'bank'));
     }
 
+    public function printDetail($id)
+    {
+        // Ambil data EAF berdasarkan id
+        $eaf = Eaf::with('details')->findOrFail($id);
+        $today = Carbon::now('Asia/Jakarta')->toDateString();
+        $akun = Asset::Active()
+            ->whereIn('nama_akun', [
+                'Piutang Proyek',
+                'Biaya Material, Alat dan Barang',
+                'Biaya Gaji Tukang & pengawas lapangan',
+                'Biaya Sewa Alat Berat',
+                'Biaya Listrik,air, telphon dan Internet',
+                'Biaya Infaq dan sumbangan',
+                'Biaya Operasional Lainnya',
+                'Biaya Alat tulis kantor',
+                'Biaya Sewa Gedung Kantor',
+                'Biaya Jilid dan Keperluan Product',
+                'Pajak'
+            ])
+            ->get();
+       if (Auth::user()->role === 'Admin 1') {
+            $allowedAccounts = ['Kas Besar', 'Kas Bank BCA', 'Kas Flip', 'OVO'];
+
+            $bank = Asset::Active()
+                ->where('akun_header', 'asset_lancar_bank')
+                ->whereIn('nama_akun', $allowedAccounts)
+                ->where('nama_akun', '!=', 'Kas BJB')
+                ->get();
+        } elseif (Auth::user()->role === 'Admin 2') {
+            $bank = Asset::Active()
+                ->where('akun_header', 'asset_lancar_bank')
+                ->where('nama_akun', '!=', 'Kas BJB')
+                ->get();
+        }
+        // Kirim ke view detail
+        $admin = Auth::user()->name ?? 'Administrator';
+        $role = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('admin.form-eaf.printDetail', compact('eaf', 'today', 'bank', 'admin', 'role', 'tanggalCetak', 'jamCetak'))
+            ->setPaper('A4', 'portrait');
+
+        return $pdf->stream('Rincian-eaf.pdf');
+    }
+
     public function print($id)
     {
         $eaf = Eaf::where('id', $id)
