@@ -532,18 +532,18 @@ class JurnalUmumController extends Controller
             // validasi dulu semua kredit
             foreach ($transaksi as $row) {
                 if (($row['kredit'] ?? 0) > 0) {
+                    $kodeBank = Asset::active()->where('akun_header', 'aset_lancar_bank')->where('kode_akun', $row['kode_akun'])->firts();
                     // hitung saldo dari jurnal
-                    $debit  = JurnalUmum::active()->where('kode_akun', $row['kode_akun'])->sum('debit');
-                    $kredit = JurnalUmum::active()->where('kode_akun', $row['kode_akun'])->sum('kredit');
+                    $debit  = JurnalUmum::active()->where('kode_perkiraan', $kodeBank->kode_akun)->sum('debit');
+                    $kredit = JurnalUmum::active()->where('kode_perkiraan', $kodeBank->kode_akun)->sum('kredit');
 
-                    $asset = Asset::where('kode_akun', $row['kode_akun'])->first();
+                    $asset = Asset::where('kode_akun', $kodeBank->kode_akun)->first();
                     $saldo = $debit - $kredit;
 
                     if ($saldo < $row['kredit']) {
                         DB::rollBack();
                         return response()->json(['error' => "Saldo {$asset->nama_akun} tidak mencukupi"], 400);
                     }
-
                 }
             }
 
