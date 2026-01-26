@@ -33,7 +33,7 @@
                         @foreach ($nota as $item)
                             <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
                                 <td class="py-2">{{ $no++ }}</td>
-                                <td class="py-2">{{ $item->creator?->name ?? '-' }}</td>
+                                <td class="py-2">{{ $item->created_by ?? '-' }}</td>
                                 <td class="py-2">{{ $item->tanggal }}</td>
                                 <td class="py-2">{{ $item->nama_proyek }}</td>
                                 <td class="py-2">{{ $item->pic }}</td>
