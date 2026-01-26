@@ -18,6 +18,7 @@
                 <table class="table-auto text-center text-sm w-full">
                     <thead class="border-b-2 border-[#CCCCCC]">
                         <th class="py-2 w-[5%]">No</th>
+                        <th class="py-2 w-[10%]">Created By</th>
                         <th class="py-2 w-[10%]">Tanggal</th>
                         <th class="py-2 w-[15%]">Nama Proyek</th>
                         <th class="py-2 w-[10%]">PIC</th>
@@ -32,6 +33,7 @@
                         @foreach ($nota as $item)
                             <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
                                 <td class="py-2">{{ $no++ }}</td>
+                                <td class="py-2">{{ $item->creator?->name ?? '-' }}</td>
                                 <td class="py-2">{{ $item->tanggal }}</td>
                                 <td class="py-2">{{ $item->nama_proyek }}</td>
                                 <td class="py-2">{{ $item->pic }}</td>

@@ -26,4 +26,8 @@ class NotaLangsung extends Model
     {
         return $query->whereNull('deleted_at');
     }
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 }
