@@ -66,7 +66,7 @@
             /* Hapus float: right, gunakan margin auto untuk posisi tengah */
             margin-left: auto;
             margin-right: auto;
-            display: block; 
+            display: block;
         }
     </style>
 
@@ -115,7 +115,7 @@
                     </td>
                     <td style="vertical-align: bottom; height: 80px;">
                         <div style="width: 100px;"></div>
-                        <span>Siska</span>
+                        <span>{{ $admin }}</span>
                     </td>
                     <td style="vertical-align: bottom; height: 80px;">
                         <div style="width: 100px;"></div>
