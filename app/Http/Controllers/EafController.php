@@ -116,9 +116,9 @@ class EafController extends Controller
         // Ambil data EAF berdasarkan id
         $eaf = Eaf::with('details')->findOrFail($id);
         $today = Carbon::now('Asia/Jakarta')->toDateString();
-        $detailTanggal = Carbon::parse($eaf->details->first()?->tanggal)->toDateString();
+        $tanggalDetail = optional($eaf->details->first())->tanggal;
         $hariIni = Carbon::now('Asia/Jakarta')->toDateString();
-        $besok = Carbon::now('Asia/Jakarta')->addDay()->toDateString();
+        $besok = Carbon::now('Asia/Jakarta')->subDay()->toDateString();
         $akun = Asset::Active()
             ->whereIn('nama_akun', [
                 'Piutang Proyek',
