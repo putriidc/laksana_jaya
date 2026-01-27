@@ -743,6 +743,8 @@ Route::middleware('auth')->group(function () {
             ->name('jurnalOwner.bulk-delete');
 
         Route::get('print-resume', [ProyekOwnerController::class, 'print'])->name('resume.print');
+        Route::get('print-proyek', [ProyekOwnerController::class, 'print'])->name('proyek.print');
+        Route::get('print-proyek-detail/{id}', [ProyekOwnerController::class, 'printDetail'])->name('proyek-detail.print');
         Route::get('print-data-management', [ProyekOwnerController::class, 'printManagement'])->name('dataManagement.print');
         Route::get('/proyekOwner', [ProyekOwnerController::class, 'index'])->name('proyekOwner.index');
         Route::get('/proyekOwner/indexManage', [ProyekOwnerController::class, 'indexManage'])->name('proyekOwner.indexManage');

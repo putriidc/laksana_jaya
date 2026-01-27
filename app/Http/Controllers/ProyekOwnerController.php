@@ -33,6 +33,30 @@ class ProyekOwnerController extends Controller
 
         return view('owner.data-proyek.proyek.data', compact('proyeks', 'kategori'));
     }
+
+    public function print(Request $request)
+    {
+        // tangkap kategori dari query string
+        $kategori = $request->kategori;
+
+        // filter berdasarkan kategori
+        $proyeks = Proyek::where('kategori', $kategori)
+            ->whereNull('deleted_at')
+            ->orderBy('nama_perusahaan')
+            ->get()
+            ->groupBy('nama_perusahaan');
+
+        $owner = Auth::user()->name ?? 'Rian';
+        $role = Auth::user()->role ?? 'owner';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('owner.data-proyek.proyek.print', compact('proyeks', 'kategori', 'owner', 'role', 'tanggalCetak', 'jamCetak'))
+            ->setPaper('A4', 'potrait');
+
+        return $pdf->stream('data-proyek.pdf');
+    }
+
     public function indexManage(Request $request)
     {
 
@@ -98,69 +122,69 @@ class ProyekOwnerController extends Controller
         return view('owner.resume.data', compact('resume'));
     }
 
-    public function print()
-    {
-        $proyeks = Proyek::active()->get();
-        $assetBankAccounts = Asset::where('akun_header', 'asset_lancar_bank')->pluck('nama_akun');
-        $resume = $proyeks->map(function ($proyek) use ($assetBankAccounts) {
-            $jurnal = JurnalUmum::where('nama_proyek', $proyek->nama_proyek)->where('nama_perkiraan', '!=', 'Piutang Proyek')->whereNotIn('nama_perkiraan', $assetBankAccounts)->get();
-            $totalPengeluaran = $jurnal->sum('debit');
-            $kontrak = KontrakProyek::where('kode_proyek', $proyek->kode_akun)->first();
-            $net = $kontrak->net ?? 0;
+    // public function print()
+    // {
+    //     $proyeks = Proyek::active()->get();
+    //     $assetBankAccounts = Asset::where('akun_header', 'asset_lancar_bank')->pluck('nama_akun');
+    //     $resume = $proyeks->map(function ($proyek) use ($assetBankAccounts) {
+    //         $jurnal = JurnalUmum::where('nama_proyek', $proyek->nama_proyek)->where('nama_perkiraan', '!=', 'Piutang Proyek')->whereNotIn('nama_perkiraan', $assetBankAccounts)->get();
+    //         $totalPengeluaran = $jurnal->sum('debit');
+    //         $kontrak = KontrakProyek::where('kode_proyek', $proyek->kode_akun)->first();
+    //         $net = $kontrak->net ?? 0;
 
-            $dataPerusahaan = DataPerusahaan::whereNull('deleted_at')
-                ->where('nama_paket', $proyek->nama_proyek)
-                ->first();
+    //         $dataPerusahaan = DataPerusahaan::whereNull('deleted_at')
+    //             ->where('nama_paket', $proyek->nama_proyek)
+    //             ->first();
 
-            $progres = collect(); // default kosong
+    //         $progres = collect(); // default kosong
 
-            if ($dataPerusahaan) {
-                $progres = Progres::where('kode_paket', $dataPerusahaan->kode_paket)
-                    ->whereNull('deleted_at')
-                    ->orderBy('minggu', 'asc')
-                    ->get();
-            }
+    //         if ($dataPerusahaan) {
+    //             $progres = Progres::where('kode_paket', $dataPerusahaan->kode_paket)
+    //                 ->whereNull('deleted_at')
+    //                 ->orderBy('minggu', 'asc')
+    //                 ->get();
+    //         }
 
-            // Hitung total progres (maksimal 100%)
-            $totalProgress = $progres->sum('persen');
-            if ($totalProgress > 100) {
-                $totalProgress = 100;
-            }
-            $Hutang_vendor = HutangVendor::active()
-                ->where('kode_proyek', $proyek->kode_akun)
-                ->first();
+    //         // Hitung total progres (maksimal 100%)
+    //         $totalProgress = $progres->sum('persen');
+    //         if ($totalProgress > 100) {
+    //             $totalProgress = 100;
+    //         }
+    //         $Hutang_vendor = HutangVendor::active()
+    //             ->where('kode_proyek', $proyek->kode_akun)
+    //             ->first();
 
-            $piutangVendor = 0; // default
+    //         $piutangVendor = 0; // default
 
-            if ($Hutang_vendor) {
-                $piutangVendor = $Hutang_vendor->is_generate ? 0 : $Hutang_vendor->nominal;
-            }
+    //         if ($Hutang_vendor) {
+    //             $piutangVendor = $Hutang_vendor->is_generate ? 0 : $Hutang_vendor->nominal;
+    //         }
 
-            return [
-                'nama_proyek' => $proyek->nama_proyek,
-                'nilai_kontrak' => $proyek->nilai_kontrak,
-                'tgl_mulai' => $proyek->tgl_mulai,
-                'jenis_proyek' => $proyek->jenis ?? '-',
-                'total_pengeluaran' => $totalPengeluaran,
-                'piutang_vendor' => $piutangVendor,
-                'total_tp_pv' => $totalPengeluaran + $piutangVendor,
-                'persentase' => $net > 0 ? ($totalPengeluaran / $net) * 100 : 0,
-                'sisa' => $net - $totalPengeluaran,
-                'net' => $net,
-                'total_progres' => $totalProgress ?? 0,
-            ];
-        });
+    //         return [
+    //             'nama_proyek' => $proyek->nama_proyek,
+    //             'nilai_kontrak' => $proyek->nilai_kontrak,
+    //             'tgl_mulai' => $proyek->tgl_mulai,
+    //             'jenis_proyek' => $proyek->jenis ?? '-',
+    //             'total_pengeluaran' => $totalPengeluaran,
+    //             'piutang_vendor' => $piutangVendor,
+    //             'total_tp_pv' => $totalPengeluaran + $piutangVendor,
+    //             'persentase' => $net > 0 ? ($totalPengeluaran / $net) * 100 : 0,
+    //             'sisa' => $net - $totalPengeluaran,
+    //             'net' => $net,
+    //             'total_progres' => $totalProgress ?? 0,
+    //         ];
+    //     });
 
-        $owner = Auth::user()->name ?? 'Rian';
-        $role = Auth::user()->role ?? 'owner';
-        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
-        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+    //     $owner = Auth::user()->name ?? 'Rian';
+    //     $role = Auth::user()->role ?? 'owner';
+    //     $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+    //     $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
 
-        $pdf = Pdf::loadView('owner.resume.print', compact('resume', 'owner', 'role', 'tanggalCetak', 'jamCetak'))
-            ->setPaper('A4', 'landscape');
+    //     $pdf = Pdf::loadView('owner.resume.print', compact('resume', 'owner', 'role', 'tanggalCetak', 'jamCetak'))
+    //         ->setPaper('A4', 'landscape');
 
-        return $pdf->stream('resume-proyek.pdf');
-    }
+    //     return $pdf->stream('resume-proyek.pdf');
+    // }
 
     public function printManagement()
     {
@@ -306,24 +330,66 @@ class ProyekOwnerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
         $proyek = Proyek::with('kontrak')->findOrFail($id);
+        $startDate = $request->query('start_date');
+        $endDate = $request->query('end_date');
 
         // ambil semua nama akun dari Asset dengan akun_header = asset_lancar_bank
         $assetBankAccounts = Asset::where('akun_header', 'asset_lancar_bank')
             ->pluck('nama_akun'); // ambil nama_akun, bisa juga kode_akun kalau mau
 
-        $jurnal = JurnalUmum::active()->where('nama_proyek', $proyek->nama_proyek)
+        $jurnal = JurnalUmum::active()
+            ->where('nama_proyek', $proyek->nama_proyek)
             ->where('nama_perkiraan', '!=', 'Piutang Proyek')
             ->where('nama_perkiraan', '!=', 'Pendapatan Proyek Fisik')
             ->whereNotIn('nama_perkiraan', $assetBankAccounts)
             ->where('debit', '>', 0)
+            // Logika Search by Date
+            ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
+                return $query->whereBetween('tanggal', [$startDate, $endDate]);
+            })
             ->orderBy('tanggal', 'desc')
             ->get();
         $totalDebit = $jurnal->sum('debit');
 
         return view('owner.data-proyek.proyek.detail', compact('proyek', 'jurnal', 'totalDebit'));
+    }
+
+    public function printDetail($id, Request $request)
+    {
+        $proyek = Proyek::with('kontrak')->findOrFail($id);
+        $startDate = $request->query('start_date');
+        $endDate = $request->query('end_date');
+
+        // ambil semua nama akun dari Asset dengan akun_header = asset_lancar_bank
+        $assetBankAccounts = Asset::where('akun_header', 'asset_lancar_bank')
+            ->pluck('nama_akun'); // ambil nama_akun, bisa juga kode_akun kalau mau
+
+        $jurnal = JurnalUmum::active()
+            ->where('nama_proyek', $proyek->nama_proyek)
+            ->where('nama_perkiraan', '!=', 'Piutang Proyek')
+            ->where('nama_perkiraan', '!=', 'Pendapatan Proyek Fisik')
+            ->whereNotIn('nama_perkiraan', $assetBankAccounts)
+            ->where('debit', '>', 0)
+            // Logika Search by Date
+            ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
+                return $query->whereBetween('tanggal', [$startDate, $endDate]);
+            })
+            ->orderBy('tanggal', 'desc')
+            ->get();
+        $totalDebit = $jurnal->sum('debit');
+
+        $owner = Auth::user()->name ?? 'Rian';
+        $role = Auth::user()->role ?? 'owner';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('owner.data-proyek.proyek.printDetail', compact('proyek', 'jurnal', 'totalDebit', 'owner', 'role', 'tanggalCetak', 'jamCetak'))
+            ->setPaper('A4', 'potrait');
+
+        return $pdf->stream('data-proyek.pdf');
     }
 
     /**

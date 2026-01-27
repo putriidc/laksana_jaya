@@ -6,10 +6,6 @@
                 <span class="text-2xl font-bold">Data Proyek</span>
                 <img src="{{ asset('assets/arrow-down.png') }}" alt="">
             </button>
-            <a href="" class="flex items-center gap-x-2 border-2 border-[#9A9A9A] py-2 px-3 rounded-lg">
-                <span class="text-[#72686B]">Cetak Data</span>
-                <img src="{{ asset('assets/printer.png') }}" alt="printer icon">
-            </a>
         </div>
         {{-- <div class="py-6 px-10 rounded-lg shadow-[0px_0px_10px_rgba(0,0,0,0.1)] flex flex-col gap-y-5 mb-8">
         <div class="flex items-center gap-x-2 select-none">
@@ -150,7 +146,24 @@
             {{-- setelah isi manage kontrak --}}
         </div>
         <div>
-            <h1 class="text-2xl font-bold mb-5">Tabel Pengeluaran</h1>
+            <div class="flex items-start justify-between mb-2">
+                <h1 class="text-2xl font-bold mb-5">Tabel Pengeluaran</h1>
+                <div class="flex flex-col items-end gap-y-2">
+                    <form method="GET" action="{{ route('proyekOwner.show', $proyek->id) }}" class="flex gap-x-2 max-[600px]:flex-wrap max-[600px]:gap-y-2">
+                        <input type="text" data-flatpickr placeholder="Pilih tanggal awal" name="start_date" value="{{ request('start_date') }}"
+                            class="border-2 border-[#9A9A9A] rounded-lg px-3 py-2">
+                        <input type="text" data-flatpickr placeholder="Pilih tanggal akhir" name="end_date" value="{{ request('end_date') }}"
+                            class="border-2 border-[#9A9A9A] rounded-lg px-3 py-2">
+                        <button type="submit" class="border-2 border-[#9A9A9A] rounded-lg px-3 py-2 bg-white max-[600px]:hidden">
+                            <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" />
+                        </button>
+                    </form>
+                    <a target="_blank" href="{{ route('proyek-detail.print', ['id' => $proyek->id, 'start_date' => request('start_date'), 'end_date' => request('end_date')]) }}" class="w-fit flex items-center gap-x-2 border-2 border-[#9A9A9A] py-2 px-3 rounded-lg">
+                        <span class="text-[#72686B]">Cetak Data</span>
+                        <img src="{{ asset('assets/printer.png') }}" alt="printer icon">
+                    </a>
+                </div>
+            </div>
             <div class="flex items-center justify-between mb-5 max-[540px]:flex-col max-[540px]:items-start max-[540px]:gap-y-2">
                 <span>Nama Proyek : {{ $proyek->nama_proyek }}</span>
                 <span>Total Pengeluaran : <b>{{ 'RP. ' . number_format($totalDebit, 0, ',', '.') }}</b> </span>

@@ -20,7 +20,7 @@
                     <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" class="w-[20px]">
                 </button>
             </div>
-            <a href="" class="border-2 border-[#9A9A9A] py-2 px-2 rounded-lg cursor-pointer flex items-center gap-x-2 text-[#726868]">
+            <a target="_blank" href="{{  route('proyek.print', ['kategori' => $kategori]) }}" class="border-2 border-[#9A9A9A] py-2 px-2 rounded-lg cursor-pointer flex items-center gap-x-2 text-[#726868]">
                 <span>Cetak Data</span>
                 <img src="{{ asset('assets/printer.png') }}" alt="printer icon">
             </a>
