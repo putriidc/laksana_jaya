@@ -359,8 +359,24 @@ class JurnalUmumController extends Controller
             $asset = Asset::where('kode_akun', $akunFrom->kode_akun)->first();
             if ($asset) {
                 if ($nominal > 0) {
+                    $kodeBank = Asset::active()
+                        ->where('akun_header', 'asset_lancar_bank') // pastikan nama benar
+                        ->where('kode_akun', $akunFrom->kode_akun)
+                        ->first();
+
+                    if (!$kodeBank) {
+                        DB::rollBack();
+                        return response()->json(['error' => "Akun bank tidak ditemukan"], 400);
+                    }
+
+                    // hitung saldo dari jurnal
+                    $debit  = JurnalUmum::active()->where('kode_perkiraan', $kodeBank->kode_akun)->sum('debit');
+                    $kredit = JurnalUmum::active()->where('kode_perkiraan', $kodeBank->kode_akun)->sum('kredit');
+
+
+                    $saldo =  $debit - $kredit;
                     // kredit → saldo berkurang, tapi jangan sampai minus
-                    if ($asset->saldo < $nominal) {
+                    if ($saldo < $nominal) {
                         return response()->json(['error' => "Saldo {$asset->nama_akun} tidak mencukupi"], 400);
                     }
                     $asset->saldo -= $nominal;
@@ -548,6 +564,7 @@ class JurnalUmumController extends Controller
 
                     $asset = Asset::where('kode_akun', $kodeBank->kode_akun)->first();
                     $saldo =  $debit - $kredit;
+                    $asset->saldo -= $row['kredit'];
 
                     if ($saldo < $row['kredit']) {
                         DB::rollBack();

@@ -225,35 +225,35 @@ class HutangVendorController extends Controller
                 'error' => 'Anda belum membayar hutang'
             ], 400);
         }
+        $kas = Asset::active()->where('kode_akun', $hutang->kode_akun)->first();
+        if (!$kas) {
+            return redirect()->back()->with('error', 'Akun kas tidak ditemukan');
+        }
+        // hitung saldo dari jurnal
+        $debit  = JurnalUmum::active()->where('kode_perkiraan', $kas->kode_akun)->sum('debit');
+        $kredit = JurnalUmum::active()->where('kode_perkiraan', $kas->kode_akun)->sum('kredit');
+
+
+        $saldo =  $debit - $kredit;
+        if ($saldo < $hutang->nominal) {
+            return redirect()->back()->with('error', "Saldo {$kas->nama_akun} tidak mencukupi");
+        }
+        if ($kas) {
+            // Kurangi saldo
+            $kas->saldo -= $hutang->nominal;
+            $kas->save();
+        }
 
         // update status generate
         $hutang->is_generate = true;
         $hutang->save();
 
         $proyek = Proyek::active()->where('kode_akun', $hutang->kode_proyek)->first();
-        $kas = Asset::active()->where('kode_akun', $hutang->kode_akun)->first();
+
         $lastId = JurnalUmum::max('id') ?? 0;
         $nextId = $lastId + 1;
         $kodeJurnal = 'J-' . str_pad($nextId, 3, '0', STR_PAD_LEFT);
-        if (!$kas) {
-                return redirect()->back()->with('error', 'Akun kas tidak ditemukan');
-            }
-            // Cek saldo cukup atau tidak
-            if ($kas->saldo < $hutang->nominal) {
-                return redirect()->back()->with('error', "Saldo {$kas->nama_akun} tidak mencukupi");
-            }
-            if ($kas) {
-                // Kurangi saldo
-                $kas->saldo -= $hutang->nominal;
-                $kas->save();
-                $modal = Asset::where('nama_akun', 'Modal')->first();
-                if ($modal) {
-                    if (($hutang->nominal ?? 0) > 0) {
-                        $modal->saldo -= $hutang->nominal;
-                    }
-                    $modal->save();
-                }
-            }
+
         // buat jurnal debit hutang vendor
         JurnalUmum::create([
             'detail_order'   => 3,

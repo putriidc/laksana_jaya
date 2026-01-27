@@ -187,23 +187,23 @@ class JurnalOwnerController extends Controller
             $akunTo   = Asset::where('kode_akun', $to)->first();
             // update saldo di assets (Kas/Bank asal)
             $asset = Asset::where('kode_akun', $akunFrom->kode_akun)->first();
-            if ($asset) {
-                if ($nominal > 0) {
-                    // kredit → saldo berkurang, tapi jangan sampai minus
-                    if ($asset->saldo < $nominal) {
-                        return response()->json(['error' => "Saldo {$asset->nama_akun} tidak mencukupi"], 400);
-                    }
-                    $asset->saldo -= $nominal;
-                }
-                $asset->save();
-            }
-            $asset = Asset::where('kode_akun', $akunTo->kode_akun)->first();
-            if ($asset) {
-                if ($nominal > 0) {
-                    $asset->saldo += $nominal;
-                }
-                $asset->save();
-            }
+            // if ($asset) {
+            //     if ($nominal > 0) {
+            //         // kredit → saldo berkurang, tapi jangan sampai minus
+            //         if ($asset->saldo < $nominal) {
+            //             return response()->json(['error' => "Saldo {$asset->nama_akun} tidak mencukupi"], 400);
+            //         }
+            //         $asset->saldo -= $nominal;
+            //     }
+            //     $asset->save();
+            // }
+            // $asset = Asset::where('kode_akun', $akunTo->kode_akun)->first();
+            // if ($asset) {
+            //     if ($nominal > 0) {
+            //         $asset->saldo += $nominal;
+            //     }
+            //     $asset->save();
+            // }
 
             // baris 2: debit ke kas/bank tujuan
             JurnalUmum::create([

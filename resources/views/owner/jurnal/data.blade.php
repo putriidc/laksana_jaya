@@ -944,7 +944,7 @@
                                         if (res.error) {
                                             Swal.fire("Error", res.error, "error");
                                         } else {
-                                            Swal.fire("Sukses", "Transfer kas/bank berhasil dicatat",
+                                            Swal.fire("Sukses", "Jurnal Transaksi berhasil dicatat",
                                                 "success").then(() => {
                                                 location.reload();
                                             });

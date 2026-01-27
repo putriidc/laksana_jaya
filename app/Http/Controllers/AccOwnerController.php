@@ -86,7 +86,24 @@ class AccOwnerController extends Controller
             $pinjamanKaryawan = KasbonTukang::active()
                 ->where('kode_kasbon', $kasbonContent->kode_kasbon)
                 ->firstOrFail();
+            $bank = Asset::where('kode_akun', $kasbonContent->kode_kas)->first();
+            if (!$bank) {
+                return redirect()->back()->with('error', 'Akun kas tidak ditemukan');
+            }
+            // hitung saldo dari jurnal
+            $debit  = JurnalUmum::active()->where('kode_perkiraan', $bank->kode_akun)->sum('debit');
+            $kredit = JurnalUmum::active()->where('kode_perkiraan', $bank->kode_akun)->sum('kredit');
 
+
+            $saldo =  $debit - $kredit;
+            if ($saldo < $kasbonContent->bayar) {
+                return redirect()->back()->with('error', "Saldo {$bank->nama_akun} tidak mencukupi");
+            }
+            if ($bank) {
+                // Kurangi saldo
+                $bank->saldo -= $kasbonContent->bayar;
+                $bank->save();
+            }
             $sisa = $kasbonContent->bayar + $pinjamanKaryawan->total;
 
             $pinjamanKaryawan->update([
@@ -99,32 +116,14 @@ class AccOwnerController extends Controller
 
             // ✅ Tambahkan input ke jurnal umum
             $asset = Asset::where('nama_akun', $kasbonContent->kasbon->nama_akun)->first();
-            $bank = Asset::where('kode_akun', $kasbonContent->kode_kas)->first();
+
             $proyek = Proyek::where('nama_proyek', $kasbonContent->kasbon->nama_proyek)->first();
             // generate kode jurnal J-00{id terakhir + 1}
             $lastId = JurnalUmum::max('id') ?? 0;
             $nextId = $lastId + 1;
             $kodeJurnal = 'J-' . str_pad($nextId, 3, '0', STR_PAD_LEFT);
 
-            if (!$bank) {
-                return redirect()->back()->with('error', 'Akun kas tidak ditemukan');
-            }
-            // Cek saldo cukup atau tidak
-            if ($bank->saldo < $kasbonContent->bayar) {
-                return redirect()->back()->with('error', "Saldo {$bank->nama_akun} tidak mencukupi");
-            }
-            if ($bank) {
-                // Kurangi saldo
-                $bank->saldo -= $kasbonContent->bayar;
-                $bank->save();
-                $modal = Asset::where('nama_akun', 'Modal')->first();
-                if ($modal) {
-                    if (($kasbonContent->bayar ?? 0) > 0) {
-                        $modal->saldo -= $kasbonContent->bayar;
-                    }
-                    $modal->save();
-                }
-            }
+
 
             JurnalUmum::create([
                 'id_content'   => $kasbonContent->id, // generate kode unik
@@ -166,24 +165,22 @@ class AccOwnerController extends Controller
         $pinjamContent = PinjamanContent::active()->findOrFail($request->id_tukang_content);
         $bank = Asset::where('kode_akun', $pinjamContent->kode_kas)->first();
         if (!$bank) {
-                return redirect()->back()->with('error', 'Akun kas tidak ditemukan');
-            }
-            // Cek saldo cukup atau tidak
-            if ($bank->saldo < $pinjamContent->bayar) {
-                return redirect()->back()->with('error', "Saldo {$bank->nama_akun} tidak mencukupi");
-            }
-            if ($bank) {
-                // Kurangi saldo
-                $bank->saldo -= $pinjamContent->bayar;
-                $bank->save();
-                $modal = Asset::where('nama_akun', 'Modal')->first();
-                if ($modal) {
-                    if (($pinjamContent->bayar ?? 0) > 0) {
-                        $modal->saldo -= $pinjamContent->bayar;
-                    }
-                    $modal->save();
-                }
-            }
+            return redirect()->back()->with('error', 'Akun kas tidak ditemukan');
+        }
+        // hitung saldo dari jurnal
+        $debit  = JurnalUmum::active()->where('kode_perkiraan', $bank->kode_akun)->sum('debit');
+        $kredit = JurnalUmum::active()->where('kode_perkiraan', $bank->kode_akun)->sum('kredit');
+
+
+        $saldo =  $debit - $kredit;
+        if ($saldo < $pinjamContent->bayar) {
+            return redirect()->back()->with('error', "Saldo {$bank->nama_akun} tidak mencukupi");
+        }
+        if ($bank) {
+            // Kurangi saldo
+            $bank->saldo -= $pinjamContent->bayar;
+            $bank->save();
+        }
 
         // Update status owner dulu
         $pinjamContent->update([
@@ -248,18 +245,18 @@ class AccOwnerController extends Controller
         ]);
 
         JurnalUmum::create([
-                'id_content'   => $pinjamContent->id, // generate kode unik
-                'kode_jurnal'   => $kodeJurnal, // generate kode unik
-                'tanggal'       => $pinjamContent->tanggal,         // sama dengan tanggal content
-                'keterangan'    => $pinjamContent->kontrak,         // isi kontrak
-                'nama_perkiraan' => $bank ? $bank->nama_akun : null,
-                'kode_perkiraan' => $pinjamContent->kode_kas,
-                'nama_proyek'   => '-',
-                'kode_proyek'   => '-',
-                'debit'         => 0,
-                'kredit'        => $pinjamContent->bayar,
-                'created_by'    => $pinjamContent->created_by,
-            ]);
+            'id_content'   => $pinjamContent->id, // generate kode unik
+            'kode_jurnal'   => $kodeJurnal, // generate kode unik
+            'tanggal'       => $pinjamContent->tanggal,         // sama dengan tanggal content
+            'keterangan'    => $pinjamContent->kontrak,         // isi kontrak
+            'nama_perkiraan' => $bank ? $bank->nama_akun : null,
+            'kode_perkiraan' => $pinjamContent->kode_kas,
+            'nama_proyek'   => '-',
+            'kode_proyek'   => '-',
+            'debit'         => 0,
+            'kredit'        => $pinjamContent->bayar,
+            'created_by'    => $pinjamContent->created_by,
+        ]);
 
 
         return redirect()->route('accowner.index')
@@ -274,24 +271,22 @@ class AccOwnerController extends Controller
         $kasbonContent = KasbonContent::active()->findOrFail($request->id_tukang_content);
         $bank = Asset::where('kode_akun', $kasbonContent->kode_kas)->first();
         if (!$bank) {
-                return redirect()->back()->with('error', 'Akun kas tidak ditemukan');
-            }
-            // Cek saldo cukup atau tidak
-            if ($bank->saldo < $kasbonContent->bayar) {
-                return redirect()->back()->with('error', "Saldo {$bank->nama_akun} tidak mencukupi");
-            }
-            if ($bank) {
-                // Kurangi saldo
-                $bank->saldo -= $kasbonContent->bayar;
-                $bank->save();
-                $modal = Asset::where('nama_akun', 'Modal')->first();
-                if ($modal) {
-                    if (($kasbonContent->bayar ?? 0) > 0) {
-                        $modal->saldo -= $kasbonContent->bayar;
-                    }
-                    $modal->save();
-                }
-            }
+            return redirect()->back()->with('error', 'Akun kas tidak ditemukan');
+        }
+        // hitung saldo dari jurnal
+        $debit  = JurnalUmum::active()->where('kode_perkiraan', $bank->kode_akun)->sum('debit');
+        $kredit = JurnalUmum::active()->where('kode_perkiraan', $bank->kode_akun)->sum('kredit');
+
+
+        $saldo =  $debit - $kredit;
+        if ($saldo < $kasbonContent->bayar) {
+            return redirect()->back()->with('error', "Saldo {$bank->nama_akun} tidak mencukupi");
+        }
+        if ($bank) {
+            // Kurangi saldo
+            $bank->saldo -= $kasbonContent->bayar;
+            $bank->save();
+        }
 
         // Update status owner dulu
         $kasbonContent->update([
@@ -353,18 +348,18 @@ class AccOwnerController extends Controller
             'created_by'    => $kasbonContent->created_by,
         ]);
         JurnalUmum::create([
-                'id_content'   => $kasbonContent->id, // generate kode unik
-                'kode_jurnal'   => $kodeJurnal, // generate kode unik
-                'tanggal'       => $kasbonContent->tanggal,         // sama dengan tanggal content
-                'keterangan'    => $kasbonContent->kontrak,         // isi kontrak
-                'nama_perkiraan' => $bank ? $bank->nama_akun : null,
-                'kode_perkiraan' => $kasbonContent->kode_kas,
-                'nama_proyek'   => '-',
-                'kode_proyek'   => '-',
-                'debit'         => 0,
-                'kredit'        => $kasbonContent->bayar,
-                'created_by'    => $kasbonContent->created_by,
-            ]);
+            'id_content'   => $kasbonContent->id, // generate kode unik
+            'kode_jurnal'   => $kodeJurnal, // generate kode unik
+            'tanggal'       => $kasbonContent->tanggal,         // sama dengan tanggal content
+            'keterangan'    => $kasbonContent->kontrak,         // isi kontrak
+            'nama_perkiraan' => $bank ? $bank->nama_akun : null,
+            'kode_perkiraan' => $kasbonContent->kode_kas,
+            'nama_proyek'   => '-',
+            'kode_proyek'   => '-',
+            'debit'         => 0,
+            'kredit'        => $kasbonContent->bayar,
+            'created_by'    => $kasbonContent->created_by,
+        ]);
 
 
         return redirect()->route('accowner.index')
@@ -422,15 +417,15 @@ class AccOwnerController extends Controller
     public function printPinjaman()
     {
         $pinjamans = DB::table('pinjaman_contents')
-        // Join ke tabel perantara (karyawan_pinjamans)
-        ->join('karyawans', 'pinjaman_contents.kode_karyawan', '=', 'karyawans.kode_karyawan')
-        ->select(
-           'pinjaman_contents.*',
-            'karyawans.nama as nama_karyawan' // Kita ambil namanya saja
-        )
-        ->whereNull('pinjaman_contents.deleted_at')
-        ->orderBy('pinjaman_contents.tanggal', 'desc')
-        ->get();
+            // Join ke tabel perantara (karyawan_pinjamans)
+            ->join('karyawans', 'pinjaman_contents.kode_karyawan', '=', 'karyawans.kode_karyawan')
+            ->select(
+                'pinjaman_contents.*',
+                'karyawans.nama as nama_karyawan' // Kita ambil namanya saja
+            )
+            ->whereNull('pinjaman_contents.deleted_at')
+            ->orderBy('pinjaman_contents.tanggal', 'desc')
+            ->get();
 
         $owner = Auth::user()->name ?? 'Rian';
         $role = Auth::user()->role ?? 'owner';
@@ -445,15 +440,15 @@ class AccOwnerController extends Controller
     public function printKasbon()
     {
         $kasbons = DB::table('kasbon_contents')
-        // Join ke tabel perantara (karyawan_kasbons)
-        ->join('karyawans', 'kasbon_contents.kode_karyawan', '=', 'karyawans.kode_karyawan')
-        ->select(
-           'kasbon_contents.*',
-            'karyawans.nama as nama_karyawan' // Kita ambil namanya saja
-        )
-        ->whereNull('kasbon_contents.deleted_at')
-        ->orderBy('kasbon_contents.tanggal', 'desc')
-        ->get();
+            // Join ke tabel perantara (karyawan_kasbons)
+            ->join('karyawans', 'kasbon_contents.kode_karyawan', '=', 'karyawans.kode_karyawan')
+            ->select(
+                'kasbon_contents.*',
+                'karyawans.nama as nama_karyawan' // Kita ambil namanya saja
+            )
+            ->whereNull('kasbon_contents.deleted_at')
+            ->orderBy('kasbon_contents.tanggal', 'desc')
+            ->get();
 
         $owner = Auth::user()->name ?? 'Rian';
         $role = Auth::user()->role ?? 'owner';
@@ -468,15 +463,15 @@ class AccOwnerController extends Controller
     public function printKasbonTukang()
     {
         $kasbons = DB::table('tukang_contents')
-        // Join ke tabel perantara (karyawan_kasbons)
-        ->join('kasbon_tukangs', 'tukang_contents.kode_kasbon', '=', 'kasbon_tukangs.kode_kasbon')
-        ->select(
-           'tukang_contents.*',
-            'kasbon_tukangs.nama_tukang as nama_tukang' // Kita ambil namanya saja
-        )
-        ->whereNull('tukang_contents.deleted_at')
-        ->orderBy('tukang_contents.tanggal', 'desc')
-        ->get();
+            // Join ke tabel perantara (karyawan_kasbons)
+            ->join('kasbon_tukangs', 'tukang_contents.kode_kasbon', '=', 'kasbon_tukangs.kode_kasbon')
+            ->select(
+                'tukang_contents.*',
+                'kasbon_tukangs.nama_tukang as nama_tukang' // Kita ambil namanya saja
+            )
+            ->whereNull('tukang_contents.deleted_at')
+            ->orderBy('tukang_contents.tanggal', 'desc')
+            ->get();
 
         $owner = Auth::user()->name ?? 'Rian';
         $role = Auth::user()->role ?? 'owner';

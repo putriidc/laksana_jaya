@@ -29,7 +29,7 @@ class AccTukangSpvController extends Controller
         return view('kepala-gudang.pinjaman-karyawan.data', compact('pinjamans', 'contents'));
     }
 
-     public function print()
+    public function print()
     {
         $pinjamans = TukangContent::with('kasbon')->where('jenis', 'pinjam')
             ->whereNull('deleted_at')
@@ -78,6 +78,24 @@ class AccTukangSpvController extends Controller
             $pinjamanKaryawan = KasbonTukang::active()
                 ->where('kode_kasbon', $kasbonContent->kode_kasbon)
                 ->firstOrFail();
+            $bank = Asset::where('kode_akun', $kasbonContent->kode_kas)->first();
+            if (!$bank) {
+                return redirect()->back()->with('error', 'Akun kas tidak ditemukan');
+            }
+            // hitung saldo dari jurnal
+            $debit  = JurnalUmum::active()->where('kode_perkiraan', $bank->kode_akun)->sum('debit');
+            $kredit = JurnalUmum::active()->where('kode_perkiraan', $bank->kode_akun)->sum('kredit');
+
+
+            $saldo =  $debit - $kredit;
+            if ($saldo < $kasbonContent->bayar) {
+                return redirect()->back()->with('error', "Saldo {$bank->nama_akun} tidak mencukupi");
+            }
+            if ($bank) {
+                // Kurangi saldo
+                $bank->saldo -= $kasbonContent->bayar;
+                $bank->save();
+            }
 
             $sisa = $kasbonContent->bayar + $pinjamanKaryawan->total;
 
@@ -91,32 +109,14 @@ class AccTukangSpvController extends Controller
 
             // ✅ Tambahkan input ke jurnal umum
             $asset = Asset::where('nama_akun', $kasbonContent->kasbon->nama_akun)->first();
-            $bank = Asset::where('kode_akun', $kasbonContent->kode_kas)->first();
+
             $proyek = Proyek::where('nama_proyek', $kasbonContent->kasbon->nama_proyek)->first();
             // generate kode jurnal J-00{id terakhir + 1}
             $lastId = JurnalUmum::max('id') ?? 0;
             $nextId = $lastId + 1;
             $kodeJurnal = 'J-' . str_pad($nextId, 3, '0', STR_PAD_LEFT);
 
-            if (!$bank) {
-                return redirect()->back()->with('error', 'Akun kas tidak ditemukan');
-            }
-            // Cek saldo cukup atau tidak
-            if ($bank->saldo < $kasbonContent->bayar) {
-                return redirect()->back()->with('error', "Saldo {$bank->nama_akun} tidak mencukupi");
-            }
-            if ($bank) {
-                // Kurangi saldo
-                $bank->saldo -= $kasbonContent->bayar;
-                $bank->save();
-                $modal = Asset::where('nama_akun', 'Modal')->first();
-                if ($modal) {
-                    if (($kasbonContent->bayar ?? 0) > 0) {
-                        $modal->saldo -= $kasbonContent->bayar;
-                    }
-                    $modal->save();
-                }
-            }
+
 
 
             JurnalUmum::create([
