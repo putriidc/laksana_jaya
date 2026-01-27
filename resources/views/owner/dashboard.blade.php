@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     datasets: [{
                         // Masukkan data variabel JS di sini
                         data: [totalPendapatan, pengeluaranLain],
-                        backgroundColor: ['#4ade80', '#facc15', '#f87171'],
+                        backgroundColor: ['#4ade80', '#f87171'],
                         cutout: '85%',
                         borderWidth: 0
                     }]
