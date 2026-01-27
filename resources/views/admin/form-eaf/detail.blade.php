@@ -20,7 +20,7 @@
             <div class="flex justify-between items-center mb-5">
                 <h1 class="text-2xl font-bold">Tabel Rincian</h1>
                 <div class="flex items-center gap-x-2">
-                    @if ($hariIni->between($detailTanggal, $detailTanggal->copy()->addDay()))
+                    @if ($hariIni->between($detailTanggal, $detailTanggal->copy()->addDay(), true))
                         <button data-id="{{ $eaf->id }}" data-kode="{{ $eaf->kode_eaf }}"
                             onclick="modalAddRincian(this)"
                             class="flex items-center gap-x-2 border border-[#3E98D0] px-4 py-2 rounded-lg cursor-pointer">
@@ -67,7 +67,7 @@
                                 <td>{{ 'RP. ' . number_format($item->debit, 0, ',', '.') }}</td>
                                 <td>{{ 'RP. ' . number_format($item->kredit, 0, ',', '.') }}</td>
                                 <td>
-                                    @if ($loop->iteration > 2 && $hariIni->between($detailTanggal, $detailTanggal->copy()->addDay()))
+                                    @if ($loop->iteration > 2 && $hariIni->between($detailTanggal, $detailTanggal->copy()->addDay(), true))
                                         <div class="flex items-center gap-x-2 justify-center">
                                             {{-- Tombol Delete --}}
                                             <form action="{{ route('eaf.destroy', $item->id) }}" method="POST"
