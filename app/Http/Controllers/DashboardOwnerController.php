@@ -93,7 +93,7 @@ class DashboardOwnerController extends Controller
         // GET KAS
         // Ambil daftar kas aktif
         $assets = Asset::active()->where('akun_header', 'asset_lancar_bank')->get();
-        
+
         $chartLabels = [];
         $seriesData = [];
 
@@ -122,7 +122,7 @@ class DashboardOwnerController extends Controller
                         $saldoBerjalan += ($trx->kredit - $trx->debit);
                     }
                 }
-                
+
                 $dailyBalances[] = $saldoBerjalan;
             }
 
@@ -362,6 +362,8 @@ class DashboardOwnerController extends Controller
         $saldoModal = $totalModal;
 
         return view('owner.dashboard', compact('cashInGL', 'cashOutGL', 'pendapatanFinal',
+            'biayaCurr',
+            'pendapatanCurr',
             'biayaFinal',
             'totalPendapatan',
             'totalBiaya',

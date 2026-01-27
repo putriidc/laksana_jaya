@@ -5,7 +5,7 @@
     <div class="p-6">
     <div class="grid grid-cols-1 gap-6">
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-            <h3 class="font-bold text-gray-800 mb-6">Laba/Rugi Tahun Ini</h3>
+            <h3 class="font-bold text-gray-800 mb-6">Laba/Rugi Bulan Ini</h3>
             <div class="flex flex-col md:flex-row items-center gap-6">
                 <div class="relative w-[300px] h-[300px]">
                     <canvas id="chartLabaRugi"></canvas>
@@ -13,7 +13,7 @@
                         <span class="text-xl font-bold text-green-500">
                             @php
                                 // Hindari pembagian dengan nol jika pendapatan masih kosong
-                                $persentaseLaba = $totalPendapatan > 0 ? ($totalLabaRugi / $totalPendapatan) * 100 : 0;
+                                $persentaseLaba = $pendapatanCurr > 0 ? ($labaTahunBerjalan / $pendapatanCurr) * 100 : 0;
                             @endphp
                            {{ number_format($persentaseLaba, 1) }}%
                         </span>
@@ -22,16 +22,16 @@
                 <div class="flex-1 space-y-3 w-full">
                     <div class="flex justify-between text-sm">
                         <span><span class="inline-block w-3 h-3 rounded-full bg-green-400 mr-2"></span>Pendapatan</span>
-                        <span class="font-bold">Rp {{ number_format($totalPendapatan, 0, ',', '.') }}</span>
+                        <span class="font-bold">Rp {{ number_format($pendapatanCurr, 0, ',', '.') }}</span>
                     </div>
                     <div class="flex justify-between text-sm">
                         <span><span class="inline-block w-3 h-3 rounded-full bg-red-400 mr-2"></span>Pengeluaran</span>
                         {{-- Total Biaya dikurangi Biaya Material --}}
-                        <span class="font-bold">Rp {{ number_format($totalBiaya - ($biayaFinal->where('nama_perkiraan', 'Biaya Material')->first()['total'] ?? 0), 0, ',', '.') }}</span>
+                        <span class="font-bold">Rp {{ number_format($biayaCurr , 0, ',', '.') }}</span>
                     </div>
                     <div class="border-t pt-2 flex justify-between font-bold text-lg">
                         <span>Laba</span>
-                        <span class="text-green-500">Rp {{ number_format($totalLabaRugi, 0, ',', '.') }}</span>
+                        <span class="text-green-500">Rp {{ number_format($labaTahunBerjalan, 0, ',', '.') }}</span>
                     </div>
                 </div>
             </div>
@@ -62,7 +62,7 @@
                     <span>Jumlah Modal: Rp. {{ number_format($saldoModal + $labaDitahan + $labaTahunBerjalan, 0, ',', '.') }}</span>
                 </div>
             </div>
-{{-- 
+{{--
             <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
                 <p class="text-gray-500 text-sm font-medium">Total Kewajiban</p>
                 <h2 class="text-2xl font-bold text-red-500 mt-1">Rp. {{ number_format($totalKewajiban, 0, ',', '.') }}</h2>
@@ -84,26 +84,26 @@ document.addEventListener("DOMContentLoaded", function() {
     // 1. DATA DARI LARAVEL
     const labelsKas = @json($formattedLabels ?? []);
     const seriesKas = @json($seriesData ?? []);
-    
+
     // Data Laba Rugi
     // 1. Ambil data dari Laravel ke JavaScript
             // Kita bagi biaya menjadi dua: HPP (Material) dan Biaya Lainnya
-            const totalPendapatan = {{ $totalPendapatan }};
+            const totalPendapatan = {{ $pendapatanCurr }};
             const detailBiaya = @json($biayaFinal);
-            
+
             // Logika sederhana memisahkan HPP (Material) dari total biaya
             const nilaiHPP = detailBiaya.find(item => item.nama_perkiraan === 'Biaya Material')?.total || 0;
-            const pengeluaranLain = {{ $totalBiaya }} - nilaiHPP;
+            const pengeluaranLain = {{ $biayaCurr }};
 
             // 2. Inisialisasi Chart
             const ctxLR = document.getElementById('chartLabaRugi').getContext('2d');
             new Chart(ctxLR, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Pendapatan', 'Nilai HPP', 'Pengeluaran'],
+                    labels: ['Pendapatan', 'Pengeluaran'],
                     datasets: [{
                         // Masukkan data variabel JS di sini
-                        data: [totalPendapatan, nilaiHPP, pengeluaranLain], 
+                        data: [totalPendapatan, pengeluaranLain],
                         backgroundColor: ['#4ade80', '#facc15', '#f87171'],
                         cutout: '85%',
                         borderWidth: 0
@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // Map data series dari Laravel ke format Chart.js
         const datasetsKas = seriesKas.map((item, index) => {
             const colors = [
-                '#3b82f6', '#4ade80', '#facc15', '#f87171', '#a855f7', 
+                '#3b82f6', '#4ade80', '#facc15', '#f87171', '#a855f7',
                 '#ec4899', '#06b6d4', '#84cc16', '#f59e0b', '#6366f1',
                 '#14b8a6', '#f43f5e', '#8b5cf6', '#10b981', '#fbbf24',
                 '#2dd4bf', '#fb7185', '#60a5fa', '#34d399', '#fb923c'
