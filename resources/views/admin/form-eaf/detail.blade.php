@@ -20,9 +20,6 @@
             <div class="flex justify-between items-center mb-5">
                 <h1 class="text-2xl font-bold">Tabel Rincian</h1>
                 <div class="flex items-center gap-x-2">
-                    @php
-                        $detailTanggal = $eaf->details->first()?->tanggal;
-                    @endphp
                     @if ($today->between($detailTanggal, $detailTanggal->copy()->addDay()))
                         <button data-id="{{ $eaf->id }}" data-kode="{{ $eaf->kode_eaf }}"
                             onclick="modalAddRincian(this)"
