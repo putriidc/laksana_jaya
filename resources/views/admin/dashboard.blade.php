@@ -13,11 +13,11 @@
          <div class="w-full rounded-xl py-6 px-8 shadow-sm border border-gray-100">
             <h3 class="font-bold text-lg mb-5">Saldo Kas</h3>
            <section class="flex items-center flex-wrap gap-4">
-            @foreach ($bank as $item)
+            @foreach ($kasFinal as $item)
                 <div class="flex items-center justify-between border border-[#DD4049] px-6 py-4 rounded-lg w-[270px]">
                     <div class="flex flex-col">
-                        <span class="font-medium">{{ $item->nama_akun }}</span>
-                        <span class="font-bold">Rp. {{ number_format($item->saldo, 0, ',', '.') }}</span>
+                        <span class="font-medium">{{ $item['nama_perkiraan'] }}</span>
+                        <span class="font-bold">Rp. {{ number_format($item['total'], 0, ',', '.') }}</span>
                     </div>
                     <div class="bg-gradient-to-b from-[#DD4049] to-[#F9E52D] p-6 rounded-xl w-fit">
                         <img src="{{ asset('assets/card-send.png') }}" alt="card icon" class="w-[20px] h-[20px]">
@@ -94,11 +94,11 @@
                 if(!canvasAK) return;
 
                 const ctxAK = canvasAK.getContext('2d');
-                
+
                 new Chart(ctxAK, {
                     type: 'line',
                     data: {
-                        labels: labels, 
+                        labels: labels,
                         datasets: [
                             {
                                 label: 'Cash In (Hari Ini)',
