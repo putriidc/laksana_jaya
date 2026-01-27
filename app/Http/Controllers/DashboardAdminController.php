@@ -88,7 +88,7 @@ class DashboardAdminController extends Controller
             'total' => ($detailKas[$akun]->total_debit ?? 0) - ($detailKas[$akun]->total_kredit ?? 0),
         ]);
 
-        return view('admin.dashboard', compact('bank', 'kasFinal', 'cashIn', 'cashOut', 'labels', 'karyawans', 'hutangVendors'));
+        return view('admin.dashboard', compact('kasFinal', 'cashIn', 'cashOut', 'labels', 'karyawans', 'hutangVendors'));
     }
 
     /**
