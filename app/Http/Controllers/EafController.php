@@ -116,6 +116,7 @@ class EafController extends Controller
         // Ambil data EAF berdasarkan id
         $eaf = Eaf::with('details')->findOrFail($id);
         $today = Carbon::now('Asia/Jakarta')->toDateString();
+        $hariIni = Carbon::now('Asia/Jakarta');
         $detailTanggal = Carbon::parse($eaf->details->first()?->tanggal);
         $akun = Asset::Active()
             ->whereIn('nama_akun', [
@@ -147,7 +148,7 @@ class EafController extends Controller
                 ->get();
         }
         // Kirim ke view detail
-        return view('admin.form-eaf.detail', compact('eaf', 'today', 'akun', 'bank', 'detailTanggal'));
+        return view('admin.form-eaf.detail', compact('eaf', 'today', 'akun', 'bank', 'detailTanggal', 'hariIni'));
     }
 
     public function printDetail($id)
