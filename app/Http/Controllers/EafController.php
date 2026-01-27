@@ -116,8 +116,9 @@ class EafController extends Controller
         // Ambil data EAF berdasarkan id
         $eaf = Eaf::with('details')->findOrFail($id);
         $today = Carbon::now('Asia/Jakarta')->toDateString();
-        $hariIni = Carbon::now('Asia/Jakarta');
-        $detailTanggal = Carbon::parse($eaf->details->first()?->tanggal);
+        $detailTanggal = Carbon::parse($eaf->details->first()?->tanggal)->toDateString();
+        $hariIni = Carbon::now('Asia/Jakarta')->toDateString();
+        $besok = Carbon::now('Asia/Jakarta')->addDay()->toDateString();
         $akun = Asset::Active()
             ->whereIn('nama_akun', [
                 'Piutang Proyek',
@@ -133,7 +134,7 @@ class EafController extends Controller
                 'Pajak'
             ])
             ->get();
-       if (Auth::user()->role === 'Admin 1') {
+        if (Auth::user()->role === 'Admin 1') {
             $allowedAccounts = ['Kas Besar', 'Kas Bank BCA', 'Kas Flip', 'OVO'];
 
             $bank = Asset::Active()
@@ -148,7 +149,7 @@ class EafController extends Controller
                 ->get();
         }
         // Kirim ke view detail
-        return view('admin.form-eaf.detail', compact('eaf', 'today', 'akun', 'bank', 'detailTanggal', 'hariIni'));
+        return view('admin.form-eaf.detail', compact('eaf', 'today', 'akun', 'bank', 'detailTanggal', 'hariIni', 'besok'));
     }
 
     public function printDetail($id)
@@ -171,7 +172,7 @@ class EafController extends Controller
                 'Pajak'
             ])
             ->get();
-       if (Auth::user()->role === 'Admin 1') {
+        if (Auth::user()->role === 'Admin 1') {
             $allowedAccounts = ['Kas Besar', 'Kas Bank BCA', 'Kas Flip', 'OVO'];
 
             $bank = Asset::Active()
@@ -200,7 +201,7 @@ class EafController extends Controller
     public function print($id)
     {
         $eaf = Eaf::where('id', $id)
-                ->whereNull('deleted_at')->orderBy('id', 'desc')->get();
+            ->whereNull('deleted_at')->orderBy('id', 'desc')->get();
         $today = Carbon::now('Asia/Jakarta')->toDateString();
         $proyek = Proyek::whereNull('deleted_at')
             ->get();
