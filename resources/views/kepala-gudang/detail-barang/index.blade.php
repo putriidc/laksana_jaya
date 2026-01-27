@@ -107,11 +107,11 @@
             <div class="rounded-lg shadow-[1px_1px_10px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[900px]:overflow-x-scroll">
                 <table class="table-fixed text-center text-sm w-full max-[900px]:w-[900px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
-                        <th class="py-2 w-[20%] pl-36 max-[1100px]:pl-0">No</th>
+                        <th class="py-2 w-[20%]">No</th>
                         <th class="py-2 w-[20%]">Tgl Masuk</th>
                         <th class="py-2 w-[20%]">Qty</th>
                         <th class="py-2 w-[20%]">Keterangan</th>
-                        <th class="py-2 w-[25%] pr-36 max-[1100px]:pr-0">Action</th>
+                        <th class="py-2 w-[25%]">Action</th>
                     </thead>
                     <tbody>
                         @php
@@ -119,11 +119,11 @@
                         @endphp
                         @foreach ($barangMasuks as $item)
                             <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
-                                <td class="py-2 pl-36 max-[1100px]:pl-0">{{ $nomasuk++ }}</td>
+                                <td class="py-2">{{ $nomasuk++ }}</td>
                                 <td class="py-2">{{ $item->tanggal }}</td>
                                 <td class="py-2">{{ $item->qty }}</td>
                                 <td class="py-2">{{ $item->keterangan }}</td>
-                                <td class="py-2 pr-36 max-[1100px]:pr-0">
+                                <td class="py-2">
                                     <div class="flex justify-center items-center gap-x-2 ">
                                         {{-- Tombol Edit --}}
                                         <a href="{{ route('barang-masuk.edit', $item->id) }}"
@@ -142,6 +142,11 @@
                                                     class="w-[22px] cursor-pointer">
                                             </button>
                                         </form>
+                                        <span class="border-black border-l-[1px] h-[22px]"></span>
+                                        {{-- Tombol Print --}}
+                                        <a target="_blank" href="{{ route('print-masuk-detail-spv.print', ['tanggal' => $item->tanggal, 'qty' => $item->qty, 'keterangan' => $item->keterangan]) }}">
+                                            <img src="{{ asset('assets/printer-oren.png') }}" alt="print icon">
+                                        </a>
                                     </div>
                                 </td>
                             </tr>
@@ -231,6 +236,11 @@
                                                     class="w-[22px] cursor-pointer">
                                             </button>
                                         </form>
+                                        <span class="border-black border-l-[1px] h-[22px]"></span>
+                                        {{-- Tombol Print --}}
+                                        <a target="_blank" href="{{ route('print-keluar-detail-spv.print', ['tanggal' => $item->tanggal, 'proyek' => $proyekCocok->nama_proyek, 'pic' => $proyekCocok->pic, 'qty' => $item->qty, 'keterangan' => $item->keterangan]) }}">
+                                            <img src="{{ asset('assets/printer-oren.png') }}" alt="print icon">
+                                        </a>
                                     </div>
                                 </td>
                             </tr>
@@ -320,6 +330,11 @@
                                                     class="w-[22px] cursor-pointer">
                                             </button>
                                         </form>
+                                        <span class="border-black border-l-[1px] h-[22px]"></span>
+                                        {{-- Tombol Print --}}
+                                        <a target="_blank" href="{{ route('print-retur-detail-spv.print', ['tanggal' => $item->tanggal, 'proyek' => $proyekCocok->nama_proyek, 'pic' => $proyekCocok->pic, 'qty' => $item->qty, 'keterangan' => $item->keterangan]) }}">
+                                            <img src="{{ asset('assets/printer-oren.png') }}" alt="print icon">
+                                        </a>
                                     </div>
                                 </td>
                             </tr>

@@ -201,6 +201,22 @@ class AlatController extends Controller
         return $pdf->stream("AlatDibeli_{$alat->nama_alat}.pdf");
     }
 
+    public function printDetailBeli(request $request)
+    {
+        $tanggal = $request->tanggal;
+        $qty = $request->qty;
+        $keterangan = $request->keterangan;
+        $admin = Auth::user()->name ?? 'Administrator';
+        $role = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('kepala-gudang.data-alat.printDetailBeli', compact('tanggal', 'qty', 'keterangan', 'admin', 'role', 'tanggalCetak', 'jamCetak'))
+            ->setPaper('A4', 'potrait');
+
+        return $pdf->stream('Transaksi Alat Masuk.pdf');
+    }
+
     public function printDihapus(Request $request, $id)
     {
         $alat = Alat::findOrFail($id);
@@ -223,6 +239,22 @@ class AlatController extends Controller
             ->setPaper('A4', 'portrait');
 
         return $pdf->stream("AlatDihapus_{$alat->nama_alat}.pdf");
+    }
+
+    public function printDetailHapus(request $request)
+    {
+        $tanggal = $request->tanggal;
+        $qty = $request->qty;
+        $keterangan = $request->keterangan;
+        $admin = Auth::user()->name ?? 'Administrator';
+        $role = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('kepala-gudang.data-alat.printDetailHapus', compact('tanggal', 'qty', 'keterangan', 'admin', 'role', 'tanggalCetak', 'jamCetak'))
+            ->setPaper('A4', 'potrait');
+
+        return $pdf->stream('Transaksi Alat Keluar.pdf');
     }
 
     public function printDipinjam(Request $request, $id)
@@ -250,6 +282,24 @@ class AlatController extends Controller
         return $pdf->stream("AlatDipinjam_{$alat->nama_alat}.pdf");
     }
 
+    public function printDetailPinjam(request $request)
+    {
+        $tanggal = $request->tanggal;
+        $proyek = $request->proyek;
+        $pic = $request->pic;
+        $qty = $request->qty;
+        $keterangan = $request->keterangan;
+        $admin = Auth::user()->name ?? 'Administrator';
+        $role = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('kepala-gudang.data-alat.printDetailPinjam', compact('tanggal', 'proyek', 'pic', 'qty', 'keterangan', 'admin', 'role', 'tanggalCetak', 'jamCetak'))
+            ->setPaper('A4', 'potrait');
+
+        return $pdf->stream('Transaksi Alat Diambil.pdf');
+    }
+
     public function printDikembalikan(Request $request, $id)
     {
         $alat = Alat::findOrFail($id);
@@ -273,6 +323,24 @@ class AlatController extends Controller
             ->setPaper('A4', 'portrait');
 
         return $pdf->stream("AlatDikembalikan_{$alat->nama_alat}.pdf");
+    }
+
+    public function printDetailKembali(request $request)
+    {
+        $tanggal = $request->tanggal;
+        $proyek = $request->proyek;
+        $pic = $request->pic;
+        $qty = $request->qty;
+        $keterangan = $request->keterangan;
+        $admin = Auth::user()->name ?? 'Administrator';
+        $role = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('kepala-gudang.data-alat.printDetailKembali', compact('tanggal', 'proyek', 'pic', 'qty', 'keterangan', 'admin', 'role', 'tanggalCetak', 'jamCetak'))
+            ->setPaper('A4', 'potrait');
+
+        return $pdf->stream('Transaksi Alat Dikembalikan.pdf');
     }
 
     /**

@@ -178,6 +178,22 @@ class BarangController extends Controller
         return $pdf->stream("BarangMasuk_{$barang->nama_barang}.pdf");
     }
 
+    public function printDetailMasuk(request $request)
+    {
+        $tanggal = $request->tanggal;
+        $qty = $request->qty;
+        $keterangan = $request->keterangan;
+        $admin = Auth::user()->name ?? 'Administrator';
+        $role = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('kepala-gudang.detail-barang.printDetailMasuk', compact('tanggal', 'qty', 'keterangan', 'admin', 'role', 'tanggalCetak', 'jamCetak'))
+            ->setPaper('A4', 'potrait');
+
+        return $pdf->stream('Transaksi Barang Masuk.pdf');
+    }
+
     public function printKeluar(Request $request, $id)
     {
         $barang = Barang::findOrFail($id);
@@ -200,6 +216,24 @@ class BarangController extends Controller
             ->setPaper('A4', 'portrait');
 
         return $pdf->stream("BarangKeluar_{$barang->nama_barang}.pdf");
+    }
+
+    public function printDetailKeluar(request $request)
+    {
+        $tanggal = $request->tanggal;
+        $proyek = $request->proyek;
+        $pic = $request->pic;
+        $qty = $request->qty;
+        $keterangan = $request->keterangan;
+        $admin = Auth::user()->name ?? 'Administrator';
+        $role = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('kepala-gudang.detail-barang.printDetailKeluar', compact('tanggal', 'proyek', 'pic', 'qty', 'keterangan', 'admin', 'role', 'tanggalCetak', 'jamCetak'))
+            ->setPaper('A4', 'potrait');
+
+        return $pdf->stream('Transaksi Barang Masuk.pdf');
     }
 
     public function printRetur(Request $request, $id)
@@ -226,6 +260,23 @@ class BarangController extends Controller
         return $pdf->stream("BarangRetur_{$barang->nama_barang}.pdf");
     }
 
+    public function printDetailRetur(request $request)
+    {
+        $tanggal = $request->tanggal;
+        $proyek = $request->proyek;
+        $pic = $request->pic;
+        $qty = $request->qty;
+        $keterangan = $request->keterangan;
+        $admin = Auth::user()->name ?? 'Administrator';
+        $role = Auth::user()->role ?? 'admin';
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        $pdf = Pdf::loadView('kepala-gudang.detail-barang.printDetailRetur', compact('tanggal', 'proyek', 'pic', 'qty', 'keterangan', 'admin', 'role', 'tanggalCetak', 'jamCetak'))
+            ->setPaper('A4', 'potrait');
+
+        return $pdf->stream('Transaksi Barang Retur.pdf');
+    }
 
     public function edit($id)
     {

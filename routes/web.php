@@ -219,6 +219,8 @@ Route::middleware('auth')->group(function () {
 
         Route::get('barangs/{id}/printMasuk', [BarangController::class, 'printMasuk'])
             ->name('barangs.printMasuk');
+        Route::get('print-masuk-detail', [BarangController::class, 'printDetailMasuk'])
+            ->name('print-masuk-detail.print');
         Route::get('barangs/{id}/printKeluar', [BarangController::class, 'printKeluar'])
             ->name('barangs.printKeluar');
         Route::get('barangs/{id}/printRetur', [BarangController::class, 'printRetur'])
@@ -349,6 +351,12 @@ Route::middleware('auth')->group(function () {
         Route::resource('proyek', ProyekController::class);
 
         // data alat dan barang
+         Route::get('print-masuk-detail-admin', [BarangAdminController::class, 'printDetailMasuk'])
+            ->name('print-masuk-detail-admin.print');
+        Route::get('print-keluar-detail-admin', [BarangAdminController::class, 'printDetailKeluar'])
+            ->name('print-keluar-detail-admin.print');
+        Route::get('print-retur-detail-admin', [BarangAdminController::class, 'printDetailRetur'])
+            ->name('print-retur-detail-admin.print');
          Route::get('barangsAdmin/{id}/printMasuk', [BarangAdminController::class, 'printMasuk'])
             ->name('barangsAdmin.printMasuk');
         Route::get('barangsAdmin/{id}/printKeluar', [BarangAdminController::class, 'printKeluar'])
@@ -357,6 +365,14 @@ Route::middleware('auth')->group(function () {
             ->name('barangsAdmin.printRetur');
         Route::get('print-barang-admin', [BarangAdminController::class, 'print'])->name('barang-admin.print');
         Route::resource('barangsAdmin', BarangAdminController::class);
+        Route::get('print-beli-detail-admin', [AlatAdminController::class, 'printDetailBeli'])
+            ->name('print-beli-detail-admin.print');
+        Route::get('print-hapus-detail-admin', [AlatAdminController::class, 'printDetailHapus'])
+            ->name('print-hapus-detail-admin.print');
+        Route::get('print-pinjam-detail-admin', [AlatAdminController::class, 'printDetailPinjam'])
+            ->name('print-pinjam-detail-admin.print');
+        Route::get('print-kembali-detail-admin', [AlatAdminController::class, 'printDetailKembali'])
+            ->name('print-kembali-detail-admin.print');
         Route::get('alatsAdmin/{id}/printDibeli', [AlatAdminController::class, 'printDibeli'])
             ->name('alatsAdmin.printDibeli');
         Route::get('alatsAdmin/{id}/printDihapus', [AlatAdminController::class, 'printDihapus'])
@@ -486,6 +502,7 @@ Route::middleware('auth')->group(function () {
             ->name('buku-besar-admin.print');
 
         Route::get('print-eaf/{id}', [EafController::class, 'print'])->name('eaf.print');
+        Route::get('print-eaf-detail/{id}', [EafController::class, 'printDetail'])->name('eaf-detail.print');
         Route::get('print-eaf-detail/{kode}', [EafController::class, 'printDetail'])->name('eaf-detail.print');
         Route::resource('eaf', EafController::class);
         Route::post('/eaf/{id}/detail', [EafController::class, 'storeDetail'])->name('eaf.storeDetail');
@@ -507,7 +524,12 @@ Route::middleware('auth')->group(function () {
         route::get('/gudang', function () {
             return view('kepala-gudang.dashboard');
         });
-
+        Route::get('print-masuk-detail-spv', [BarangController::class, 'printDetailMasuk'])
+            ->name('print-masuk-detail-spv.print');
+        Route::get('print-keluar-detail-spv', [BarangController::class, 'printDetailKeluar'])
+            ->name('print-keluar-detail-spv.print');
+        Route::get('print-retur-detail-spv', [BarangController::class, 'printDetailRetur'])
+            ->name('print-retur-detail-spv.print');
         Route::get('barangs/{id}/printMasuk', [BarangController::class, 'printMasuk'])
             ->name('barangs.printMasuk');
         Route::get('barangs/{id}/printKeluar', [BarangController::class, 'printKeluar'])
@@ -522,6 +544,14 @@ Route::middleware('auth')->group(function () {
         Route::post('/pinjaman/{id}/decline', [AccTukangSpvController::class, 'decline'])
             ->name('pinjaman.decline');
 
+        Route::get('print-beli-detail-spv', [AlatController::class, 'printDetailBeli'])
+            ->name('print-beli-detail-spv.print');
+        Route::get('print-hapus-detail-spv', [AlatController::class, 'printDetailHapus'])
+            ->name('print-hapus-detail-spv.print');
+        Route::get('print-pinjam-detail-spv', [AlatController::class, 'printDetailPinjam'])
+            ->name('print-pinjam-detail-spv.print');
+        Route::get('print-kembali-detail-spv', [AlatController::class, 'printDetailKembali'])
+            ->name('print-kembali-detail-spv.print');
         Route::get('alats/{id}/printDibeli', [AlatController::class, 'printDibeli'])
             ->name('alats.printDibeli');
         Route::get('alats/{id}/printDihapus', [AlatController::class, 'printDihapus'])
@@ -584,6 +614,12 @@ Route::middleware('auth')->group(function () {
         Route::get('freelance-owner/print', [SampinganOwnerController::class, 'print'])->name('freelance-owner.print');
         // Freelance
         // data alat dan barang
+        Route::get('print-masuk-detail', [BarangOwnerController::class, 'printDetailMasuk'])
+            ->name('print-masuk-detail.print');
+        Route::get('print-keluar-detail', [BarangOwnerController::class, 'printDetailKeluar'])
+            ->name('print-keluar-detail.print');
+        Route::get('print-retur-detail', [BarangOwnerController::class, 'printDetailRetur'])
+            ->name('print-retur-detail.print');
          Route::get('barangsOwner/{id}/printMasuk', [BarangOwnerController::class, 'printMasuk'])
             ->name('barangsOwner.printMasuk');
         Route::get('barangsOwner/{id}/printKeluar', [BarangOwnerController::class, 'printKeluar'])
@@ -592,6 +628,14 @@ Route::middleware('auth')->group(function () {
             ->name('barangsOwner.printRetur');
         Route::get('print-barang-owner', [BarangOwnerController::class, 'print'])->name('barang-owner.print');
         Route::resource('barangsOwner', BarangOwnerController::class);
+        Route::get('print-beli-detail', [AlatOwnerController::class, 'printDetailBeli'])
+            ->name('print-beli-detail.print');
+        Route::get('print-hapus-detail', [AlatOwnerController::class, 'printDetailHapus'])
+            ->name('print-hapus-detail.print');
+        Route::get('print-pinjam-detail', [AlatOwnerController::class, 'printDetailPinjam'])
+            ->name('print-pinjam-detail.print');
+        Route::get('print-kembali-detail', [AlatOwnerController::class, 'printDetailKembali'])
+            ->name('print-kembali-detail.print');
         Route::get('alatsOwner/{id}/printDibeli', [AlatOwnerController::class, 'printDibeli'])
             ->name('alatsOwner.printDibeli');
         Route::get('alatsOwner/{id}/printDihapus', [AlatOwnerController::class, 'printDihapus'])

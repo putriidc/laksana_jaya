@@ -142,6 +142,11 @@
                                                     class="w-[22px] cursor-pointer">
                                             </button>
                                         </form>
+                                        <span class="border-black border-l-[1px] h-[22px]"></span>
+                                        {{-- Tombol Print --}}
+                                        <a target="_blank" href="{{ route('print-masuk-detail.print', ['tanggal' => $item->tanggal, 'qty' => $item->qty, 'keterangan' => $item->keterangan]) }}">
+                                            <img src="{{ asset('assets/printer-oren.png') }}" alt="print icon">
+                                        </a>
                                     </div>
                                 </td>
                             </tr>
@@ -231,6 +236,11 @@
                                                     class="w-[22px] cursor-pointer">
                                             </button>
                                         </form>
+                                        <span class="border-black border-l-[1px] h-[22px]"></span>
+                                        {{-- Tombol Print --}}
+                                        <a target="_blank" href="{{ route('print-keluar-detail.print', ['tanggal' => $item->tanggal, 'proyek' => $proyekCocok->nama_proyek, 'pic' => $proyekCocok->pic, 'qty' => $item->qty, 'keterangan' => $item->keterangan]) }}">
+                                            <img src="{{ asset('assets/printer-oren.png') }}" alt="print icon">
+                                        </a>
                                     </div>
                                 </td>
                             </tr>
@@ -320,6 +330,11 @@
                                                     class="w-[22px] cursor-pointer">
                                             </button>
                                         </form>
+                                        <span class="border-black border-l-[1px] h-[22px]"></span>
+                                        {{-- Tombol Print --}}
+                                        <a target="_blank" href="{{ route('print-retur-detail.print', ['tanggal' => $item->tanggal, 'proyek' => $proyekCocok->nama_proyek, 'pic' => $proyekCocok->pic, 'qty' => $item->qty, 'keterangan' => $item->keterangan]) }}">
+                                            <img src="{{ asset('assets/printer-oren.png') }}" alt="print icon">
+                                        </a>
                                     </div>
                                 </td>
                             </tr>
