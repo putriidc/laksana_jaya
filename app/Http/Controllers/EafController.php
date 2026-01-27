@@ -149,7 +149,7 @@ class EafController extends Controller
                 ->get();
         }
         // Kirim ke view detail
-        return view('admin.form-eaf.detail', compact('eaf', 'today', 'akun', 'bank', 'detailTanggal', 'hariIni', 'besok'));
+        return view('admin.form-eaf.detail', compact('eaf', 'today', 'akun', 'bank', 'tanggalDetail', 'hariIni', 'besok'));
     }
 
     public function printDetail($id)
