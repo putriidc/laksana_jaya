@@ -15,7 +15,21 @@ class PinjamanKaryawanController extends Controller
 {
     public function index()
     {
-        $pinjamans = PinjamanKaryawan::with('karyawan')->active()->get();
+        $pinjamans = PinjamanKaryawan::with(['karyawan', 'pinjamanContent', 'kasbonContent'])
+            ->active()
+            ->get()
+            ->map(function ($p) {
+                $totalPinjam = $p->pinjamanContent->where('jenis', 'pinjam')->sum('bayar');
+                $totalCicil  = $p->pinjamanContent->where('jenis', 'cicil')->sum('bayar');
+                $totalKasbon = $p->kasbonContent->where('jenis', 'pinjam')->sum('bayar');
+                $totalKasbonCicil = $p->kasbonContent->where('jenis', 'cicil')->sum('bayar');
+
+                $p->total_pinjaman_sisa = $totalPinjam - $totalCicil;
+                $p->total_kasbon_sisa   = $totalKasbon - $totalKasbonCicil;
+
+                return $p;
+            });
+
         $pinjams = PinjamanContent::with('karyawanPinjaman')
             ->where('jenis', 'pinjam')
             ->whereNull('deleted_at')
