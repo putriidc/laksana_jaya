@@ -99,9 +99,9 @@
                         <th class="py-2 pl-[150px]">No</th>
                         <th class="py-2">Nama Karyawan</th>
                         <th class="py-2">Jumlah Pinjaman</th>
-                        <th class="py-2">Sisa Pinjaman</th>
+                        {{-- <th class="py-2">Sisa Pinjaman</th> --}}
                         <th class="py-2">Jumlah Kasbon</th>
-                        <th class="py-2">Sisa Kasbon</th>
+                        {{-- <th class="py-2">Sisa Kasbon</th> --}}
                         <th class="py-2 pr-[150px]">Action</th>
                     </thead>
                     <tbody>
@@ -113,9 +113,9 @@
                                 <td class="py-2 pl-[150px]">{{ $no++ }}</td>
                                 <td class="py-2">{{ optional($pinjaman->karyawan)->nama ?? '-' }}</td>
                                 <td class="py-2">{{ 'RP. ' . number_format($pinjaman->total_pinjaman_sisa, 0, ',', '.') }}</td>
-                                <td class="py-2">{{ 'RP. ' . number_format($pinjaman->total_pinjam, 0, ',', '.') }}</td>
+                                {{-- <td class="py-2">{{ 'RP. ' . number_format($pinjaman->total_pinjam, 0, ',', '.') }}</td> --}}
                                 <td class="py-2">{{ 'RP. ' . number_format($pinjaman->total_kasbon_sisa, 0, ',', '.') }}</td>
-                                <td class="py-2">{{ 'RP. ' . number_format($pinjaman->total_kasbon, 0, ',', '.') }}</td>
+                                {{-- <td class="py-2">{{ 'RP. ' . number_format($pinjaman->total_kasbon, 0, ',', '.') }}</td> --}}
                                 <td class="flex justify-center items-center gap-x-2 py-2 pr-[150px]">
                                     {{-- Tombol Edit --}}
                                     {{-- <a href="{{ route('pinjamanKaryawans.edit', $pinjaman->id) }}"
