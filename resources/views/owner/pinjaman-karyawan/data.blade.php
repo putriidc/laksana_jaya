@@ -109,7 +109,7 @@
                                     <td class="py-2">{{ $item->kas->nama_akun ?? 'Tidak Ada Kas Bank' }}</td>
                                     <td class="py-2">{{ $item->ket_owner }}</td>
                                     <td class="py-2">{{ 'RP. ' . number_format($item->bayar, 0, ',', '.') }}</td>
-                                    <td class="py-2">{{ 'RP. ' . number_format($item->karyawanPinjaman->total_pinjam, 0, ',', '.') }}</td>
+                                    <td class="py-2">{{ 'RP. ' . number_format($item->sisa, 0, ',', '.') }}</td>
                                     <td class="py-2 flex justify-center items-center gap-x-2">
                                         {{-- Status SPV --}}
                                         @if ($item->menunggu == true)
@@ -158,7 +158,7 @@
                                     <td class="py-2">{{ $item->kas->nama_akun ?? 'Tidak Ada Kas Bank' }}</td>
                                     <td class="py-2">{{ $item->ket_owner }}</td>
                                     <td class="py-2">{{ 'RP. ' . number_format($item->bayar, 0, ',', '.') }}</td>
-                                    <td class="py-2">{{ 'RP. ' . number_format($item->karyawanKasbon->total_kasbon, 0, ',', '.') }}</td>
+                                    <td class="py-2">{{ 'RP. ' . number_format($item->sisa, 0, ',', '.') }}</td>
                                     <td class="py-2 flex justify-center items-center gap-x-2">
                                         {{-- Status SPV --}}
                                         @if ($item->menunggu == true)
