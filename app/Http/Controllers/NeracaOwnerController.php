@@ -294,16 +294,17 @@ class NeracaOwnerController extends Controller
 
     public function printLajur(Request $request)
     {
-        // Ambil input tanggal dari request
-        $start = $request->filled('start') ? Carbon::parse($request->start)->startOfDay() : null;
-        $end   = $request->filled('end')   ? Carbon::parse($request->end)->endOfDay()   : null;
-
+        //NERACA LAJUR
         // Ambil semua asset
         $assets = Asset::with(['jurnalUmum' => function ($query) {
             $query->select('id', 'kode_perkiraan', 'debit', 'kredit', 'tanggal');
         }])->get();
 
-        // Map tiap asset dengan sum debit & kredit sesuai periode
+        // Ambil input tanggal dari request
+        $start = $request->filled('start') ? Carbon::parse($request->start)->startOfDay() : null;
+        $end   = $request->filled('end')   ? Carbon::parse($request->end)->endOfDay()   : null;
+
+        // Map tiap asset dengan sum debit & kredit dari jurnal umum sesuai periode
         $assets = $assets->map(function ($asset) use ($start, $end) {
             $query = JurnalUmum::where('kode_perkiraan', $asset->kode_akun);
 
@@ -311,9 +312,11 @@ class NeracaOwnerController extends Controller
                 $query->whereBetween('tanggal', [$start, $end]);
             }
 
-            $asset->debit_total  = $query->sum('debit');
-            $asset->kredit_total = $query->sum('kredit');
+            $debitSum  = $query->sum('debit');
+            $kreditSum = $query->sum('kredit');
 
+            $asset->debit_total  = $debitSum;
+            $asset->kredit_total = $kreditSum;
             return $asset;
         });
 
@@ -344,7 +347,92 @@ class NeracaOwnerController extends Controller
         return $pdf->stream($filename);
     }
 
+    public function printSaldo(Request $request)
+    {
+        // 1. Logika Rentang Tanggal
+        if ($request->filled('start') && $request->filled('end')) {
+            $startCurr = Carbon::parse($request->start)->startOfDay();
+            $endCurr   = Carbon::parse($request->end)->endOfDay();
+        } else {
+            $startCurr = now()->startOfMonth();
+            $endCurr   = now()->endOfMonth();
+        }
 
+        // 2. Ambil Master Akun & Nama Akun
+        $akunKasNames = Asset::active()->where('akun_header', 'asset_lancar_bank')->pluck('nama_akun')->toArray();
+        $akunLancarNames = Asset::active()->where('akun_header', 'asset_lancar')->pluck('nama_akun')->toArray();
+        $akunKewajibanNames = Asset::active()->where('akun_header', 'kewajiban')->pluck('nama_akun')->toArray();
+        $akunTetapNames = Asset::active()->where('akun_header', 'asset_tetap')->pluck('nama_akun')->toArray();
+        $akunLabaDitahanNames = Asset::active()->where('kode_akun', '320')->pluck('nama_akun')->toArray();
+        $akunModalNames = Asset::active()->where('kode_akun', '310')->pluck('nama_akun')->toArray();
+
+        // 3. Langsung Query Saldo (Tanpa Helper)
+        $detailKas = JurnalUmum::active()->whereIn('nama_perkiraan', $akunKasNames)->whereBetween('tanggal', [$startCurr, $endCurr])
+            ->select('nama_perkiraan', DB::raw('SUM(debit) as total_debit'), DB::raw('SUM(kredit) as total_kredit'))
+            ->groupBy('nama_perkiraan')->get()->keyBy('nama_perkiraan');
+
+        $detailLancar = JurnalUmum::active()->whereIn('nama_perkiraan', $akunLancarNames)->whereBetween('tanggal', [$startCurr, $endCurr])
+            ->select('nama_perkiraan', DB::raw('SUM(debit) as total_debit'), DB::raw('SUM(kredit) as total_kredit'))
+            ->groupBy('nama_perkiraan')->get()->keyBy('nama_perkiraan');
+
+        $detailKewajiban = JurnalUmum::active()->whereIn('nama_perkiraan', $akunKewajibanNames)->whereBetween('tanggal', [$startCurr, $endCurr])
+            ->select('nama_perkiraan', DB::raw('SUM(debit) as total_debit'), DB::raw('SUM(kredit) as total_kredit'))
+            ->groupBy('nama_perkiraan')->get()->keyBy('nama_perkiraan');
+
+        $detailTetap = JurnalUmum::active()->whereIn('nama_perkiraan', $akunTetapNames)->whereBetween('tanggal', [$startCurr, $endCurr])
+            ->select('nama_perkiraan', DB::raw('SUM(debit) as total_debit'), DB::raw('SUM(kredit) as total_kredit'))
+            ->groupBy('nama_perkiraan')->get()->keyBy('nama_perkiraan');
+
+        $detailLabaDitahan = JurnalUmum::active()->whereIn('nama_perkiraan', $akunLabaDitahanNames)->whereBetween('tanggal', [$startCurr, $endCurr])
+            ->select('nama_perkiraan', DB::raw('SUM(debit) as total_debit'), DB::raw('SUM(kredit) as total_kredit'))
+            ->groupBy('nama_perkiraan')->get()->keyBy('nama_perkiraan');
+
+        $detailModal = JurnalUmum::active()->whereIn('nama_perkiraan', $akunModalNames)->whereBetween('tanggal', [$startCurr, $endCurr])
+            ->select('nama_perkiraan', DB::raw('SUM(debit) as total_debit'), DB::raw('SUM(kredit) as total_kredit'))
+            ->groupBy('nama_perkiraan')->get()->keyBy('nama_perkiraan');
+
+        // 4. Kalkulasi Data Final untuk View
+        $kasFinal = collect($akunKasNames)->map(fn($n) => ['nama' => $n, 'total' => ($detailKas[$n]->total_debit ?? 0) - ($detailKas[$n]->total_kredit ?? 0)]);
+        $lancarFinal = collect($akunLancarNames)->map(fn($n) => ['nama' => $n, 'total' => ($detailLancar[$n]->total_debit ?? 0) - ($detailLancar[$n]->total_kredit ?? 0)]);
+        $kewajibanFinal = collect($akunKewajibanNames)->map(fn($n) => ['nama' => $n, 'total' => ($detailKewajiban[$n]->total_kredit ?? 0) - ($detailKewajiban[$n]->total_debit ?? 0)]);
+        $tetapFinal = collect($akunTetapNames)->map(fn($n) => ['nama' => $n, 'total' => ($detailTetap[$n]->total_debit ?? 0) - ($detailTetap[$n]->total_kredit ?? 0)]);
+
+        // 5. Hitung Laba Rugi Berjalan (Langsung Query)
+        $pndptn = JurnalUmum::active()->whereIn('nama_perkiraan', Asset::active()->where('akun_header', 'pendapatan')->pluck('nama_akun'))->whereBetween('tanggal', [$startCurr, $endCurr])->sum('kredit');
+        $biaya = JurnalUmum::active()->whereIn('nama_perkiraan', Asset::active()->where('akun_header', 'hpp_proyek')->pluck('nama_akun'))->whereBetween('tanggal', [$startCurr, $endCurr])->sum('debit');
+        $labaTahunBerjalan = $pndptn - $biaya;
+
+        // 6. Final Totaling
+        $totalAktivaLancar = $kasFinal->sum('total') + $lancarFinal->sum('total');
+        $totalAktivaTetap  = $tetapFinal->sum('total');
+        $totalKewajiban    = $kewajibanFinal->sum('total');
+        
+        $saldoModal = $detailModal->sum(fn($q) => $q->total_kredit - $q->total_debit);
+        $saldoLabaDitahan = $detailLabaDitahan->sum(fn($q) => $q->total_kredit - $q->total_debit);
+        $totalPasiva = $totalKewajiban + $saldoModal + $saldoLabaDitahan + $labaTahunBerjalan;
+        $tanggalCetak = Carbon::now('Asia/Jakarta')->translatedFormat('d F Y');
+        $jamCetak     = Carbon::now('Asia/Jakarta')->translatedFormat('H:i');
+
+        // 7. Load PDF
+        $data = [
+            'periode'           => $startCurr->format('d M Y') . ' - ' . $endCurr->format('d M Y'),
+            'kasFinal'          => $kasFinal,
+            'lancarFinal'       => $lancarFinal,
+            'kewajibanFinal'    => $kewajibanFinal,
+            'tetapFinal'        => $tetapFinal,
+            'labaTahunBerjalan' => $labaTahunBerjalan,
+            'labaDitahan'       => $saldoLabaDitahan,
+            'modal'             => $saldoModal,
+            'totalAktivaLancar' => $totalAktivaLancar,
+            'totalAktivaTetap'  => $totalAktivaTetap,
+            'totalKewajiban'    => $totalKewajiban,
+            'totalPasiva'       => $totalPasiva,
+            'tanggalCetak'      => $tanggalCetak,
+            'jamCetak'          => $jamCetak
+        ];
+
+        return Pdf::loadView('owner.neraca.printSaldo', $data)->stream('Laporan_Neraca.pdf');
+    }
     /**
      * Show the form for creating a new resource.
      */

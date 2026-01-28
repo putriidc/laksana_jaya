@@ -766,6 +766,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('progresOwner', ProgresOwnerController::class);
 
         Route::get('print-lajur', [NeracaOwnerController::class, 'printLajur'])->name('neracaLajur.print');
+        Route::get('print-saldo', [NeracaOwnerController::class, 'printSaldo'])->name('neracaSaldo.print');
         Route::resource('neracaOwner', NeracaOwnerController::class);
 
         Route::get('labarugi/print', [LabaRugiController::class, 'print'])->name('labarugi.print');

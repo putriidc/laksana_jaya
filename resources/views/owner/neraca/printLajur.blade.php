@@ -116,8 +116,8 @@
                 <td>{{ $asset->post_laporan }}</td>
                 <td class="text-right">Rp. {{ number_format($asset->post_laporan === 'LABA RUGI' ? $asset->debit_total : 0, 0, ',', '.') }}</td>
                 <td class="text-right">Rp. {{ number_format($asset->post_laporan === 'LABA RUGI' ? $asset->kredit_total : 0, 0, ',', '.') }}</td>
-                <td class="text-right">Rp. 5.000.000</td>
-                <td class="text-right">Rp. 5.000.000</td>
+                <td class="text-right">Rp. {{ number_format($asset->post_laporan === 'NERACA' ? $asset->debit_total : 0, 0, ',', '.') }}</td>
+                <td class="text-right">Rp. {{ number_format($asset->post_laporan === 'NERACA' ? $asset->kredit_total : 0, 0, ',', '.') }}</td>
             </tr>
             @endforeach
         </tbody>

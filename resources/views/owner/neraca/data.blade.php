@@ -12,7 +12,7 @@
             </select>
         </div>
         <div class="{{ request('tipe') == 'neraca-lajur' ? '' : 'hidden' }}" id="neraca-lajur">
-            <div class="flex justify-between items-center mb-5 max-[380px]:gap-2 max-[380px]:flex-wrap">
+            <div class="flex justify-between items-center mb-2 max-[380px]:gap-2 max-[380px]:flex-wrap">
                 <h1 class="text-2xl font-bold">Neraca Lajur</h1>
                 <form action="{{ route('neracaOwner.index') }}" method="GET" class="flex items-center gap-x-2">
                     <input type="hidden" name="tipe" value="neraca-lajur">
@@ -28,17 +28,17 @@
                     </button>
                 </form>
 
-                <a href="{{ route('neracaLajur.print', ['start' => request('start'), 'end' => request('end')]) }}"
-                    target="_blank"
-                    class="py-[10px] px-[10px] border-[#9A9A9A] border-2 rounded-lg cursor-pointer flex items-center gap-x-2 w-fit">
-                    <span class="text-gray-500">Cetak Laporan</span>
-                    <img src="{{ asset('assets/printer.png') }}" alt="search icon" class="w-[22px]">
-                </a>
                 {{-- <a target="_blank" href="{{ route('neracaLajur.print') }}" class="flex items-center gap-x-2 border-2 border-[#9A9A9A] rounded-lg px-4 py-2">
-                <span class="text-[#72686B]">Cetak Laporan</span>
-                <img src="{{ asset('assets/printer.png') }}" alt="">
-            </a> --}}
+                    <span class="text-[#72686B]">Cetak Laporan</span>
+                    <img src="{{ asset('assets/printer.png') }}" alt="">
+                </a> --}}
             </div>
+            <a href="{{ route('neracaLajur.print', ['start' => request('start'), 'end' => request('end')]) }}"
+                target="_blank"
+                class="py-[10px] px-[10px] border-[#9A9A9A] border-2 rounded-lg cursor-pointer flex items-center gap-x-2 w-fit ml-auto mb-5">
+                <span class="text-gray-500">Cetak Laporan</span>
+                <img src="{{ asset('assets/printer.png') }}" alt="search icon" class="w-[22px]">
+            </a>
             <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1200px]:overflow-x-scroll">
                 <table class="table-fixed text-center text-sm w-full max-[1200px]:w-[1200px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
@@ -104,8 +104,8 @@
                     <img src="{{ asset('assets/search-normal.png') }}" alt="search icon" class="w-[20px]">
                 </button>
             </form>
-            <a href="" target="_blank"
-                class="py-[10px] px-[10px] border-[#9A9A9A] border-2 rounded-lg cursor-pointer flex items-center gap-x-2 w-fit">
+            <a href="{{ route('neracaSaldo.print', ['start' => request('start'), 'end' => request('end')]) }}" target="_blank"
+                class="py-[10px] px-[10px] border-[#9A9A9A] border-2 rounded-lg cursor-pointer flex items-center gap-x-2 w-fit mb-5 mt-2">
                 <span class="text-gray-500">Cetak Laporan</span>
                 <img src="{{ asset('assets/printer.png') }}" alt="" class="w-[22px]">
             </a>
