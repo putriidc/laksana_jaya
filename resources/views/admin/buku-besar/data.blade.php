@@ -30,15 +30,15 @@
         <div class="flex justify-end items-center gap-x-5 mb-5">
             <div class="flex items-center gap-x-2">
                 <span class="text-[#9A9A9A] font-medium">Total Saldo</span>
-                <span class="bg-[#E6E6E6] px-10 py-1 rounded-lg font-medium">{{ 'RP. ' . number_format(($totalDebit - $totalKredit), 0, ',', '.') }}</span>
+                <span class="bg-[#E6E6E6] px-10 py-1 rounded-lg font-medium">{{ number_format(($totalDebit - $totalKredit), 0, ',', '.') }}</span>
             </div>
             <div class="flex items-center gap-x-2">
                 <span class="text-[#9A9A9A] font-medium">Total Debit</span>
-                <span class="bg-[#E6E6E6] px-10 py-1 rounded-lg font-medium">{{ 'RP. ' . number_format($totalDebit, 0, ',', '.') }}</span>
+                <span class="bg-[#E6E6E6] px-10 py-1 rounded-lg font-medium">{{ number_format($totalDebit, 0, ',', '.') }}</span>
             </div>
             <div class="flex items-center gap-x-2">
                 <span class="text-[#9A9A9A] font-medium">Total Kredit</span>
-                <span class="bg-[#E6E6E6] px-10 py-1 rounded-lg font-medium">{{ 'RP. ' . number_format($totalKredit, 0, ',', '.') }}</span>
+                <span class="bg-[#E6E6E6] px-10 py-1 rounded-lg font-medium">{{ number_format($totalKredit, 0, ',', '.') }}</span>
             </div>
             <div class="flex items-center gap-x-2">
                 <span class="text-[#9A9A9A] font-medium">Kode Akun</span>
