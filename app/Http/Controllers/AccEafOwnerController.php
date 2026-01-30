@@ -36,6 +36,10 @@ class AccEafOwnerController extends Controller
             ->whereHas('bank')
             ->orderBy('tanggal', 'desc')
             ->paginate(5);
+        $eafOpen->getCollection()->transform(function ($item) {
+            $item->can_show = (($item->acc_owner === 'accept') && ($item->acc_spv === 'accept'));
+            return $item;
+        });
 
         $today = Carbon::now('Asia/Jakarta')->toDateString();
         return view('owner.pengajuan-eaf.data', compact('eaf', 'eafOpen', 'today', 'eaf_needAcc'));

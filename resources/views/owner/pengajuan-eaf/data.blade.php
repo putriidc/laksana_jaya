@@ -77,9 +77,6 @@
                                 $no = 1;
                             @endphp
                             @foreach ($eafOpen as $item)
-                             @if (
-                                ($item->acc_owner === 'pending' || $item->acc_owner === 'accept') &&
-                                    ($item->acc_spv === 'pending' || $item->acc_spv === 'accept'))
                                 <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
                                     <td class="py-2">{{ $no++ }}</td>
                                     <td class="py-2">{{ $item->tanggal }}</td>
@@ -114,7 +111,6 @@
                                         </div>
                                     </td>
                                 </tr>
-                                @endif
                             @endforeach
                         </tbody>
                     </table>
