@@ -88,7 +88,7 @@ class BukuBesarController extends Controller
 
 
         // 2. Ambil transaksi (Jurnal) - Siapkan Query dulu, JANGAN di ->get() dulu
-        $query = JurnalUmum::active()->where('kode_perkiraan', $code)->orderBy('tanggal', 'asc');
+        $query = JurnalUmum::whereNull('deleted_at')->where('nama_perkiraan', $account->nama_akun)->orderBy('tanggal', 'asc');
 
         // CEK FILTER TANGGAL
         if ($request->filled('tgl_mulai') && $request->filled('tgl_selesai')) {
@@ -121,7 +121,7 @@ class BukuBesarController extends Controller
         $account = Asset::where('kode_akun', $code)->firstOrFail();
 
         // 2. Ambil transaksi (Jurnal) dengan filter yang sama
-        $query = JurnalUmum::where('kode_perkiraan', $code)->orderBy('tanggal', 'asc');
+        $query = JurnalUmum::whereNull('deleted_at')->where('nama_perkiraan', $account->nama_akun)->orderBy('tanggal', 'asc');
 
         if ($request->filled('tgl_mulai') && $request->filled('tgl_selesai')) {
             $query->whereBetween('tanggal', [$request->tgl_mulai, $request->tgl_selesai]);
@@ -166,7 +166,7 @@ class BukuBesarController extends Controller
         $account = Asset::where('kode_akun', $code)->firstOrFail();
 
         // 2. Ambil transaksi (Jurnal) dengan filter yang sama
-        $query = JurnalUmum::where('kode_perkiraan', $code)->orderBy('tanggal', 'asc');
+        $query = JurnalUmum::whereNull('deleted_at')->where('nama_perkiraan', $account->nama_akun)->orderBy('tanggal', 'asc');
 
         if ($request->filled('tgl_mulai') && $request->filled('tgl_selesai')) {
             $query->whereBetween('tanggal', [$request->tgl_mulai, $request->tgl_selesai]);
