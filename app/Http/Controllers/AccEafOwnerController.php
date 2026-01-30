@@ -38,7 +38,7 @@ class AccEafOwnerController extends Controller
             ->paginate(5);
 
         $today = Carbon::now('Asia/Jakarta')->toDateString();
-        return view('owner.pengajuan-eaf.data', compact('eaf', 'today', 'eaf_needAcc'));
+        return view('owner.pengajuan-eaf.data', compact('eaf', 'eafOpen', 'today', 'eaf_needAcc'));
     }
 
     public function print()
