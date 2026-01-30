@@ -57,6 +57,8 @@ class BukuBesarController extends Controller
 
         // Baru jalankan get() setelah semua filter terpasang
         $transactions = $query->get();
+        $totalDebit = $query->sum('debit');
+        $totalKredit = $query->sum('kredit');
 
         // 3. Logika Running Balance
         $saldoBerjalan = 0;
@@ -69,7 +71,7 @@ class BukuBesarController extends Controller
             $trx->saldo_temp = $saldoBerjalan;
         }
 
-        return view('admin.buku-besar.data', compact('account', 'transactions', 'asset'));
+        return view('admin.buku-besar.data', compact('account', 'transactions', 'asset', 'totalDebit', 'totalKredit'));
     }
 
     public function index_owner($code, Request $request)
@@ -96,6 +98,8 @@ class BukuBesarController extends Controller
 
         // Baru jalankan get() setelah semua filter terpasang
         $transactions = $query->get();
+        $totalDebit = $query->sum('debit');
+        $totalKredit = $query->sum('kredit');
 
         // 3. Logika Running Balance
         $saldoBerjalan = 0;
@@ -108,7 +112,7 @@ class BukuBesarController extends Controller
             $trx->saldo_temp = $saldoBerjalan;
         }
 
-        return view('owner.buku-besar.data', compact('account', 'transactions', 'asset'));
+        return view('owner.buku-besar.data', compact('account', 'transactions', 'asset', 'totalDebit', 'totalKredit'));
     }
 
     public function print($code, Request $request)
