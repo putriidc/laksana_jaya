@@ -27,6 +27,8 @@ class KaryawanController extends Controller
             'alamat'      => 'nullable|string|max:255',
             'no_hp'       => 'nullable|string|max:20',
             'email'       => 'nullable|email|max:100',
+            'pekerja'       => 'required',
+            'jabatan'       => 'nullable',
         ]);
         $lastId = Karyawan::max('id') ?? 0;
         $nextId = $lastId + 1;
@@ -38,6 +40,8 @@ class KaryawanController extends Controller
             'alamat'        => $request->alamat,
             'no_hp'         => $request->no_hp,
             'email'         => $request->email,
+            'pekerja'         => $request->pekerja,
+            'jabatan'         => $request->jabatan,
             'created_by'    => Auth::check() ? Auth::user()->name : null,
         ]);
         return redirect()->route('master-data.index')->with('success', 'Karyawan berhasil ditambahkan');
@@ -58,6 +62,8 @@ class KaryawanController extends Controller
             'alamat'      => 'nullable|string|max:255',
             'no_hp'       => 'nullable|string|max:20',
             'email'       => 'nullable|email|max:100',
+            'pekerja'       => 'required',
+            'jabatan'       => 'nullable',
         ]);
 
         $karyawan = Karyawan::findOrFail($id);
@@ -68,6 +74,8 @@ class KaryawanController extends Controller
             'alamat'      => $request->alamat,
             'no_hp'       => $request->no_hp,
             'email'       => $request->email,
+            'pekerja'         => $request->pekerja,
+            'jabatan'         => $request->jabatan,
         ]);
         return redirect()->route('master-data.index')->with('success', 'Karyawan berhasil diupdate');
     }

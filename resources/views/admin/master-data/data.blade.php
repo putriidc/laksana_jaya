@@ -414,6 +414,8 @@
                             <th class="py-2 w-[20%]">alamat</th>
                             <th class="py-2 w-[15%]">No. HP</th>
                             <th class="py-2 w-[20%]">Email</th>
+                            <th class="py-2 w-[20%]">Pekerja</th>
+                            <th class="py-2 w-[20%]">Jabatan</th>
                             <th class="py-2 w-[20%]">Action</th>
                         </thead>
                         <tbody>
@@ -428,6 +430,8 @@
                                     <td class="py-2">{{ $karyawan->alamat }}</td>
                                     <td class="py-2">{{ $karyawan->no_hp }}</td>
                                     <td class="py-2">{{ $karyawan->email }}</td>
+                                    <td class="py-2">{{ $karyawan->pekerja ?? '-' }}</td>
+                                    <td class="py-2">{{ $karyawan->jabatan ?? '-' }}</td>
                                     <td class="py-2">
                                         <div class="flex items-center justify-center gap-x-2">
                                             {{-- Tombol Edit --}}

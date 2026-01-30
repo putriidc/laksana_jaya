@@ -15,6 +15,8 @@ class Karyawan extends Model
         'kode_karyawan',
         'kode_akun',
         'nama',
+        'pekerja',
+        'jabatan',
         'alamat',
         'no_hp',
         'email',
