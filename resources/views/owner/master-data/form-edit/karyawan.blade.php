@@ -34,6 +34,23 @@
                 <input type="text" name="email" value="{{ old('email', $karyawan->email) }}"
                        class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
             </div>
+            <div class="flex items-center">
+                    <label for="pekerja" class="w-[180px] font-medium">Pekerja</label>
+                    <select name="pekerja" id="pekerja" class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
+                        <option disabled value="">-Pilih Pekerja-</option>
+                        <option value="Pekerja Tetap" {{ $karyawan->pekerja === 'Pekerja Tetap' ? 'selected' : '' }}>Pekerja
+                            Tetap</option>
+                        <option value="Pekerja Lepas" {{ $karyawan->pekerja === 'Pekerja Lepas' ? 'selected' : '' }}>Pekerja
+                            Lepas</option>
+                        <option value="Pekerja Kontrak" {{ $karyawan->pekerja === 'Pekerja Kontrak' ? 'selected' : '' }}>
+                            Pekerja Kontrak</option>
+                    </select>
+                </div>
+                <div class="flex items-center mt-2">
+                    <label for="jabatan" class="w-[180px] font-medium">Jabatan</label>
+                    <input type="text" name="jabatan" id="jabatan" value="{{ old('jabatan', $karyawan->jabatan) }}"
+                        class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
+                </div>
 
             <div class="flex mt-4">
                 <div class="w-[180px]"></div>

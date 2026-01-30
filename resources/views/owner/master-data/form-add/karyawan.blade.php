@@ -21,6 +21,20 @@
                 <label for="" class="w-[180px] font-medium">Email</label>
                 <input type="text" name="email" id="" class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
             </div>
+            <div class="flex items-center">
+                    <label for="" class="w-[180px] font-medium">Pekerja</label>
+                    <select name="pekerja" id="" class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2">
+                        <option selected disabled value="">-Pilih Pekerja-</option>
+                        <option value=" Pekerja Tetap"> Pekerja Tetap</option>
+                        <option value="Pekerja Lepas">Pekerja Lepas</option>
+                        <option value="Pekerja Kontrak">Pekerja Kontrak</option>
+                    </select>
+                </div>
+                <div class="flex items-center">
+                    <label for="" class="w-[180px] font-medium">Jabatan</label>
+                    <input type="text" name="jabatan" id=""
+                        class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2" required>
+                </div>
             <div class="flex mt-4">
                 <div class="w-[180px]"></div>
                 <div class="w-full flex gap-x-2">

@@ -58,7 +58,6 @@ class KaryawanController extends Controller
         $request->validate([
 
             'nama'    => 'required|string|max:100',
-            'akun_header' => 'required|string|max:100',
             'alamat'      => 'nullable|string|max:255',
             'no_hp'       => 'nullable|string|max:20',
             'email'       => 'nullable|email|max:100',
@@ -70,7 +69,6 @@ class KaryawanController extends Controller
 
         $karyawan->update([
             'nama'    => $request->nama,
-            'akun_header' => $request->akun_header,
             'alamat'      => $request->alamat,
             'no_hp'       => $request->no_hp,
             'email'       => $request->email,
