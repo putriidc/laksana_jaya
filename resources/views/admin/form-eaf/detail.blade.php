@@ -20,7 +20,7 @@
             <div class="flex justify-between items-center mb-5">
                 <h1 class="text-2xl font-bold">Tabel Rincian</h1>
                 <div class="flex items-center gap-x-2">
-                    @if ($tanggalDetail == $hariIni || $tanggalDetail == $besok)
+                    @if ($tanggalDetail == $hariIni || $tanggalDetail == $besok || $eaf->is_open === 'open')
                         <button data-id="{{ $eaf->id }}" data-kode="{{ $eaf->kode_eaf }}"
                             onclick="modalAddRincian(this)"
                             class="flex items-center gap-x-2 border border-[#3E98D0] px-4 py-2 rounded-lg cursor-pointer">

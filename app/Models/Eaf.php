@@ -24,6 +24,7 @@ class Eaf extends Model
         'ket_owner',
         'ket_spv',
         'detail_biaya',
+        'is_open',
         'created_by',
         'deleted_at'
     ];

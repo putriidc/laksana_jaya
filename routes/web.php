@@ -723,6 +723,8 @@ Route::middleware('auth')->group(function () {
             ->name('AcceafO.decline');
         Route::post('/acc-eaf-owner/update-detail-biaya', [AccEafOwnerController::class, 'updateDetailBiaya'])
             ->name('AcceafO.updateDetailBiaya');
+        Route::post('/eaf/{id}/toggle-open', [AccEafOwnerController::class, 'toggleOpen'])->name('eaf.toggleOpen');
+
 
          Route::get('printMutasiDetailOwner', [JurnalOwnerController::class, 'printMutasiDetail'])->name('jurnalMutasiDetailOwner.print');
         Route::get('print-jurnalOnwner', [JurnalOwnerController::class, 'print'])->name('jurnalOwner.print');

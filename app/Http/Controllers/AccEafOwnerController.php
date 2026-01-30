@@ -29,7 +29,13 @@ class AccEafOwnerController extends Controller
                 $query->where('acc_owner', '!=', 'accept')
                     ->orWhere('acc_owner', '!=', 'decline');
             })
-            ->get();
+            ->orderBy('tanggal', 'desc')
+            ->paginate(5);
+        $eafOpen = Eaf::with('bank')
+            ->whereNull('deleted_at')
+            ->whereHas('bank')
+            ->orderBy('tanggal', 'desc')
+            ->paginate(5);
 
         $today = Carbon::now('Asia/Jakarta')->toDateString();
         return view('owner.pengajuan-eaf.data', compact('eaf', 'today', 'eaf_needAcc'));
@@ -125,7 +131,7 @@ class AccEafOwnerController extends Controller
                 EafDetail::create([
                     'kode_eaf'   => $eaf->kode_eaf,
                     'tanggal'    => $eaf->tanggal,
-                    'keterangan'    => 'Closing '. $eaf-> nama_proyek,
+                    'keterangan'    => 'Closing ' . $eaf->nama_proyek,
                     'kode_akun'  => $piutang->kode_akun,
                     'nama_akun'  => $piutang->nama_akun,
                     'debit'      =>  0,
@@ -166,6 +172,16 @@ class AccEafOwnerController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+    public function toggleOpen(Request $request, $id)
+    {
+        $eaf = Eaf::findOrFail($id);
+        $eaf->is_open = $request->status; // 'open' atau 'close'
+        $eaf->save();
+
+        return back()->with('success', 'Status berhasil diupdate');
+    }
+
 
     /**
      * Display the specified resource.

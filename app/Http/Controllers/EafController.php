@@ -119,6 +119,7 @@ class EafController extends Controller
         $tanggalDetail = optional($eaf->details->first())->tanggal;
         $hariIni = Carbon::now('Asia/Jakarta')->toDateString();
         $besok = Carbon::now('Asia/Jakarta')->subDay()->toDateString();
+
         $akun = Asset::Active()
             ->whereIn('nama_akun', [
                 'Piutang Proyek',

@@ -54,6 +54,72 @@
                 </div>
             </section>
             <section class="mb-5">
+                <h1 class="font-bold text-2xl mb-4 text-[#C0C0C0]">Data EAF</h1>
+                <a target="_blank" href="{{ route('accEafOwner.print') }}"
+                    class="px-4 py-2 border-2 border-[#9A9A9A] rounded-lg w-fit flex items-center gap-x-2 mb-4">
+                    <span class="text-[#72686B]">Cetak Laporan</span>
+                    <img src="{{ asset('assets/printer.png') }}" alt="printer icon">
+                </a>
+                <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1200px]:overflow-x-auto">
+                    <table class="table-auto text-center text-sm w-full max-[1200px]:w-[1200px]">
+                        <thead class="border-b-2 border-[#CCCCCC]">
+                            <th class="py-2">No</th>
+                            <th class="py-2 ">Tgl Pengajuan</th>
+                            <th class="py-2 ">Nama Proyek</th>
+                            <th class="py-2 ">PIC</th>
+                            <th class="py-2 ">Sumber dana</th>
+                            <th class="py-2">Nominal</th>
+                            <th class="py-2 ">Detail Biaya</th>
+                            <th class="py-2 ">Action</th>
+                        </thead>
+                        <tbody>
+                            @php
+                                $no = 1;
+                            @endphp
+                            @foreach ($eafOpen as $item)
+                                <tr class="bg-white border-b-[1px] border-[#CCCCCC]">
+                                    <td class="py-2">{{ $no++ }}</td>
+                                    <td class="py-2">{{ $item->tanggal }}</td>
+                                    <td class="py-2">{{ $item->nama_proyek }}</td>
+                                    <td class="py-2">{{ $item->pic }}</td>
+                                    <td class="py-2">{{ $item->bank->nama_akun }}</td>
+                                    <td class="py-2">{{ 'RP. ' . number_format($item->nominal, 0, ',', '.') }}</td>
+                                    <td class="py-2">
+                                        <span data-detail="{{ $item->detail_biaya }}" data-mode="view"
+                                            onclick="detailBiaya(this)"
+                                            class="hover:underline text-blue-400 cursor-pointer">
+                                            Lihat Detail
+                                        </span>
+                                    </td>
+                                    <td class="py-2">
+                                        <div class="flex justify-center gap-x-2 items-center">
+                                            <form action="{{ route('eaf.toggleOpen', $item->id) }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="status" value="open">
+                                                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-lg">
+                                                    Open
+                                                </button>
+                                            </form>
+
+                                            <form action="{{ route('eaf.toggleOpen', $item->id) }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="status" value="close">
+                                                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-lg">
+                                                    Close
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <div class="mt-4">
+                        {{ $eaf->links() }}
+                    </div>
+                </div>
+            </section>
+            <section class="mb-5">
                 <h1 class="font-bold text-2xl mb-4 text-[#C0C0C0]">Form ACC EAF</h1>
                 <a target="_blank" href="{{ route('accEafOwner.print') }}"
                     class="px-4 py-2 border-2 border-[#9A9A9A] rounded-lg w-fit flex items-center gap-x-2 mb-4">
@@ -97,7 +163,8 @@
                                         <div class="flex justify-center gap-x-1 items-center">
                                             {{-- Status spv --}}
                                             @if ($item->acc_owner === 'accept')
-                                                <span class="bg-[#8CE987] px-4 py-2 rounded-lg cursor-pointer">Accept</span>
+                                                <span
+                                                    class="bg-[#8CE987] px-4 py-2 rounded-lg cursor-pointer">Accept</span>
                                             @elseif ($item->acc_owner === 'decline')
                                                 <span
                                                     class="bg-[#e91111] px-4 py-2 rounded-lg cursor-pointer">Decline</span>
@@ -111,6 +178,9 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <div class="mt-4">
+                        {{ $eaf->links() }}
+                    </div>
                 </div>
             </section>
             <script>
