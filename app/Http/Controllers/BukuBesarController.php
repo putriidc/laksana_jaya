@@ -47,7 +47,7 @@ class BukuBesarController extends Controller
         }
 
         // 2. Ambil transaksi (Jurnal) - Siapkan Query dulu, JANGAN di ->get() dulu
-        $query = JurnalUmum::active()->where('kode_perkiraan', $code)->orderBy('tanggal', 'asc');
+        $query = JurnalUmum::whereNull('deleted_at')->where('nama_perkiraan', $account->nama_akun)->orderBy('tanggal', 'asc');
 
         // CEK FILTER TANGGAL
         if ($request->filled('tgl_mulai') && $request->filled('tgl_selesai')) {
