@@ -36,7 +36,7 @@ class AccEafOwnerController extends Controller
             ->whereHas('bank')
             ->where('acc_owner', 'accept')
             ->where('acc_spv', 'accept')
-            ->orderBy('tanggal', 'desc')
+            ->orderBy('id', 'desc')
             ->paginate(5);
 
         $today = Carbon::now('Asia/Jakarta')->toDateString();
