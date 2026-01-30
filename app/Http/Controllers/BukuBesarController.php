@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Asset;
 use Carbon\Carbon;
 use App\Models\JurnalUmum;
@@ -16,13 +17,14 @@ class BukuBesarController extends Controller
      */
     public function index($code, Request $request)
     {
+        // BukuBesar
         // Sidebar: Ambil daftar asset sesuai kriteria Anda
         $asset = Asset::active()
             ->where(function ($query) {
                 $query->whereNotIn('akun_header', ['asset_tetap', 'kewajiban', 'ekuitas', 'pendapatan'])
                     ->orWhere(function ($q) {
                         $q->where('akun_header', 'pendapatan')
-                        ->whereIn('kode_akun', ['450', '451']);
+                            ->whereIn('kode_akun', ['450', '451']);
                     });
             })->get();
 
@@ -37,8 +39,10 @@ class BukuBesarController extends Controller
         $allowedPendapatan = ['450', '451'];
         $disallowedHeaders = ['asset_tetap', 'kewajiban', 'ekuitas'];
 
-        if (in_array($account->akun_header, $disallowedHeaders) ||
-        ($account->akun_header == 'pendapatan' && !in_array($account->kode_akun, $allowedPendapatan))) {
+        if (
+            in_array($account->akun_header, $disallowedHeaders) ||
+            ($account->akun_header == 'pendapatan' && !in_array($account->kode_akun, $allowedPendapatan))
+        ) {
             return redirect()->back()->with('error', 'Role Ini dilarang untuk membuka Buku Besar ini.');
         }
 
@@ -57,11 +61,11 @@ class BukuBesarController extends Controller
         // 3. Logika Running Balance
         $saldoBerjalan = 0;
         foreach ($transactions as $trx) {
-            if ($account->post_saldo == 'DEBET') {
-                $saldoBerjalan += ($trx->debit - $trx->kredit);
-            } else {
-                $saldoBerjalan += ($trx->kredit - $trx->debit);
-            }
+            // Tambahkan debit
+            $saldoBerjalan += $trx->debit;
+            // Kurangi kredit
+            $saldoBerjalan -= $trx->kredit;
+
             $trx->saldo_temp = $saldoBerjalan;
         }
 
@@ -96,11 +100,11 @@ class BukuBesarController extends Controller
         // 3. Logika Running Balance
         $saldoBerjalan = 0;
         foreach ($transactions as $trx) {
-            if ($account->post_saldo == 'DEBET') {
-                $saldoBerjalan += ($trx->debit - $trx->kredit);
-            } else {
-                $saldoBerjalan += ($trx->kredit - $trx->debit);
-            }
+            // Tambahkan debit
+            $saldoBerjalan += $trx->debit;
+            // Kurangi kredit
+            $saldoBerjalan -= $trx->kredit;
+
             $trx->saldo_temp = $saldoBerjalan;
         }
 

@@ -70,7 +70,7 @@ class DashboardAdminController extends Controller
         // Sesuaikan 'nama_akun' dengan nama yang tepat di database Anda
         $assets = Asset::active()
                     ->where('akun_header', 'asset_lancar_bank')
-                    ->where('nama_akun', '!=', 'Kas BJB') 
+                    ->where('nama_akun', '!=', 'Kas BJB')
                     ->get();
 
         $chartLabels = [];
@@ -90,7 +90,7 @@ class DashboardAdminController extends Controller
         // 3. Loop setiap Asset Kas
         foreach ($assets as $account) {
             $dailyBalances = [];
-            
+
             // Optimasi: Ambil saldo awal SEBELUM bulan ini dimulai (Saldo Carry Over)
             $initialBalance = JurnalUmum::active()
                 ->where('kode_perkiraan', $account->kode_akun)
@@ -122,7 +122,7 @@ class DashboardAdminController extends Controller
 
                 // Jika tanggal sudah melewati hari ini, isi null agar garis tidak drop ke nol di masa depan
                 if ($tanggal > now()->format('Y-m-d')) {
-                    $dailyBalances[] = null; 
+                    $dailyBalances[] = null;
                 } else {
                     $dailyBalances[] = $currentRunningBalance;
                 }
@@ -146,6 +146,7 @@ class DashboardAdminController extends Controller
             ->get();
 
         // tampilkan nama kas dan isi saldo
+        //Dashboard
         $akunKas = Asset::active()->where('akun_header', 'asset_lancar_bank')->where('nama_akun', '!=', 'Kas BJB')->get();
         $akunKasNames = $akunKas->pluck('nama_akun')->toArray();
         $queryKas = JurnalUmum::active()->whereIn('nama_perkiraan', $akunKasNames);
