@@ -121,19 +121,7 @@ class EafController extends Controller
         $besok = Carbon::now('Asia/Jakarta')->subDay()->toDateString();
 
         $akun = Asset::Active()
-            ->whereIn('nama_akun', [
-                'Piutang Proyek',
-                'Biaya Material, Alat dan Barang',
-                'Biaya Gaji Tukang & pengawas lapangan',
-                'Biaya Sewa Alat Berat',
-                'Biaya Listrik,air, telphon dan Internet',
-                'Biaya Infaq dan sumbangan',
-                'Biaya Operasional Lainnya',
-                'Biaya Alat tulis kantor',
-                'Biaya Sewa Gedung Kantor',
-                'Biaya Jilid dan Keperluan Product',
-                'Pajak'
-            ])
+            ->where('akun_header', 'hpp_proyek')
             ->get();
         if (Auth::user()->role === 'Admin 1') {
             $allowedAccounts = ['Kas Besar', 'Kas Bank BCA', 'Kas Flip', 'OVO'];
