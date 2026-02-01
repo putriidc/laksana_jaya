@@ -107,20 +107,17 @@ class DashboardOwnerController extends Controller
             $dailyBalances = [];
 
             foreach ($chartLabels as $tanggal) {
-                // Ambil semua transaksi dari awal sampai tanggal tersebut (Look-back)
-                $transactions = JurnalUmum::active()
-                    ->where('kode_perkiraan', $account->kode_akun)
+                // Gunakan query yang identik dengan Buku Besar
+                $transactions = JurnalUmum::whereNull('deleted_at')
+                    ->where('nama_perkiraan', $account->nama_akun) // Samakan: pakai NAMA
                     ->where('tanggal', '<=', $tanggal)
                     ->get();
 
-                // Hitung Running Balance seperti di Buku Besar
                 $saldoBerjalan = 0;
                 foreach ($transactions as $trx) {
-                    if ($account->post_saldo == 'DEBET') {
-                        $saldoBerjalan += ($trx->debit - $trx->kredit);
-                    } else {
-                        $saldoBerjalan += ($trx->kredit - $trx->debit);
-                    }
+                    // Gunakan rumus yang identik dengan Buku Besar
+                    $saldoBerjalan += $trx->debit;
+                    $saldoBerjalan -= $trx->kredit;
                 }
 
                 $dailyBalances[] = $saldoBerjalan;

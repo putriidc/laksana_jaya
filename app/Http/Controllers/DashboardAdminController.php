@@ -148,8 +148,9 @@ class DashboardAdminController extends Controller
         // tampilkan nama kas dan isi saldo
         //Dashboard
         $akunKas = Asset::active()->where('akun_header', 'asset_lancar_bank')->where('nama_akun', '!=', 'Kas BJB')->get();
-        $akunKasNames = $akunKas->pluck('nama_akun')->toArray();
-        $queryKas = JurnalUmum::active()->whereIn('nama_perkiraan', $akunKasNames);
+        $akunKasKodes = $akunKas->pluck('kode_akun')->toArray(); // Ambil KODE
+        $akunKasNames = $akunKas->pluck('nama_akun')->toArray(); // Ambil NAMA
+        $queryKas = JurnalUmum::active()->whereIn('kode_perkiraan', $akunKasKodes); // Cari berdasarkan KODE
         $detailKas = $queryKas
             ->select(
                 'nama_perkiraan',
