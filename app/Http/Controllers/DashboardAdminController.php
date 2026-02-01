@@ -150,7 +150,7 @@ class DashboardAdminController extends Controller
         $akunKas = Asset::active()->where('akun_header', 'asset_lancar_bank')->where('nama_akun', '!=', 'Kas BJB')->get();
         $akunKasKodes = $akunKas->pluck('kode_akun')->toArray(); // Ambil KODE
         $akunKasNames = $akunKas->pluck('nama_akun')->toArray(); // Ambil NAMA
-        $queryKas = JurnalUmum::active()->whereIn('kode_perkiraan', $akunKasKodes); // Cari berdasarkan KODE
+        $queryKas = JurnalUmum::active()->whereIn('nama_perkiraan', $akunKasNames); // Cari berdasarkan nama
         $detailKas = $queryKas
             ->select(
                 'nama_perkiraan',
