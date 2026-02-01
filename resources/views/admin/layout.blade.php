@@ -25,9 +25,9 @@
                 data-message="{{ session('error') }}"
             ></div>
         @endif
-        <section class="flex h-screen">
+        <section class="flex h-screen max-[550px]:overflow-x-hidden">
             <nav
-                class="flex flex-col bg-white h-screen w-[350px] py-5 px-5 shadow-[1px_0px_5px_rgba(0,0,0,0.25)] items-center relative z-[99] overflow-y-auto overflow-x-hidden max-[1300px]:absolute max-[1300px]:items-center max-[1300px]:w-[60px] max-[1300px]:overflow-x-hidden max-[1300px]:transition-all max-[1300px]:ease-in-out max-[1300px]:duration-200"
+                class="flex flex-col bg-white h-screen w-[350px] py-5 px-5 shadow-[1px_0px_5px_rgba(0,0,0,0.25)] items-center relative z-[99] overflow-y-auto overflow-x-hidden max-[1300px]:absolute max-[1300px]:items-center max-[1300px]:w-[60px] max-[1300px]:overflow-x-hidden max-[1300px]:transition-all max-[1300px]:ease-in-out max-[1300px]:duration-200 max-[550px]:w-full max-[550px]:translate-x-[-100vw]"
                 id="sideNavbar"
             >
                 {{-- button view --}}
@@ -400,8 +400,17 @@
             <div class="w-full flex flex-col relative">
                 {{-- header --}}
                 <header
-                    class="flex justify-between items-center px-10 py-4 shadow-[0px_1px_5px_rgba(0,0,0,0.25)] max-[1300px]:w-[calc(100%-60px)] max-[1300px]:ml-[60px]"
+                    class="flex justify-between items-center px-10 max-[550px]:px-4 py-4 shadow-[0px_1px_5px_rgba(0,0,0,0.25)] max-[1300px]:w-[calc(100%-60px)] max-[550px]:w-full max-[1300px]:ml-[60px] max-[550px]:ml-0"
                 >
+                    {{-- Bagian yang di responsive --}}
+                    <button
+                        class="min-[550px]:hidden w-[30px] flex flex-col gap-y-[7px]"
+                        id="buttonBurger"
+                    >
+                        <span class="w-full border border-gray-400"></span>
+                        <span class="w-full border border-gray-400"></span>
+                        <span class="w-full border border-gray-400"></span>
+                    </button>
                     <span class="text-base">pages / dashboard</span>
                     <div class="flex items-center gap-x-4">
                         <img
@@ -423,7 +432,8 @@
                     </div>
                 </header>
                 {{-- header --}}
-                <div class="px-6 pt-5 pb-16 overflow-y-auto max-[1300px]:w-[calc(100vw-60px)] max-[1300px]:ml-[60px]">
+                <div class="px-6 pt-5 pb-16 overflow-y-auto max-[1300px]:w-[calc(100vw-60px)] max-[1300px]:ml-[60px] max-[550px]:w-full max-[550px]:ml-0">
+                    {{-- content --}}
                     @yield('content')
                 </div>
                 <footer
@@ -479,6 +489,68 @@
                 childDropdown2.forEach((item, index) => {
                     item.classList.toggle("max-[1300px]:ml-[-67px]");
                 });
+            });
+
+            const buttonBurger = document.getElementById("buttonBurger");
+            buttonBurger.addEventListener("click", () => {
+                nav.classList.toggle("max-[550px]:translate-x-[-100vw]");
+                sideNavbarContent.classList.toggle("max-[550px]:w-full");
+                logoFull.classList.toggle("max-[1300px]:hidden");
+                justLogo.classList.toggle("max-[1300px]:hidden");
+                sideNavbarContent.classList.toggle("max-[1300px]:items-center");
+                arrow2.classList.toggle("max-[1300px]:hidden");
+                arrow2.classList.toggle("max-[1300px]:scale-200");
+                arrow2.classList.toggle("max-[1300px]:ml-8");
+                arrow2.classList.toggle("max-[550px]:ml-auto");
+                children.forEach((item, index) => {
+                    item.classList.toggle("max-[1300px]:w-[50px]");
+                    item.classList.toggle("max-[550px]:w-full");
+                });
+                imgChild.forEach((item, index) => {
+                    item.classList.toggle("max-[1300px]:scale-200");
+                });
+                spanChild.forEach((item, index) => {
+                    item.classList.toggle("max-[1300px]:hidden");
+                });
+                childDropdown2.forEach((item, index) => {
+                    item.classList.toggle("max-[1300px]:ml-[-67px]");
+                    item.classList.toggle("max-[550px]:ml-0");
+                });
+            });
+
+            const buttonClose = document.getElementById("buttonClose");
+            buttonClose.addEventListener("click", () => {
+                nav.classList.toggle("max-[550px]:translate-x-[-100vw]");
+                sideNavbarContent.classList.toggle("max-[550px]:w-full");
+                logoFull.classList.toggle("max-[1300px]:hidden");
+                justLogo.classList.toggle("max-[1300px]:hidden");
+                sideNavbarContent.classList.toggle("max-[1300px]:items-center");
+                arrow2.classList.toggle("max-[1300px]:hidden");
+                arrow2.classList.toggle("max-[1300px]:scale-200");
+                arrow2.classList.toggle("max-[1300px]:ml-8");
+                arrow2.classList.toggle("max-[550px]:ml-auto");
+                children.forEach((item, index) => {
+                    item.classList.toggle("max-[1300px]:w-[50px]");
+                    item.classList.toggle("max-[550px]:w-full");
+                });
+                imgChild.forEach((item, index) => {
+                    item.classList.toggle("max-[1300px]:scale-200");
+                });
+                spanChild.forEach((item, index) => {
+                    item.classList.toggle("max-[1300px]:hidden");
+                });
+                childDropdown2.forEach((item, index) => {
+                    item.classList.toggle("max-[1300px]:ml-[-67px]");
+                    item.classList.toggle("max-[550px]:ml-0");
+                });
+            });
+
+            // profil button
+            const profilButton = document.getElementById("profilButton");
+            const profil = document.getElementById("profil");
+            profilButton.addEventListener("click", () => {
+                profil.classList.toggle("hidden");
+                profil.classList.toggle("flex");
             });
 
             function triggerCheckbox2(event) {

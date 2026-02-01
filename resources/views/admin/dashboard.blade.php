@@ -10,7 +10,7 @@
     <h1 class="font-bold text-2xl mb-4">Dashboard</h1>
     <section class="flex flex-col gap-y-2">
         @if (Auth::user()->role == "Admin 1" || Auth::user()->role == "Admin 2")
-        <div class="flex items-center gap-x-4">
+        <div class="flex items-center gap-x-4 max-[600px]:gap-x-1 max-[570px]:flex-col max-[570px]:items-start max-[570px]:gap-y-2">
             {{-- <div class="w-[60%] rounded-xl py-6 px-8 shadow-sm border border-gray-100 h-[400px] overflow-y-auto">
                 <h3 class="font-bold text-lg mb-5">Saldo Kas</h3>
                 <section class="flex items-center flex-wrap gap-4">
@@ -27,41 +27,41 @@
                 @endforeach
                 </section>
             </div> --}}
-            <div class="bg-white py-5 rounded-2xl shadow-sm border border-gray-100 grow">
+            <div class="bg-white py-5 rounded-2xl shadow-sm border border-gray-100 grow max-[930px]:grow-0 max-[570px]:w-full">
                 <div class="flex pb-5 items-center justify-between px-6 shadow-[0px_2px_5px_rgba(0,0,0,0.1)] rounded-b-2xl">
                     <h3 class="font-bold text-gray-800">Saldo Kas</h3>
                 </div>
-                <div class="h-[300px] flex flex-col w-full px-6 py-4 gap-y-4 overflow-y-auto">
+                <div class="h-[300px] flex flex-col w-full px-6 py-4 gap-y-4 overflow-y-auto max-[670px]:h-[335px]">
                    @foreach ($kasFinal as $item)
-                    <div class="flex items-center gap-x-3 w-full border-b border-gray-500 pb-3">
-                        <div class="bg-gray-400 rounded-full px-3 py-2">
+                    <div class="flex items-center gap-x-3 w-full border-b border-gray-500 pb-3 max-[930px]:flex-col max-[930px]:items-start">
+                        <div class="bg-gray-400 rounded-full px-3 py-2 max-[930px]:mb-2 ">
                             <img src="{{ asset('assets/dolar.png') }}" alt="dolar icon" class="w-[15px] h-[25px]">
                         </div>
-                        <div class="flex flex-col text-sm leading-[22px] w-[60%]">
+                        <div class="flex flex-col text-sm leading-[22px] ">
                             <span class="font-bold">{{ $item['nama_perkiraan'] }}</span>
                         </div>
-                        <div class="ml-auto bg-green-400 px-2 py-1 rounded-lg text-sm">
+                        <div class="ml-auto bg-green-400 px-2 py-1 rounded-lg text-sm max-[930px]:ml-0">
                             <span class="text-white">Rp. {{ number_format($item['total'], 0, ',', '.') }}</span>
                         </div>
                    </div>
                    @endforeach
                 </div>
             </div>
-            <div class="bg-white py-5 rounded-2xl shadow-sm border border-gray-100 grow">
-                <div class="flex pb-5 items-center justify-between px-6 shadow-[0px_2px_5px_rgba(0,0,0,0.1)] rounded-b-2xl">
+            <div class="bg-white py-5 rounded-2xl shadow-sm border border-gray-100 grow max-[570px]:w-full">
+                <div class="flex pb-5 items-center justify-between px-6 shadow-[0px_2px_5px_rgba(0,0,0,0.1)] rounded-b-2xl max-[670px]:flex-col max-[670px]:items-start max-[670px]:gap-y-2">
                     <h3 class="font-bold text-gray-800">Biaya Pengeluaran</h3>
                     <span class="bg-blue-600 px-4 py-1 rounded-lg text-sm text-white">Total Biaya: Rp. {{ number_format($totalBiaya, 0, ',', '.') }}</span>
                 </div>
                 <div class="h-[300px] flex flex-col w-full px-6 py-4 gap-y-4 overflow-y-auto">
                    @foreach ($biayaFinal as $item)
-                    <div class="flex items-center gap-x-3 w-full border-b border-gray-500 pb-3">
-                        <div class="bg-gray-400 rounded-full px-3 py-2">
+                    <div class="flex items-center gap-x-3 w-full border-b border-gray-500 pb-3 max-[720px]:flex-col max-[720px]:items-start">
+                        <div class="bg-gray-400 rounded-full px-3 py-2 max-[720px]:mb-2">
                             <img src="{{ asset('assets/dolar.png') }}" alt="dolar icon" class="w-[15px] h-[25px]">
                         </div>
-                        <div class="flex flex-col text-sm leading-[22px] w-[60%]">
+                        <div class="flex flex-col text-sm leading-[22px] w-[60%] max-[720px]:mb-[2px] max-[720px]:w-auto">
                             <span class="font-bold">{{ $item['nama_perkiraan'] }}</span>
                         </div>
-                        <div class="ml-auto bg-red-500 px-2 py-1 rounded-lg text-sm">
+                        <div class="ml-auto bg-red-500 px-2 py-1 rounded-lg text-sm max-[720px]:ml-0">
                             <span class="text-white">Rp. {{ number_format($item['total'], 0, ',', '.') }}</span>
                         </div>
                    </div>
@@ -76,47 +76,47 @@
                 <canvas id="chartTrendKas"></canvas>
             </div>
         </div>
-        <div class="flex items-center gap-x-4">
-            <div class="bg-white py-5 rounded-2xl shadow-sm border border-gray-100 grow">
-                <div class="flex pb-5 items-center justify-between px-6 shadow-[0px_2px_5px_rgba(0,0,0,0.1)] rounded-b-2xl">
+        <div class="flex items-center gap-x-4 max-[600px]:gap-x-1 max-[570px]:flex-col max-[570px]:items-start max-[570px]:gap-y-2">
+            <div class="bg-white py-5 rounded-2xl shadow-sm border border-gray-100 grow max-[860px]:grow-3 max-[570px]:w-full">
+                <div class="flex pb-5 items-center justify-between px-6 shadow-[0px_2px_5px_rgba(0,0,0,0.1)] rounded-b-2xl max-[730px]:flex-col max-[730px]:items-start max-[730px]:gap-y-2">
                     <h3 class="font-bold text-gray-800">Karyawan</h3>
                     <span class="bg-blue-600 px-4 py-1 rounded-lg text-sm text-white">Total Karyawan: {{ $karyawans->count() }}</span>
                 </div>
                 <div class="h-[300px] flex flex-col w-full px-6 py-4 gap-y-4 overflow-y-auto">
                    @foreach ($karyawans as $item)
-                    <div class="flex items-center gap-x-3 w-full border-b border-gray-500 pb-3">
-                        <div class="bg-gray-400 rounded-full p-1">
+                    <div class="flex items-center gap-x-3 w-full border-b border-gray-500 pb-3 max-[860px]:flex-col max-[860px]:items-start">
+                        <div class="bg-gray-400 rounded-full p-1 max-[860px]:mb-2">
                             <img src="{{ asset('assets/user.png') }}" alt="user icon" class="w-[40px] h-[40px]">
                         </div>
-                        <div class="flex flex-col leading-[22px]">
+                        <div class="flex flex-col leading-[22px] max-[860px]:mb-1">
                             <span class="font-bold">{{ $item->nama }}</span>
                             <span>{{ $item->email }}</span>
                         </div>
-                        <div class="ml-auto bg-green-800 px-2 py-1 rounded-lg">
+                        <div class="ml-auto bg-green-800 px-2 py-1 rounded-lg max-[860px]:ml-0">
                             <span class="text-white">{{ $item->kode_akun }}</span>
                         </div>
                    </div>
                    @endforeach
                 </div>
             </div>
-            <div class="bg-white py-5 rounded-2xl shadow-sm border border-gray-100 grow">
-                <div class="flex pb-5 items-center justify-between px-6 shadow-[0px_2px_5px_rgba(0,0,0,0.1)] rounded-b-2xl">
+            <div class="bg-white py-5 rounded-2xl shadow-sm border border-gray-100 grow max-[570px]:w-full">
+                <div class="flex pb-5 items-center justify-between px-6 shadow-[0px_2px_5px_rgba(0,0,0,0.1)] rounded-b-2xl max-[730px]:flex-col max-[730px]:items-start max-[730px]:gap-y-2">
                     <h3 class="font-bold text-gray-800">Hutang Vendor</h3>
                     <span class="bg-blue-600 px-4 py-1 rounded-lg text-sm text-white">Belum Dibayar: {{ $hutangVendors->count() }}</span>
                 </div>
                 <div class="h-[300px] flex flex-col w-full px-6 py-4 gap-y-4 overflow-y-auto">
                    @foreach ($hutangVendors as $item)
-                   <div class="flex items-center gap-x-3 w-full border-b border-gray-500 pb-3">
-                        <div class="bg-gray-400 rounded-full p-1">
+                   <div class="flex items-center gap-x-3 w-full border-b border-gray-500 pb-3 max-[860px]:flex-col max-[860px]:items-start">
+                        <div class="bg-gray-400 rounded-full p-1 max-[860px]:mb-2">
                             <img src="{{ asset('assets/user.png') }}" alt="user icon" class="w-[40px] h-[40px]">
                         </div>
-                        <div class="flex flex-col leading-[22px]">
+                        <div class="flex flex-col leading-[22px] max-[860px]:mb-1">
                             <span class="font-bold">{{ $item->supplier?->nama ?? '-' }}</span>
                             <span>{{ $item->proyek?->nama_proyek ?? '-' }}</span>
                         </div>
-                        <div class="ml-auto flex flex-col gap-y-1">
-                            <span class="text-white bg-green-800 px-2 py-1 rounded-lg text-xs text-center">Rp {{ number_format($item->nominal, 0, ',', '.') }}</span>
-                            <span class="text-white bg-red-500 px-2 py-1 rounded-lg text-xs text-center">{{ \Carbon\Carbon::parse($item->tgl_jatuh_tempo)->format('d/m/Y') }}</span>
+                        <div class="ml-auto flex flex-col gap-y-1 max-[860px]:ml-0">
+                            <span class="text-white bg-green-800 px-2 py-1 rounded-lg text-xs text-center max-[860px]:text-base">Rp {{ number_format($item->nominal, 0, ',', '.') }}</span>
+                            <span class="text-white bg-red-500 px-2 py-1 rounded-lg text-xs text-center max-[860px]:text-base">{{ \Carbon\Carbon::parse($item->tgl_jatuh_tempo)->format('d/m/Y') }}</span>
                         </div>
                    </div>
                    @endforeach

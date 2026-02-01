@@ -1108,32 +1108,51 @@
                         inputNominal.addEventListener('input', updateCetakVisibility);
                         inputKet.addEventListener('input', updateCetakVisibility);
 
-                        // 3. Logika Format Rupiah
+                        // 3. Logika Format Rupiah (Mendukung Minus)
                         inputNominal.addEventListener('input', function() {
+                            // Simpan status apakah input diawali tanda minus
+                            let isNegative = this.value.startsWith('-');
+                            
+                            // Ambil angka saja
                             let value = this.value.replace(/[^0-9]/g, "");
-                            this.value = value ? "Rp. " + parseInt(value).toLocaleString('id-ID') : "";
+                            
+                            // Format tampilan
+                            if (value) {
+                                let formatted = parseInt(value).toLocaleString('id-ID');
+                                this.value = (isNegative ? "- " : "") + "Rp. " + formatted;
+                            } else {
+                                this.value = isNegative ? "-" : "";
+                            }
                         });
 
-                        // 4. Logika Tombol Cetak (Ambil Label)
+                        // 4. Logika Tombol Cetak
                         btnCetak.addEventListener('click', function() {
                             const labelFrom = tsFrom.options[tsFrom.getValue()].text;
                             const labelTo = tsTo.options[tsTo.getValue()].text;
-                            const cleanNominal = inputNominal.value.replace(/[^0-9]/g, "");
+                            
+                            // Cek apakah ada minus di input
+                            let isNegative = inputNominal.value.includes('-');
+                            let cleanNominal = inputNominal.value.replace(/[^0-9]/g, "");
+                            
+                            // Gabungkan kembali minusnya jika ada
+                            let finalNominal = (isNegative ? "-" : "") + cleanNominal;
 
-                            const url = `/printMutasiDetailOwner?from=${encodeURIComponent(labelFrom)}&to=${encodeURIComponent(labelTo)}&keterangan=${encodeURIComponent(inputKet.value)}&nominal=${cleanNominal}`;
+                            const url = `/printMutasiDetailOwner?from=${encodeURIComponent(labelFrom)}&to=${encodeURIComponent(labelTo)}&keterangan=${encodeURIComponent(inputKet.value)}&nominal=${finalNominal}`;
                             window.open(url, '_blank');
                         });
 
                         // 5. Logika Submit (Perbaikan Layar Hitam & Nominal Kosong)
                         form.addEventListener('submit', function(e) {
                             e.preventDefault();
-
-                            // Ambil data asli sebelum diubah-ubah
                             const formData = new FormData(form);
 
-                            // Ambil nilai nominal asli (angka saja)
+                            // Ambil nilai nominal asli (angka & minus saja)
+                            let isNegative = inputNominal.value.includes('-');
                             const rawNominal = inputNominal.value.replace(/[^0-9]/g, "");
-                            formData.set('nominal', rawNominal); // Timpa nominal format dengan angka murni
+                            
+                            let finalNominal = (isNegative ? "-" : "") + rawNominal;
+                            
+                            formData.set('nominal', finalNominal);
 
                             fetch(form.action, {
                                 method: "POST",
