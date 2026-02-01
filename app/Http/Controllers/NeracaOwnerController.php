@@ -67,12 +67,12 @@ class NeracaOwnerController extends Controller
         $akunlabaDitahanNames = $akunlabaDitahan->pluck('nama_akun')->toArray();
         $akunModalNames = $akunModal->pluck('nama_akun')->toArray();
 
-        $queryKas = JurnalUmum::active()->whereIn('nama_perkiraan', $akunKasNames)->whereBetween('tanggal', [$startCurr, $endCurr]);
-        $queryLancar = JurnalUmum::active()->whereIn('nama_perkiraan', $akunLancarNames)->whereBetween('tanggal', [$startCurr, $endCurr]);
-        $queryKewajiban = JurnalUmum::active()->whereIn('nama_perkiraan', $akunKewajibanNames)->whereBetween('tanggal', [$startCurr, $endCurr]);
-        $queryTetap = JurnalUmum::active()->whereIn('nama_perkiraan', $akunTetapNames)->whereBetween('tanggal', [$startCurr, $endCurr]);
-        $querylabaDitahan = JurnalUmum::active()->whereIn('nama_perkiraan', $akunlabaDitahanNames)->whereBetween('tanggal', [$startCurr, $endCurr]);
-        $queryModal = JurnalUmum::active()->whereIn('nama_perkiraan', $akunModalNames)->whereBetween('tanggal', [$startCurr, $endCurr]);
+        $queryKas = JurnalUmum::active()->whereIn('nama_perkiraan', $akunKasNames);
+        $queryLancar = JurnalUmum::active()->whereIn('nama_perkiraan', $akunLancarNames);
+        $queryKewajiban = JurnalUmum::active()->whereIn('nama_perkiraan', $akunKewajibanNames);
+        $queryTetap = JurnalUmum::active()->whereIn('nama_perkiraan', $akunTetapNames);
+        $querylabaDitahan = JurnalUmum::active()->whereIn('nama_perkiraan', $akunlabaDitahanNames);
+        $queryModal = JurnalUmum::active()->whereIn('nama_perkiraan', $akunModalNames);
 
         // kas bank
         $detailKas = $queryKas
@@ -406,7 +406,7 @@ class NeracaOwnerController extends Controller
         $totalAktivaLancar = $kasFinal->sum('total') + $lancarFinal->sum('total');
         $totalAktivaTetap  = $tetapFinal->sum('total');
         $totalKewajiban    = $kewajibanFinal->sum('total');
-        
+
         $saldoModal = $detailModal->sum(fn($q) => $q->total_kredit - $q->total_debit);
         $saldoLabaDitahan = $detailLabaDitahan->sum(fn($q) => $q->total_kredit - $q->total_debit);
         $totalPasiva = $totalKewajiban + $saldoModal + $saldoLabaDitahan + $labaTahunBerjalan;
