@@ -1093,8 +1093,8 @@
                         const inputKet = document.getElementById('keterangan');
 
                         // 1. Inisialisasi TomSelect
-                        const tsFrom = new TomSelect('#From', { placeholder: 'Cari akun...', maxItems: 1 });
-                        const tsTo = new TomSelect('#To', { placeholder: 'Cari akun...', maxItems: 1 });
+                        const tsFrom = new TomSelect('#From', { placeholder: 'Cari akun...', maxItems: 1, maxOptions: null, });
+                        const tsTo = new TomSelect('#To', { placeholder: 'Cari akun...', maxItems: 1, maxOptions: null, });
 
                         // 2. Fungsi Validasi Tombol Cetak
                         const updateCetakVisibility = () => {
