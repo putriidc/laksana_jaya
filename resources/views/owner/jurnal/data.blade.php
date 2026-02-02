@@ -178,8 +178,8 @@
                                         onchange="updateBulkButton()">
                                 </td>
                                 <td class="py-2">{{ $jurnal->tanggal }}</td>
-                                <td class="py-2">{{ $jurnal->keterangan }}</td>
                                 <td class="py-2">{{ $jurnal->creator?->name ?? 'owner' }}</td>
+                                <td class="py-2">{{ $jurnal->keterangan }}</td>
                                 <td class="py-2">{{ $jurnal->nama_perkiraan }}</td>
                                 <td class="py-2">{{ $jurnal->kode_perkiraan }}</td>
                                 <td class="py-2">{{ $jurnal->nama_proyek }}</td>
