@@ -45,7 +45,7 @@
         </div>
 
     </div>
-    <div class="flex items-center gap-x-4 max-[600px]:gap-x-1 max-[570px]:flex-col max-[570px]:items-start max-[570px]:gap-y-2">
+    <div class="flex items-center gap-x-4 max-[600px]:gap-x-1 max-[570px]:flex-col max-[570px]:items-start max-[570px]:gap-y-2 mt-6">
             <div class="bg-white py-5 rounded-2xl shadow-sm border border-gray-100 grow max-[930px]:grow-0 max-[570px]:w-full">
                 <div class="flex pb-5 items-center justify-between px-6 shadow-[0px_2px_5px_rgba(0,0,0,0.1)] rounded-b-2xl">
                     <h3 class="font-bold text-gray-800">Saldo Kas</h3>
