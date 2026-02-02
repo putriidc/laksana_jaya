@@ -15,20 +15,20 @@
             </div>
         </div>
         <section class="mb-10">
-            <div class="flex items-center pb-4 w-full justify-between">
+            <div class="flex items-center pb-4 w-full justify-between max-[880px]:items-start gap-x-2">
                 <h1 class="font-bold text-2xl">Pinjaman Karyawan</h1>
-                <div class="flex items-center gap-x-4">
+                <div class="flex items-center gap-x-4 max-[880px]:flex-wrap max-[880px]:gap-y-2 max-[880px]:justify-end">
                     <a href="{{ route('pinjamanContents.bayar', $pinjaman->id) }}"
-                        class="flex items-center gap-x-3 border-[#9A9A9A] border-2 rounded-xl py-[10px] px-[15px] bg-white cursor-pointer">
+                        class="max-[613px]:order-2 flex items-center gap-x-3 border-[#9A9A9A] border-2 rounded-xl py-[10px] px-[15px] bg-white cursor-pointer">
                         <span>Bayar Pinjaman</span>
                         <img src="{{ asset('assets/card-receive.png') }}" alt="bayar pinjaman icon" class="w-[20px]">
                     </a>
                     <a href="{{ route('pinjamanContents.pinjam', $pinjaman->id) }}"
-                        class="flex items-center gap-x-3 border-[#9A9A9A] border-2 rounded-xl py-[10px] px-[15px] bg-white cursor-pointer">
+                        class="max-[613px]:order-3 flex items-center gap-x-3 border-[#9A9A9A] border-2 rounded-xl py-[10px] px-[15px] bg-white cursor-pointer">
                         <span>Pinjam Uang</span>
                         <img src="{{ asset('assets/card-receive.png') }}" alt="bayar pinjaman icon" class="w-[20px]">
                     </a>
-                    <div class="flex items-center gap-x-2">
+                    <div class="flex items-center gap-x-2 max-[613px]:order-1">
                         <h1 class="font-bold">STATUS</h1>
                         @if ($pinjaman->total_pinjam > 4500000)
                             <div class="bg-[#8CE987] w-[100px] h-[20px]"></div>
@@ -38,8 +38,8 @@
                     </div>
                 </div>
             </div>
-            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                <table class="table-auto text-center text-sm w-full">
+            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1100px]:overflow-x-auto">
+                <table class="table-auto text-center text-sm w-full max-[1100px]:w-[1200px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
                         <th class="py-2 w-[15%]">Kontrak</th>
                         <th class="py-2 w-[10%]">Kas/Bank</th>
@@ -125,20 +125,20 @@
             </div>
         </section>
         <section>
-            <div class="flex items-center pb-4 w-full justify-between">
+            <div class="flex items-center pb-4 w-full justify-between max-[880px]:items-start gap-x-2">
                 <h1 class="font-bold text-2xl">Kasbon Karyawan</h1>
-                <div class="flex items-center gap-x-4">
+                <div class="flex items-center gap-x-4 max-[880px]:flex-wrap max-[880px]:gap-y-2 max-[880px]:justify-end">
                     <a href="{{ route('kasbonContents.bayar', $pinjaman->id) }}"
-                        class="flex items-center gap-x-3 border-[#9A9A9A] border-2 rounded-xl py-[10px] px-[15px] bg-white cursor-pointer">
+                        class="max-[480px]:order-2 flex items-center gap-x-3 border-[#9A9A9A] border-2 rounded-xl py-[10px] px-[15px] bg-white cursor-pointer">
                         <span>Bayar Kasbon</span>
                         <img src="{{ asset('assets/card-receive.png') }}" alt="bayar pinjaman icon" class="w-[20px]">
                     </a>
                     <a href="{{ route('kasbonContents.pinjam', $pinjaman->id) }}"
-                        class="flex items-center gap-x-3 border-[#9A9A9A] border-2 rounded-xl py-[10px] px-[15px] bg-white cursor-pointer">
+                        class="max-[480px]:order-3 flex items-center gap-x-3 border-[#9A9A9A] border-2 rounded-xl py-[10px] px-[15px] bg-white cursor-pointer">
                         <span>Kasbon</span>
                         <img src="{{ asset('assets/card-receive.png') }}" alt="bayar pinjaman icon" class="w-[20px]">
                     </a>
-                    <div class="flex items-center gap-x-2">
+                    <div class="flex items-center gap-x-2 max-[480px]:order-1">
                         <h1 class="font-bold">STATUS</h1>
                         @if ($pinjaman->total_kasbon > 4500000)
                             <div class="bg-[#8CE987] w-[100px] h-[20px]"></div>
@@ -149,8 +149,8 @@
                 </div>
             </div>
     </div>
-    <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-        <table class="table-auto text-center text-sm w-full">
+    <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1100px]:overflow-x-auto">
+        <table class="table-auto text-center text-sm w-full max-[1100px]:w-[1200px]">
             <thead class="border-b-2 border-[#CCCCCC]">
                 <th class="py-2 w-[15%]">Kontrak</th>
                 <th class="py-2 w-[10%]">Kas/Bank</th>

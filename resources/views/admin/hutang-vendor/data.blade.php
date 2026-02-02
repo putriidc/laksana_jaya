@@ -2,9 +2,9 @@
 @section('content')
     <div>
         <section>
-            <div class="flex items-center pb-4 justify-between">
+            <div class="flex items-center pb-4 justify-between gap-x-4 max-[710px]:items-start max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-4">
                 <h1 class="font-bold text-2xl">Data Hutang Vendor</h1>
-                <div class="flex items-center gap-x-2">
+                <div class="flex items-center gap-x-2 max-[710px]:flex-col max-[710px]:items-end max-[710px]:gap-y-2 max-[710px]:justify-end max-[500px]:items-start">
                     <a target="_blank" href="{{ route('hutang_vendor.print') }}"
                         class="flex items-center gap-x-2 border-[#9A9A9A] border-2 rounded-lg px-4 py-2"><span
                             class="text-gray-600">Cetak Semua Data</span> <img src="{{ asset('assets/printer.png') }}"
@@ -14,8 +14,8 @@
                     </button>
                 </div>
             </div>
-            <div class="rounded-lg shadow-[1px_1px_10px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                <table class="table-fixed text-center text-sm w-full">
+            <div class="rounded-lg shadow-[1px_1px_10px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1100px]:overflow-x-auto">
+                <table class="table-fixed text-center text-sm w-full max-[1100px]:w-[1200px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
                         <th class="w-[5%] py-2">No</th>
                         <th class="w-[15%] py-2">Nama Supplier</th>
@@ -84,12 +84,12 @@
             @csrf
             <h1 class="font-bold text-2xl mb-4">Form Hutang Vendor</h1>
 
-            <div class="flex items-center w-full">
+            <div class="flex items-center w-full max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2 max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label class="w-[200px] text-start">Tgl Hutang</label>
                 <input  value="{{ \Carbon\Carbon::now('Asia/Jakarta')->format('Y-m-d') }}" readonly type="date" name="tgl_hutang" class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2 cursor-pointer"/>
             </div>
 
-            <div class="flex items-center w-full">
+            <div class="flex items-center w-full max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2 max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label class="w-[200px] text-start">Nama Supplier</label>
                 <select name="kode_supplier" class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2 cursor-pointer appearance-none">
                     <option selected disabled>Pilih Supplier</option>
@@ -99,17 +99,17 @@
                 </select>
             </div>
 
-            <div class="flex items-center w-full">
+            <div class="flex items-center w-full max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2 max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label class="w-[200px] text-start">Tgl Jatuh Tempo</label>
                 <input type="date" name="tgl_jatuh_tempo" class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2 cursor-pointer"/>
             </div>
 
-            <div class="flex items-center w-full">
+            <div class="flex items-center w-full max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2 max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label class="w-[200px] text-start">Nominal</label>
                 <input type="text" name="nominal" class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2 cursor-pointer rupiah-format"/>
             </div>
 
-            <div class="flex items-center w-full">
+            <div class="flex items-center w-full max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2 max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label class="w-[200px] text-start">Nama Proyek</label>
                 <select name="kode_proyek" class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2 cursor-pointer appearance-none">
                     <option selected disabled>Pilih Proyek</option>
@@ -119,12 +119,12 @@
                 </select>
             </div>
 
-            <div class="flex items-center w-full">
+            <div class="flex items-center w-full max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2 max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label class="w-[200px] text-start">Keterangan</label>
                 <input type="text" name="keterangan" class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2 cursor-pointer"/>
             </div>
 
-            <div class="flex items-center w-full justify-end gap-x-2 mt-4">
+            <div class="flex items-center w-full max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2 max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2 justify-end gap-x-2 mt-4">
                 <button type="submit" class="flex items-center gap-x-2 py-1 px-4 rounded-lg border border-[#3E98D0] cursor-pointer mr-2">
                     <span class="text-[#3E98D0]">Simpan Data</span>
                     <img src="{{ asset('assets/plus-circle-blue.png') }}" class="w-[30px] mt-1"/>
@@ -228,47 +228,47 @@
                     html: `
         <form id="myForm" class="flex flex-col items-start gap-y-4">
             <h1 class="font-bold text-2xl mb-4">Detail Hutang Vendor</h1>
-            <div class="flex items-center w-full">
+            <div class="flex items-center w-full max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label class="w-[200px] text-start">Tgl Hutang</label>
                 <input type="date" value="${item.tgl_hutang}"
                        class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2" readonly/>
             </div>
 
-            <div class="flex items-center w-full">
+            <div class="flex items-center w-full max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label class="w-[200px] text-start">Nama Supplier</label>
                 <input type="text" value="${item.supplier?.nama ?? '-'}"
                        class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2" readonly/>
             </div>
 
-            <div class="flex items-center w-full">
+            <div class="flex items-center w-full max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label class="w-[200px] text-start">Tgl Jatuh Tempo</label>
                 <input type="date" value="${item.tgl_jatuh_tempo}"
                        class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2" readonly/>
             </div>
 
-            <div class="flex items-center w-full">
+            <div class="flex items-center w-full max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label class="w-[200px] text-start">Nominal</label>
                 <input type="text" value="Rp. ${Number(item.nominal).toLocaleString('id-ID')}"
                        class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2" readonly/>
             </div>
 
-            <div class="flex items-center w-full">
+            <div class="flex items-center w-full max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label class="w-[200px] text-start">Nama Proyek</label>
                 <input type="text" value="${item.proyek?.nama_proyek ?? '-'}"
                        class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2" readonly/>
             </div>
 
-            <div class="flex items-center w-full">
+            <div class="flex items-center w-full max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label class="w-[200px] text-start">Keterangan</label>
                 <input type="text" value="${item.keterangan ?? '-'}"
                        class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2" readonly/>
             </div>
-            <div class="flex items-center w-full">
+            <div class="flex items-center w-full max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label class="w-[150px] text-start">Status</label>
                 ${ item.tgl_bayar ? `<span class="px-2 py-1 rounded-full bg-blue-200 text-blue-800 text-xs font-semibold">Sudah dibayar</span>` : item.is_generate ? `<span class="px-2 py-1 rounded-full bg-green-200 text-green-800 text-xs font-semibold">Sudah digenerate</span>` : `<span class="px-2 py-1 rounded-full bg-red-200 text-red-800 text-xs font-semibold">Belum digenerate</span>` }
             </div>
 
-            <div class="flex items-center w-full justify-end gap-x-2 mt-4">
+            <div class="flex items-center w-full max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2 justify-end gap-x-2 mt-4">
                 ${ item.is_generate ? ` <button type="button" onclick="Swal.close()" class="flex items-center gap-x-2 py-2 px-4 rounded-lg border border-[#DD4049]"> <span class="text-[#DD4049]">Batal</span> </button> <button id="btnCetak" class="flex items-center gap-x-2 py-2 px-4 rounded-lg border border-gray-500"><span class="text-gray-500">Cetak Data</span></button>` : ` <button type="button" id="generateBtn" class="flex items-center gap-x-2 py-2 px-4 rounded-lg border border-[#45D03E]"> <span class="text-[#45D03E]">Generate</span> </button> <button id="btnCetak" class="flex items-center gap-x-2 py-2 px-4 rounded-lg border border-gray-500"><span class="text-gray-500">Cetak Data</span></button> <button type="button" onclick="Swal.close()" class="flex items-center gap-x-2 py-2 px-4 rounded-lg border border-[#DD4049]"> <span class="text-[#DD4049]">Batal</span> </button> ` }
             </div>
         </form>
@@ -353,12 +353,12 @@
             @method('PUT')
             <h1 class="font-bold text-2xl mb-4">Edit Hutang Vendor</h1>
 
-            <div class="flex items-center w-full">
+            <div class="flex items-center w-full max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label class="w-[200px] text-start">Tgl Hutang</label>
                 <input type="date" name="tgl_hutang" value="${item.tgl_hutang}" class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2"/>
             </div>
 
-            <div class="flex items-center w-full">
+            <div class="flex items-center w-full max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label class="w-[200px] text-start">Nama Supplier</label>
                 <select name="kode_supplier" class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2">
                     <option disabled>Pilih Supplier</option>
@@ -370,17 +370,17 @@
                 </select>
             </div>
 
-            <div class="flex items-center w-full">
+            <div class="flex items-center w-full max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label class="w-[200px] text-start">Tgl Jatuh Tempo</label>
                 <input type="date" name="tgl_jatuh_tempo" value="${item.tgl_jatuh_tempo}" class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2"/>
             </div>
 
-            <div class="flex items-center w-full">
+            <div class="flex items-center w-full max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label class="w-[200px] text-start">Nominal</label>
                 <input type="text" name="nominal" value="Rp. ${Number(item.nominal).toLocaleString('id-ID')}" class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2 rupiah-format"/>
             </div>
 
-            <div class="flex items-center w-full">
+            <div class="flex items-center w-full max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label class="w-[200px] text-start">Nama Proyek</label>
                 <select name="kode_proyek" class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2">
                     <option disabled>Pilih Proyek</option>
@@ -392,12 +392,12 @@
                 </select>
             </div>
 
-            <div class="flex items-center w-full">
+            <div class="flex items-center w-full max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label class="w-[200px] text-start">Keterangan</label>
                 <input type="text" name="keterangan" value="${item.keterangan ?? ''}" class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2"/>
             </div>
 
-            <div class="flex items-center w-full justify-end gap-x-2 mt-4">
+            <div class="flex items-center w-full max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2 justify-end gap-x-2 mt-4">
                 <button type="submit" class="bg-[#3E98D0] text-white px-4 py-2 rounded-lg">Simpan</button>
                 <button type="button" onclick="Swal.close()" class="bg-[#DD4049] text-white px-4 py-2 rounded-lg">Batal</button>
             </div>
@@ -443,22 +443,22 @@
             @method('PUT')
             <h1 class="font-bold text-2xl mb-4">Bayar Hutang Vendor</h1>
 
-            <div class="flex items-center w-full">
+            <div class="flex items-center w-full max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label class="w-[200px] text-start">Tgl Bayar Hutang</label>
                 <input  value="{{ \Carbon\Carbon::now('Asia/Jakarta')->format('Y-m-d') }}" readonly type="date" name="tgl_bayar" class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2" required/>
             </div>
 
-            <div class="flex items-center w-full">
+            <div class="flex items-center w-full max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label class="w-[200px] text-start">Nama Supplier</label>
                 <input type="text" value="${item.supplier?.nama ?? '-'}" readonly class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2"/>
             </div>
 
-            <div class="flex items-center w-full">
+            <div class="flex items-center w-full max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label class="w-[200px] text-start">Nominal</label>
                 <input type="text" value="Rp. ${Number(item.nominal).toLocaleString('id-ID')}" readonly class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2"/>
             </div>
 
-            <div class="flex items-center w-full">
+            <div class="flex items-center w-full max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label class="w-[200px] text-start">Kas / Bank</label>
                 <select name="kode_akun" class="w-full bg-[#D9D9D9] rounded-lg px-4 py-2" required>
                     <option disabled selected>Pilih Kas / Bank</option>
@@ -468,7 +468,7 @@
                 </select>
             </div>
 
-            <div class="flex items-center w-full justify-end gap-x-2 mt-4">
+            <div class="flex items-center w-full max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2 justify-end gap-x-2 mt-4">
                 <button type="submit" class="bg-[#3E98D0] text-white px-4 py-2 rounded-lg">Simpan</button>
                 <button type="button" onclick="Swal.close()" class="bg-[#DD4049] text-white px-4 py-2 rounded-lg">Batal</button>
             </div>

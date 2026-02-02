@@ -379,21 +379,21 @@
                     </a>
                     --}}
                     <div class="grow flex items-end pb-3">
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button
-                                class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1300px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
-                            >
-                                <img
-                                    src="{{
-                                        asset('assets/navbar/logout.png')
-                                    }}"
-                                    alt="logout icon"
-                                    class="max-[1300px]:scale-200"
-                                />
-                                <span class="max-[1300px]:hidden">Logout</span>
-                            </button>
-                        </form>
+                        <a href="#" class="cursor-pointer">
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button
+                                    class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1300px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_15px_rgba(0,0,0,0.25)]"
+                                >
+                                    <img
+                                        src="{{ asset('assets/navbar/logout.png') }}"
+                                        alt="logout icon"
+                                        class="max-[1300px]:scale-200"
+                                    />
+                                    <span class="max-[1300px]:hidden">Logout</span>
+                                </button>
+                            </form>
+                        </a>
                     </div>
                 </div>
             </nav>
@@ -479,6 +479,7 @@
                 // di sideNavbarContent terdapat beberapa tombol link yang akan kita manipulasi secara bersamaan
                 children.forEach((item, index) => {
                     item.classList.toggle("max-[1300px]:w-[50px]");
+                    item.classList.toggle("max-[1200px]:ml-[-63px]");
                 });
                 imgChild.forEach((item, index) => {
                     item.classList.toggle("max-[1300px]:scale-200");

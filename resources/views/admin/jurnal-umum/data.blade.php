@@ -8,18 +8,18 @@
         @endif
         <h1 class="font-bold text-2xl mb-6">Jurnal Umum</h1>
         <section>
-            <div class="flex items-center justify-between mb-5 pb-5 border-b-[1px] border-[#CCCCCC]">
-                <div class="flex items-center gap-x-4">
+            <div class="flex items-center justify-between mb-5 pb-5 border-b-[1px] border-[#CCCCCC] max-[790px]:flex-wrap max-[820px]:gap-4 max-[820px]:justify-start max-[1080px]:items-start">
+                <div class="flex items-center gap-x-4 max-[1080px]:flex-col max-[1080px]:items-start max-[1080px]:gap-y-1">
                     <span class="font-medium">Saldo Debet</span>
                     <span
                         class="bg-[#E9E9E9] py-[6px] px-4 w-[200px] rounded-lg font-semibold text-gray-500">{{ 'RP. ' . number_format($totalDebit, 0, ',', '.') }}</span>
                 </div>
-                <div class="flex items-center gap-x-4">
+                <div class="flex items-center gap-x-4 max-[1080px]:flex-col max-[1080px]:items-start max-[1080px]:gap-y-1">
                     <span class="font-medium">Saldo Kredit</span>
                     <span
                         class="bg-[#E9E9E9] py-[6px] px-4 w-[200px] rounded-lg font-semibold text-gray-500">{{ 'RP. ' . number_format($totalKredit, 0, ',', '.') }}</span>
                 </div>
-                <div class="flex items-center gap-x-1">
+                <div class="flex items-center gap-x-1 max-[1080px]:flex-col max-[1080px]:items-start max-[1080px]:gap-y-1">
                     <span class="font-medium mr-4">Status</span>
                     <span
                         class="bg-[#E9E9E9] py-[6px] px-8 rounded-lg font-semibold text-gray-500">{{ $status }}</span>
@@ -28,12 +28,12 @@
                     </div>
                 </div>
             </div>
-            <div class="flex justify-between items-center pb-4">
+            <div class="flex justify-between items-center pb-4 gap-x-2 max-[1070px]:items-start max-[400px]:flex-col max-[1070px]:gap-y-2">
                 {{-- <a href="{{ route('jurnalUmums.create') }}"
                     class="border-[#9A9A9A] border-2 rounded-lg px-4 py-2 shadow-[0px_0px_10px_rgba(0,0,0,0.1)]">
                     <button class="cursor-pointer">Tambah Data +</button>
                 </a> --}}
-                <div class="flex items-center gap-x-2">
+                <div class="flex items-center gap-x-2 max-[1070px]:flex-wrap max-[1070px]:gap-y-2">
                     @if (Auth::user()->role != "Admin 1")
                     <button onclick="transaksiMasuk()" data-url="{{ route('jurnalUmums.storeDebit') }}"
                         data-token="{{ csrf_token() }}"
@@ -57,7 +57,7 @@
                     </button>
                     @endif
                 </div>
-                <form action="{{ route('jurnalUmums.index') }}" method="GET" class="flex items-center gap-x-2">
+                <form action="{{ route('jurnalUmums.index') }}" method="GET" class="flex items-center gap-x-2 max-[1070px]:flex-wrap max-[1070px]:gap-y-2">
                     <input type="text" name="start" data-flatpickr placeholder="Tgl Mulai"
                         value="{{ request('start') }}"
                         class="border-[#9A9A9A] border-2 rounded-lg py-2 px-4 w-[170px] outline-none">
@@ -81,8 +81,8 @@
                     class="hidden border border-[#FF4B45] rounded-lg p-2 text-[#FF4B45] cursor-pointer">Hapus <span
                         id="count-selected">0</span> Data</button>
             </div>
-            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                <table class="table-fixed text-center text-sm w-full">
+            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 max-w-full max-[1100px]:overflow-x-auto">
+                <table class="table-fixed text-center text-sm w-full max-[1100px]:w-[1200px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
                         <th class="w-[5%]"><input type="checkbox" id="check-all"></th>
                         <th class="w-[12%] py-2">
@@ -889,56 +889,62 @@
                 // buat form modal dengan sweetalert2
                 Swal.fire({
                     html: `
-                    <form action="{{ route('jurnalUmums.storeBank') }}" method="POST" class="flex flex-col text-left" id="myForm">
+                    <form action="{{ route('jurnalUmums.storeBank') }}" method="POST" class="flex flex-col text-left p-2" id="myForm">
                         @csrf
                         <h1 class="font-bold text-2xl mb-4">Transaksi Kas Bank</h1>
-                        <div class="flex items-center mt-4">
-                            <label for="tanggal" class="font-medium w-[150px]">Tgl Transaksi</label>
-                            <div class="flex items-center w-full justify-between">
-                                <input value="{{ $today }}" type="date" name="tanggal" id="tanggal" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none" readonly>
-                                <div class="flex items-center w-[350px]">
-                                    <label for="kode_akun" class="font-medium w-[35%]">Ke Kas/Bank</label>
-                                    <select name="to" id="" class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none appearance-none" required>
-                                <option selected disabled>-Pilih kas/bank-</option>
-                                @foreach ($bankTo as $item)
-                                    <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
-                                @endforeach
-                            </select>
-                                </div>
+
+                        <div class="flex flex-wrap md:flex-nowrap items-center gap-4 mt-4">
+                            <div class="flex items-center w-full md:w-1/2">
+                                <label for="tanggal" class="font-medium w-[130px] shrink-0">Tgl Transaksi</label>
+                                <input value="{{ $today }}" type="date" name="tanggal" id="tanggal" required 
+                                    class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-full outline-none max-[420px]:text-sm" readonly>
+                            </div>
+                            <div class="flex items-center w-full md:w-1/2">
+                                <label for="to" class="font-medium w-[130px] shrink-0">Ke Kas/Bank</label>
+                                <select name="to" id="To" class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-full outline-none appearance-none" required>
+                                    <option selected disabled>-Pilih kas/bank-</option>
+                                    @foreach ($bankTo as $item)
+                                        <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
-                        <div class="flex items-center mt-4">
-                            <label for="keterangan" class="font-medium w-[150px]">Keterangan</label>
-                            <div class="flex items-center w-full justify-between">
-                                <input type="text" name="keterangan" id="keterangan" required class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none">
-                                <div class="flex items-center w-[350px]">
-                                    <label for="nominal" class="font-medium w-[35%]">Nominal</label>
-                                    <input type="text" name="nominal" required class="bg-[#D9D9D9]/40 rounded-lg py-2 px-4 w-[65%] outline-none mt-2 rupiah-format">
-                                </div>
+
+                        <div class="flex flex-wrap md:flex-nowrap items-center gap-4 mt-4">
+                            <div class="flex items-center w-full md:w-1/2">
+                                <label for="keterangan" class="font-medium w-[130px] shrink-0">Keterangan</label>
+                                <input type="text" name="keterangan" id="keterangan" required 
+                                    class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-full outline-none">
+                            </div>
+                            <div class="flex items-center w-full md:w-1/2">
+                                <label for="nominal" class="font-medium w-[130px] shrink-0">Nominal</label>
+                                <input type="text" name="nominal" id="nominal" required 
+                                    class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-full outline-none rupiah-format">
                             </div>
                         </div>
-                        <div class="flex items-center mt-4">
-                            <label for="kas/bank" class="font-medium w-[125px]">Dari Kas</label>
-                            <select name="from" id="" class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-[220px] outline-none appearance-none" required>
+
+                        <div class="flex items-center mt-4 w-full md:w-1/2">
+                            <label for="from" class="font-medium w-[130px] shrink-0">Dari Kas</label>
+                            <select name="from" id="From" class="bg-[#D9D9D9]/40 rounded-lg h-[45px] px-4 w-full outline-none appearance-none" required>
                                 <option selected disabled>-Pilih kas/bank-</option>
                                 @foreach ($bank as $item)
                                     <option value="{{ $item->kode_akun }}">{{ $item->nama_akun }}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <div class="flex items-center mt-6 gap-x-4">
-                            <div class="w-[110px]"></div>
-                            <button type="submit" class="border-[#3E98D0] border text-[#3E98D0] py-1 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
-                                <span class="">Simpan Data</span>
-                                <img src="https://ar4n-group.com/public/assets/plus-circle-blue.png" alt="arrow right blue icon" class="w-[30px]">
+
+                        <div class="flex flex-wrap items-center mt-8 gap-3">
+                            <button type="submit" class="border-[#3E98D0] border text-[#3E98D0] py-2 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
+                                <span class="font-semibold">Simpan Data</span>
+                                <img src="https://ar4n-group.com/public/assets/plus-circle-blue.png" alt="icon" class="w-[25px]">
                             </button>
                             <button type="button" onclick="Swal.close()" class="border-[#DD4049] border text-[#DD4049] py-2 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
-                                <span class="">Batal</span>
-                                <img src="https://ar4n-group.com/public/assets/close-circle-red.png" alt="arrow right blue icon" class="w-[22px]">
+                                <span class="font-semibold">Batal</span>
+                                <img src="https://ar4n-group.com/public/assets/close-circle-red.png" alt="icon" class="w-[20px]">
                             </button>
                             <button type="button" id="btnCetakOtomatis" class="hidden border-orange-500 border text-orange-500 py-2 px-4 rounded-lg cursor-pointer flex items-center gap-x-2">
                                 <span>Cetak</span>
-                                <img src="{{ asset('assets/printer-oren.png') }}" class="w-[25px]">
+                                <img src="{{ asset('assets/printer-oren.png') }}" class="w-[22px]">
                             </button>
                         </div>
                     </form>

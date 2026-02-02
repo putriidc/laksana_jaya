@@ -3,8 +3,8 @@
     <div>
         <div class="flex flex-col mb-8">
             <h1 class="font-bold text-2xl">Pengajuan Pinjaman / Kasbon</h1>
-            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 mt-4">
-                <table class="table-auto text-center text-sm w-full">
+            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 mt-4 max-[1100px]:overflow-x-auto">
+                <table class="table-auto text-center text-sm w-full max-[1100px]:w-[1200px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
                         <th class="py-2 w-[10%]">Tgl Pengajuan</th>
                         <th class="py-2 w-[15%]">Karyawan</th>
@@ -93,8 +93,8 @@
                     </a>
                 </div>
             </div>
-            <div class="rounded-lg shadow-[1px_1px_10px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                <table class="table-auto text-center text-sm w-full">
+            <div class="rounded-lg shadow-[1px_1px_10px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1100px]:overflow-x-auto">
+                <table class="table-auto text-center text-sm w-full max-[1100px]:w-[1100px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
                         <th class="py-2 pl-[150px]">No</th>
                         <th class="py-2">Nama Karyawan</th>

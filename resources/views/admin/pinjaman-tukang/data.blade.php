@@ -15,7 +15,7 @@
             ></div>
         @endif
         <h1 class="font-bold text-2xl mb-6">Pinjaman Tukang</h1>
-        <div class="flex items-center gap-x-4 mb-6 pb-6 border-b-2 border-[#B6B6B6]">
+        <div class="flex items-center gap-x-4 mb-6 pb-6 border-b-2 border-[#B6B6B6] max-[410px]:flex-col max-[410px]:gap-y-2 max-[410px]:items-start">
             <a href="{{ route('pinjamanTukangs.create') }}" class="px-4 py-2 border-2 border-[#9A9A9A] rounded-lg">Tambah Data
                 +</a>
             <a target="_blank" href="{{ route('pinjamanTukangs.print') }}" class="px-4 py-2 border-2 border-[#9A9A9A] rounded-lg flex items-center gap-x-2">
@@ -25,8 +25,8 @@
         </div>
         <div class="flex flex-col mb-8">
             <h1 class="font-bold text-2xl">Pengajuan Pinjaman</h1>
-            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 mt-4">
-                <table class="table-auto text-center text-sm w-full">
+            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 mt-4 max-[1100px]:overflow-x-auto">
+                <table class="table-auto text-center text-sm w-full max-[1100px]:w-[1200px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
                         <th class="py-2 w-[10%]">Tgl Pengajuan</th>
                         <th class="py-2 w-[15%]">Tukang</th>
@@ -76,8 +76,8 @@
         </div>
         <div class="flex flex-col">
             <h1 class="font-bold text-2xl">Data Pinjaman</h1>
-            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 mt-4">
-                <table class="table-auto text-center text-sm w-full">
+            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 mt-4 max-[1100px]:overflow-x-auto">
+                <table class="table-auto text-center text-sm w-full max-[1100px]:w-[1200px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
                         <th class="py-2 w-[5%] pl-[100px]">No</th>
                         <th class="py-2 w-[15%]">Nama Tukang</th>

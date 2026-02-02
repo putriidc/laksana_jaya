@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Asset;
+use App\Models\HutangVendor;
 use App\Models\JurnalUmum;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -358,8 +359,36 @@ class DashboardOwnerController extends Controller
         // $saldoModal = $total_saldo_awal;
         $saldoModal = $totalModal;
 
+        // HUTANG VENDOR
+        $hutangVendors = HutangVendor::active()->with(['supplier', 'proyek'])
+            ->whereNull('deleted_at')
+            ->whereNull('kode_akun')
+            ->get();
+        
+        // tampilkan nama kas dan isi saldo
+        //Dashboard
+        $akunKas = Asset::active()->where('akun_header', 'asset_lancar_bank')->where('nama_akun', '!=', 'Kas BJB')->get();
+        $akunKasKodes = $akunKas->pluck('kode_akun')->toArray(); // Ambil KODE
+        $akunKasNames = $akunKas->pluck('nama_akun')->toArray(); // Ambil NAMA
+        $queryKas = JurnalUmum::active()->whereIn('nama_perkiraan', $akunKasNames); // Cari berdasarkan nama
+        $detailKas = $queryKas
+            ->select(
+                'nama_perkiraan',
+                DB::raw('SUM(debit) as total_debit'),
+                DB::raw('SUM(kredit) as total_kredit')
+            )
+            ->groupBy('nama_perkiraan')
+            ->get()
+            ->keyBy('nama_perkiraan');
+        $kasFinal = collect($akunKasNames)->map(fn($akun) => [
+            'nama_perkiraan' => $akun,
+            'total' => ($detailKas[$akun]->total_debit ?? 0) - ($detailKas[$akun]->total_kredit ?? 0),
+        ]);
+
         return view('owner.dashboard', compact('cashInGL', 'cashOutGL', 'pendapatanFinal',
             'biayaCurr',
+            'kasFinal',
+            'hutangVendors',
             'pendapatanCurr',
             'biayaFinal',
             'totalPendapatan',

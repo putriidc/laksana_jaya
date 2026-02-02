@@ -2,18 +2,18 @@
 @section('content')
     <div>
         <h1 class="text-2xl font-bold mb-8">Laporan Kuangan Harian</h1>
-        <div class="flex items-center justify-between mb-5 pb-5 border-b-[1px] border-[#CCCCCC]">
-            <div class="flex items-center gap-x-4">
+        <div class="flex items-center justify-between mb-5 pb-5 border-b-[1px] border-[#CCCCCC] max-[1280px]:gap-4 max-[800px]:flex-wrap max-[800px]:justify-start max-[1030px]:items-start">
+            <div class="flex items-center gap-x-4 max-[1030px]:flex-col max-[1030px]:items-start max-[1030px]:gap-y-2">
                 <span class="font-medium">Saldo Debet</span>
                 <span
                     class="bg-[#E9E9E9] py-[6px] px-4 w-[200px] rounded-lg font-semibold text-gray-500">{{ 'RP. ' . number_format($totalDebit, 0, ',', '.') }}</span>
             </div>
-            <div class="flex items-center gap-x-4">
+            <div class="flex items-center gap-x-4 max-[1030px]:flex-col max-[1030px]:items-start max-[1030px]:gap-y-2">
                 <span class="font-medium">Saldo Kredit</span>
                 <span
                     class="bg-[#E9E9E9] py-[6px] px-4 w-[200px] rounded-lg font-semibold text-gray-500">{{ 'RP. ' . number_format($totalKredit, 0, ',', '.') }}</span>
             </div>
-            <div class="flex items-center gap-x-1">
+            <div class="flex items-center gap-x-1 max-[1030px]:flex-col max-[1030px]:items-start max-[1030px]:gap-y-2">
                 <span class="font-medium mr-4">Status</span>
                 <span class="bg-[#E9E9E9] py-[6px] px-8 rounded-lg font-semibold text-gray-500">{{ $status }}</span>
                 <div
@@ -30,8 +30,8 @@
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[25px]">
                 </a>
             </div>
-            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                <table class="table-fixed text-center text-sm w-full">
+            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1100px]:overflow-x-auto">
+                <table class="table-fixed text-center text-sm w-full max-[1100px]:w-[1200px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
                         <th class="w-[10%] py-2">Tanggal</th>
                         <th class="w-[22%] py-2">Keterangan</th>
@@ -92,8 +92,8 @@
                     <img src="{{ asset('assets/printer.png') }}" alt="printer icon" class="w-[25px]">
                 </a>
             </div>
-            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                <table class="table-fixed text-center text-sm w-full">
+            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1100px]:overflow-x-auto">
+                <table class="table-fixed text-center text-sm w-full max-[1100px]:w-[1200px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
                         <th class="w-[10%] py-2">Tanggal</th>
                         <th class="w-[22%] py-2">Keterangan</th>
@@ -146,11 +146,11 @@
             </div>
         </div>
         <div class="flex flex-col gap-y-5 mb-5">
-            <div class="flex justify-between items-center">
+            <div class="flex justify-between items-center max-[870px]:items-start">
                 <h1 class="text-2xl font-bold">Global Cash In</h1>
-                <div class="flex items-center">
+                <div class="flex items-center max-[870px]:flex-wrap max-[870px]:gap-y-2 max-[870px]:justify-end">
                     {{-- Cash In Global --}}
-                    <form method="GET" action="{{ route('laporanHarian.index') }}" class="flex items-center gap-x-1">
+                    <form method="GET" action="{{ route('laporanHarian.index') }}" class="flex items-center gap-x-1 max-[870px]:flex-wrap max-[870px]:gap-y-2 max-[870px]:justify-end">
                         <input type="text" data-flatpickr name="start_in" placeholder="Tanggal Mulai"
                             class="w-[180px] rounded-lg border-2 border-[#9A9A9A] py-2 px-4">
                         <input type="text" data-flatpickr name="end_in" placeholder="Tanggal Akhir"
@@ -167,8 +167,8 @@
                     </a>
                 </div>
             </div>
-            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                <table class="table-fixed text-center text-sm w-full">
+            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1100px]:overflow-x-auto">
+                <table class="table-fixed text-center text-sm w-full max-[1100px]:w-[1200px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
                         <th class="w-[10%] py-2">Tanggal</th>
                         <th class="w-[22%] py-2">Keterangan</th>
@@ -225,11 +225,11 @@
             </div>
         </div>
         <div class="flex flex-col gap-y-5 mb-5">
-            <div class="flex justify-between items-center">
+            <div class="flex justify-between items-center max-[870px]:items-start">
                 <h1 class="text-2xl font-bold">Global Cash Out</h1>
-                <div class="flex items-center">
+                <div class="flex items-center max-[870px]:flex-wrap max-[870px]:gap-y-2 max-[870px]:justify-end">
                     {{-- Cash Out Global --}}
-                    <form method="GET" action="{{ route('laporanHarian.index') }}" class="flex items-center gap-x-1">
+                    <form method="GET" action="{{ route('laporanHarian.index') }}" class="flex items-center gap-x-1 max-[870px]:flex-wrap max-[870px]:gap-y-2 max-[870px]:justify-end">
                         <input type="text" data-flatpickr name="start_out" placeholder="Tanggal Mulai"
                             class="w-[180px] rounded-lg border-2 border-[#9A9A9A] py-2 px-4">
                         <input type="text" data-flatpickr name="end_out" placeholder="Tanggal Akhir"
@@ -246,8 +246,8 @@
                     </a>
                 </div>
             </div>
-            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                <table class="table-fixed text-center text-sm w-full">
+            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1100px]:overflow-x-auto">
+                <table class="table-fixed text-center text-sm w-full max-[1100px]:w-[1200px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
                         <th class="w-[10%] py-2">Tanggal</th>
                         <th class="w-[22%] py-2">Keterangan</th>

@@ -28,8 +28,8 @@
                     class="block border-[#9A9A9A] border-2 rounded-lg px-4 py-2 shadow-[0px_0px_10px_rgba(0,0,0,0.1)]">Tambah
                     Data +</a>
             </div>
-            <div class="rounded-lg shadow-[1px_1px_10px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                <table class="table-fixed text-center text-sm w-full">
+            <div class="rounded-lg shadow-[1px_1px_10px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1200px]:overflow-x-auto">
+                <table class="table-fixed text-center text-sm w-full max-[1200px]:w-[1200px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
                         <th class="w-[5%] py-2">No</th>
                         <th class="w-[10%] py-2">Nama</th>

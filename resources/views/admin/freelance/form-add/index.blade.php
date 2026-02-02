@@ -11,7 +11,7 @@
             id="myForm"
         >
             @csrf
-            <div class="flex items-center">
+            <div class="flex items-center max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label for="" class="w-[180px] font-medium">Nama</label>
                 <input
                     type="text"
@@ -20,7 +20,7 @@
                     class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2"
                 />
             </div>
-            <div class="flex items-center">
+            <div class="flex items-center max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label for="" class="w-[180px] font-medium">Tgl Mulai</label>
                 <input
                     type="text"
@@ -31,7 +31,7 @@
                     class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2"
                 />
             </div>
-            <div class="flex items-center">
+            <div class="flex items-center max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label for="" class="w-[180px] font-medium">Tgl Selesai</label>
                 <input
                     type="text"
@@ -42,7 +42,7 @@
                     class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2"
                 />
             </div>
-            <div class="flex items-center">
+            <div class="flex items-center max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label for="" class="w-[180px] font-medium">Salary</label>
                 <input
                     type="text"
@@ -51,7 +51,7 @@
                     class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2 rupiah-format"
                 />
             </div>
-            <div class="flex items-center">
+            <div class="flex items-center max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label for="" class="w-[180px] font-medium">Day</label>
                 <input
                     type="number"
@@ -60,7 +60,7 @@
                     class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2"
                 />
             </div>
-            <div class="flex items-center">
+            <div class="flex items-center max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label for="" class="w-[180px] font-medium">Total Salary</label>
                 <input
                     type="text"
@@ -70,7 +70,7 @@
                     readonly
                 />
             </div>
-            <div class="flex items-center">
+            <div class="flex items-center max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label for="" class="w-[180px] font-medium">Tambahan</label>
                 <input
                     type="text"
@@ -79,7 +79,7 @@
                     class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2 rupiah-format"
                 />
             </div>
-            <div class="flex items-center">
+            <div class="flex items-center max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label for="" class="w-[180px] font-medium">Jumlah</label>
                 <input
                     type="text"
@@ -89,7 +89,7 @@
                     readonly
                 />
             </div>
-            <div class="flex items-center">
+            <div class="flex items-center max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label for="" class="w-[180px] font-medium">Kasbon</label>
                 <input
                     type="text"
@@ -98,7 +98,7 @@
                     class="w-full outline-none bg-[#D9D9D9]/40 rounded-sm px-4 py-2 rupiah-format"
                 />
             </div>
-            <div class="flex items-center">
+            <div class="flex items-center max-[500px]:flex-col max-[500px]:items-start max-[500px]:gap-y-2">
                 <label for="" class="w-[180px] font-medium"
                     >Total Seluruh</label
                 >
@@ -111,7 +111,7 @@
                 />
             </div>
             <div class="flex mt-4">
-                <div class="w-[180px]"></div>
+                <div class="w-[180px] max-[500px]:hidden"></div>
                 <div class="w-full flex gap-x-2">
                     <button
                         type="submit"

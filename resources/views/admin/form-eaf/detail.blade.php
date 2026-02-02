@@ -41,8 +41,8 @@
                     @endif
                 </div>
             </div>
-            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                <table class="table-auto text-center text-sm w-full">
+            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1100px]:overflow-x-auto">
+                <table class="table-auto text-center text-sm w-full max-[1100px]:w-[1200px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
                         <th class="py-2 w-[5%]">No</th>
                         <th class="py-2 w-[10%]">Tgl Relasi</th>

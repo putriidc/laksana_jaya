@@ -71,7 +71,7 @@
                     class="w-full flex flex-col justify-center py-8 gap-y-8 shadow-[1px_1px_5px_rgba(0,0,0,0.25)] rounded-lg mt-2 items-center">
                     <div class="flex flex-col w-[80%] gap-y-3">
                         <h1 class="text-[#C0C0C0] font-bold text-xl">Data Kas / Bank</h1>
-                        <table class="table-fixed w-[80%] text-center w-full">
+                        <table class="table-fixed text-center w-full">
                             <thead class="border-b-2 border-[#CCCCCC]">
                                 <th class="py-2 w-[10%]">No</th>
                                 <th class="py-2 w-[15%]">Kode Akun</th>

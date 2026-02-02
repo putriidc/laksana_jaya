@@ -5,12 +5,12 @@
         <form method="POST" action="{{ route('eaf.store') }}" class="flex flex-col gap-y-5 pb-10 border-b border-gray-300"
             id="myForm">
             @csrf
-            <div class="flex items-center">
+            <div class="flex items-center max-[550px]:flex-col max-[550px]:items-start max-[550px]:gap-y-2">
                 <label for="" class="w-[200px]">Tanggal Pengajuan</label>
                 <input type="date" name="tanggal" id="" value="{{ $today }}" readonly
                     class="bg-[#D9D9D9]/40 px-6 py-2 rounded-lg w-full">
             </div>
-            <div class="flex items-center">
+            <div class="flex items-center max-[550px]:flex-col max-[550px]:items-start max-[550px]:gap-y-2">
                 <label class="w-[200px]">Nama Proyek</label>
                 <select name="nama_proyek" id="nama_proyek"
                     class="bg-[#D9D9D9]/40 px-4 appearance-none py-2 rounded-lg w-full cursor-pointer">
@@ -22,21 +22,21 @@
                     @endforeach
                 </select>
             </div>
-            <div class="flex items-center">
+            <div class="flex items-center max-[550px]:flex-col max-[550px]:items-start max-[550px]:gap-y-2">
                 <label class="w-[200px]">PIC</label>
                 <input type="text" name="pic" id="pic" class="bg-[#D9D9D9]/40 px-6 py-2 rounded-lg w-full"
                     readonly>
             </div>
-            <div class="flex items-center">
+            <div class="flex items-center max-[550px]:flex-col max-[550px]:items-start max-[550px]:gap-y-2">
                 <label for="" class="w-[200px]">Keterangan</label>
                 <input type="text" name="keterangan" id="" class="bg-[#D9D9D9]/40 px-6 py-2 rounded-lg w-full">
             </div>
-            <div class="flex items-center">
+            <div class="flex items-center max-[550px]:flex-col max-[550px]:items-start max-[550px]:gap-y-2">
                 <label for="" class="w-[200px]">Nominal</label>
                 <input type="text" placeholder="Rp." name="nominal" id=""
                     class="bg-[#D9D9D9]/40 px-6 py-2 rounded-lg w-full rupiah-format">
             </div>
-            <div class="flex items-center">
+            <div class="flex items-center max-[550px]:flex-col max-[550px]:items-start max-[550px]:gap-y-2">
                 <label for="" class="w-[200px]">Kas / Bank</label>
                 <select name="kas" id=""
                     class="bg-[#D9D9D9]/40 px-4 appearance-none py-2 rounded-lg w-full cursor-pointer">
@@ -46,13 +46,13 @@
                     @endforeach
                 </select>
             </div>
-            <div class="flex">
+            <div class="flex max-[550px]:flex-col max-[550px]:items-start max-[550px]:gap-y-2">
                 <label for="" class="w-[200px]">Detail Biaya</label>
                 <textarea name="detail_biaya" id="" cols="20" rows="8"
                     class="bg-[#D9D9D9]/40 px-6 py-2 rounded-lg w-full"></textarea>
             </div>
             <div class="flex">
-                <div class="w-[200px]"></div>
+                <div class="w-[200px] max-[550px]:hidden"></div>
                 <div class="w-full flex gap-x-2">
                     <button type="submit"
                         class="bg-white border border-[#3E98D0] text-[#3E98D0] px-4 py-[6px] rounded-lg cursor-pointer flex items-center justify-center gap-x-1">
@@ -64,8 +64,8 @@
         </form>
         <div class="mt-5">
             <h1 class="text-2xl font-bold mb-5">Status Pengajuan</h1>
-            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                <table class="table-auto text-center text-sm w-full">
+            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1100px]:overflow-x-auto">
+                <table class="table-auto text-center text-sm w-full max-[1100px]:w-[1200px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
                         <th class="py-2 w-[5%]">No</th>
                         <th class="py-2 w-[10%]">Tgl Pengajuan</th>
@@ -142,8 +142,8 @@
         </div>
         <div class="mt-5">
             <h1 class="text-2xl font-bold mb-5">Status Pengajuan</h1>
-            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                <table class="table-auto text-center text-sm w-full">
+            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1100px]:overflow-x-auto">
+                <table class="table-auto text-center text-sm w-full max-[1100px]:w-[1200px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
                         <th class="py-2 w-[5%]">No</th>
                         <th class="py-2 w-[10%]">Tgl Pengajuan</th>

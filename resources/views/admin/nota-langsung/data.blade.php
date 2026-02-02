@@ -1,7 +1,7 @@
 @extends('admin.layout')
 @section('content')
     <div>
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-between max-[520px]:flex-col max-[520px]:items-start">
             <h1 class="text-2xl font-bold mb-5">Nota Langsung</h1>
             <div class="flex items-center gap-x-2">
                 <button class="border border-[#9A9A9A] rounded-lg px-4 py-2 cursor-pointer"
@@ -14,8 +14,8 @@
             </div>
         </div>
         <div class="mt-5">
-            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-                <table class="table-auto text-center text-sm w-full">
+            <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1100px]:overflow-x-auto">
+                <table class="table-auto text-center text-sm w-full max-[1100px]:w-[1200px]">
                     <thead class="border-b-2 border-[#CCCCCC]">
                         <th class="py-2 w-[5%]">No</th>
                         <th class="py-2 w-[10%]">Created By</th>
@@ -77,11 +77,11 @@
                             <form action="{{ route('notaLangsung.store') }}" method="POST" class="flex flex-col gap-y-4" id="myForm">
                                 @csrf
                                 <h1 class="font-bold text-2xl text-start mb-5">Form Nota Langsung</h1>
-                                <div class="flex items-center max-[550px]:flex-col max-[550px]:items-start">
+                                <div class="flex items-center max-[700px]:flex-col max-[700px]:items-start max-[700px]:gap-y-2">
                                     <label for="tanggal" class="font-medium w-[160px] text-start">Tanggal</label>
                                     <input type="date" name="tanggal" id="tanggal" value="{{ $today }}" readonly class="bg-[#D9D9D9]/40 px-6 py-2 rounded-lg w-full">
                                 </div>
-                                <div class="flex items-center max-[550px]:flex-col max-[550px]:items-start">
+                                <div class="flex items-center max-[700px]:flex-col max-[700px]:items-start max-[700px]:gap-y-2">
                                     <label for="proyek" class="font-medium w-[160px] text-start">Nama Proyek</label>
                                     <select name="nama_proyek" id="nama_proyek"
                     class="bg-[#D9D9D9]/40 px-4 appearance-none py-2 rounded-lg w-full cursor-pointer">
@@ -93,11 +93,11 @@
                     @endforeach
                 </select>
                                 </div>
-                                <div class="flex items-center max-[550px]:flex-col max-[550px]:items-start">
+                                <div class="flex items-center max-[700px]:flex-col max-[700px]:items-start max-[700px]:gap-y-2">
                                     <label for="pic" class="font-medium w-[160px] text-start">PIC</label>
                                     <input type="text" name="pic" id="pic" class="bg-[#D9D9D9]/40 px-6 py-2 rounded-lg w-full" readonly>
                                 </div>
-                                <div class="flex items-center max-[550px]:flex-col max-[550px]:items-start">
+                                <div class="flex items-center max-[700px]:flex-col max-[700px]:items-start max-[700px]:gap-y-2">
                                     <label for="" class="font-medium w-[160px] text-start">Dari Kas/Bank</label>
                                     <select name="kode_kas" id=""
                     class="bg-[#D9D9D9]/40 px-4 appearance-none py-2 rounded-lg w-full cursor-pointer">
@@ -109,7 +109,7 @@
                     @endforeach
                 </select>
                                 </div>
-                                <div class="flex items-center max-[550px]:flex-col max-[550px]:items-start">
+                                <div class="flex items-center max-[700px]:flex-col max-[700px]:items-start max-[700px]:gap-y-2">
                                     <label for="akun" class="font-medium w-[160px] text-start">Ke Nama Akun</label>
                                     <select name="kode_akun" id=""
                     class="bg-[#D9D9D9]/40 px-4 appearance-none py-2 rounded-lg w-full cursor-pointer">
@@ -121,19 +121,19 @@
                     @endforeach
                 </select>
                                 </div>
-                                <div class="flex items-center max-[550px]:flex-col max-[550px]:items-start">
+                                <div class="flex items-center max-[700px]:flex-col max-[700px]:items-start max-[700px]:gap-y-2">
                                     <label for="keterangan" class="font-medium w-[160px] text-start">Keterangan</label>
                                     <input type="text" name="keterangan" id="keterangan" class="bg-[#D9D9D9]/40 px-6 py-2 rounded-lg w-full">
                                 </div>
-                                <div class="flex items-center max-[550px]:flex-col max-[550px]:items-start">
+                                <div class="flex items-center max-[700px]:flex-col max-[700px]:items-start max-[700px]:gap-y-2">
                                     <label for="nominal" class="font-medium w-[160px] text-start">Nominal</label>
                                     <input type="text" name="nominal" id="nominal" class="bg-[#D9D9D9]/40 px-6 py-2 rounded-lg w-full rupiah-format">
                                 </div>
-                                <div class="flex items-start">
+                                <div class="flex items-start max-[700px]:flex-col max-[700px]:items-start max-[700px]:gap-y-2">
                                     <label for="detail_biaya" class="font-medium w-[160px] text-start">Detail Biaya</label>
                                     <textarea name="detail_biaya" id="detail_biaya" cols="20" rows="5" class="bg-[#D9D9D9]/40 px-6 py-2 rounded-lg w-full"></textarea>
                                 </div>
-                                <div class="flex items-center max-[550px]:flex-col max-[550px]:items-start">
+                                <div class="flex items-center max-[700px]:flex-col max-[700px]:items-start max-[700px]:gap-y-2">
                                     <label for="" class="font-medium w-[130px]"></label>
                                     <button class="flex items-center gap-x-1 border border-[#3E98D0] text-[#3E98D0] px-4 py-[6px] rounded-lg cursor-pointer">
                                         <span class="text-[#3E98D0]">Simpan Data</span>

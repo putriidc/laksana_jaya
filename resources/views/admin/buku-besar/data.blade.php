@@ -2,7 +2,7 @@
 @section('content')
     <div>
         <h1 class="text-2xl font-bold mb-5">Buku Besar</h1>
-        <div class="flex items-center justify-between mb-5">
+        <div class="flex items-center justify-between mb-5 gap-x-2 max-[780px]:items-start max-[420px]:flex-col max-[420px]:gap-y-3">
             <div class="px-4 py-2 w-auto border-[#9A9A9A] border-2 rounded-lg bg-amber-50">
                 <select name="" id="selectTransaksi" class="cursor-pointer w-[150px] outline-none">
                     <option selected disabled>{{ $account->nama_akun }}</option>
@@ -12,7 +12,7 @@
                 </select>
             </div>
             <form action="{{ route('bukubesar.index', $account->kode_akun) }}" method="GET"
-                class="flex items-center gap-x-1">
+                class="flex items-center gap-x-1 max-[780px]:flex-wrap max-[780px]:justify-end max-[780px]:gap-y-2 max-[420px]:justify-start">
                 <input type="text" data-flatpickr placeholder="Tanggal Mulai" name="tgl_mulai" id=""
                     class="w-[180px] px-4 py-2 border-[#9A9A9A] border-2 rounded-lg">
                 <input type="text" data-flatpickr placeholder="Tanggal Selesai" name="tgl_selesai" id=""
@@ -27,30 +27,30 @@
                 </a>
             </form>
         </div>
-        <div class="flex justify-end items-center gap-x-5 mb-5">
-            <div class="flex items-center gap-x-2">
+        <div class="flex justify-end items-center gap-x-5 mb-5 max-[1120px]:justify-between max-[870px]:flex-wrap max-[870px]:gap-y-3 max-[870px]:justify-start max-[368px]:flex-col max-[368px]:items-start">
+            <div class="flex items-center gap-x-2 max-[1120px]:flex-col max-[1120px]:items-start max-[1120px]:gap-y-1">
                 <span class="text-[#9A9A9A] font-medium">Total Saldo</span>
                 <span class="bg-[#E6E6E6] px-10 py-1 rounded-lg font-medium">{{ number_format(($totalDebit - $totalKredit), 0, ',', '.') }}</span>
             </div>
-            <div class="flex items-center gap-x-2">
+            <div class="flex items-center gap-x-2 max-[1120px]:flex-col max-[1120px]:items-start max-[1120px]:gap-y-1">
                 <span class="text-[#9A9A9A] font-medium">Total Debit</span>
                 <span class="bg-[#E6E6E6] px-10 py-1 rounded-lg font-medium">{{ number_format($totalDebit, 0, ',', '.') }}</span>
             </div>
-            <div class="flex items-center gap-x-2">
+            <div class="flex items-center gap-x-2 max-[1120px]:flex-col max-[1120px]:items-start max-[1120px]:gap-y-1">
                 <span class="text-[#9A9A9A] font-medium">Total Kredit</span>
                 <span class="bg-[#E6E6E6] px-10 py-1 rounded-lg font-medium">{{ number_format($totalKredit, 0, ',', '.') }}</span>
             </div>
-            <div class="flex items-center gap-x-2">
+            <div class="flex items-center gap-x-2 max-[1120px]:flex-col max-[1120px]:items-start max-[1120px]:gap-y-1">
                 <span class="text-[#9A9A9A] font-medium">Kode Akun</span>
                 <span class="bg-[#E6E6E6] px-10 py-1 rounded-lg font-medium">{{ $account->kode_akun }}</span>
             </div>
-            <div class="flex items-center gap-x-2">
+            <div class="flex items-center gap-x-2 max-[1120px]:flex-col max-[1120px]:items-start max-[1120px]:gap-y-1">
                 <span class="text-[#9A9A9A] font-medium">Post Saldo</span>
                 <span class="bg-[#E6E6E6] px-10 py-1 rounded-lg font-medium">{{ $account->post_saldo }}</span>
             </div>
         </div>
-        <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6">
-            <table class="table-fixed text-center text-sm w-full">
+        <div class="rounded-lg shadow-[0px_0px_20px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1100px]:overflow-x-auto">
+            <table class="table-fixed text-center text-sm w-full max-[1100px]:w-[1200px]">
                 <thead class="border-b-2 border-[#CCCCCC]">
                     <th class="w-[10%] py-2">No</th>
                     <th class="w-[10%] py-2">Tanggal</th>
