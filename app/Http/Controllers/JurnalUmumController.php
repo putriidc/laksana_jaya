@@ -370,8 +370,8 @@ class JurnalUmumController extends Controller
                     }
 
                     // hitung saldo dari jurnal
-                    $debit  = JurnalUmum::active()->where('kode_perkiraan', $kodeBank->kode_akun)->sum('debit');
-                    $kredit = JurnalUmum::active()->where('kode_perkiraan', $kodeBank->kode_akun)->sum('kredit');
+                    $debit  = JurnalUmum::active()->where('nama_perkiraan', $kodeBank->nama_akun)->sum('debit');
+                    $kredit = JurnalUmum::active()->where('nama_perkiraan', $kodeBank->nama_akun)->sum('kredit');
 
 
                     $saldo =  $debit - $kredit;
@@ -559,8 +559,8 @@ class JurnalUmumController extends Controller
                     }
 
                     // hitung saldo dari jurnal
-                    $debit  = JurnalUmum::active()->where('kode_perkiraan', $kodeBank->kode_akun)->sum('debit');
-                    $kredit = JurnalUmum::active()->where('kode_perkiraan', $kodeBank->kode_akun)->sum('kredit');
+                    $debit  = JurnalUmum::active()->where('nama_perkiraan', $kodeBank->nama_akun)->sum('debit');
+                    $kredit = JurnalUmum::active()->where('nama_perkiraan', $kodeBank->nama_akun)->sum('kredit');
 
                     $asset = Asset::where('kode_akun', $kodeBank->kode_akun)->first();
                     $saldo =  $debit - $kredit;

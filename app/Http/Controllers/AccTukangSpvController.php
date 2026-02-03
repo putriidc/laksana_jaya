@@ -83,8 +83,8 @@ class AccTukangSpvController extends Controller
                 return redirect()->back()->with('error', 'Akun kas tidak ditemukan');
             }
             // hitung saldo dari jurnal
-            $debit  = JurnalUmum::active()->where('kode_perkiraan', $bank->kode_akun)->sum('debit');
-            $kredit = JurnalUmum::active()->where('kode_perkiraan', $bank->kode_akun)->sum('kredit');
+            $debit  = JurnalUmum::active()->where('nama_perkiraan', $bank->nama_akun)->sum('debit');
+            $kredit = JurnalUmum::active()->where('nama_perkiraan', $bank->nama_akun)->sum('kredit');
 
 
             $saldo =  $debit - $kredit;
