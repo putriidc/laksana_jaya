@@ -155,12 +155,12 @@ class DashboardOwnerController extends Controller
         $akunlabaDitahanNames = $akunlabaDitahan->pluck('nama_akun')->toArray();
         $akunModalNames = $akunModal->pluck('nama_akun')->toArray();
 
-        $queryKas = JurnalUmum::active()->whereIn('nama_perkiraan', $akunKasNames)->whereBetween('tanggal', [$startCurr, $endCurr]);
-        $queryLancar = JurnalUmum::active()->whereIn('nama_perkiraan', $akunLancarNames)->whereBetween('tanggal', [$startCurr, $endCurr]);
-        $queryKewajiban = JurnalUmum::active()->whereIn('nama_perkiraan', $akunKewajibanNames)->whereBetween('tanggal', [$startCurr, $endCurr]);
-        $queryTetap = JurnalUmum::active()->whereIn('nama_perkiraan', $akunTetapNames)->whereBetween('tanggal', [$startCurr, $endCurr]);
-        $querylabaDitahan = JurnalUmum::active()->whereIn('nama_perkiraan', $akunlabaDitahanNames)->whereBetween('tanggal', [$startCurr, $endCurr]);
-        $queryModal = JurnalUmum::active()->whereIn('nama_perkiraan', $akunModalNames)->whereBetween('tanggal', [$startCurr, $endCurr]);
+        $queryKas = JurnalUmum::active()->whereIn('nama_perkiraan', $akunKasNames);
+        $queryLancar = JurnalUmum::active()->whereIn('nama_perkiraan', $akunLancarNames);
+        $queryKewajiban = JurnalUmum::active()->whereIn('nama_perkiraan', $akunKewajibanNames);
+        $queryTetap = JurnalUmum::active()->whereIn('nama_perkiraan', $akunTetapNames);
+        $querylabaDitahan = JurnalUmum::active()->whereIn('nama_perkiraan', $akunlabaDitahanNames);
+        $queryModal = JurnalUmum::active()->whereIn('nama_perkiraan', $akunModalNames);
 
         // kas bank
         $detailKas = $queryKas
@@ -364,7 +364,7 @@ class DashboardOwnerController extends Controller
             ->whereNull('deleted_at')
             ->whereNull('kode_akun')
             ->get();
-        
+
         // tampilkan nama kas dan isi saldo
         //Dashboard
         $akunKas = Asset::active()->where('akun_header', 'asset_lancar_bank')->where('nama_akun', '!=', 'Kas BJB')->get();
