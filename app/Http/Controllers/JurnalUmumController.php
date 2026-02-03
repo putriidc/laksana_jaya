@@ -568,7 +568,7 @@ class JurnalUmumController extends Controller
 
                     if ($saldo < $row['kredit']) {
                         DB::rollBack();
-                        return response()->json(['error' => "Saldo {$asset->nama_akun} tidak mencukupi"], 400);
+                        return response()->json(['error' => "Saldo {$asset->nama_akun} tidak mencukupi, Saldo Yang Tersedia: {$saldo}"], 400);
                     }
                 }
             }
