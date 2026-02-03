@@ -3,7 +3,8 @@
         <div class="flex flex-col mb-6">
             <section class="mb-10">
                 <h1 class="font-bold text-2xl mb-4 text-[#C0C0C0] max-[500px]:text-xl">Form Pengajuan Pinjaman Karyawan</h1>
-                <div class="rounded-lg shadow-[0px_0px_5px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1200px]:overflow-x-scroll max-[1200px]:overflow-x-scroll">
+                <div
+                    class="rounded-lg shadow-[0px_0px_5px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1200px]:overflow-x-scroll max-[1200px]:overflow-x-scroll">
                     <table class="table-auto text-center text-sm w-full max-[1200px]:w-[1200px]">
                         <thead class="border-b-2 border-[#CCCCCC]">
                             <tr>
@@ -82,7 +83,8 @@
                 </div>
             </section>
             <section class="mb-5">
-                <h1 class="font-bold text-2xl mb-4 text-[#C0C0C0] max-[500px]:text-xl">Data Persetujuan Pinjaman Karyawan</h1>
+                <h1 class="font-bold text-2xl mb-4 text-[#C0C0C0] max-[500px]:text-xl">Data Persetujuan Pinjaman Karyawan
+                </h1>
                 <a target="_blank" href="{{ route('accownerPinjaman.print') }}"
                     class="px-4 py-2 border-2 border-[rgb(154,154,154)] rounded-lg w-fit flex items-center gap-x-2 mb-4">
                     <span class="text-[#72686B]">Cetak Laporan</span>
@@ -173,6 +175,39 @@
                                             <span class="bg-[#8CE987] px-4 py-2 rounded-lg cursor-pointer">Accept </span>
                                         @endif
                                     </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <section class="mb-5">
+                <h1 class="font-bold text-2xl mb-4 text-[#C0C0C0] max-[500px]:text-xl">Data Pinjaman & Kasbon Karyawan</h1>
+                <div class="rounded-lg shadow-[0px_0px_5px_rgba(0,0,0,0.1)] pt-4 pb-6 max-[1200px]:overflow-x-scroll">
+                    <table class="table-auto text-center text-sm w-full max-[1200px]:w-[1200px]">
+                        <thead class="border-b-2 border-[#CCCCCC]">
+                            <th class="py-2 pl-[150px]">No</th>
+                            <th class="py-2">Nama Karyawan</th>
+                            <th class="py-2">Jumlah Pinjaman</th>
+                            {{-- <th class="py-2">Sisa Pinjaman</th> --}}
+                            <th class="py-2">Jumlah Kasbon</th>
+                            {{-- <th class="py-2">Sisa Kasbon</th> --}}
+                        </thead>
+                        <tbody>
+                            @php
+                                $noall = 1;
+                            @endphp
+                            @foreach ($allpinjam as $pinjaman)
+                                <tr class="bg-[#E9E9E9] border-b-[1px] border-[#CCCCCC]">
+                                    <td class="py-2 pl-[150px]">{{ $noall++ }}</td>
+                                    <td class="py-2">{{ optional($pinjaman->karyawan)->nama ?? '-' }}</td>
+                                    <td class="py-2">
+                                        {{ 'RP. ' . number_format($pinjaman->total_pinjaman_sisa, 0, ',', '.') }}</td>
+                                    {{-- <td class="py-2">{{ 'RP. ' . number_format($pinjaman->total_pinjam, 0, ',', '.') }}</td> --}}
+                                    <td class="py-2">
+                                        {{ 'RP. ' . number_format($pinjaman->total_kasbon_sisa, 0, ',', '.') }}
+                                    </td>
+                                    {{-- <td class="py-2">{{ 'RP. ' . number_format($pinjaman->total_kasbon, 0, ',', '.') }}</td> --}}
                                 </tr>
                             @endforeach
                         </tbody>
@@ -276,7 +311,7 @@
                                 // tombol tolak
                                 document.getElementById('btn-tolak').addEventListener('click', () => {
                                     const ket_owner = document.getElementById('ket_owner')
-                                    .value;
+                                        .value;
                                     if (!ket_owner) {
                                         Swal.showValidationMessage('Alasan wajib diisi');
                                         return;
@@ -296,7 +331,7 @@
                                         .then(data => {
                                             Swal.fire('Ditolak!',
                                                 'Pengajuan berhasil ditolak.', 'success'
-                                                );
+                                            );
                                             location.reload();
                                         })
                                         .catch(err => {
@@ -344,7 +379,7 @@
                                 // tombol tolak
                                 document.getElementById('btn-tolak').addEventListener('click', () => {
                                     const ket_owner = document.getElementById('ket_owner')
-                                    .value;
+                                        .value;
                                     if (!ket_owner) {
                                         Swal.showValidationMessage('Alasan wajib diisi');
                                         return;
@@ -364,7 +399,7 @@
                                         .then(data => {
                                             Swal.fire('Ditolak!',
                                                 'Pengajuan berhasil ditolak.', 'success'
-                                                );
+                                            );
                                             location.reload();
                                         })
                                         .catch(err => {

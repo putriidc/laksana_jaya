@@ -24,6 +24,20 @@ class AccOwnerController extends Controller
      */
     public function index()
     {
+        $allpinjam = PinjamanKaryawan::with(['karyawan', 'pinjamanContent', 'kasbonContent'])
+            ->active()
+            ->get()
+            ->map(function ($p) {
+                $totalPinjam = $p->pinjamanContent->where('jenis', 'pinjam')->sum('bayar');
+                $totalCicil  = $p->pinjamanContent->where('jenis', 'cicil')->sum('bayar');
+                $totalKasbon = $p->kasbonContent->where('jenis', 'pinjam')->sum('bayar');
+                $totalKasbonCicil = $p->kasbonContent->where('jenis', 'cicil')->sum('bayar');
+
+                $p->total_pinjaman_sisa = $totalPinjam - $totalCicil;
+                $p->total_kasbon_sisa   = $totalKasbon - $totalKasbonCicil;
+
+                return $p;
+            });
         $pinjamans = PinjamanContent::with('karyawanPinjaman')->where('jenis', 'pinjam')
             ->whereNull('deleted_at')
             ->get();
@@ -42,7 +56,7 @@ class AccOwnerController extends Controller
             ->whereNull('deleted_at')
             ->where('menunggu', true)
             ->get();
-        return view('owner.pinjaman-karyawan.data', compact('pinjamans', 'contents', 'pinjamans', 'kasbons', 'contentKasbons', 'contentPinjams'));
+        return view('owner.pinjaman-karyawan.data', compact('pinjamans', 'allpinjam', 'contents', 'pinjamans', 'kasbons', 'contentKasbons', 'contentPinjams'));
     }
     public function indexTukang()
     {
