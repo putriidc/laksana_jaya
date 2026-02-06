@@ -298,7 +298,7 @@ class EafController extends Controller
                     'detail_order' => $index + 1,
                     'kode_jurnal'   => $kodeJurnal,
                     'tanggal'       => $detail->tanggal,
-                    'kode_perkiraan' => now('Asia/Jakarta'),
+                    'kode_perkiraan' => $detail->kode_akun,
                     'kode_proyek'   => $kodeProyek,
                     'nama_perkiraan' => $detail->nama_akun,
                     'nama_proyek'   => $namaProyek,
