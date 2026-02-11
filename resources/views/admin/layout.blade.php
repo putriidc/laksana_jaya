@@ -37,20 +37,20 @@
                 {{-- button view --}}
                 {{-- Logo --}}
                 <div
-                    class="flex justify-between items-center gap-x-1 mb-8 max-[1300px]:hidden max-[550px]:w-full max-[550px]:px-2"
+                    class="flex justify-between items-center gap-x-4 mb-8 max-[1300px]:hidden max-[550px]:w-full max-[550px]:px-2"
                     id="logoFull"
                 >
                     {{-- bagian yang di responsive --}}
                     <img
-                        src="{{ asset('assets/ar4anSmallLogo.png') }}"
-                        alt="LOGO AR4N GROUP"
+                        src="{{ asset('assets/logo_laksana2.png') }}"
+                        alt="LOGO LAKSANA JAYA"
                         class="max-[550px]:w-[70px]"
                     />
                     <h1
                         class="leading-6 font-bold text-2xl text-[#353132] max-[550px]:text-xl"
                     >
-                        AR4N <br class="max-[550px]:hidden" />
-                        GROUP
+                        Laksana <br class="max-[550px]:hidden" />
+                        Jaya
                     </h1>
                     <button
                         class="min-[550px]:hidden w-[30px] flex flex-col gap-y-[7px]"
@@ -65,19 +65,19 @@
                     </button>
                 </div>
                 <img
-                    src="{{ asset('assets/ar4anSmallLogo.png') }}"
-                    alt="LOGO AR4N GROUP"
-                    class="w-[60px] min-[1300px]:hidden mb-8 scale-200"
+                    src="{{ asset('assets/logo_laksana2.png') }}"
+                    alt="LOGO LAKSANA JAYA"
+                    class="w-[60px] min-[1300px]:hidden mb-8 scale-100"
                     id="justLogo"
                 />
                 {{-- logo --}}
                 <div class="flex flex-col gap-y-3 h-full max-[1300px]:items-center" id="sideNavbarContent">
                     <a href="/admin-dashboard" class="cursor-pointer">
                         <button
-                            class="bg-linear-to-r from-[#DD4049] to-[#F9E52D] text-white flex items-center gap-x-5 w-[250px] max-[1300px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
+                            class="bg-[#FF0000] text-white flex items-center gap-x-5 w-[250px] max-[1300px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >
                             <img
-                                src="{{ asset('assets/navbar/home-2.png') }}"
+                                src="{{ asset('assets/navbar-admin/home-2.png') }}"
                                 alt="home icon"
                                 class="max-[1300px]:scale-200"
                             />
@@ -89,7 +89,7 @@
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1300px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
                         >
                             <img
-                                src="{{ asset('assets/navbar/devices.png') }}"
+                                src="{{ asset('assets/navbar-admin/devices.png') }}"
                                 alt="devices icon"
                                 class="max-[1300px]:scale-200"
                             />
@@ -105,7 +105,7 @@
                         >
                             <img
                                 src="{{
-                                    asset('assets/navbar/receipt-item.png')
+                                    asset('assets/navbar-admin/receipt-item.png')
                                 }}"
                                 alt="receipt icon"
                                 class="max-[1300px]:scale-200"
@@ -130,7 +130,7 @@
                     </a>
                     --}}
                     @if (Auth::user()->role != "Admin 1")
-                    <a
+                    {{-- <a
                         href="{{ route('sampingans.index') }}"
                         class="cursor-pointer"
                     >
@@ -146,8 +146,8 @@
                             />
                             <span class="max-[1300px]:hidden">Freelance</span>
                         </button>
-                    </a>
-                    <a
+                    </a> --}}
+                    {{-- <a
                     href="{{ route('pinjamanKaryawans.index') }}"
                     class="cursor-pointer"
                     >
@@ -163,7 +163,7 @@
                                 />
                                 <span class="max-[1300px]:hidden">Pinjaman Karyawan</span>
                             </button>
-                        </a>
+                        </a> --}}
                     @endif
                     <a
                         href="{{ route('pinjamanTukangs.index') }}"
@@ -174,7 +174,7 @@
                         >
                             <img
                                 src="{{
-                                    asset('assets/navbar/receipt-item.png')
+                                    asset('assets/navbar-admin/receipt-item.png')
                                 }}"
                                 alt="receipt2 icon"
                                 class="max-[1300px]:scale-200"
@@ -208,12 +208,29 @@
                         >
                             <img
                                 src="{{
-                                    asset('assets/navbar/status-up.png')
+                                    asset('assets/navbar-admin/status.png')
                                 }}"
                                 alt="receipt2 icon"
                                 class="max-[1300px]:scale-200"
                             />
                             <span class="max-[1300px]:hidden">Laporan Harian</span>
+                        </button>
+                    </a>
+                    <a
+                        href="{{ route('labarugi.index_admin') }}"
+                        class="cursor-pointer"
+                    >
+                        <button
+                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1300px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
+                        >
+                            <img
+                                src="{{
+                                    asset('assets/navbar-admin/status.png')
+                                }}"
+                                alt="receipt2 icon"
+                                class="max-[1300px]:scale-200"
+                            />
+                            <span class="max-[1300px]:hidden">Laba Rugi</span>
                         </button>
                     </a>
                     <a
@@ -225,7 +242,7 @@
                         >
                             <img
                                 src="{{
-                                    asset('assets/navbar/book.png')
+                                    asset('assets/navbar-admin/book.png')
                                 }}"
                                 alt="receipt2 icon"
                                 class="max-[1300px]:scale-200"
@@ -275,7 +292,7 @@
                         >
                             <img
                                 src="{{
-                                    asset('assets/navbar/receipt-discount.png')
+                                    asset('assets/navbar-admin/receipt-discount.png')
                                 }}"
                                 alt="receipt2 icon"
                                 class="max-[1300px]:scale-200"
@@ -283,11 +300,28 @@
                             <span class="max-[1300px]:hidden">Hutang Vendor</span>
                         </button>
                     </a>
+                    <a
+                        href="{{ route('proyekAdmin.index_admin', ['kategori' => 'Kontruksi']) }}"
+                        class="cursor-pointer"
+                    >
+                        <button
+                            class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1300px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[1px_1px_5px_rgba(0,0,0,0.25)]"
+                        >
+                            <img
+                                src="{{
+                                    asset('assets/navbar-admin/book.png')
+                                }}"
+                                alt="receipt2 icon"
+                                class="max-[1300px]:scale-200"
+                            />
+                            <span class="max-[1300px]:hidden">Buku Proyek</span>
+                        </button>
+                    </a>
                     @endif
                     <a
                         href="#"
                         onclick="triggerCheckbox2(event)"
-                        class="cursor-pointer"
+                        class="cursor-pointer hidden"
                     >
                         <button
                             class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1300px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_5px_rgba(0,0,0,0.25)]"
@@ -386,7 +420,7 @@
                                     class="bg-white text-[#353132] flex items-center gap-x-5 w-[250px] max-[1300px]:w-[50px] py-3 px-5 rounded-lg cursor-pointer shadow-[0px_0px_15px_rgba(0,0,0,0.25)]"
                                 >
                                     <img
-                                        src="{{ asset('assets/navbar/logout.png') }}"
+                                        src="{{ asset('assets/navbar-admin/logout.png') }}"
                                         alt="logout icon"
                                         class="max-[1300px]:scale-200"
                                     />
@@ -440,7 +474,7 @@
                     class="absolute bottom-0 z-50 flex justify-center w-full py-3 shadow-[0px_-1px_5px_rgba(0,0,0,0.25)] bg-white"
                 >
                     <div class="text-center text-xs text-[#A8A8A8]">
-                        Copyright@AR4N GROUP
+                        Copyright@2024 Laksana Jaya. All Rights Reserved.
                     </div>
                 </footer>
             </div>
@@ -479,7 +513,7 @@
                 // di sideNavbarContent terdapat beberapa tombol link yang akan kita manipulasi secara bersamaan
                 children.forEach((item, index) => {
                     item.classList.toggle("max-[1300px]:w-[50px]");
-                    item.classList.toggle("max-[1200px]:ml-[-63px]");
+                    item.classList.toggle("max-[1300px]:ml-[-63px]");
                 });
                 imgChild.forEach((item, index) => {
                     item.classList.toggle("max-[1300px]:scale-200");

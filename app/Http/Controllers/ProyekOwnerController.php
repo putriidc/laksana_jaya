@@ -34,6 +34,21 @@ class ProyekOwnerController extends Controller
         return view('owner.data-proyek.proyek.data', compact('proyeks', 'kategori'));
     }
 
+    public function index_admin(Request $request)
+    {
+        // tangkap kategori dari query string
+        $kategori = $request->input('kategori');
+
+        // filter berdasarkan kategori
+        $proyeks = Proyek::where('kategori', $kategori)
+            ->whereNull('deleted_at')
+            ->orderBy('nama_perusahaan')
+            ->get()
+            ->groupBy('nama_perusahaan');
+
+        return view('admin.data-proyek.proyek.data', compact('proyeks', 'kategori'));
+    }
+
     public function print(Request $request)
     {
         // tangkap kategori dari query string

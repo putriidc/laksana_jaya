@@ -73,6 +73,64 @@ class LabaRugiController extends Controller
             'totalLabaRugi'
         ));
     }
+    public function index_admin(Request $request)
+    {
+        $akunPendapatan = Asset::active()->where('akun_header', 'pendapatan')->get();
+        $akunBiaya      = Asset::active()->where('akun_header', 'hpp_proyek')->get();
+
+        $akunPendapatanNames = $akunPendapatan->pluck('nama_akun')->toArray();
+        $akunBiayaNames      = $akunBiaya->pluck('nama_akun')->toArray();
+
+        $queryPendapatan = JurnalUmum::active()->whereIn('nama_perkiraan', $akunPendapatanNames);
+        $queryBiaya      = JurnalUmum::active()->whereIn('nama_perkiraan', $akunBiayaNames);
+
+        // 🔎 Filter periode tanggal
+        if ($request->filled('start') && $request->filled('end')) {
+            $start = Carbon::parse($request->start)->startOfDay();
+            $end   = Carbon::parse($request->end)->endOfDay();
+
+            $queryPendapatan->whereBetween('tanggal', [$start, $end]);
+            $queryBiaya->whereBetween('tanggal', [$start, $end]);
+        } else {
+            $start = now()->startOfMonth();
+            $end = now()->endOfMonth();
+        }
+        $queryPendapatan->whereBetween('tanggal', [$start, $end]);
+        $queryBiaya->whereBetween('tanggal', [$start, $end]);
+        // Query pendapatan → ambil dari kredit
+        $detailPendapatan = $queryPendapatan
+            ->select('nama_perkiraan', DB::raw('SUM(kredit) as total'))
+            ->groupBy('nama_perkiraan')
+            ->pluck('total', 'nama_perkiraan');
+
+        // Query biaya → ambil dari debit
+        $detailBiaya = $queryBiaya
+            ->select('nama_perkiraan', DB::raw('SUM(debit) as total'))
+            ->groupBy('nama_perkiraan')
+            ->pluck('total', 'nama_perkiraan');
+
+        $pendapatanFinal = collect($akunPendapatanNames)->map(fn($akun) => [
+            'nama_perkiraan' => $akun,
+            'total' => $detailPendapatan[$akun] ?? 0,
+        ]);
+
+        $biayaFinal = collect($akunBiayaNames)->map(fn($akun) => [
+            'nama_perkiraan' => $akun,
+            'total' => $detailBiaya[$akun] ?? 0,
+        ]);
+
+        $totalPendapatan = $pendapatanFinal->sum('total');
+        $totalBiaya      = $biayaFinal->sum('total');
+        $totalLabaRugi   = $totalPendapatan - $totalBiaya;
+
+        return view('admin.laba-rugi.data', compact(
+            'pendapatanFinal',
+            'biayaFinal',
+            'totalPendapatan',
+            'totalBiaya',
+            'totalLabaRugi'
+        ));
+    }
     public function print(Request $request)
     {
         // Master akun pendapatan & biaya

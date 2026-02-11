@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <title>LOGIN AR4N GROUP</title>
+        <title>LOGIN LAKSANA JAYA</title>
        @vite('resources/css/app.css') @vite('resources/js/app.js')
     </head>
     <body class="flex justify-center items-center h-screen font-poppins">
@@ -18,15 +18,15 @@
         <section class="flex items-center w-[90vw] max-[1040px]:justify-center">
             <div class="w-[55%] max-[1200px]:w-[45%] overflow-hidden max-[1040px]:hidden">
                 <img
-                    src="https://ar4n-group.com/public/assets/ar4anBigLogo.png"
-                    alt="LOGO AR4N GROUP"
-                    class="scale-[130%] translate-x-[30px]"
+                    src="{{ asset('assets/logo_laksana.png') }}"
+                    alt="LOGO LAKSANA JAYA"
+                    class="scale-[100%] translate-x-[30px]"
                 />
             </div>
             <div class="flex flex-col w-[35%] max-[1200px]:w-[40%] max-[1040px]:w-[60%] max-[600px]:w-[80%] max-[430px]:w-[90%]">
                 <h1 class="text-5xl max-[800px]:text-3xl max-[600px]:text-2xl max-[430px]:text-xl leading-10 max-[430px]:leading-6 max-[600px]:leading-8 text-[#353132] mb-8 max-[800px]:mb-4 max-[600px]:mb-3">
                     Welcome to, <br />
-                    <span class="font-extrabold text-6xl max-[800px]:text-5xl max-[600px]:text-4xl max-[430px]:text-3xl">AR4N Group</span>
+                    <span class="font-extrabold text-6xl max-[800px]:text-5xl max-[600px]:text-4xl max-[430px]:text-3xl">Laksana Jaya</span>
                 </h1>
                 <form
                     method="POST"
@@ -79,7 +79,7 @@
                     </div>
                     <button
                         type="submit"
-                        class="bg-[#353132] font-bold text-white py-3 rounded-lg cursor-pointer"
+                        class="bg-[#E62129] font-bold text-white py-3 rounded-lg cursor-pointer"
                     >
                         Login
                     </button>

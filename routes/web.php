@@ -350,6 +350,21 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('proyek', ProyekController::class);
 
+        Route::get('labarugi/print', [LabaRugiController::class, 'print'])->name('labarugi.print');
+        Route::get('labarugi-admin', [LabaRugiController::class, 'index_admin'])->name('labarugi.index_admin');
+
+        Route::get('print-resume', [ProyekOwnerController::class, 'print'])->name('resume.print');
+        Route::get('print-proyek', [ProyekOwnerController::class, 'print'])->name('proyek.print');
+        Route::get('print-proyek-detail/{id}', [ProyekOwnerController::class, 'printDetail'])->name('proyek-detail.print');
+        Route::get('print-data-management', [ProyekOwnerController::class, 'printManagement'])->name('dataManagement.print');
+        Route::get('proyekAdmin', [ProyekOwnerController::class, 'index_admin'])->name('proyekAdmin.index_admin');
+        Route::get('/proyekOwner/indexManage', [ProyekOwnerController::class, 'indexManage'])->name('proyekOwner.indexManage');
+        Route::get('/proyekOwner/indexResume', [ProyekOwnerController::class, 'indexResume'])->name('proyekOwner.indexResume');
+        Route::resource('proyekOwner', ProyekOwnerController::class);
+        Route::post('/kontrak/storeKontrak', [ProyekOwnerController::class, 'storeKontrak'])->name('kontrak.storeKontrak');
+        Route::put('/kontrak/updateKontrak/{id}', [ProyekOwnerController::class, 'updateKontrak'])->name('kontrak.update');
+        Route::post('/proyekOwner/proyekSelesai', [ProyekOwnerController::class, 'ProyekSelesai'])->name('proyekOwner.proyekSelesai');
+
         // data alat dan barang
          Route::get('print-masuk-detail-admin', [BarangAdminController::class, 'printDetailMasuk'])
             ->name('print-masuk-detail-admin.print');
