@@ -2,7 +2,7 @@
 @section('content')
 <div>
     <div>
-        <h1 class="text-2xl font-bold mb-5 pb-5 border-b border-gray-400">Data Proyek {{ $kategori }}</h1>
+        <h1 class="text-2xl font-bold mb-5 pb-5 border-b border-gray-400">Data Proyek</h1>
     </div>
     @foreach ($proyeks as $nama_perusahaan => $listProyek)
     <div class="pb-5 border-b border-gray-400 mb-8">
